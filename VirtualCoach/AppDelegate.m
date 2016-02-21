@@ -24,7 +24,7 @@
     
     self.window.rootViewController.view = [[UIView alloc] initWithFrame:[UIScreen mainScreen].bounds];
     
-    self.window.rootViewController.view.backgroundColor = [UIColor redColor];
+    self.window.rootViewController.view.backgroundColor = [UIColor greenColor];
     
     [self.window makeKeyAndVisible];
     return YES;
