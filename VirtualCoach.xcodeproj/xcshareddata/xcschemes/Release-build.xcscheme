@@ -10,7 +10,7 @@
             ActionType = "Xcode.IDEStandardExecutionActionsCore.ExecutionActionType.ShellScriptAction">
             <ActionContent
                title = "Get latest version of libimagic"
-               scriptText = "rm -rf ${SOURCE_ROOT}/tmp&#10;mkdir -p ${SOURCE_ROOT}/tmp&#10;git clone https://github.com/itzseven/libimagic ${SOURCE_ROOT}/tmp/&#10;make libimagic_iphoneos.a -C  ${SOURCE_ROOT}/tmp/&#10;make headers -C  ${SOURCE_ROOT}/tmp/&#10;cp -R ${SOURCE_ROOT}/tmp/bin/ ${SOURCE_ROOT}/Libraries/libimagic">
+               scriptText = "rm -rf ${SOURCE_ROOT}/tmp&#10;mkdir -p ${SOURCE_ROOT}/tmp&#10;git clone https://github.com/itzseven/libimagic ${SOURCE_ROOT}/tmp/&#10;make libimagic_iphoneos.a -C  ${SOURCE_ROOT}/tmp/&#10;make headers -C  ${SOURCE_ROOT}/tmp/&#10;mkdir -p ${SOURCE_ROOT}/Libraries/libimagic&#10;cp -R ${SOURCE_ROOT}/tmp/bin/ ${SOURCE_ROOT}/Libraries/libimagic">
                <EnvironmentBuildable>
                   <BuildableReference
                      BuildableIdentifier = "primary"
