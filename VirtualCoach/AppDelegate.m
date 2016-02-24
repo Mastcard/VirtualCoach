@@ -26,6 +26,8 @@
     
     self.window.rootViewController.view.backgroundColor = [UIColor redColor];
     
+    //
+    
     [self.window makeKeyAndVisible];
     return YES;
 }
