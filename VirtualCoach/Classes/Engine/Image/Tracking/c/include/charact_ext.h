@@ -9,5 +9,8 @@
 #ifndef charact_ext_h
 #define charact_ext_h
 
+#include "characterization.h"
+
+int32_t overlappingreg(regchar_t *ref, labels_t *reflabels, labels_t *labels, uint16_t width);
 
 #endif /* charact_ext_h */
