@@ -18,7 +18,6 @@
 
 @property (nonatomic, assign) unsigned int maxAccumulatedFrames;
 
-- (void)buildReferenceFrame;
 - (gray8i_t *)retrieveReferenceFrame;
 
 @end

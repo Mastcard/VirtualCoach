@@ -14,5 +14,6 @@
 @interface TrackingService : NSObject
 
 + (int32_t)trackRegion:(regchar_t *)reg byOverlapping:(labels_t *)labels withReferenceLabels:(labels_t *)reflabels;
++ (int32_t)trackRegion:(regchar_t *)reg byComparing:(charact_t *)characterization;
 
 @end

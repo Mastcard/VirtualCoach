@@ -107,6 +107,11 @@ static RecordingProcess *recordingProcess;
 {
     NSLog(@"startTrackingProcess");
     
+    gray8i_t *referenceFrame = [referenceFrameProcess retrieveReferenceFrame];
+    
+    if (referenceFrameProcess != NULL)
+        [trackingProcess setReferenceFrame:referenceFrame];
+    
     AVCaptureOutput *captureOutput = (AVCaptureOutput *)[captureSessionController.captureSession.captureSession.outputs objectAtIndex:0];
     
     if ([captureOutput isMemberOfClass:[AVCaptureMovieFileOutput class]])
@@ -129,7 +134,9 @@ static RecordingProcess *recordingProcess;
     if ([captureOutput isMemberOfClass:[AVCaptureVideoDataOutput class]])
         [captureSessionController switchCaptureOutput];
     
-    [captureSessionController startRecordingMovieAtURL:[NSURL fileURLWithPath:[userInfo objectForKey:@"video.path"]]];
+    [captureSessionController setRecordingDelegate:recordingProcess];
+    
+    [captureSessionController startRecordingMovieAtURL:[NSURL fileURLWithPath:[NSString stringWithFormat:@"%@", [userInfo objectForKey:@"video.path"]]]];
 }
 
 + (void)stopReferenceFrameProcess:(NSNotification *)notification

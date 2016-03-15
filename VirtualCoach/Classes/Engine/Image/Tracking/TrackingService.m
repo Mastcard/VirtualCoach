@@ -25,10 +25,9 @@
         for (j = start.x; j <= end.x; j++)
         {
             uint32_t idx = (uint32_t)PXL_IDX(width, j, i);
-            uint32_t reflabel = reflabels->data[idx];
             uint32_t label = labels->data[idx];
             
-            if ((reflabel == id) && (label > 0))
+            if ((reflabels->data[idx] == id) && (label > 0))
                 count[label-1]++;
         }
     }
@@ -45,6 +44,11 @@
     }
     
     return bestRegAcc == 0 ? -1 : (bestReg + 1);
+}
+
++ (int32_t)trackRegion:(regchar_t *)reg byComparing:(charact_t *)characterization
+{
+    return 0;
 }
 
 @end

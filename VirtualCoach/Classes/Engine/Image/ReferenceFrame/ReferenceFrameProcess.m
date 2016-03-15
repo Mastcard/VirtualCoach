@@ -21,6 +21,8 @@
 @property (nonatomic) uint16_t height;
 @property (nonatomic) uint32_t size;
 
+- (void)buildReferenceFrame;
+
 @end
 
 @implementation ReferenceFrameProcess
@@ -49,6 +51,8 @@
     
     for (i = 0; i < _size; i++)
         _result->data[i] = (uint8_t)(_acc[i] / _count);
+    
+    NSLog(@"ReferenceFrameProcess finished : reference built!");
 }
 
 - (gray8i_t *)retrieveReferenceFrame
@@ -75,6 +79,11 @@
 - (void)resume
 {
     
+}
+
+- (BOOL)running
+{
+    return _canRetrieveFrames;
 }
 
 - (void)captureOutput:(AVCaptureOutput *)captureOutput didOutputSampleBuffer:(CMSampleBufferRef)sampleBuffer fromConnection:(AVCaptureConnection *)connection
