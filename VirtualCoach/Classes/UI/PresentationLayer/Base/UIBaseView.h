@@ -7,6 +7,7 @@
 //
 
 #import <UIKit/UIKit.h>
+#import "Layout.h"
 
 typedef NS_ENUM(NSUInteger, UIViewAlignment) {
     UIViewNoCentered = 0,
@@ -15,7 +16,7 @@ typedef NS_ENUM(NSUInteger, UIViewAlignment) {
     UIViewCenteredOnY = 3,
 };
 
-@interface UIBaseView : UIView
+@interface UIBaseView : UIView <Layout>
 
 - (void)prepareForUse;
 

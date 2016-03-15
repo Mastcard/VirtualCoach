@@ -8,6 +8,8 @@
 
 #import "TrackingProcess.h"
 
+#include "charact_ext.h"
+
 @interface TrackingProcess ()
 
 @property (nonatomic) BOOL canRetrieveFrames;
@@ -91,27 +93,24 @@ labels_t *previousLabels;
         rgb8i_t *rgb = rgb8iallocwd_bgra((uint16_t)width, (uint16_t)height, myPixelBuf);
         free(myPixelBuf);
         
-        unsigned long size = width * height;
-        
         gray8i_t *grayscaleImg = grayscale(rgb);
         gray8i_t *grayscaleSubstract = subgray8i(grayscaleImg, _referenceFrame);
         bini_t *binaryImg = binarise(grayscaleSubstract, _binaryThreshold);
-        //bini_t *erodedImg = erosion(binaryImg, 1);
         gray8i_t *unbinaryImg = unbinarise(binaryImg);
         labels_t *nextLabels = label(binaryImg);
         charact_t *charact = characterize(NULL, grayscaleImg, nextLabels);
         
-//        CGColorSpaceRef colorspace = CGColorSpaceCreateDeviceGray();
-//        CFDataRef rgbData = CFDataCreate(NULL, unbinaryImg->data, width * height);
-//        CGDataProviderRef provider = CGDataProviderCreateWithCFData(rgbData);
-//        CGImageRef binaryImageRef = CGImageCreate(width, height, 8, 8, width, colorspace, kCGBitmapByteOrderDefault, provider, NULL, true, kCGRenderingIntentDefault);
-//        CFRelease(rgbData);
-//        CGDataProviderRelease(provider);
-//        CGColorSpaceRelease(colorspace);
-//        
-//        NSDictionary *userInfoDebugImage = [NSDictionary dictionaryWithObject:(__bridge id _Nonnull)(binaryImageRef) forKey:@"debugImage"];
-//        
-//        [[NSNotificationCenter defaultCenter] postNotificationName:@"debug.image.changed" object:self userInfo:userInfoDebugImage];
+        CGColorSpaceRef colorspace = CGColorSpaceCreateDeviceGray();
+        CFDataRef rgbData = CFDataCreate(NULL, unbinaryImg->data, width * height);
+        CGDataProviderRef provider = CGDataProviderCreateWithCFData(rgbData);
+        CGImageRef binaryImageRef = CGImageCreate(width, height, 8, 8, width, colorspace, kCGBitmapByteOrderDefault, provider, NULL, true, kCGRenderingIntentDefault);
+        CFRelease(rgbData);
+        CGDataProviderRelease(provider);
+        CGColorSpaceRelease(colorspace);
+        
+        NSDictionary *userInfoDebugImage = [NSDictionary dictionaryWithObject:(__bridge id _Nonnull)(binaryImageRef) forKey:@"debugImage"];
+        
+        [[NSNotificationCenter defaultCenter] postNotificationName:@"debug.image.changed" object:self userInfo:userInfoDebugImage];
         
         if (previousReg->id == 0)
         {
@@ -135,6 +134,7 @@ labels_t *previousLabels;
 
         else
         {
+            //int32_t bestRegId = [TrackingService trackRegion:previousReg byOverlapping:previousLabels withReferenceLabels:nextLabels];
             int32_t bestRegId = overlappingreg(previousReg, previousLabels, nextLabels, width);
 
             //printf("bestRegId : %d\n", bestRegId);
@@ -179,7 +179,6 @@ labels_t *previousLabels;
         //labfree(nextLabels);
         charactfree(charact);
         gray8ifree(unbinaryImg);
-        //binifree(erodedImg);
         binifree(binaryImg);
         gray8ifree(grayscaleSubstract);
         gray8ifree(grayscaleImg);

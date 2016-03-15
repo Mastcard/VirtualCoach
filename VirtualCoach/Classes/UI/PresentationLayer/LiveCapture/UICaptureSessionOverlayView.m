@@ -77,7 +77,6 @@
 
 - (void)updateDebugImage:(NSNotification *)notification
 {
-    NSLog(@"image updated");
     NSDictionary *userInfo = notification.userInfo;
     
     dispatch_async(dispatch_get_main_queue(), ^{
@@ -94,12 +93,13 @@
 
 - (void)updateRegionBounds:(NSNotification *)notification
 {
+    NSLog(@"(void)updateRegionBounds");
     NSDictionary *userInfo = notification.userInfo;
     
-    int starti;
-    int startj;
-    int endi;
-    int endj;
+    int starti = 0;
+    int startj = 0;
+    int endi = 0;
+    int endj = 0;
     uint16_t width = 0, height = 0;
     
     if (userInfo != nil)
@@ -112,6 +112,8 @@
         height = ((NSNumber *)[userInfo objectForKey:@"image.height"]).unsignedIntValue;
     }
     
+    
+    
     CGFloat screenWidth = [UIScreen mainScreen].bounds.size.width, screenHeight = [UIScreen mainScreen].bounds.size.height;
     
     starti = (int)(starti * (screenHeight / height));
@@ -121,19 +123,16 @@
     
     dispatch_async(dispatch_get_main_queue(), ^{
         
-        if (userInfo != nil)
-        {
-            UIBezierPath *bounds = [[UIBezierPath alloc] init];
-            
-            [bounds moveToPoint:CGPointMake(startj, starti)];
-            [bounds addLineToPoint:CGPointMake(endj, starti)];
-            [bounds addLineToPoint:CGPointMake(endj, endi)];
-            [bounds addLineToPoint:CGPointMake(startj, endi)];
-            [bounds closePath];
-            
-            [_regionBoundShapeView setPath:bounds.CGPath];
-            [_regionBoundShapeView didChangeValueForKey:@"path"];
-        }
+        UIBezierPath *bounds = [[UIBezierPath alloc] init];
+        
+        [bounds moveToPoint:CGPointMake(startj, starti)];
+        [bounds addLineToPoint:CGPointMake(endj, starti)];
+        [bounds addLineToPoint:CGPointMake(endj, endi)];
+        [bounds addLineToPoint:CGPointMake(startj, endi)];
+        [bounds closePath];
+        
+        [_regionBoundShapeView setPath:bounds.CGPath];
+        [_regionBoundShapeView didChangeValueForKey:@"path"];
     });
 }
 

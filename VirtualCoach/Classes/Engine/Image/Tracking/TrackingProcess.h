@@ -9,14 +9,13 @@
 #import <AVFoundation/AVFoundation.h>
 #import <Foundation/Foundation.h>
 #import "Process.h"
+#import "TrackingService.h"
 
 #include <core.h>
 #include <arithmetic.h>
 #include <labelling.h>
 #include <characterization.h>
 #include <morpho.h>
-
-#include "charact_ext.h"
 
 @interface TrackingProcess : NSObject <AVCaptureVideoDataOutputSampleBufferDelegate, Process>
 

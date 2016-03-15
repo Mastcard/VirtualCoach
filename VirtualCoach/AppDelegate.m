@@ -8,7 +8,14 @@
 
 #import "AppDelegate.h"
 
+#import "UIApplicationNavigationViewController.h"
+#import "UICaptureSessionViewController.h"
+
+#import "CaptureProcessManager.h"
+
 @interface AppDelegate ()
+
+@property (nonatomic, strong) UICaptureSessionViewController *captureSessionController;
 
 @end
 
@@ -18,17 +25,22 @@
 - (BOOL)application:(UIApplication *)application didFinishLaunchingWithOptions:(NSDictionary *)launchOptions {
     // Override point for customization after application launch.
     
+    CaptureProcessManager *captureProcessManager = [CaptureProcessManager sharedInstance];
+    
+    _captureSessionController = [[UICaptureSessionViewController alloc] initWithSessionController:[captureProcessManager captureSessionController]];
+    
+    [_captureSessionController prepareForUse];
+    
     self.window = [[UIWindow alloc] initWithFrame:[[UIScreen mainScreen] bounds]];
     
-    self.window.rootViewController = [[UIViewController alloc] init];
+    UIApplicationNavigationViewController *appNavController = [[UIApplicationNavigationViewController alloc] initWithRootViewController:_captureSessionController];
     
-    self.window.rootViewController.view = [[UIView alloc] initWithFrame:[UIScreen mainScreen].bounds];
-    
-    self.window.rootViewController.view.backgroundColor = [UIColor redColor];
-    
-    //
+    self.window.rootViewController = appNavController;
     
     [self.window makeKeyAndVisible];
+    
+    appNavController.navigationBarHidden = YES;
+    
     return YES;
 }
 

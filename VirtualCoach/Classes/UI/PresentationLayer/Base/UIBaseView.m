@@ -15,7 +15,7 @@
     return [self initWithFrame:CGRectZero];
 }
 
-- (void)layoutSubviews
+- (void)layout
 {
     
 }

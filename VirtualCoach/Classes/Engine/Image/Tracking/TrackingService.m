@@ -46,9 +46,4 @@
     return bestRegAcc == 0 ? -1 : (bestReg + 1);
 }
 
-+ (int32_t)trackRegion:(regchar_t *)reg byComparing:(charact_t *)characterization
-{
-    return 0;
-}
-
 @end

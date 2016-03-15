@@ -27,7 +27,4 @@
 - (void)adjustmentButtonAction;
 - (void)trackerButtonAction;
 
-//debug img
-- (void)updateDebugViewForBounds:(NSNotification *) notification;
-
 @end

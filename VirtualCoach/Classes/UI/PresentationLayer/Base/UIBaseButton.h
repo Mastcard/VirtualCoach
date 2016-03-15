@@ -7,7 +7,8 @@
 //
 
 #import <UIKit/UIKit.h>
+#import "Layout.h"
 
-@interface UIBaseButton : UIButton
+@interface UIBaseButton : UIButton <Layout>
 
 @end
