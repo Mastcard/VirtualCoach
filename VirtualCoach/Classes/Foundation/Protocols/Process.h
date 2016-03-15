@@ -17,5 +17,6 @@
 @optional
 - (void)pause;
 - (void)resume;
+- (BOOL)running;
 
 @end
