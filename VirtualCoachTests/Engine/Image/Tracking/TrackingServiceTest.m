@@ -189,6 +189,74 @@
         gray8i_t *img = pgmopen(imagePath);
         bini_t *binary = binarise(img, 10);
         labels_t *nextLabels = label(binary);
+        
+        charact_t *ch = characterize(NULL, img, nextLabels);
+        
+        if (previousReg->id == 0)
+        {
+            uint32_t firstRegIndex = 0, firstRegSize = 0;
+            
+            int a = 0;
+            
+            for (a = 0; a < ch->count; a++)
+            {
+                if (ch->data[a]->size > firstRegSize)
+                {
+                    firstRegSize = ch->data[a]->size;
+                    firstRegIndex = a;
+                }
+            }
+            
+            free(previousReg);
+            previousReg = regcharcpy(ch->data[firstRegIndex]);
+            previousLabels = nextLabels;
+        }
+        
+        else
+        {
+            int32_t regIdFound = [TrackingService trackRegion:previousReg byOverlapping:nextLabels withReferenceLabels:previousLabels];
+            
+            if ((regIdFound > 0) && (regIdFound <= ch->count))
+            {
+                free(previousReg);
+                previousReg = regcharcpy(ch->data[regIdFound-1]);
+                labfree(previousLabels);
+                previousLabels = nextLabels;
+            }
+            
+            else
+            {
+                labfree(nextLabels);
+            }
+        }
+        
+        charactfree(ch);
+        binifree(binary);
+        gray8ifree(img);
+        i++;
+    }
+    
+    XCTAssertEqual(previousReg->id, 1);
+}
+
+- (void)testTrackingOnOneSquareWithObjectIntersection
+{
+    NSString *imagesPath = [[[NSBundle bundleForClass:[self class]] resourcePath] stringByAppendingString:@"/Engine/Image/Tracking/TwoSquaresWithOverlapping/"];
+    
+    int i = 1;
+    
+    regchar_t *previousReg = regcharalloc(0);
+    
+    labels_t *previousLabels = NULL;
+    
+    while (i <= 7)
+    {
+        const char *imagePath = [[imagesPath stringByAppendingPathComponent:[NSString stringWithFormat:@"twoSquaresWithOverlapping%02d.pgm", i]] UTF8String];
+        
+        gray8i_t *img = pgmopen(imagePath);
+        bini_t *binary = binarise(img, 10);
+        labels_t *nextLabels = label(binary);
+        
         charact_t *ch = characterize(NULL, img, nextLabels);
         
         if (previousReg->id == 0)

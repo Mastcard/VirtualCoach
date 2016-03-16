@@ -15,7 +15,6 @@
     uint32_t *count = (uint32_t *)calloc(labels->count, sizeof(uint32_t));
     
     uint32_t id = reg->id;
-    uint16_t width = labels->width;
     pt2d_t start = reg->bounds.start, end = reg->bounds.end;
     
     uint32_t i = 0, j = 0, k = 0;
@@ -24,10 +23,11 @@
     {
         for (j = start.x; j <= end.x; j++)
         {
-            uint32_t idx = (uint32_t)PXL_IDX(width, j, i);
-            uint32_t label = labels->data[idx];
+            uint32_t idx = (uint32_t)PXL_IDX(labels->width, j, i);
+            uint32_t reflabel = reflabels->data[idx];
+            uint32_t label = labels->data[idx]; // needs to implement width in labels datatype
             
-            if ((reflabels->data[idx] == id) && (label > 0))
+            if ((reflabel == id) && (label > 0))
                 count[label-1]++;
         }
     }
@@ -42,6 +42,8 @@
             bestReg = k;
         }
     }
+    
+    free(count);
     
     return bestRegAcc == 0 ? -1 : (bestReg + 1);
 }
