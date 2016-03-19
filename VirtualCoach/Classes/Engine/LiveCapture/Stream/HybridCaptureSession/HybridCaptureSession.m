@@ -34,16 +34,6 @@
     _videoDataOutputQueue = dispatch_queue_create("HCS_VideoDataOutputQueue", DISPATCH_QUEUE_SERIAL);
     
     _captureMovieFileOutput.maxRecordedDuration = kCMTimeInvalid;
-    
-    // by default, AVCaptureVideoDataOutput is added to the session
-    
-    if (![self.captureSession canAddOutput:_captureVideoDataOutput])
-    {
-        NSLog(@"FramesCaptureSession : session can't add the video data output.");
-        return;
-    }
-    
-    [self.captureSession addOutput:_captureVideoDataOutput];
 }
 
 @end

@@ -7,6 +7,7 @@
 //
 
 #import "UIBaseView.h"
+#import "UIBaseButton.h"
 
 #import "UIActivityIndicatorTitledView.h"
 
@@ -17,6 +18,10 @@
 @property (nonatomic, strong) UISlider *binaryThresholdSlider;
 @property (nonatomic, strong) UIImageView *debugImageView;
 @property (nonatomic, strong) UIActivityIndicatorTitledView *adjustmentActivityIndicatorView;
+@property (nonatomic, strong) UIBaseView *gestureView;
+@property (nonatomic, strong) UIBaseButton *binaryModeButton;
+
+@property (nonatomic, strong) UIColor *regionBoundsColor;
 
 - (void)updateDebugImage:(NSNotification *)notification;
 - (void)updateRegionBounds:(NSNotification *)notification;

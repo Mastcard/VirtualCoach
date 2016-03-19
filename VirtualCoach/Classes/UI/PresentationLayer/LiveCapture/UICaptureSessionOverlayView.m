@@ -23,10 +23,12 @@
         UIBezierPath* path = [[UIBezierPath alloc]init];
         [path moveToPoint:CGPointMake(0, 0)];
         [path closePath];
+        
+        _regionBoundsColor = [UIColor redColor];
     
         _regionBoundShapeView = [[CAShapeLayer alloc] init];
         [_regionBoundShapeView setFillColor:[UIColor clearColor].CGColor];
-        [_regionBoundShapeView setStrokeColor:[UIColor redColor].CGColor];
+        [_regionBoundShapeView setStrokeColor:_regionBoundsColor.CGColor];
         [_regionBoundShapeView setLineWidth:3.0];
         [_regionBoundShapeView setPath:path.CGPath];
         
@@ -38,10 +40,19 @@
         _binaryThresholdSlider.minimumValue = 5.0;
         _binaryThresholdSlider.maximumValue = 150.0;
         _binaryThresholdSlider.continuous = YES;
-        _binaryThresholdSlider.value = 50.0;
+        _binaryThresholdSlider.value = 20.0;
         _binaryThresholdSlider.hidden = YES;
         
         
+        CGSize binaryModeButtonSize = CGSizeMake(55, 55);
+        
+        _binaryModeButton = [[UIBaseButton alloc] initWithFrame:CGRectMake(10, _binaryThresholdSlider.frame.origin.y - binarySliderSize.height - 10 - binaryModeButtonSize.height, binaryModeButtonSize.width, binaryModeButtonSize.height)];
+        _binaryModeButton.backgroundColor = [UIColor whiteColor];
+        [_binaryModeButton setTitle:@"Binary mode" forState:UIControlStateNormal];
+        _binaryModeButton.hidden = YES;
+        
+        _gestureView = [[UIBaseView alloc] initWithFrame:self.frame];
+        [self addSubview:_gestureView];
         
         _debugImageView = [[UIImageView alloc] initWithFrame:self.bounds];
         
@@ -50,6 +61,7 @@
         [[self layer] addSublayer:_regionBoundShapeView];
         
         [self addSubview:_binaryThresholdSlider];
+        [self addSubview:_binaryModeButton];
         
         CGSize adjustmentActivityIndicatorViewSize = CGSizeMake(150, 140);
         [_adjustmentActivityIndicatorView setFrame:CGRectMake(0, 0, adjustmentActivityIndicatorViewSize.width, adjustmentActivityIndicatorViewSize.height)];
@@ -79,9 +91,11 @@
 {
     NSDictionary *userInfo = notification.userInfo;
     
+    CGImageRef imageRef = (__bridge CGImageRef)[userInfo objectForKey:@"debugImage"];
+    
     dispatch_async(dispatch_get_main_queue(), ^{
         
-        CGImageRef imageRef = (__bridge CGImageRef)[userInfo objectForKey:@"debugImage"];
+        
         
         UIImage *uiimg = [[UIImage alloc] initWithCGImage:imageRef scale:1.0
                                               orientation: UIImageOrientationUp];//UIImageOrientationRight in case
@@ -89,39 +103,41 @@
         [_debugImageView setImage:uiimg];
         
     });
+    
+    CGImageRelease(imageRef);
 }
 
 - (void)updateRegionBounds:(NSNotification *)notification
 {
-    NSLog(@"(void)updateRegionBounds");
-    NSDictionary *userInfo = notification.userInfo;
-    
-    int starti = 0;
-    int startj = 0;
-    int endi = 0;
-    int endj = 0;
-    uint16_t width = 0, height = 0;
-    
-    if (userInfo != nil)
-    {
-        starti = ((NSNumber *)[userInfo objectForKey:@"startPoint.i"]).intValue;
-        startj = ((NSNumber *)[userInfo objectForKey:@"startPoint.j"]).intValue;
-        endi = ((NSNumber *)[userInfo objectForKey:@"endPoint.i"]).intValue;
-        endj = ((NSNumber *)[userInfo objectForKey:@"endPoint.j"]).intValue;
-        width = ((NSNumber *)[userInfo objectForKey:@"image.width"]).unsignedIntValue;
-        height = ((NSNumber *)[userInfo objectForKey:@"image.height"]).unsignedIntValue;
-    }
-    
-    
-    
-    CGFloat screenWidth = [UIScreen mainScreen].bounds.size.width, screenHeight = [UIScreen mainScreen].bounds.size.height;
-    
-    starti = (int)(starti * (screenHeight / height));
-    startj = (int)(startj * (screenWidth / width));
-    endi = (int)(endi * (screenHeight / height));
-    endj = (int)(endj * (screenWidth / width));
-    
     dispatch_async(dispatch_get_main_queue(), ^{
+        
+        //NSLog(@"(void)updateRegionBounds");
+        NSDictionary *userInfo = notification.userInfo;
+        
+        int starti = 0;
+        int startj = 0;
+        int endi = 0;
+        int endj = 0;
+        uint16_t width = 0, height = 0;
+        
+        if (userInfo != nil)
+        {
+            starti = ((NSNumber *)[userInfo objectForKey:@"startPoint.i"]).intValue;
+            startj = ((NSNumber *)[userInfo objectForKey:@"startPoint.j"]).intValue;
+            endi = ((NSNumber *)[userInfo objectForKey:@"endPoint.i"]).intValue;
+            endj = ((NSNumber *)[userInfo objectForKey:@"endPoint.j"]).intValue;
+            width = ((NSNumber *)[userInfo objectForKey:@"image.width"]).unsignedIntValue;
+            height = ((NSNumber *)[userInfo objectForKey:@"image.height"]).unsignedIntValue;
+        }
+        
+        CGFloat screenWidth = [UIScreen mainScreen].bounds.size.width, screenHeight = [UIScreen mainScreen].bounds.size.height;
+        
+        starti = (int)(starti * (screenHeight / height));
+        startj = (int)(startj * (screenWidth / width));
+        endi = (int)(endi * (screenHeight / height));
+        endj = (int)(endj * (screenWidth / width));
+        
+        //NSLog(@"bounds ((%d, %d) (%d, %d))", startj, starti, endj, endi);
         
         UIBezierPath *bounds = [[UIBezierPath alloc] init];
         

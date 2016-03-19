@@ -12,7 +12,7 @@
 #import "UIBaseViewController.h"
 #import "HybridCaptureSessionController.h"
 
-@interface UICaptureSessionViewController : UIBaseViewController
+@interface UICaptureSessionViewController : UIBaseViewController <UIGestureRecognizerDelegate>
 
 @property (nonatomic, strong) CaptureSessionController *captureSessionController;
 @property (nonatomic, strong) UICaptureSessionView *captureSessionView;

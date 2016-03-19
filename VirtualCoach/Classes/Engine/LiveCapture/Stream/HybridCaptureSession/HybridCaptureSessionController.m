@@ -30,39 +30,50 @@
     return self;
 }
 
-- (void)switchCaptureOutput
+- (void)addMovieFileOutput
 {
-    AVCaptureOutput *captureOutput = (AVCaptureOutput *)[_captureSession.captureSession.outputs objectAtIndex:0];
-    
     [_captureSession.captureSession beginConfiguration];
     
-    if ([captureOutput isMemberOfClass:[AVCaptureMovieFileOutput class]])
+    if ([_captureSession.captureSession canAddOutput:_captureSession.captureMovieFileOutput])
     {
-        if ([_captureSession.captureSession canAddOutput:_captureSession.captureVideoDataOutput])
-        {
-            NSLog(@"Output changed to AVCaptureVideoDataOutput");
-            [_captureSession.captureSession removeOutput:_captureSession.captureMovieFileOutput];
-            [_captureSession.captureSession addOutput:_captureSession.captureVideoDataOutput];
-        }
-        
-        else
-        {
-            NSLog(@"Can't change output to AVCaptureVideoDataOutput");
-        }
+        NSLog(@"Output changed to AVCaptureMovieFileOutput");
+        [_captureSession.captureSession addOutput:_captureSession.captureMovieFileOutput];
     }
     
-    else if ([captureOutput isMemberOfClass:[AVCaptureVideoDataOutput class]])
+    [_captureSession.captureSession commitConfiguration];
+}
+
+- (void)addVideoDataOutput
+{
+    [_captureSession.captureSession beginConfiguration];
+    
+    if ([_captureSession.captureSession canAddOutput:_captureSession.captureVideoDataOutput])
     {
-        if ([_captureSession.captureSession canAddOutput:_captureSession.captureMovieFileOutput])
+        NSLog(@"Output changed to AVCaptureVideoDataOutput");
+        [_captureSession.captureSession addOutput:_captureSession.captureVideoDataOutput];
+    }
+    
+    [_captureSession.captureSession commitConfiguration];
+}
+
+- (void)removeOutput
+{
+    [_captureSession.captureSession beginConfiguration];
+    
+    if (_captureSession.captureSession.outputs.count > 0)
+    {
+        AVCaptureOutput *captureOutput = (AVCaptureOutput *)[_captureSession.captureSession.outputs objectAtIndex:0];
+        
+        if ([captureOutput isMemberOfClass:[AVCaptureMovieFileOutput class]])
         {
-            NSLog(@"Output changed to AVCaptureMovieFileOutput");
-            [_captureSession.captureSession removeOutput:_captureSession.captureVideoDataOutput];
-            [_captureSession.captureSession addOutput:_captureSession.captureMovieFileOutput];
+            [_captureSession.captureSession removeOutput:_captureSession.captureMovieFileOutput];
+            NSLog(@"Removed AVCaptureMovieFileOutput");
         }
         
-        else
+        else if ([captureOutput isMemberOfClass:[AVCaptureVideoDataOutput class]])
         {
-            NSLog(@"Can't change output to AVCaptureMovieFileOutput");
+            [_captureSession.captureSession removeOutput:_captureSession.captureVideoDataOutput];
+            NSLog(@"Removed AVCaptureVideoDataOutput");
         }
     }
     

@@ -16,6 +16,7 @@
 
 @property (assign) unsigned int* acc;
 
+@property (nonatomic) NSUInteger lazyCount;
 @property (nonatomic) NSUInteger count;
 @property (nonatomic) uint16_t width;
 @property (nonatomic) uint16_t height;
@@ -38,6 +39,7 @@
         _result = NULL;
         _width = 0;
         _height = 0;
+        _lazyCount = 0;
     }
     
     return self;
@@ -53,6 +55,8 @@
         _result->data[i] = (uint8_t)(_acc[i] / _count);
     
     NSLog(@"ReferenceFrameProcess finished : reference built!");
+    
+    [[NSNotificationCenter defaultCenter] postNotificationName:@"referenceframe.action.internal.finished" object:self userInfo:nil];
 }
 
 - (gray8i_t *)retrieveReferenceFrame
@@ -62,6 +66,7 @@
 
 - (void)start
 {
+    //[self reset];
     _canRetrieveFrames = YES;
 }
 
@@ -86,9 +91,26 @@
     return _canRetrieveFrames;
 }
 
+- (void)reset
+{
+    _canRetrieveFrames = NO;
+    _maxAccumulatedFrames = 200;
+    
+    if (_result != NULL)
+        gray8ifree(_result);
+    
+    _result = NULL;
+    _width = 0;
+    _height = 0;
+    _lazyCount = 0;
+    _count = 0;
+}
+
 - (void)captureOutput:(AVCaptureOutput *)captureOutput didOutputSampleBuffer:(CMSampleBufferRef)sampleBuffer fromConnection:(AVCaptureConnection *)connection
 {
-    if (_canRetrieveFrames)
+    _lazyCount++;
+    
+    if (_canRetrieveFrames && (_lazyCount > 80))
     {
         _count++;
         CVPixelBufferRef imageBuffer = CMSampleBufferGetImageBuffer(sampleBuffer);

@@ -18,5 +18,6 @@
 - (void)pause;
 - (void)resume;
 - (BOOL)running;
+- (void)reset;
 
 @end

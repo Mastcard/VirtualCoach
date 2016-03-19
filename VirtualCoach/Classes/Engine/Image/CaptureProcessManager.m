@@ -15,6 +15,7 @@
 + (void)startRecordingProcess:(NSNotification *)notification;
 
 + (void)stopReferenceFrameProcess:(NSNotification *)notification;
++ (void)referenceFrameProcessDidFinish:(NSNotification *)notification;
 + (void)stopTrackingProcess:(NSNotification *)notification;
 + (void)stopRecordingProcess:(NSNotification *)notification;
 
@@ -76,6 +77,11 @@ static RecordingProcess *recordingProcess;
                                                object:nil];
     
     [[NSNotificationCenter defaultCenter] addObserver:[self class]
+                                             selector:@selector(referenceFrameProcessDidFinish:)
+                                                 name:@"referenceframe.action.internal.finished"
+                                               object:nil];
+    
+    [[NSNotificationCenter defaultCenter] addObserver:[self class]
                                              selector:@selector(stopTrackingProcess:)
                                                  name:@"tracker.action.stopped"
                                                object:nil];
@@ -92,10 +98,8 @@ static RecordingProcess *recordingProcess;
 {
     NSLog(@"startReferenceFrameProcess");
     
-    AVCaptureOutput *captureOutput = (AVCaptureOutput *)[captureSessionController.captureSession.captureSession.outputs objectAtIndex:0];
-    
-    if ([captureOutput isMemberOfClass:[AVCaptureMovieFileOutput class]])
-        [captureSessionController switchCaptureOutput];
+    [captureSessionController removeOutput];
+    [captureSessionController addVideoDataOutput];
     
     [captureSessionController.captureSession.captureVideoDataOutput setSampleBufferDelegate:referenceFrameProcess queue:captureSessionController.captureSession.videoDataOutputQueue];
     [captureSessionController setSampleBufferDelegate:referenceFrameProcess];
@@ -112,10 +116,8 @@ static RecordingProcess *recordingProcess;
     if (referenceFrameProcess != NULL)
         [trackingProcess setReferenceFrame:referenceFrame];
     
-    AVCaptureOutput *captureOutput = (AVCaptureOutput *)[captureSessionController.captureSession.captureSession.outputs objectAtIndex:0];
-    
-    if ([captureOutput isMemberOfClass:[AVCaptureMovieFileOutput class]])
-        [captureSessionController switchCaptureOutput];
+    [captureSessionController removeOutput];
+    [captureSessionController addVideoDataOutput];
     
     [captureSessionController.captureSession.captureVideoDataOutput setSampleBufferDelegate:trackingProcess queue:captureSessionController.captureSession.videoDataOutputQueue];
     [captureSessionController setSampleBufferDelegate:trackingProcess];
@@ -129,10 +131,8 @@ static RecordingProcess *recordingProcess;
     
     NSDictionary *userInfo = notification.userInfo;
     
-    AVCaptureOutput *captureOutput = (AVCaptureOutput *)[captureSessionController.captureSession.captureSession.outputs objectAtIndex:0];
-    
-    if ([captureOutput isMemberOfClass:[AVCaptureVideoDataOutput class]])
-        [captureSessionController switchCaptureOutput];
+    [captureSessionController removeOutput];
+    [captureSessionController addMovieFileOutput];
     
     [captureSessionController setRecordingDelegate:recordingProcess];
     
@@ -143,18 +143,28 @@ static RecordingProcess *recordingProcess;
 {
     NSLog(@"stopReferenceFrameProcess");
     [captureSessionController stopRetrievingFrames];
+    [captureSessionController removeOutput];
+    
 }
 
 + (void)stopTrackingProcess:(NSNotification *)notification
 {
     NSLog(@"stopTrackingProcess");
     [captureSessionController stopRetrievingFrames];
+    [captureSessionController removeOutput];
 }
 
 + (void)stopRecordingProcess:(NSNotification *)notification
 {
     NSLog(@"stopRecordingProcess");
     [captureSessionController stopRecordingMovie];
+    [captureSessionController removeOutput];
+}
+
++ (void)referenceFrameProcessDidFinish:(NSNotification *)notification
+{
+    [captureSessionController removeOutput];
+    [[NSNotificationCenter defaultCenter] postNotificationName:@"referenceframe.action.finished" object:self userInfo:nil];
 }
 
 - (HybridCaptureSessionController *)captureSessionController
