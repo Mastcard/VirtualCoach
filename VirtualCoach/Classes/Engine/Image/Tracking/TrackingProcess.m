@@ -14,18 +14,20 @@
 @interface TrackingProcess ()
 
 @property (nonatomic) BOOL canRetrieveFrames;
-
 @property (nonatomic) BOOL shouldSendBinaryFrames;
+@property (nonatomic, assign) BOOL canLabelAndEstablish;
+@property (nonatomic, assign) BOOL canFindRegionFromZone;
+@property (nonatomic, assign) BOOL canTrackRegion;
+
+@property (nonatomic, assign) regchar_t *previousReg;
+@property (nonatomic, assign) labels_t *previousLabels;
+@property (nonatomic, assign) rect_t clicRegionZone;
+
+@property (nonatomic, assign) unsigned int clicRegionZoneRadius;
 
 // temp
 @property (nonatomic) NSUInteger count;
 @property (nonatomic) NSUInteger lazyCount;
-
-
-//@property (nonatomic) unsigned int x_TMP;
-//@property (nonatomic) unsigned int y_TMP;
-
-@property (nonatomic, assign) BOOL canTrackRegion;
 
 - (void)setBinaryThresholdFromNotification:(NSNotification *)notification;
 - (void)setShouldSendBinaryFramesFromNotification:(NSNotification *)notification;
@@ -35,9 +37,6 @@
 
 @implementation TrackingProcess
 
-regchar_t *previousReg;
-labels_t *previousLabels;
-
 - (instancetype)init
 {
     self = [super init];
@@ -46,14 +45,14 @@ labels_t *previousLabels;
     {
         _canRetrieveFrames = NO;
         _shouldSendBinaryFrames = NO;
+        _canLabelAndEstablish = NO;
+        _canFindRegionFromZone = NO;
         _count = 0;
         _binaryThreshold = 30;
         _referenceFrame = NULL;
+        _clicRegionZoneRadius = 20;
         
         _canTrackRegion = NO;
-        
-//        _x_TMP = 0;
-//        _y_TMP = 0;
         
         [[NSNotificationCenter defaultCenter] addObserver:self
                                                  selector:@selector(setBinaryThresholdFromNotification:)
@@ -70,8 +69,13 @@ labels_t *previousLabels;
                                                      name:@"tracking.binarymode.button.clicked"
                                                    object:nil];
         
-        previousReg = regcharalloc(0);
-        previousLabels = laballoc(1, 1);
+        _clicRegionZone.start.x = 0;
+        _clicRegionZone.start.y = 0;
+        _clicRegionZone.end.x = 0;
+        _clicRegionZone.end.y = 0;
+        
+        _previousReg = regcharalloc(0);
+        _previousLabels = laballoc(1, 1);
     }
     
     return self;
@@ -106,9 +110,9 @@ labels_t *previousLabels;
 {
     _lazyCount++;
     
-    if (_canRetrieveFrames && (_lazyCount > 80))
+    if (_canRetrieveFrames)// && (_lazyCount > 80))
     {
-        //NSLog(@"TrackingProcess running");
+        NSLog(@"TrackingProcess running");
         _count++;
         CVPixelBufferRef imageBuffer = CMSampleBufferGetImageBuffer(sampleBuffer);
         CVPixelBufferLockBaseAddress(imageBuffer,0);
@@ -127,12 +131,11 @@ labels_t *previousLabels;
         gray8i_t *grayscaleImg = grayscale(rgb);
         gray8i_t *grayscaleSubstract = subgray8i(grayscaleImg, _referenceFrame);
         bini_t *binaryImg = binarise(grayscaleSubstract, _binaryThreshold);
-        gray8i_t *unbinaryImg = unbinarise(binaryImg);
-        labels_t *nextLabels = label(binaryImg);
-        charact_t *charact = characterize(NULL, grayscaleImg, nextLabels);
         
         if (_shouldSendBinaryFrames)
         {
+            gray8i_t *unbinaryImg = unbinarise(binaryImg);
+            
             CGColorSpaceRef colorspace = CGColorSpaceCreateDeviceGray();
             CFDataRef rgbData = CFDataCreate(NULL, unbinaryImg->data, width * height);
             CGDataProviderRef provider = CGDataProviderCreateWithCFData(rgbData);
@@ -144,68 +147,84 @@ labels_t *previousLabels;
             NSDictionary *userInfoDebugImage = [NSDictionary dictionaryWithObject:(__bridge id _Nonnull)(binaryImageRef) forKey:@"debugImage"];
             
             [[NSNotificationCenter defaultCenter] postNotificationName:@"debug.image.changed" object:self userInfo:userInfoDebugImage];
+            
+            gray8ifree(unbinaryImg);
         }
         
-        if (_canTrackRegion)
+        if (_canLabelAndEstablish)
         {
-            //int32_t bestRegId = [TrackingService trackRegion:previousReg byOverlapping:previousLabels withReferenceLabels:nextLabels];
-            int32_t bestRegId = overlappingreg(previousReg, previousLabels, nextLabels, width);
+            labels_t *nextLabels = label(binaryImg);
+            charact_t *charact = characterize(NULL, grayscaleImg, nextLabels);
             
-            NSLog(@"bestRegId : %d", bestRegId);
-            
-            NSDictionary *userInfo = nil;
-            
-            if ((bestRegId > 0) && (bestRegId <= charact->count))
+            if (_canTrackRegion)
             {
-                regchar_t *bestReg = charact->data[bestRegId-1];
+                //int32_t bestRegId = [TrackingService trackRegion:previousReg byOverlapping:previousLabels withReferenceLabels:nextLabels];
+                int32_t bestRegId = overlappingreg(_previousReg, _previousLabels, nextLabels, width);
                 
-                userInfo = [NSDictionary dictionaryWithObjects:[NSArray
-                                                                arrayWithObjects:
-                                                                [NSNumber numberWithInt:bestReg->bounds.start.y],
-                                                                [NSNumber numberWithInt:bestReg->bounds.start.x],
-                                                                [NSNumber numberWithInt:bestReg->bounds.end.y],
-                                                                [NSNumber numberWithInt:bestReg->bounds.end.x],
-                                                                [NSNumber numberWithUnsignedInt:(uint16_t)width],
-                                                                [NSNumber numberWithUnsignedInt:(uint16_t)height],
-                                                                nil]
-                                                       forKeys:[NSArray arrayWithObjects:
-                                                                @"startPoint.i",
-                                                                @"startPoint.j",
-                                                                @"endPoint.i",
-                                                                @"endPoint.j",
-                                                                @"image.width",
-                                                                @"image.height", nil]];
+                NSLog(@"bestRegId : %d", bestRegId);
                 
-                free(previousReg);
-                previousReg = regcharcpy(bestReg);
-                labfree(previousLabels);
-                previousLabels = nextLabels;
+                NSDictionary *userInfo = nil;
+                
+                if ((bestRegId > 0) && (bestRegId <= charact->count))
+                {
+                    regchar_t *bestReg = charact->data[bestRegId-1];
+                    
+                    userInfo = [NSDictionary dictionaryWithObjects:[NSArray
+                                                                    arrayWithObjects:
+                                                                    [NSNumber numberWithInt:bestReg->bounds.start.y],
+                                                                    [NSNumber numberWithInt:bestReg->bounds.start.x],
+                                                                    [NSNumber numberWithInt:bestReg->bounds.end.y],
+                                                                    [NSNumber numberWithInt:bestReg->bounds.end.x],
+                                                                    [NSNumber numberWithUnsignedInt:(uint16_t)width],
+                                                                    [NSNumber numberWithUnsignedInt:(uint16_t)height],
+                                                                    nil]
+                                                           forKeys:[NSArray arrayWithObjects:
+                                                                    @"startPoint.i",
+                                                                    @"startPoint.j",
+                                                                    @"endPoint.i",
+                                                                    @"endPoint.j",
+                                                                    @"image.width",
+                                                                    @"image.height", nil]];
+                    
+                    free(_previousReg);
+                    _previousReg = regcharcpy(bestReg);
+                    labfree(_previousLabels);
+                    _previousLabels = nextLabels;
+                }
+                
+                else
+                {
+                    labfree(nextLabels);
+                }
+                
+                [[NSNotificationCenter defaultCenter] postNotificationName:@"tracking.bounds.changed" object:self userInfo:userInfo];
             }
             
             else
             {
-                labfree(nextLabels);
+                NSLog(@"Trying to find region... at (%u, %u)", _clicRegionZone.start.x + _clicRegionZoneRadius, _clicRegionZone.start.y + _clicRegionZoneRadius);
+                
+                int32_t foundRegionByClick = regionAtZone(_clicRegionZone, nextLabels);
+                
+                if (foundRegionByClick > 0 && foundRegionByClick <= charact->count)
+                {
+                    regchar_t *regClicked = charact->data[foundRegionByClick-1];
+                    
+                    if (regClicked->size > 40)
+                    {
+                        free(_previousReg);
+                        _previousReg = regcharcpy(charact->data[foundRegionByClick-1]);
+                        _canTrackRegion = YES;
+                    }
+                }
+                
+                labfree(_previousLabels);
+                _previousLabels = nextLabels;
             }
             
-            [[NSNotificationCenter defaultCenter] postNotificationName:@"tracking.bounds.changed" object:self userInfo:userInfo];
+            charactfree(charact);
         }
         
-        else
-        {
-            labfree(previousLabels);
-            previousLabels = nextLabels;
-            
-            if (previousReg->id > 0)
-            {
-                uint32_t previousId = previousReg->id;
-                free(previousReg);
-                previousReg = regcharcpy(charact->data[previousId-1]);
-                _canTrackRegion = YES;
-            }
-        }
-        
-        charactfree(charact);
-        gray8ifree(unbinaryImg);
         binifree(binaryImg);
         gray8ifree(grayscaleSubstract);
         gray8ifree(grayscaleImg);
@@ -241,6 +260,7 @@ labels_t *previousLabels;
     
     if (userInfo)
     {
+        NSLog(@"tapOnScreenToLocateRegionNotification");
         uint32_t x = ((NSNumber *)[userInfo objectForKey:@"touchPoint.x"]).unsignedIntValue;
         uint32_t y = ((NSNumber *)[userInfo objectForKey:@"touchPoint.y"]).unsignedIntValue;
         
@@ -249,20 +269,13 @@ labels_t *previousLabels;
         unsigned int touch_x = x * (1280 / screenWidth);
         unsigned int touch_y = y * (720 / screenHeight);
         
-        unsigned int zoneRadius = 20;
+        _clicRegionZone.start.x = touch_x - _clicRegionZoneRadius;
+        _clicRegionZone.start.y = touch_y - _clicRegionZoneRadius;
+        _clicRegionZone.end.x = touch_x + _clicRegionZoneRadius;
+        _clicRegionZone.end.y = touch_y + _clicRegionZoneRadius;
         
-        rect_t clickZone;
-        clickZone.start.x = touch_x - zoneRadius;
-        clickZone.start.y = touch_y - zoneRadius;
-        clickZone.end.x = touch_x + zoneRadius;
-        clickZone.end.y = touch_y + zoneRadius;
-        
-        free(previousReg);
-        int32_t foundRegionByClick = regionAtZone(clickZone, previousLabels);
-        previousReg = regcharalloc(foundRegionByClick);
-        
-        NSLog(@"Clicked region id : %d", previousReg->id);
-        
+        _canLabelAndEstablish = YES;
+        _canFindRegionFromZone = YES;
         _canTrackRegion = NO;
     }
 }
