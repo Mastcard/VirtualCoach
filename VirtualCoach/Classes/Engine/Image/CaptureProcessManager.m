@@ -136,7 +136,7 @@ static RecordingProcess *recordingProcess;
     
     [captureSessionController setRecordingDelegate:recordingProcess];
     
-    [captureSessionController startRecordingMovieAtURL:[NSURL fileURLWithPath:[NSString stringWithFormat:@"%@", [userInfo objectForKey:@"video.path"]]]];
+    [captureSessionController startRecordingMovieAtURL:(NSURL *)[userInfo objectForKey:@"video.path"]];
 }
 
 + (void)stopReferenceFrameProcess:(NSNotification *)notification

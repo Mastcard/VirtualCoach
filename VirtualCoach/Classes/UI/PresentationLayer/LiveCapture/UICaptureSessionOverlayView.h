@@ -8,6 +8,7 @@
 
 #import "UIBaseView.h"
 #import "UIBaseButton.h"
+#import "UICaptureSessionOverlayControlsView.h"
 
 #import "UIActivityIndicatorTitledView.h"
 

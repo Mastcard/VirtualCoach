@@ -111,7 +111,6 @@
 {
     dispatch_async(dispatch_get_main_queue(), ^{
         
-        //NSLog(@"(void)updateRegionBounds");
         NSDictionary *userInfo = notification.userInfo;
         
         int starti = 0;
@@ -119,6 +118,7 @@
         int endi = 0;
         int endj = 0;
         uint16_t width = 0, height = 0;
+        uint8_t colorRedComponent = 0, colorGreenComponent = 0, colorBlueComponent = 0;
         
         if (userInfo != nil)
         {
@@ -128,7 +128,13 @@
             endj = ((NSNumber *)[userInfo objectForKey:@"endPoint.j"]).intValue;
             width = ((NSNumber *)[userInfo objectForKey:@"image.width"]).unsignedIntValue;
             height = ((NSNumber *)[userInfo objectForKey:@"image.height"]).unsignedIntValue;
+            colorRedComponent = ((NSNumber *)[userInfo objectForKey:@"color.red"]).unsignedIntValue;
+            colorGreenComponent = ((NSNumber *)[userInfo objectForKey:@"color.green"]).unsignedIntValue;
+            colorBlueComponent = ((NSNumber *)[userInfo objectForKey:@"color.blue"]).unsignedIntValue;
         }
+        
+//        if (colorRedComponent > 0 || colorGreenComponent > 0 || colorBlueComponent > 0)
+//            [_regionBoundShapeView setStrokeColor:[UIColor colorWithRed:(colorRedComponent / 255.f) green:(colorGreenComponent / 255.f) blue:(colorBlueComponent / 255.f) alpha:1.0].CGColor];
         
         CGFloat screenWidth = [UIScreen mainScreen].bounds.size.width, screenHeight = [UIScreen mainScreen].bounds.size.height;
         

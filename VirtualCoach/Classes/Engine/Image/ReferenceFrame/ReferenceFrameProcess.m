@@ -110,7 +110,7 @@
 {
     _lazyCount++;
     
-    if (_canRetrieveFrames && (_lazyCount > 80))
+    if (_canRetrieveFrames)// && (_lazyCount > 80))
     {
         _count++;
         CVPixelBufferRef imageBuffer = CMSampleBufferGetImageBuffer(sampleBuffer);

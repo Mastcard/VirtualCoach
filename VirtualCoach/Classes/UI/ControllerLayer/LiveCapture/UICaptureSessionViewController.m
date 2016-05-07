@@ -88,8 +88,6 @@
     [_captureSessionView.controlsView.trackerButton setHidden:!_recording];
     [_captureSessionView.controlsView.recordButton transformShape];
     
-    _videoDirectory = [NSURL fileURLWithPath:[NSSearchPathForDirectoriesInDomains(NSDocumentDirectory, NSUserDomainMask, YES) objectAtIndex:0]];
-    
     if (!_recording)
     {
         [[NSNotificationCenter defaultCenter] postNotificationName:@"recording.action.started" object:self userInfo:[NSDictionary dictionaryWithObject:_videoDirectory forKey:@"video.path"]];

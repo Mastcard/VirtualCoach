@@ -38,6 +38,26 @@
     {
         NSLog(@"Output changed to AVCaptureMovieFileOutput");
         [_captureSession.captureSession addOutput:_captureSession.captureMovieFileOutput];
+        
+        AVCaptureConnection *videoConnection = nil;
+        
+        for ( AVCaptureConnection *connection in [_captureSession.captureMovieFileOutput connections] )
+        {
+            NSLog(@"%@", connection);
+            for ( AVCaptureInputPort *port in [connection inputPorts] )
+            {
+                NSLog(@"%@", port);
+                if ( [[port mediaType] isEqual:AVMediaTypeVideo] )
+                {
+                    videoConnection = connection;
+                }
+            }
+        }
+        
+        if([videoConnection isVideoOrientationSupported]) // **Here it is, its always false**
+        {
+            [videoConnection setVideoOrientation:AVCaptureVideoOrientationLandscapeRight];
+        }
     }
     
     [_captureSession.captureSession commitConfiguration];
@@ -104,8 +124,9 @@
     
     _lastVideoUrl = [NSURL fileURLWithPath:[url.path stringByAppendingPathComponent:fileName]];
     
-    NSLog(@"Final vidoe path : %@", _lastVideoUrl.absoluteString);
+    NSLog(@"Final video path : %@", _lastVideoUrl.path);
     
+    [_captureSession.captureMovieFileOutput stopRecording];
     [_captureSession.captureMovieFileOutput startRecordingToOutputFileURL:_lastVideoUrl recordingDelegate:_recordingDelegate];
 }
 
