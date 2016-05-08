@@ -112,7 +112,6 @@
     
     if (_canRetrieveFrames)// && (_lazyCount > 80))
     {
-        NSLog(@"TrackingProcess running");
         _count++;
         CVPixelBufferRef imageBuffer = CMSampleBufferGetImageBuffer(sampleBuffer);
         CVPixelBufferLockBaseAddress(imageBuffer,0);
@@ -161,13 +160,19 @@
                 //int32_t bestRegId = [TrackingService trackRegion:previousReg byOverlapping:previousLabels withReferenceLabels:nextLabels];
                 int32_t bestRegId = overlappingreg(_previousReg, _previousLabels, nextLabels, width);
                 
-                NSLog(@"bestRegId : %d", bestRegId);
+                //NSLog(@"bestRegId : %d", bestRegId);
                 
                 NSDictionary *userInfo = nil;
                 
                 if ((bestRegId > 0) && (bestRegId <= charact->count))
                 {
                     regchar_t *bestReg = charact->data[bestRegId-1];
+                    
+                    rgb8 c;
+                    
+                    c.r = 0;
+                    c.g = 255;
+                    c.b = 0;
                     
                     userInfo = [NSDictionary dictionaryWithObjects:[NSArray
                                                                     arrayWithObjects:
@@ -177,6 +182,9 @@
                                                                     [NSNumber numberWithInt:bestReg->bounds.end.x],
                                                                     [NSNumber numberWithUnsignedInt:(uint16_t)width],
                                                                     [NSNumber numberWithUnsignedInt:(uint16_t)height],
+                                                                    [NSNumber numberWithUnsignedInt:(uint8_t)c.r],
+                                                                    [NSNumber numberWithUnsignedInt:(uint8_t)c.g],
+                                                                    [NSNumber numberWithUnsignedInt:(uint8_t)c.b],
                                                                     nil]
                                                            forKeys:[NSArray arrayWithObjects:
                                                                     @"startPoint.i",
@@ -184,7 +192,15 @@
                                                                     @"endPoint.i",
                                                                     @"endPoint.j",
                                                                     @"image.width",
-                                                                    @"image.height", nil]];
+                                                                    @"image.height",
+                                                                    @"color.red",
+                                                                    @"color.green",
+                                                                    @"color.blue",nil]];
+                    
+                    _playerBounds.start.x = bestReg->bounds.start.x;
+                    _playerBounds.start.y = bestReg->bounds.start.y;
+                    _playerBounds.end.x = bestReg->bounds.end.x;
+                    _playerBounds.end.y = bestReg->bounds.end.y;
                     
                     free(_previousReg);
                     _previousReg = regcharcpy(bestReg);
@@ -202,8 +218,6 @@
             
             else
             {
-                NSLog(@"Trying to find region... at (%u, %u)", _clicRegionZone.start.x + _clicRegionZoneRadius, _clicRegionZone.start.y + _clicRegionZoneRadius);
-                
                 int32_t foundRegionByClick = regionAtZone(_clicRegionZone, nextLabels);
                 
                 if (foundRegionByClick > 0 && foundRegionByClick <= charact->count)
@@ -260,7 +274,6 @@
     
     if (userInfo)
     {
-        NSLog(@"tapOnScreenToLocateRegionNotification");
         uint32_t x = ((NSNumber *)[userInfo objectForKey:@"touchPoint.x"]).unsignedIntValue;
         uint32_t y = ((NSNumber *)[userInfo objectForKey:@"touchPoint.y"]).unsignedIntValue;
         

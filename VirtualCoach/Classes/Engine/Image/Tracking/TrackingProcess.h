@@ -23,4 +23,6 @@
 @property (nonatomic, assign) uint8_t binaryThreshold;
 @property (nonatomic, assign) gray8i_t *referenceFrame;
 
+@property (nonatomic, assign) rect_t playerBounds;
+
 @end

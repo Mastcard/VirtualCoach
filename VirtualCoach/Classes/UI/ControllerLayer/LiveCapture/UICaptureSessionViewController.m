@@ -17,6 +17,8 @@
 
 @property (nonatomic) BOOL recording;
 
+@property (nonatomic) UITapGestureRecognizer *locateRegionTapGestureRecognizer;
+
 - (void)hideOrShowControlsView;
 
 - (void)referenceFrameProcessDidFinish:(NSNotification *)notification;
@@ -152,12 +154,19 @@
     
     if (!_recording)
     {
-        UITapGestureRecognizer *tapRecognizer = [[UITapGestureRecognizer alloc]
+        _locateRegionTapGestureRecognizer = [[UITapGestureRecognizer alloc]
                                                  initWithTarget:self action:@selector(singleTapGestureToLocateRegion:)];
         
-        tapRecognizer.numberOfTapsRequired = 1;
-        tapRecognizer.cancelsTouchesInView = NO;
-        [_captureSessionView.overlayView.gestureView addGestureRecognizer:tapRecognizer];
+        _locateRegionTapGestureRecognizer.numberOfTapsRequired = 1;
+        _locateRegionTapGestureRecognizer.cancelsTouchesInView = NO;
+        [_captureSessionView.overlayView.gestureView addGestureRecognizer:_locateRegionTapGestureRecognizer];
+        
+        UIBezierPath* path = [[UIBezierPath alloc]init];
+        [path moveToPoint:CGPointMake(0, 0)];
+        [path closePath];
+        
+        [_captureSessionView.overlayView.regionBoundShapeView setPath:path.CGPath];
+        [_captureSessionView.overlayView.layer addSublayer:_captureSessionView.overlayView.regionBoundShapeView];
         
         [[NSNotificationCenter defaultCenter] postNotificationName:@"tracker.action.started" object:self userInfo:nil];
     }
@@ -165,6 +174,12 @@
     else
     {
         [[NSNotificationCenter defaultCenter] postNotificationName:@"tracker.action.stopped" object:self userInfo:nil];
+        [self.view removeGestureRecognizer:_locateRegionTapGestureRecognizer];
+        
+        [_captureSessionView.overlayView.regionBoundShapeView removeFromSuperlayer];
+        
+        if (_captureSessionView.overlayView.debugImageView.image != nil)
+            [self binaryModeButtonAction];
     }
     
     _recording = !_recording;

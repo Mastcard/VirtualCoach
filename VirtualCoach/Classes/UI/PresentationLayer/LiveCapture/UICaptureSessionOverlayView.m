@@ -58,7 +58,7 @@
         
         [self addSubview:_debugImageView];
         
-        [[self layer] addSublayer:_regionBoundShapeView];
+        
         
         [self addSubview:_binaryThresholdSlider];
         [self addSubview:_binaryModeButton];

@@ -115,7 +115,7 @@ static RecordingProcess *recordingProcess;
     
     gray8i_t *referenceFrame = [referenceFrameProcess retrieveReferenceFrame];
     
-    if (referenceFrameProcess != NULL)
+    if (referenceFrame != NULL)
         [trackingProcess setReferenceFrame:referenceFrame];
     
     [captureSessionController removeOutput];
@@ -164,11 +164,34 @@ static RecordingProcess *recordingProcess;
     
     // Sample code
     
-    ExtractorProcess *extractor = [[ExtractorProcess alloc] initWithFile:recordingProcess.outputPath];
-    [extractor setup];
-    [extractor start];
+//    ExtractorProcess *extractor = [[ExtractorProcess alloc] initWithFile:recordingProcess.outputPath];
+//    [extractor setup];
+//    [extractor start];
     
     // End of sample code
+    
+    // Save all informations of the video
+    
+    NSString *videoPath = recordingProcess.outputPath;
+    
+    gray8i_t *referenceFrame = trackingProcess.referenceFrame;
+    
+    uint8_t binaryThreshold = trackingProcess.binaryThreshold;
+    
+    rect_t lastPlayerBounds = trackingProcess.playerBounds;
+    
+    NSString *referenceFramePath = [[videoPath stringByDeletingPathExtension] stringByAppendingString:@"-reference.pgm"];
+    
+    pgmwrite(referenceFrame, [referenceFramePath cStringUsingEncoding:NSASCIIStringEncoding], PGM_BINARY);
+    
+    NSString *dataFilePath = [[videoPath stringByDeletingPathExtension] stringByAppendingString:@"-data.plist"];
+    
+    NSDictionary *playerPositionDict = [NSDictionary dictionaryWithObjects:[NSArray arrayWithObjects:[NSNumber numberWithUnsignedInt:lastPlayerBounds.start.x], [NSNumber numberWithUnsignedInt:lastPlayerBounds.start.y], [NSNumber numberWithUnsignedInt:lastPlayerBounds.end.x], [NSNumber numberWithUnsignedInt:lastPlayerBounds.end.y], nil] forKeys:[NSArray arrayWithObjects:@"start.x", @"start.y", @"end.x", @"end.y", nil]];
+    
+    NSDictionary *dict = [NSDictionary dictionaryWithObjects:[NSArray arrayWithObjects:videoPath, referenceFramePath, [NSNumber numberWithUnsignedChar:binaryThreshold], playerPositionDict, nil]
+                                                     forKeys:[NSArray arrayWithObjects:@"videoPath", @"referenceFramePath", @"binaryThreshold", @"lastPlayerBounds", nil]];
+    
+    [dict writeToFile:dataFilePath atomically:YES];
 }
 
 + (void)referenceFrameProcessDidFinish:(NSNotification *)notification
