@@ -36,17 +36,15 @@
     
     if ([_captureSession.captureSession canAddOutput:_captureSession.captureMovieFileOutput])
     {
-        NSLog(@"Output changed to AVCaptureMovieFileOutput");
+        //NSLog(@"Output changed to AVCaptureMovieFileOutput");
         [_captureSession.captureSession addOutput:_captureSession.captureMovieFileOutput];
         
         AVCaptureConnection *videoConnection = nil;
         
         for ( AVCaptureConnection *connection in [_captureSession.captureMovieFileOutput connections] )
         {
-            NSLog(@"%@", connection);
             for ( AVCaptureInputPort *port in [connection inputPorts] )
             {
-                NSLog(@"%@", port);
                 if ( [[port mediaType] isEqual:AVMediaTypeVideo] )
                 {
                     videoConnection = connection;
@@ -69,7 +67,7 @@
     
     if ([_captureSession.captureSession canAddOutput:_captureSession.captureVideoDataOutput])
     {
-        NSLog(@"Output changed to AVCaptureVideoDataOutput");
+        //NSLog(@"Output changed to AVCaptureVideoDataOutput");
         [_captureSession.captureSession addOutput:_captureSession.captureVideoDataOutput];
     }
     
@@ -87,13 +85,13 @@
         if ([captureOutput isMemberOfClass:[AVCaptureMovieFileOutput class]])
         {
             [_captureSession.captureSession removeOutput:_captureSession.captureMovieFileOutput];
-            NSLog(@"Removed AVCaptureMovieFileOutput");
+            //NSLog(@"Removed AVCaptureMovieFileOutput");
         }
         
         else if ([captureOutput isMemberOfClass:[AVCaptureVideoDataOutput class]])
         {
             [_captureSession.captureSession removeOutput:_captureSession.captureVideoDataOutput];
-            NSLog(@"Removed AVCaptureVideoDataOutput");
+            //NSLog(@"Removed AVCaptureVideoDataOutput");
         }
     }
     
@@ -124,7 +122,7 @@
     
     _lastVideoUrl = [NSURL fileURLWithPath:[url.path stringByAppendingPathComponent:fileName]];
     
-    NSLog(@"Final video path : %@", _lastVideoUrl.path);
+    //NSLog(@"Final video path : %@", _lastVideoUrl.path);
     
     [_captureSession.captureMovieFileOutput stopRecording];
     [_captureSession.captureMovieFileOutput startRecordingToOutputFileURL:_lastVideoUrl recordingDelegate:_recordingDelegate];

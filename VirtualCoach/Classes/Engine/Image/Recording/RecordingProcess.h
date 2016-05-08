@@ -12,4 +12,6 @@
 
 @interface RecordingProcess : NSObject <AVCaptureFileOutputRecordingDelegate, Process>
 
+@property (nonatomic, strong) NSString *outputPath;
+
 @end

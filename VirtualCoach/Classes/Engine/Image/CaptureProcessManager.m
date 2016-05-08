@@ -8,6 +8,8 @@
 
 #import "CaptureProcessManager.h"
 
+#import "ExtractorProcess.h"
+
 @interface CaptureProcessManager ()
 
 + (void)startReferenceFrameProcess:(NSNotification *)notification;
@@ -96,7 +98,7 @@ static RecordingProcess *recordingProcess;
 
 + (void)startReferenceFrameProcess:(NSNotification *)notification
 {
-    NSLog(@"startReferenceFrameProcess");
+    //NSLog(@"startReferenceFrameProcess");
     
     [captureSessionController removeOutput];
     [captureSessionController addVideoDataOutput];
@@ -109,7 +111,7 @@ static RecordingProcess *recordingProcess;
 
 + (void)startTrackingProcess:(NSNotification *)notification
 {
-    NSLog(@"startTrackingProcess");
+    //NSLog(@"startTrackingProcess");
     
     gray8i_t *referenceFrame = [referenceFrameProcess retrieveReferenceFrame];
     
@@ -127,7 +129,7 @@ static RecordingProcess *recordingProcess;
 
 + (void)startRecordingProcess:(NSNotification *)notification
 {
-    NSLog(@"startRecordingProcess");
+    //NSLog(@"startRecordingProcess");
     
     NSDictionary *userInfo = notification.userInfo;
     
@@ -141,7 +143,7 @@ static RecordingProcess *recordingProcess;
 
 + (void)stopReferenceFrameProcess:(NSNotification *)notification
 {
-    NSLog(@"stopReferenceFrameProcess");
+    //NSLog(@"stopReferenceFrameProcess");
     [captureSessionController stopRetrievingFrames];
     [captureSessionController removeOutput];
     
@@ -149,16 +151,24 @@ static RecordingProcess *recordingProcess;
 
 + (void)stopTrackingProcess:(NSNotification *)notification
 {
-    NSLog(@"stopTrackingProcess");
+    //NSLog(@"stopTrackingProcess");
     [captureSessionController stopRetrievingFrames];
     [captureSessionController removeOutput];
 }
 
 + (void)stopRecordingProcess:(NSNotification *)notification
 {
-    NSLog(@"stopRecordingProcess");
+    //NSLog(@"stopRecordingProcess");
     [captureSessionController stopRecordingMovie];
     [captureSessionController removeOutput];
+    
+    // Sample code
+    
+    ExtractorProcess *extractor = [[ExtractorProcess alloc] initWithFile:recordingProcess.outputPath];
+    [extractor setup];
+    [extractor start];
+    
+    // End of sample code
 }
 
 + (void)referenceFrameProcessDidFinish:(NSNotification *)notification

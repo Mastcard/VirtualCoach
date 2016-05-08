@@ -34,6 +34,34 @@
     _videoDataOutputQueue = dispatch_queue_create("HCS_VideoDataOutputQueue", DISPATCH_QUEUE_SERIAL);
     
     _captureMovieFileOutput.maxRecordedDuration = kCMTimeInvalid;
+    
+    AVCaptureDeviceFormat *bestFormat = nil;
+    AVFrameRateRange *bestFrameRateRange = nil;
+    
+    // setting to 60 fps by choosing highest rate range..
+    
+    for ( AVCaptureDeviceFormat *format in [self.captureDevice formats] )
+    {
+        for ( AVFrameRateRange *range in format.videoSupportedFrameRateRanges )
+        {
+            if ( range.maxFrameRate > bestFrameRateRange.maxFrameRate )
+            {
+                bestFormat = format;
+                bestFrameRateRange = range;
+            }
+        }
+    }
+    
+    if ( bestFormat )
+    {
+        if ( [self.captureDevice lockForConfiguration:NULL] == YES )
+        {
+            self.captureDevice.activeFormat = bestFormat;
+            self.captureDevice.activeVideoMinFrameDuration = bestFrameRateRange.minFrameDuration;
+            self.captureDevice.activeVideoMaxFrameDuration = bestFrameRateRange.minFrameDuration;
+            [self.captureDevice unlockForConfiguration];
+        }
+    }
 }
 
 @end
