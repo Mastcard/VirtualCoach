@@ -20,73 +20,65 @@
     
     if (self)
     {
-        UIBezierPath* path = [[UIBezierPath alloc]init];
-        [path moveToPoint:CGPointMake(0, 0)];
-        [path closePath];
-        
-        _regionBoundsColor = [UIColor redColor];
-    
         _regionBoundShapeView = [[CAShapeLayer alloc] init];
-        [_regionBoundShapeView setFillColor:[UIColor clearColor].CGColor];
-        [_regionBoundShapeView setStrokeColor:_regionBoundsColor.CGColor];
-        [_regionBoundShapeView setLineWidth:3.0];
-        [_regionBoundShapeView setPath:path.CGPath];
-        
-        
-        CGSize binarySliderSize = CGSizeMake(250, 30);
-        
-        _binaryThresholdSlider = [[UISlider alloc] initWithFrame:CGRectMake(10, self.frame.size.height - 40, binarySliderSize.width, binarySliderSize.height)];
-        [_binaryThresholdSlider setBackgroundColor:[UIColor clearColor]];
-        _binaryThresholdSlider.minimumValue = 5.0;
-        _binaryThresholdSlider.maximumValue = 150.0;
-        _binaryThresholdSlider.continuous = YES;
-        _binaryThresholdSlider.value = 20.0;
-        _binaryThresholdSlider.hidden = YES;
-        
-        
-        CGSize binaryModeButtonSize = CGSizeMake(55, 55);
-        
-        _binaryModeButton = [[UIBaseButton alloc] initWithFrame:CGRectMake(10, _binaryThresholdSlider.frame.origin.y - binarySliderSize.height - 10 - binaryModeButtonSize.height, binaryModeButtonSize.width, binaryModeButtonSize.height)];
-        [_binaryModeButton setImage:[UIImage imageNamed:@"binaryModeButton.png"] forState:UIControlStateNormal];
-        [_binaryModeButton setImage:[UIImage imageNamed:@"rgbModeButton.png"] forState:UIControlStateSelected];
-        //_binaryModeButton.backgroundColor = [UIColor whiteColor];
-        [_binaryModeButton setTitle:@"Binary mode" forState:UIControlStateNormal];
-        _binaryModeButton.hidden = YES;
-        
-        _gestureView = [[UIBaseView alloc] initWithFrame:self.frame];
-        [self addSubview:_gestureView];
-        
-        _debugImageView = [[UIImageView alloc] initWithFrame:self.bounds];
-        
-        [self addSubview:_debugImageView];
-        
-        
-        
-        [self addSubview:_binaryThresholdSlider];
-        [self addSubview:_binaryModeButton];
-        
-        CGSize adjustmentActivityIndicatorViewSize = CGSizeMake(150, 140);
-        [_adjustmentActivityIndicatorView setFrame:CGRectMake(0, 0, adjustmentActivityIndicatorViewSize.width, adjustmentActivityIndicatorViewSize.height)];
-        
-        
-        _adjustmentActivityIndicatorView = [[UIActivityIndicatorTitledView alloc] initWithFrame:CGRectMake(0, 0, adjustmentActivityIndicatorViewSize.width, adjustmentActivityIndicatorViewSize.height)];
-        
-        [_adjustmentActivityIndicatorView layout];
-        
-        //[self addSubview:_adjustmentActivityIndicatorView alignment:UIViewCentered];
-        
-        [[NSNotificationCenter defaultCenter] addObserver:self
-                                                 selector:@selector(updateRegionBounds:)
-                                                     name:@"tracking.bounds.changed"
-                                                   object:nil];
-        
-        [[NSNotificationCenter defaultCenter] addObserver:self
-                                                 selector:@selector(updateDebugImage:)
-                                                     name:@"debug.image.changed"
-                                                   object:nil];
+        _controlsView = [[UICaptureSessionOverlayControlsView alloc] init];
+        _gestureView = [[UIBaseView alloc] init];
+        _debugImageView = [[UIImageView alloc] init];
+        _adjustmentActivityIndicatorView = [[UIActivityIndicatorTitledView alloc] init];
     }
     
     return self;
+}
+
+- (void)prepareView
+{
+    UIBezierPath* path = [[UIBezierPath alloc]init];
+    [path moveToPoint:CGPointMake(0, 0)];
+    [path closePath];
+    
+    _regionBoundsColor = [UIColor redColor];
+    
+    [_regionBoundShapeView setFillColor:[UIColor clearColor].CGColor];
+    [_regionBoundShapeView setStrokeColor:_regionBoundsColor.CGColor];
+    [_regionBoundShapeView setLineWidth:3.0];
+    [_regionBoundShapeView setPath:path.CGPath];
+    
+    [_controlsView setFrame:CGRectMake(0, self.frame.size.height - 105, 270, 105)];
+    
+    [_gestureView setFrame:self.frame];
+    [_debugImageView setFrame:self.bounds];
+    
+    CGSize adjustmentActivityIndicatorViewSize = CGSizeMake(150, 140);
+    [_adjustmentActivityIndicatorView setFrame:CGRectMake(0, 0, adjustmentActivityIndicatorViewSize.width, adjustmentActivityIndicatorViewSize.height)];
+}
+
+- (void)layout
+{
+    [super layout];
+    
+    [self prepareForUse];
+    
+    [_controlsView layout];
+    [_adjustmentActivityIndicatorView layout];
+    
+    [self addSubview:_gestureView];
+    [self addSubview:_debugImageView];
+    [self addSubview:_controlsView];
+}
+
+- (void)prepareForUse
+{
+    [self prepareView];
+    
+    [[NSNotificationCenter defaultCenter] addObserver:self
+                                             selector:@selector(updateRegionBounds:)
+                                                 name:@"tracking.bounds.changed"
+                                               object:nil];
+    
+    [[NSNotificationCenter defaultCenter] addObserver:self
+                                             selector:@selector(updateDebugImage:)
+                                                 name:@"debug.image.changed"
+                                               object:nil];
 }
 
 - (void)updateDebugImage:(NSNotification *)notification

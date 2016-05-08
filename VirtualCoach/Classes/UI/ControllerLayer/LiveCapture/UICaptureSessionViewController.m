@@ -20,13 +20,9 @@
 @property (nonatomic) UITapGestureRecognizer *locateRegionTapGestureRecognizer;
 
 - (void)hideOrShowControlsView;
-
 - (void)referenceFrameProcessDidFinish:(NSNotification *)notification;
-
 - (void)singleTapGestureToLocateRegion:(UITapGestureRecognizer *)recognizer;
-
 - (void)binaryThresholdSliderAction:(UISlider *)sender;
-
 - (void)binaryModeButtonAction;
 
 @end
@@ -47,9 +43,6 @@
         [_captureSessionView.controlsView.recordButton addTarget:self action:@selector(recordButtonAction) forControlEvents:UIControlEventTouchUpInside];
         [_captureSessionView.controlsView.adjustmentButton addTarget:self action:@selector(adjustmentButtonAction) forControlEvents:UIControlEventTouchUpInside];
         [_captureSessionView.controlsView.trackerButton addTarget:self action:@selector(trackerButtonAction) forControlEvents:UIControlEventTouchUpInside];
-        
-        [_captureSessionView.overlayView.binaryThresholdSlider addTarget:self action:@selector(binaryThresholdSliderAction:) forControlEvents:UIControlEventValueChanged];
-        [_captureSessionView.overlayView.binaryModeButton addTarget:self action:@selector(binaryModeButtonAction) forControlEvents:UIControlEventTouchUpInside];
         
         _recording = NO;
         
@@ -148,9 +141,7 @@
     [_captureSessionView.controlsView.recordButton setHidden:!_recording];
     [_captureSessionView.controlsView.adjustmentButton setHidden:!_recording];
     [_captureSessionView.controlsView.recordingDurationLabelView setHidden:!_recording];
-    //[_captureSessionView.controlsView.trackerButton setHidden:!_recording];
-    [_captureSessionView.overlayView.binaryThresholdSlider setHidden:_recording];
-    [_captureSessionView.overlayView.binaryModeButton setHidden:_recording];
+    [_captureSessionView.overlayView.controlsView setHidden:_recording];
     
     if (!_recording)
     {
@@ -217,6 +208,9 @@
 - (void)prepareForUse
 {
     [_captureSessionView layout];
+    
+    [_captureSessionView.overlayView.controlsView.binaryThresholdSlider addTarget:self action:@selector(binaryThresholdSliderAction:) forControlEvents:UIControlEventValueChanged];
+    [_captureSessionView.overlayView.controlsView.binaryModeButton addTarget:self action:@selector(binaryModeButtonAction) forControlEvents:UIControlEventTouchUpInside];
 }
 
 - (void)prepareForReuse
@@ -242,7 +236,7 @@
         [_captureSessionView.overlayView.debugImageView setImage:nil];
     }
     
-    _captureSessionView.overlayView.binaryModeButton.selected = !_captureSessionView.overlayView.binaryModeButton.selected;
+    _captureSessionView.overlayView.controlsView.binaryModeButton.selected = !_captureSessionView.overlayView.controlsView.binaryModeButton.selected;
     
     [[NSNotificationCenter defaultCenter] postNotificationName:@"tracking.binarymode.button.clicked" object:self userInfo:nil];
 }

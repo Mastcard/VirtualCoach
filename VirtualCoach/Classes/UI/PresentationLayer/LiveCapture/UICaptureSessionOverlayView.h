@@ -16,11 +16,10 @@
 
 @property (nonatomic, strong) UIBezierPath *trackedRegionBoundsPath;
 @property (nonatomic, strong) CAShapeLayer *regionBoundShapeView;
-@property (nonatomic, strong) UISlider *binaryThresholdSlider;
 @property (nonatomic, strong) UIImageView *debugImageView;
 @property (nonatomic, strong) UIActivityIndicatorTitledView *adjustmentActivityIndicatorView;
+@property (nonatomic, strong) UICaptureSessionOverlayControlsView *controlsView;
 @property (nonatomic, strong) UIBaseView *gestureView;
-@property (nonatomic, strong) UIBaseButton *binaryModeButton;
 
 @property (nonatomic, strong) UIColor *regionBoundsColor;
 

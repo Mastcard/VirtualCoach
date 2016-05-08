@@ -10,6 +10,11 @@
 
 @implementation UIActivityIndicatorTitledView
 
+- (instancetype)init
+{
+    return [self initWithFrame:CGRectZero];
+}
+
 - (instancetype)initWithFrame:(CGRect)frame
 {
     self = [super initWithFrame:frame];

@@ -38,6 +38,7 @@
     [[self layer] addSublayer:_captureVideoPreviewLayer];
     
     [_controlsView layout];
+    [_overlayView layout];
     
     [self addSubview:_overlayView];
     [self addSubview:_controlsView];
