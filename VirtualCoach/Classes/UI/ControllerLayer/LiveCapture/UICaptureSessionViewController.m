@@ -242,6 +242,8 @@
         [_captureSessionView.overlayView.debugImageView setImage:nil];
     }
     
+    _captureSessionView.overlayView.binaryModeButton.selected = !_captureSessionView.overlayView.binaryModeButton.selected;
+    
     [[NSNotificationCenter defaultCenter] postNotificationName:@"tracking.binarymode.button.clicked" object:self userInfo:nil];
 }
 

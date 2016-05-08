@@ -47,7 +47,9 @@
         CGSize binaryModeButtonSize = CGSizeMake(55, 55);
         
         _binaryModeButton = [[UIBaseButton alloc] initWithFrame:CGRectMake(10, _binaryThresholdSlider.frame.origin.y - binarySliderSize.height - 10 - binaryModeButtonSize.height, binaryModeButtonSize.width, binaryModeButtonSize.height)];
-        _binaryModeButton.backgroundColor = [UIColor whiteColor];
+        [_binaryModeButton setImage:[UIImage imageNamed:@"binaryModeButton.png"] forState:UIControlStateNormal];
+        [_binaryModeButton setImage:[UIImage imageNamed:@"rgbModeButton.png"] forState:UIControlStateSelected];
+        //_binaryModeButton.backgroundColor = [UIColor whiteColor];
         [_binaryModeButton setTitle:@"Binary mode" forState:UIControlStateNormal];
         _binaryModeButton.hidden = YES;
         
