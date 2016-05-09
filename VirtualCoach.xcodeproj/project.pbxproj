@@ -7,6 +7,14 @@
 	objects = {
 
 /* Begin PBXBuildFile section */
+		8A2629801CE0E0C900AF7ABB /* MotionDeduction.m in Sources */ = {isa = PBXBuildFile; fileRef = 8A26297F1CE0E0C900AF7ABB /* MotionDeduction.m */; };
+		8A26298A1CE0E0FB00AF7ABB /* MotionDeductionTest.m in Sources */ = {isa = PBXBuildFile; fileRef = 8A2629851CE0E0FB00AF7ABB /* MotionDeductionTest.m */; };
+		8A26298B1CE0E0FB00AF7ABB /* HistogramTest.m in Sources */ = {isa = PBXBuildFile; fileRef = 8A2629871CE0E0FB00AF7ABB /* HistogramTest.m */; };
+		8A26298C1CE0E0FB00AF7ABB /* KmeanEntryDataSetTest.m in Sources */ = {isa = PBXBuildFile; fileRef = 8A2629881CE0E0FB00AF7ABB /* KmeanEntryDataSetTest.m */; };
+		8A26298D1CE0E0FB00AF7ABB /* KmeanEntryTest.m in Sources */ = {isa = PBXBuildFile; fileRef = 8A2629891CE0E0FB00AF7ABB /* KmeanEntryTest.m */; };
+		8A2629951CE0E12200AF7ABB /* Histogram.m in Sources */ = {isa = PBXBuildFile; fileRef = 8A2629901CE0E12200AF7ABB /* Histogram.m */; };
+		8A2629961CE0E12200AF7ABB /* KmeanEntry.m in Sources */ = {isa = PBXBuildFile; fileRef = 8A2629921CE0E12200AF7ABB /* KmeanEntry.m */; };
+		8A2629971CE0E12200AF7ABB /* KmeanEntryDataSet.m in Sources */ = {isa = PBXBuildFile; fileRef = 8A2629941CE0E12200AF7ABB /* KmeanEntryDataSet.m */; };
 		8A3A15361C8D85E80081F7E8 /* UICaptureSessionControlsView.m in Sources */ = {isa = PBXBuildFile; fileRef = 8A3A15351C8D85E80081F7E8 /* UICaptureSessionControlsView.m */; };
 		8A513D511C947F3800A11C60 /* VirtualCoachUITest.m in Sources */ = {isa = PBXBuildFile; fileRef = 8A513D501C947F3800A11C60 /* VirtualCoachUITest.m */; };
 		8A5494EC1C8B4DE700FB24C2 /* CaptureDeviceManager.m in Sources */ = {isa = PBXBuildFile; fileRef = 8A5494CF1C8B4DE700FB24C2 /* CaptureDeviceManager.m */; };
@@ -80,6 +88,18 @@
 /* End PBXContainerItemProxy section */
 
 /* Begin PBXFileReference section */
+		8A26297E1CE0E0C900AF7ABB /* MotionDeduction.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = MotionDeduction.h; sourceTree = "<group>"; };
+		8A26297F1CE0E0C900AF7ABB /* MotionDeduction.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = MotionDeduction.m; sourceTree = "<group>"; };
+		8A2629851CE0E0FB00AF7ABB /* MotionDeductionTest.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = MotionDeductionTest.m; sourceTree = "<group>"; };
+		8A2629871CE0E0FB00AF7ABB /* HistogramTest.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = HistogramTest.m; sourceTree = "<group>"; };
+		8A2629881CE0E0FB00AF7ABB /* KmeanEntryDataSetTest.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = KmeanEntryDataSetTest.m; sourceTree = "<group>"; };
+		8A2629891CE0E0FB00AF7ABB /* KmeanEntryTest.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = KmeanEntryTest.m; sourceTree = "<group>"; };
+		8A26298F1CE0E12200AF7ABB /* Histogram.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = Histogram.h; sourceTree = "<group>"; };
+		8A2629901CE0E12200AF7ABB /* Histogram.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = Histogram.m; sourceTree = "<group>"; };
+		8A2629911CE0E12200AF7ABB /* KmeanEntry.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = KmeanEntry.h; sourceTree = "<group>"; };
+		8A2629921CE0E12200AF7ABB /* KmeanEntry.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = KmeanEntry.m; sourceTree = "<group>"; };
+		8A2629931CE0E12200AF7ABB /* KmeanEntryDataSet.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = KmeanEntryDataSet.h; sourceTree = "<group>"; };
+		8A2629941CE0E12200AF7ABB /* KmeanEntryDataSet.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = KmeanEntryDataSet.m; sourceTree = "<group>"; };
 		8A3A15341C8D85E80081F7E8 /* UICaptureSessionControlsView.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = UICaptureSessionControlsView.h; sourceTree = "<group>"; };
 		8A3A15351C8D85E80081F7E8 /* UICaptureSessionControlsView.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = UICaptureSessionControlsView.m; sourceTree = "<group>"; };
 		8A3A15381C8D88160081F7E8 /* Layout.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = Layout.h; sourceTree = "<group>"; };
@@ -212,6 +232,72 @@
 /* End PBXFrameworksBuildPhase section */
 
 /* Begin PBXGroup section */
+		8A26297D1CE0E0C900AF7ABB /* Recognition */ = {
+			isa = PBXGroup;
+			children = (
+				8A26297E1CE0E0C900AF7ABB /* MotionDeduction.h */,
+				8A26297F1CE0E0C900AF7ABB /* MotionDeduction.m */,
+			);
+			path = Recognition;
+			sourceTree = "<group>";
+		};
+		8A2629811CE0E0FB00AF7ABB /* Classes */ = {
+			isa = PBXGroup;
+			children = (
+				8A2629821CE0E0FB00AF7ABB /* Engine */,
+			);
+			name = Classes;
+			path = VirtualCoachTests/Classes;
+			sourceTree = SOURCE_ROOT;
+		};
+		8A2629821CE0E0FB00AF7ABB /* Engine */ = {
+			isa = PBXGroup;
+			children = (
+				8A2629831CE0E0FB00AF7ABB /* Analysis */,
+				8A2629861CE0E0FB00AF7ABB /* Data */,
+			);
+			path = Engine;
+			sourceTree = "<group>";
+		};
+		8A2629831CE0E0FB00AF7ABB /* Analysis */ = {
+			isa = PBXGroup;
+			children = (
+				8A2629841CE0E0FB00AF7ABB /* Recognition */,
+			);
+			path = Analysis;
+			sourceTree = "<group>";
+		};
+		8A2629841CE0E0FB00AF7ABB /* Recognition */ = {
+			isa = PBXGroup;
+			children = (
+				8A2629851CE0E0FB00AF7ABB /* MotionDeductionTest.m */,
+			);
+			path = Recognition;
+			sourceTree = "<group>";
+		};
+		8A2629861CE0E0FB00AF7ABB /* Data */ = {
+			isa = PBXGroup;
+			children = (
+				8A2629871CE0E0FB00AF7ABB /* HistogramTest.m */,
+				8A2629881CE0E0FB00AF7ABB /* KmeanEntryDataSetTest.m */,
+				8A2629891CE0E0FB00AF7ABB /* KmeanEntryTest.m */,
+			);
+			path = Data;
+			sourceTree = "<group>";
+		};
+		8A26298E1CE0E12200AF7ABB /* Data */ = {
+			isa = PBXGroup;
+			children = (
+				8A26298F1CE0E12200AF7ABB /* Histogram.h */,
+				8A2629901CE0E12200AF7ABB /* Histogram.m */,
+				8A2629911CE0E12200AF7ABB /* KmeanEntry.h */,
+				8A2629921CE0E12200AF7ABB /* KmeanEntry.m */,
+				8A2629931CE0E12200AF7ABB /* KmeanEntryDataSet.h */,
+				8A2629941CE0E12200AF7ABB /* KmeanEntryDataSet.m */,
+			);
+			path = Data;
+			sourceTree = "<group>";
+		};
 		8A3A15371C8D87DF0081F7E8 /* Protocols */ = {
 			isa = PBXGroup;
 			children = (
@@ -402,6 +488,7 @@
 		8A748DBB1C7CB984007AA850 /* Engine */ = {
 			isa = PBXGroup;
 			children = (
+				8A26298E1CE0E12200AF7ABB /* Data */,
 				8A7E8CF51C871B0A00FF4866 /* LiveCapture */,
 				8AD459CD1C7DF597005D51BC /* Analysis */,
 				8A748DBC1C7CB984007AA850 /* Image */,
@@ -636,6 +723,7 @@
 		8AD459CD1C7DF597005D51BC /* Analysis */ = {
 			isa = PBXGroup;
 			children = (
+				8A26297D1CE0E0C900AF7ABB /* Recognition */,
 				8AD459CE1C7DF597005D51BC /* Classification */,
 			);
 			path = Analysis;
@@ -651,6 +739,7 @@
 		8AFA903C1C946F5900AD3535 /* Engine */ = {
 			isa = PBXGroup;
 			children = (
+				8A2629811CE0E0FB00AF7ABB /* Classes */,
 				8AFA903D1C946F5900AD3535 /* Image */,
 			);
 			path = Engine;
@@ -807,8 +896,10 @@
 				8AAC3A7A1C8C6DA60098E6A2 /* TrackingProcess.m in Sources */,
 				8A5495171C8B55DF00FB24C2 /* UIBaseView.m in Sources */,
 				8A5494F01C8B4DE700FB24C2 /* CaptureSessionController.m in Sources */,
+				8A2629951CE0E12200AF7ABB /* Histogram.m in Sources */,
 				8AAC3A941C8C7EC00098E6A2 /* UIHomeView.m in Sources */,
 				8A54951D1C8B578600FB24C2 /* NSOrderedDictionary.m in Sources */,
+				8A2629971CE0E12200AF7ABB /* KmeanEntryDataSet.m in Sources */,
 				8AAC3A911C8C7A870098E6A2 /* UIAuthenticationView.m in Sources */,
 				8AAC3A9A1C8C8A5F0098E6A2 /* UIBaseLabel.m in Sources */,
 				8A7E1FE51C936718005B41C7 /* TrackingService.m in Sources */,
@@ -833,6 +924,7 @@
 				8A5494F31C8B4DE700FB24C2 /* FramesCaptureSession.m in Sources */,
 				8A7E1FDB1C907448005B41C7 /* HybridCaptureSession.m in Sources */,
 				8ABE3D8E1C78F77300AF659B /* main.m in Sources */,
+				8A2629801CE0E0C900AF7ABB /* MotionDeduction.m in Sources */,
 				8A748DC31C7CBA55007AA850 /* charact_ext.c in Sources */,
 				8A5494F21C8B4DE700FB24C2 /* CaptureSessionControllerFactory.m in Sources */,
 				8A54950B1C8B4E7300FB24C2 /* UIRecordingDurationLabelView.m in Sources */,
@@ -845,6 +937,7 @@
 				8A5494F61C8B4DE700FB24C2 /* MovieCaptureSession.m in Sources */,
 				8A5495091C8B4E7300FB24C2 /* UICaptureSessionView.m in Sources */,
 				8A54951E1C8B578600FB24C2 /* Queue.m in Sources */,
+				8A2629961CE0E12200AF7ABB /* KmeanEntry.m in Sources */,
 				8A7E1FDE1C907A50005B41C7 /* HybridCaptureSessionController.m in Sources */,
 				8A5495101C8B55D300FB24C2 /* UIBaseViewController.m in Sources */,
 			);
@@ -854,10 +947,14 @@
 			isa = PBXSourcesBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
+				8A26298B1CE0E0FB00AF7ABB /* HistogramTest.m in Sources */,
+				8A26298D1CE0E0FB00AF7ABB /* KmeanEntryTest.m in Sources */,
 				8AFA90411C946FCC00AD3535 /* TrackingService.m in Sources */,
+				8A26298A1CE0E0FB00AF7ABB /* MotionDeductionTest.m in Sources */,
 				8AAC3A7F1C8C72C50098E6A2 /* Queue.m in Sources */,
 				8AFA90401C946F7C00AD3535 /* TrackingServiceTest.m in Sources */,
 				8AAC3A7E1C8C701E0098E6A2 /* QueueTest.m in Sources */,
+				8A26298C1CE0E0FB00AF7ABB /* KmeanEntryDataSetTest.m in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
