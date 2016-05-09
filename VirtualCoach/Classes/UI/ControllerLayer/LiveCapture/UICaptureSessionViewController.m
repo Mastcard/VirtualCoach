@@ -81,6 +81,7 @@
     [_captureSessionView.controlsView.deviceButton setHidden:!_recording];
     [_captureSessionView.controlsView.adjustmentButton setHidden:!_recording];
     [_captureSessionView.controlsView.trackerButton setHidden:!_recording];
+    
     [_captureSessionView.controlsView.recordButton transformShape];
     
     if (!_recording)
@@ -111,6 +112,8 @@
     [_captureSessionView.controlsView.deviceButton setHidden:!_recording];
     [_captureSessionView.controlsView.recordButton setHidden:!_recording];
     [_captureSessionView.controlsView.recordingDurationLabelView setHidden:!_recording];
+    [self.navigationItem.leftBarButtonItem setEnabled:!_recording];
+    //[((UIApplicationNavigationViewController *)self.navigationController).navigationItem.leftBarButtonItem setEnabled:!_recording];
     //[_captureSessionView.controlsView.adjustmentButton setHidden:!_recording];
     [_captureSessionView.controlsView.trackerButton setHidden:!_recording];
     
@@ -186,16 +189,27 @@
 - (void)viewDidLoad
 {
     [super viewDidLoad];
-    
+}
+
+- (void)viewWillAppear:(BOOL)animated
+{
     AVCaptureConnection *previewLayerConnection=_captureSessionView.captureVideoPreviewLayer.connection;
     
     if ([previewLayerConnection isVideoOrientationSupported])
         [previewLayerConnection setVideoOrientation:AVCaptureVideoOrientationLandscapeRight];
-
     
-    // Starting session
+    [self.navigationController.navigationBar setBackgroundImage:[UIImage new] forBarMetrics:UIBarMetricsDefault];
+    self.navigationController.navigationBar.shadowImage = [UIImage new];
+    self.navigationController.navigationBar.translucent = YES;
     
     [_captureSessionController startSession];
+}
+
+- (void)viewWillDisappear:(BOOL)animated
+{
+    [self.navigationController.navigationBar setBackgroundImage:nil forBarMetrics:UIBarMetricsDefault];
+    self.navigationController.navigationBar.shadowImage = nil;
+    self.navigationController.navigationBar.translucent = NO;
 }
 
 - (void)viewDidDisappear:(BOOL)animated

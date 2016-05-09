@@ -10,4 +10,8 @@
 
 @interface UIHomeView : UIBaseView
 
+// temp
+@property (nonatomic, strong) UIButton *captureButton;
+@property (nonatomic, strong) UIButton *processButton;
+
 @end

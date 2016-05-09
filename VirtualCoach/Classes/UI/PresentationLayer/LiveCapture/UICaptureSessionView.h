@@ -21,14 +21,7 @@
 @property (nonatomic, strong) AVCaptureVideoPreviewLayer *captureVideoPreviewLayer;
 
 @property (nonatomic, strong) UICaptureSessionControlsView *controlsView;
-
 @property (nonatomic, strong) UICaptureSessionOverlayView *overlayView;
-
-
-//debugging
-@property (nonatomic, strong) UIView *debbugingView;
-@property (nonatomic, strong) UIImageView *debbugingImaegView;
-@property (nonatomic, strong) CAShapeLayer *shapeView;
 
 - (instancetype)initWithFrame:(CGRect)frameRect captureSession:(CaptureSession *)captureSession;
 

@@ -9,11 +9,14 @@
 #import <UIKit/UIKit.h>
 
 #import "UIAuthenticationViewController.h"
-#import "UIHomeViewController.h"
+#import "CaptureProcessManager.h"
+
+@class UIHomeViewController, UICaptureSessionViewController;
 
 @interface UIApplicationNavigationViewController : UINavigationController
 
-@property (nonatomic) UIAuthenticationViewController *authenticationViewController;
-@property (nonatomic) UIHomeViewController *homeViewController;
+@property (nonatomic, strong) UIAuthenticationViewController *authenticationViewController;
+@property (nonatomic, strong) UICaptureSessionViewController *captureSessionViewController;
+@property (nonatomic, strong) UIHomeViewController *homeViewController;
 
 @end

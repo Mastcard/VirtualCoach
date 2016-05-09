@@ -100,6 +100,11 @@ static RecordingProcess *recordingProcess;
 {
     //NSLog(@"startReferenceFrameProcess");
     
+    gray8i_t *referenceFrame = [referenceFrameProcess retrieveReferenceFrame];
+    
+    if (referenceFrame != NULL)
+        [referenceFrameProcess reset];
+    
     [captureSessionController removeOutput];
     [captureSessionController addVideoDataOutput];
     
@@ -161,14 +166,6 @@ static RecordingProcess *recordingProcess;
     //NSLog(@"stopRecordingProcess");
     [captureSessionController stopRecordingMovie];
     [captureSessionController removeOutput];
-    
-    // Sample code
-    
-//    ExtractorProcess *extractor = [[ExtractorProcess alloc] initWithFile:recordingProcess.outputPath];
-//    [extractor setup];
-//    [extractor start];
-    
-    // End of sample code
     
     // Save all informations of the video
     

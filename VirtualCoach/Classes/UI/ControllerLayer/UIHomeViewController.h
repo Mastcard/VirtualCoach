@@ -7,7 +7,8 @@
 //
 
 #import "UIBaseViewController.h"
-
+#import "UIApplicationNavigationViewController.h"
+#import "UICaptureSessionViewController.h"
 #import "UIHomeView.h"
 
 @interface UIHomeViewController : UIBaseViewController

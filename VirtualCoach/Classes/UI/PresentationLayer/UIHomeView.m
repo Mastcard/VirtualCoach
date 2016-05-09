@@ -16,7 +16,17 @@
     
     if (self)
     {
+        _captureButton = [UIButton buttonWithType:UIButtonTypeRoundedRect];
+        [_captureButton setFrame:CGRectMake(100, 100, 100, 30)];
         
+        _processButton = [UIButton buttonWithType:UIButtonTypeRoundedRect];
+        [_processButton setFrame:CGRectMake(250, 100, 100, 30)];
+        
+        [_captureButton setTitle:@"Capture" forState:UIControlStateNormal];
+        [_processButton setTitle:@"Process" forState:UIControlStateNormal];
+        
+        [self addSubview:_captureButton];
+        [self addSubview:_processButton];
     }
     
     return self;
