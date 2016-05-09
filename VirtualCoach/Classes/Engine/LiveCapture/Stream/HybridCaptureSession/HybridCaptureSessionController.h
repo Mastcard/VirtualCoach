@@ -9,6 +9,8 @@
 #import "CaptureSessionController.h"
 #import "HybridCaptureSession.h"
 
+#import <UIKit/UIDevice.h>
+
 @interface HybridCaptureSessionController : CaptureSessionController
 
 @property (nonatomic, strong) HybridCaptureSession *captureSession;
@@ -20,7 +22,10 @@
 - (instancetype) __unavailable init;
 
 - (instancetype)initWithCaptureSession:(HybridCaptureSession *)captureSession;
-- (void)switchCaptureOutput;
+
+- (void)addMovieFileOutput;
+- (void)addVideoDataOutput;
+- (void)removeOutput;
 
 - (void)startRetrievingFrames;
 - (void)stopRetrievingFrames;

@@ -7,6 +7,8 @@
 //
 
 #import "UIBaseView.h"
+#import "UIBaseButton.h"
+#import "UICaptureSessionOverlayControlsView.h"
 
 #import "UIActivityIndicatorTitledView.h"
 
@@ -14,9 +16,12 @@
 
 @property (nonatomic, strong) UIBezierPath *trackedRegionBoundsPath;
 @property (nonatomic, strong) CAShapeLayer *regionBoundShapeView;
-@property (nonatomic, strong) UISlider *binaryThresholdSlider;
 @property (nonatomic, strong) UIImageView *debugImageView;
 @property (nonatomic, strong) UIActivityIndicatorTitledView *adjustmentActivityIndicatorView;
+@property (nonatomic, strong) UICaptureSessionOverlayControlsView *controlsView;
+@property (nonatomic, strong) UIBaseView *gestureView;
+
+@property (nonatomic, strong) UIColor *regionBoundsColor;
 
 - (void)updateDebugImage:(NSNotification *)notification;
 - (void)updateRegionBounds:(NSNotification *)notification;

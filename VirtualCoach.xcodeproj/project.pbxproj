@@ -54,6 +54,7 @@
 		8ABE3D911C78F77300AF659B /* AppDelegate.m in Sources */ = {isa = PBXBuildFile; fileRef = 8ABE3D901C78F77300AF659B /* AppDelegate.m */; };
 		8ABE3D991C78F77300AF659B /* Assets.xcassets in Resources */ = {isa = PBXBuildFile; fileRef = 8ABE3D981C78F77300AF659B /* Assets.xcassets */; };
 		8AC781AF1C961DB700551D3A /* CaptureProcessManager.m in Sources */ = {isa = PBXBuildFile; fileRef = 8AC781AE1C961DB700551D3A /* CaptureProcessManager.m */; };
+		8AD434AA1C9D909300A3C419 /* core_ext.c in Sources */ = {isa = PBXBuildFile; fileRef = 8AD434A91C9D909300A3C419 /* core_ext.c */; };
 		8AFA90401C946F7C00AD3535 /* TrackingServiceTest.m in Sources */ = {isa = PBXBuildFile; fileRef = 8AFA903F1C946F7C00AD3535 /* TrackingServiceTest.m */; };
 		8AFA90411C946FCC00AD3535 /* TrackingService.m in Sources */ = {isa = PBXBuildFile; fileRef = 8A7E1FE41C936718005B41C7 /* TrackingService.m */; };
 		8AFA90431C94701600AD3535 /* Resources in Resources */ = {isa = PBXBuildFile; fileRef = 8AFA90421C94701600AD3535 /* Resources */; };
@@ -172,6 +173,8 @@
 		8ABE3DB31C78F77300AF659B /* Info.plist */ = {isa = PBXFileReference; lastKnownFileType = text.plist.xml; path = Info.plist; sourceTree = "<group>"; };
 		8AC781AD1C961DB700551D3A /* CaptureProcessManager.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = CaptureProcessManager.h; sourceTree = "<group>"; };
 		8AC781AE1C961DB700551D3A /* CaptureProcessManager.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = CaptureProcessManager.m; sourceTree = "<group>"; };
+		8AD434A81C9D908100A3C419 /* core_ext.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = core_ext.h; sourceTree = "<group>"; };
+		8AD434A91C9D909300A3C419 /* core_ext.c */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.c; path = core_ext.c; sourceTree = "<group>"; };
 		8AFA903F1C946F7C00AD3535 /* TrackingServiceTest.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = TrackingServiceTest.m; sourceTree = "<group>"; };
 		8AFA90421C94701600AD3535 /* Resources */ = {isa = PBXFileReference; lastKnownFileType = folder; path = Resources; sourceTree = "<group>"; };
 /* End PBXFileReference section */
@@ -427,6 +430,7 @@
 			children = (
 				8A748DC01C7CB9B4007AA850 /* include */,
 				8A748DC21C7CBA55007AA850 /* charact_ext.c */,
+				8AD434A91C9D909300A3C419 /* core_ext.c */,
 			);
 			path = c;
 			sourceTree = "<group>";
@@ -435,6 +439,7 @@
 			isa = PBXGroup;
 			children = (
 				8A748DC11C7CBA46007AA850 /* charact_ext.h */,
+				8AD434A81C9D908100A3C419 /* core_ext.h */,
 			);
 			path = include;
 			sourceTree = "<group>";
@@ -810,6 +815,7 @@
 				8A5494F31C8B4DE700FB24C2 /* FramesCaptureSession.m in Sources */,
 				8A7E1FDB1C907448005B41C7 /* HybridCaptureSession.m in Sources */,
 				8ABE3D8E1C78F77300AF659B /* main.m in Sources */,
+				8AD434AA1C9D909300A3C419 /* core_ext.c in Sources */,
 				8A748DC31C7CBA55007AA850 /* charact_ext.c in Sources */,
 				8A5494F21C8B4DE700FB24C2 /* CaptureSessionControllerFactory.m in Sources */,
 				8A54950B1C8B4E7300FB24C2 /* UIRecordingDurationLabelView.m in Sources */,

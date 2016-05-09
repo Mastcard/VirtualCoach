@@ -8,6 +8,7 @@
 
 #import <AVFoundation/AVFoundation.h>
 #import <Foundation/Foundation.h>
+#import <UIKit/UIKit.h>
 #import "Process.h"
 #import "TrackingService.h"
 
@@ -21,5 +22,7 @@
 
 @property (nonatomic, assign) uint8_t binaryThreshold;
 @property (nonatomic, assign) gray8i_t *referenceFrame;
+
+@property (nonatomic, assign) rect_t playerBounds;
 
 @end

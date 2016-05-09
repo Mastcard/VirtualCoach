@@ -11,4 +11,6 @@
 
 @interface UIBaseLabel : UILabel <Layout>
 
+- (void)resizeToFitText;
+
 @end

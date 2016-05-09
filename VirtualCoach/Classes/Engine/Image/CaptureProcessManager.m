@@ -8,6 +8,8 @@
 
 #import "CaptureProcessManager.h"
 
+#import "ExtractorProcess.h"
+
 @interface CaptureProcessManager ()
 
 + (void)startReferenceFrameProcess:(NSNotification *)notification;
@@ -15,6 +17,7 @@
 + (void)startRecordingProcess:(NSNotification *)notification;
 
 + (void)stopReferenceFrameProcess:(NSNotification *)notification;
++ (void)referenceFrameProcessDidFinish:(NSNotification *)notification;
 + (void)stopTrackingProcess:(NSNotification *)notification;
 + (void)stopRecordingProcess:(NSNotification *)notification;
 
@@ -76,6 +79,11 @@ static RecordingProcess *recordingProcess;
                                                object:nil];
     
     [[NSNotificationCenter defaultCenter] addObserver:[self class]
+                                             selector:@selector(referenceFrameProcessDidFinish:)
+                                                 name:@"referenceframe.action.internal.finished"
+                                               object:nil];
+    
+    [[NSNotificationCenter defaultCenter] addObserver:[self class]
                                              selector:@selector(stopTrackingProcess:)
                                                  name:@"tracker.action.stopped"
                                                object:nil];
@@ -90,12 +98,10 @@ static RecordingProcess *recordingProcess;
 
 + (void)startReferenceFrameProcess:(NSNotification *)notification
 {
-    NSLog(@"startReferenceFrameProcess");
+    //NSLog(@"startReferenceFrameProcess");
     
-    AVCaptureOutput *captureOutput = (AVCaptureOutput *)[captureSessionController.captureSession.captureSession.outputs objectAtIndex:0];
-    
-    if ([captureOutput isMemberOfClass:[AVCaptureMovieFileOutput class]])
-        [captureSessionController switchCaptureOutput];
+    [captureSessionController removeOutput];
+    [captureSessionController addVideoDataOutput];
     
     [captureSessionController.captureSession.captureVideoDataOutput setSampleBufferDelegate:referenceFrameProcess queue:captureSessionController.captureSession.videoDataOutputQueue];
     [captureSessionController setSampleBufferDelegate:referenceFrameProcess];
@@ -105,17 +111,15 @@ static RecordingProcess *recordingProcess;
 
 + (void)startTrackingProcess:(NSNotification *)notification
 {
-    NSLog(@"startTrackingProcess");
+    //NSLog(@"startTrackingProcess");
     
     gray8i_t *referenceFrame = [referenceFrameProcess retrieveReferenceFrame];
     
-    if (referenceFrameProcess != NULL)
+    if (referenceFrame != NULL)
         [trackingProcess setReferenceFrame:referenceFrame];
     
-    AVCaptureOutput *captureOutput = (AVCaptureOutput *)[captureSessionController.captureSession.captureSession.outputs objectAtIndex:0];
-    
-    if ([captureOutput isMemberOfClass:[AVCaptureMovieFileOutput class]])
-        [captureSessionController switchCaptureOutput];
+    [captureSessionController removeOutput];
+    [captureSessionController addVideoDataOutput];
     
     [captureSessionController.captureSession.captureVideoDataOutput setSampleBufferDelegate:trackingProcess queue:captureSessionController.captureSession.videoDataOutputQueue];
     [captureSessionController setSampleBufferDelegate:trackingProcess];
@@ -125,36 +129,75 @@ static RecordingProcess *recordingProcess;
 
 + (void)startRecordingProcess:(NSNotification *)notification
 {
-    NSLog(@"startRecordingProcess");
+    //NSLog(@"startRecordingProcess");
     
     NSDictionary *userInfo = notification.userInfo;
     
-    AVCaptureOutput *captureOutput = (AVCaptureOutput *)[captureSessionController.captureSession.captureSession.outputs objectAtIndex:0];
-    
-    if ([captureOutput isMemberOfClass:[AVCaptureVideoDataOutput class]])
-        [captureSessionController switchCaptureOutput];
+    [captureSessionController removeOutput];
+    [captureSessionController addMovieFileOutput];
     
     [captureSessionController setRecordingDelegate:recordingProcess];
     
-    [captureSessionController startRecordingMovieAtURL:[NSURL fileURLWithPath:[NSString stringWithFormat:@"%@", [userInfo objectForKey:@"video.path"]]]];
+    [captureSessionController startRecordingMovieAtURL:(NSURL *)[userInfo objectForKey:@"video.path"]];
 }
 
 + (void)stopReferenceFrameProcess:(NSNotification *)notification
 {
-    NSLog(@"stopReferenceFrameProcess");
+    //NSLog(@"stopReferenceFrameProcess");
     [captureSessionController stopRetrievingFrames];
+    [captureSessionController removeOutput];
+    
 }
 
 + (void)stopTrackingProcess:(NSNotification *)notification
 {
-    NSLog(@"stopTrackingProcess");
+    //NSLog(@"stopTrackingProcess");
     [captureSessionController stopRetrievingFrames];
+    [captureSessionController removeOutput];
 }
 
 + (void)stopRecordingProcess:(NSNotification *)notification
 {
-    NSLog(@"stopRecordingProcess");
+    //NSLog(@"stopRecordingProcess");
     [captureSessionController stopRecordingMovie];
+    [captureSessionController removeOutput];
+    
+    // Sample code
+    
+//    ExtractorProcess *extractor = [[ExtractorProcess alloc] initWithFile:recordingProcess.outputPath];
+//    [extractor setup];
+//    [extractor start];
+    
+    // End of sample code
+    
+    // Save all informations of the video
+    
+    NSString *videoPath = recordingProcess.outputPath;
+    
+    gray8i_t *referenceFrame = trackingProcess.referenceFrame;
+    
+    uint8_t binaryThreshold = trackingProcess.binaryThreshold;
+    
+    rect_t lastPlayerBounds = trackingProcess.playerBounds;
+    
+    NSString *referenceFramePath = [[videoPath stringByDeletingPathExtension] stringByAppendingString:@"-reference.pgm"];
+    
+    pgmwrite(referenceFrame, [referenceFramePath cStringUsingEncoding:NSASCIIStringEncoding], PGM_BINARY);
+    
+    NSString *dataFilePath = [[videoPath stringByDeletingPathExtension] stringByAppendingString:@"-data.plist"];
+    
+    NSDictionary *playerPositionDict = [NSDictionary dictionaryWithObjects:[NSArray arrayWithObjects:[NSNumber numberWithUnsignedInt:lastPlayerBounds.start.x], [NSNumber numberWithUnsignedInt:lastPlayerBounds.start.y], [NSNumber numberWithUnsignedInt:lastPlayerBounds.end.x], [NSNumber numberWithUnsignedInt:lastPlayerBounds.end.y], nil] forKeys:[NSArray arrayWithObjects:@"start.x", @"start.y", @"end.x", @"end.y", nil]];
+    
+    NSDictionary *dict = [NSDictionary dictionaryWithObjects:[NSArray arrayWithObjects:videoPath, referenceFramePath, [NSNumber numberWithUnsignedChar:binaryThreshold], playerPositionDict, nil]
+                                                     forKeys:[NSArray arrayWithObjects:@"videoPath", @"referenceFramePath", @"binaryThreshold", @"lastPlayerBounds", nil]];
+    
+    [dict writeToFile:dataFilePath atomically:YES];
+}
+
++ (void)referenceFrameProcessDidFinish:(NSNotification *)notification
+{
+    [captureSessionController removeOutput];
+    [[NSNotificationCenter defaultCenter] postNotificationName:@"referenceframe.action.finished" object:self userInfo:nil];
 }
 
 - (HybridCaptureSessionController *)captureSessionController

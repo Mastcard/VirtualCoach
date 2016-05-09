@@ -35,15 +35,33 @@
     
     _captureMovieFileOutput.maxRecordedDuration = kCMTimeInvalid;
     
-    // by default, AVCaptureVideoDataOutput is added to the session
+    AVCaptureDeviceFormat *bestFormat = nil;
+    AVFrameRateRange *bestFrameRateRange = nil;
     
-    if (![self.captureSession canAddOutput:_captureVideoDataOutput])
+    // setting to 60 fps by choosing highest rate range..
+    
+    for ( AVCaptureDeviceFormat *format in [self.captureDevice formats] )
     {
-        NSLog(@"FramesCaptureSession : session can't add the video data output.");
-        return;
+        for ( AVFrameRateRange *range in format.videoSupportedFrameRateRanges )
+        {
+            if ( range.maxFrameRate > bestFrameRateRange.maxFrameRate )
+            {
+                bestFormat = format;
+                bestFrameRateRange = range;
+            }
+        }
     }
     
-    [self.captureSession addOutput:_captureVideoDataOutput];
+    if ( bestFormat )
+    {
+        if ( [self.captureDevice lockForConfiguration:NULL] == YES )
+        {
+            self.captureDevice.activeFormat = bestFormat;
+            self.captureDevice.activeVideoMinFrameDuration = bestFrameRateRange.minFrameDuration;
+            self.captureDevice.activeVideoMaxFrameDuration = bestFrameRateRange.minFrameDuration;
+            [self.captureDevice unlockForConfiguration];
+        }
+    }
 }
 
 @end

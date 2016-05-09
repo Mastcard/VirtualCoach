@@ -19,7 +19,7 @@
         _captureSession = captureSession;
         
         _captureVideoPreviewLayer = [AVCaptureVideoPreviewLayer layerWithSession:_captureSession.captureSession];
-        _captureVideoPreviewLayer.videoGravity = AVLayerVideoGravityResizeAspectFill;
+        _captureVideoPreviewLayer.videoGravity = AVLayerVideoGravityResize;
         
         [_captureVideoPreviewLayer setFrame:self.bounds];
         
@@ -38,6 +38,7 @@
     [[self layer] addSublayer:_captureVideoPreviewLayer];
     
     [_controlsView layout];
+    [_overlayView layout];
     
     [self addSubview:_overlayView];
     [self addSubview:_controlsView];

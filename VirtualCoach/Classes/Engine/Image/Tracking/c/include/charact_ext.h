@@ -15,7 +15,7 @@
 int32_t overlappingreg(regchar_t *ref, labels_t *reflabels, labels_t *labels, uint16_t width);
 
 int32_t largerRegion(charact_t *charact);
-int32_t regionAtPoint(pt2d_t p);
-int32_t regionAtZone(rect_t rect);
+int32_t regionAtPoint(labels_t *labels, pt2d_t p);
+int32_t regionAtZone(rect_t rect, labels_t *labels);
 
 #endif /* charact_ext_h */

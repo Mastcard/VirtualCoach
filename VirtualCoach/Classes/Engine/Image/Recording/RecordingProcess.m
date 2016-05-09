@@ -39,7 +39,9 @@
 didStartRecordingToOutputFileAtURL:(NSURL *)fileURL
       fromConnections:(NSArray *)connections
 {
-    NSLog(@"RecordingProcess running, recording at %@", fileURL.path);
+    _outputPath = fileURL.path;
+    
+    NSLog(@"RecordingProcess : did start recording to output file at %@", fileURL.path);
 }
 
 - (void)captureOutput:(AVCaptureFileOutput *)captureOutput

@@ -10,4 +10,6 @@
 
 @protocol Configurable <NSObject>
 
+- (void)setup;
+
 @end
