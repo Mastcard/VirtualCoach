@@ -10,36 +10,28 @@
 
 #import "UIApplicationNavigationViewController.h"
 #import "UICaptureSessionViewController.h"
+#import "UIHomeViewController.h"
 
 #import "CaptureProcessManager.h"
-
-@interface AppDelegate ()
-
-@property (nonatomic, strong) UICaptureSessionViewController *captureSessionController;
-
-@end
 
 @implementation AppDelegate
 
 
 - (BOOL)application:(UIApplication *)application didFinishLaunchingWithOptions:(NSDictionary *)launchOptions {
-    // Override point for customization after application launch.
-    
-    CaptureProcessManager *captureProcessManager = [CaptureProcessManager sharedInstance];
-    
-    _captureSessionController = [[UICaptureSessionViewController alloc] initWithSessionController:[captureProcessManager captureSessionController]];
-    
-    [_captureSessionController prepareForUse];
     
     self.window = [[UIWindow alloc] initWithFrame:[[UIScreen mainScreen] bounds]];
     
-    UIApplicationNavigationViewController *appNavController = [[UIApplicationNavigationViewController alloc] initWithRootViewController:_captureSessionController];
+    UIHomeViewController *homeViewController = [[UIHomeViewController alloc] init];
     
+    UIApplicationNavigationViewController *appNavController = [[UIApplicationNavigationViewController alloc] initWithRootViewController:homeViewController];
     self.window.rootViewController = appNavController;
-    
     [self.window makeKeyAndVisible];
+    [appNavController popToRootViewControllerAnimated:NO];
     
-    appNavController.navigationBarHidden = YES;
+    //appNavController.navigationBarHidden = YES;
+    
+    NSString *documentsDirectory = [NSSearchPathForDirectoriesInDomains(NSDocumentDirectory, NSUserDomainMask, YES) objectAtIndex:0];
+    appNavController.captureSessionViewController.videoDirectory = [NSURL fileURLWithPath:documentsDirectory];
     
     return YES;
 }

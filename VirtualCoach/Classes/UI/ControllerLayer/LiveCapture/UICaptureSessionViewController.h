@@ -11,6 +11,7 @@
 #import "CaptureSessionController.h"
 #import "UIBaseViewController.h"
 #import "HybridCaptureSessionController.h"
+#import "UIApplicationNavigationViewController.h"
 
 @interface UICaptureSessionViewController : UIBaseViewController <UIGestureRecognizerDelegate>
 

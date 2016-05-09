@@ -35,6 +35,7 @@
 		8A7E1FDE1C907A50005B41C7 /* HybridCaptureSessionController.m in Sources */ = {isa = PBXBuildFile; fileRef = 8A7E1FDD1C907A50005B41C7 /* HybridCaptureSessionController.m */; };
 		8A7E1FE21C908C60005B41C7 /* RecordingProcess.m in Sources */ = {isa = PBXBuildFile; fileRef = 8A7E1FE11C908C60005B41C7 /* RecordingProcess.m */; };
 		8A7E1FE51C936718005B41C7 /* TrackingService.m in Sources */ = {isa = PBXBuildFile; fileRef = 8A7E1FE41C936718005B41C7 /* TrackingService.m */; };
+		8A83AD3C1C9F15FD008E3BFA /* UICaptureSessionOverlayControlsView.m in Sources */ = {isa = PBXBuildFile; fileRef = 8A83AD3B1C9F15FD008E3BFA /* UICaptureSessionOverlayControlsView.m */; };
 		8A908A021C8F0B3E00B2C5EC /* ReferenceFrameProcess.m in Sources */ = {isa = PBXBuildFile; fileRef = 8A908A011C8F0B3E00B2C5EC /* ReferenceFrameProcess.m */; };
 		8AAC3A7A1C8C6DA60098E6A2 /* TrackingProcess.m in Sources */ = {isa = PBXBuildFile; fileRef = 8AAC3A791C8C6DA60098E6A2 /* TrackingProcess.m */; };
 		8AAC3A7E1C8C701E0098E6A2 /* QueueTest.m in Sources */ = {isa = PBXBuildFile; fileRef = 8AAC3A7D1C8C701E0098E6A2 /* QueueTest.m */; };
@@ -48,13 +49,14 @@
 		8AAC3A971C8C7EE50098E6A2 /* UIHomeViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = 8AAC3A961C8C7EE50098E6A2 /* UIHomeViewController.m */; };
 		8AAC3A9A1C8C8A5F0098E6A2 /* UIBaseLabel.m in Sources */ = {isa = PBXBuildFile; fileRef = 8AAC3A991C8C8A5F0098E6A2 /* UIBaseLabel.m */; };
 		8AAC3A9D1C8CB07C0098E6A2 /* UICaptureSessionOverlayView.m in Sources */ = {isa = PBXBuildFile; fileRef = 8AAC3A9C1C8CB07C0098E6A2 /* UICaptureSessionOverlayView.m */; };
+		8ABC6B0E1CDEAAE2008E3D1E /* ExtractorProcess.m in Sources */ = {isa = PBXBuildFile; fileRef = 8ABC6B0D1CDEAAE2008E3D1E /* ExtractorProcess.m */; };
+		8ABC6B101CDEAF32008E3D1E /* ImageIO.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 8ABC6B0F1CDEAF32008E3D1E /* ImageIO.framework */; };
 		8ABDDB601C87291400C48702 /* UIKit.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 8ABDDB5F1C87291400C48702 /* UIKit.framework */; };
 		8ABDDB621C87293A00C48702 /* QuartzCore.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 8ABDDB611C87293A00C48702 /* QuartzCore.framework */; };
 		8ABE3D8E1C78F77300AF659B /* main.m in Sources */ = {isa = PBXBuildFile; fileRef = 8ABE3D8D1C78F77300AF659B /* main.m */; };
 		8ABE3D911C78F77300AF659B /* AppDelegate.m in Sources */ = {isa = PBXBuildFile; fileRef = 8ABE3D901C78F77300AF659B /* AppDelegate.m */; };
 		8ABE3D991C78F77300AF659B /* Assets.xcassets in Resources */ = {isa = PBXBuildFile; fileRef = 8ABE3D981C78F77300AF659B /* Assets.xcassets */; };
 		8AC781AF1C961DB700551D3A /* CaptureProcessManager.m in Sources */ = {isa = PBXBuildFile; fileRef = 8AC781AE1C961DB700551D3A /* CaptureProcessManager.m */; };
-		8AD434AA1C9D909300A3C419 /* core_ext.c in Sources */ = {isa = PBXBuildFile; fileRef = 8AD434A91C9D909300A3C419 /* core_ext.c */; };
 		8AFA90401C946F7C00AD3535 /* TrackingServiceTest.m in Sources */ = {isa = PBXBuildFile; fileRef = 8AFA903F1C946F7C00AD3535 /* TrackingServiceTest.m */; };
 		8AFA90411C946FCC00AD3535 /* TrackingService.m in Sources */ = {isa = PBXBuildFile; fileRef = 8A7E1FE41C936718005B41C7 /* TrackingService.m */; };
 		8AFA90431C94701600AD3535 /* Resources in Resources */ = {isa = PBXBuildFile; fileRef = 8AFA90421C94701600AD3535 /* Resources */; };
@@ -134,6 +136,8 @@
 		8A7E1FE11C908C60005B41C7 /* RecordingProcess.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = RecordingProcess.m; sourceTree = "<group>"; };
 		8A7E1FE31C936718005B41C7 /* TrackingService.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = TrackingService.h; sourceTree = "<group>"; };
 		8A7E1FE41C936718005B41C7 /* TrackingService.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = TrackingService.m; sourceTree = "<group>"; };
+		8A83AD3A1C9F15FD008E3BFA /* UICaptureSessionOverlayControlsView.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = UICaptureSessionOverlayControlsView.h; sourceTree = "<group>"; };
+		8A83AD3B1C9F15FD008E3BFA /* UICaptureSessionOverlayControlsView.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = UICaptureSessionOverlayControlsView.m; sourceTree = "<group>"; };
 		8A908A001C8F0B3E00B2C5EC /* ReferenceFrameProcess.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = ReferenceFrameProcess.h; sourceTree = "<group>"; };
 		8A908A011C8F0B3E00B2C5EC /* ReferenceFrameProcess.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = ReferenceFrameProcess.m; sourceTree = "<group>"; };
 		8AAC3A771C8C6C200098E6A2 /* Process.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = Process.h; sourceTree = "<group>"; };
@@ -159,6 +163,9 @@
 		8AAC3A991C8C8A5F0098E6A2 /* UIBaseLabel.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = UIBaseLabel.m; sourceTree = "<group>"; };
 		8AAC3A9B1C8CB07C0098E6A2 /* UICaptureSessionOverlayView.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = UICaptureSessionOverlayView.h; sourceTree = "<group>"; };
 		8AAC3A9C1C8CB07C0098E6A2 /* UICaptureSessionOverlayView.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = UICaptureSessionOverlayView.m; sourceTree = "<group>"; };
+		8ABC6B0C1CDEAAE2008E3D1E /* ExtractorProcess.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = ExtractorProcess.h; sourceTree = "<group>"; };
+		8ABC6B0D1CDEAAE2008E3D1E /* ExtractorProcess.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = ExtractorProcess.m; sourceTree = "<group>"; };
+		8ABC6B0F1CDEAF32008E3D1E /* ImageIO.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = ImageIO.framework; path = System/Library/Frameworks/ImageIO.framework; sourceTree = SDKROOT; };
 		8ABDDB5F1C87291400C48702 /* UIKit.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = UIKit.framework; path = System/Library/Frameworks/UIKit.framework; sourceTree = SDKROOT; };
 		8ABDDB611C87293A00C48702 /* QuartzCore.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = QuartzCore.framework; path = System/Library/Frameworks/QuartzCore.framework; sourceTree = SDKROOT; };
 		8ABE3D891C78F77300AF659B /* VirtualCoach.app */ = {isa = PBXFileReference; explicitFileType = wrapper.application; includeInIndex = 0; path = VirtualCoach.app; sourceTree = BUILT_PRODUCTS_DIR; };
@@ -173,8 +180,6 @@
 		8ABE3DB31C78F77300AF659B /* Info.plist */ = {isa = PBXFileReference; lastKnownFileType = text.plist.xml; path = Info.plist; sourceTree = "<group>"; };
 		8AC781AD1C961DB700551D3A /* CaptureProcessManager.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = CaptureProcessManager.h; sourceTree = "<group>"; };
 		8AC781AE1C961DB700551D3A /* CaptureProcessManager.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = CaptureProcessManager.m; sourceTree = "<group>"; };
-		8AD434A81C9D908100A3C419 /* core_ext.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = core_ext.h; sourceTree = "<group>"; };
-		8AD434A91C9D909300A3C419 /* core_ext.c */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.c; path = core_ext.c; sourceTree = "<group>"; };
 		8AFA903F1C946F7C00AD3535 /* TrackingServiceTest.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = TrackingServiceTest.m; sourceTree = "<group>"; };
 		8AFA90421C94701600AD3535 /* Resources */ = {isa = PBXFileReference; lastKnownFileType = folder; path = Resources; sourceTree = "<group>"; };
 /* End PBXFileReference section */
@@ -184,6 +189,7 @@
 			isa = PBXFrameworksBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
+				8ABC6B101CDEAF32008E3D1E /* ImageIO.framework in Frameworks */,
 				8ABDDB621C87293A00C48702 /* QuartzCore.framework in Frameworks */,
 				8ABDDB601C87291400C48702 /* UIKit.framework in Frameworks */,
 			);
@@ -341,6 +347,8 @@
 				8A3A15351C8D85E80081F7E8 /* UICaptureSessionControlsView.m */,
 				8A7E1FD51C903131005B41C7 /* UIActivityIndicatorTitledView.h */,
 				8A7E1FD61C903131005B41C7 /* UIActivityIndicatorTitledView.m */,
+				8A83AD3A1C9F15FD008E3BFA /* UICaptureSessionOverlayControlsView.h */,
+				8A83AD3B1C9F15FD008E3BFA /* UICaptureSessionOverlayControlsView.m */,
 			);
 			path = LiveCapture;
 			sourceTree = "<group>";
@@ -404,6 +412,7 @@
 		8A748DBC1C7CB984007AA850 /* Image */ = {
 			isa = PBXGroup;
 			children = (
+				8ABC6B0B1CDEAAC3008E3D1E /* Extractor */,
 				8A7E1FDF1C908C26005B41C7 /* Recording */,
 				8A9089FF1C8F0B2600B2C5EC /* ReferenceFrame */,
 				8A748DBE1C7CB984007AA850 /* Tracking */,
@@ -430,7 +439,6 @@
 			children = (
 				8A748DC01C7CB9B4007AA850 /* include */,
 				8A748DC21C7CBA55007AA850 /* charact_ext.c */,
-				8AD434A91C9D909300A3C419 /* core_ext.c */,
 			);
 			path = c;
 			sourceTree = "<group>";
@@ -439,7 +447,6 @@
 			isa = PBXGroup;
 			children = (
 				8A748DC11C7CBA46007AA850 /* charact_ext.h */,
-				8AD434A81C9D908100A3C419 /* core_ext.h */,
 			);
 			path = include;
 			sourceTree = "<group>";
@@ -499,9 +506,19 @@
 			path = Foundation;
 			sourceTree = "<group>";
 		};
+		8ABC6B0B1CDEAAC3008E3D1E /* Extractor */ = {
+			isa = PBXGroup;
+			children = (
+				8ABC6B0C1CDEAAE2008E3D1E /* ExtractorProcess.h */,
+				8ABC6B0D1CDEAAE2008E3D1E /* ExtractorProcess.m */,
+			);
+			path = Extractor;
+			sourceTree = "<group>";
+		};
 		8ABE3D801C78F77300AF659B = {
 			isa = PBXGroup;
 			children = (
+				8ABC6B0F1CDEAF32008E3D1E /* ImageIO.framework */,
 				8ABDDB611C87293A00C48702 /* QuartzCore.framework */,
 				8ABDDB5F1C87291400C48702 /* UIKit.framework */,
 				8ABE3D8B1C78F77300AF659B /* VirtualCoach */,
@@ -799,6 +816,7 @@
 				8A908A021C8F0B3E00B2C5EC /* ReferenceFrameProcess.m in Sources */,
 				8A54950A1C8B4E7300FB24C2 /* UIRecordingButton.m in Sources */,
 				8AAC3A8E1C8C7A310098E6A2 /* UILaunchView.m in Sources */,
+				8ABC6B0E1CDEAAE2008E3D1E /* ExtractorProcess.m in Sources */,
 				8A3A15361C8D85E80081F7E8 /* UICaptureSessionControlsView.m in Sources */,
 				8AAC3A9D1C8CB07C0098E6A2 /* UICaptureSessionOverlayView.m in Sources */,
 				8ABE3D911C78F77300AF659B /* AppDelegate.m in Sources */,
@@ -815,13 +833,13 @@
 				8A5494F31C8B4DE700FB24C2 /* FramesCaptureSession.m in Sources */,
 				8A7E1FDB1C907448005B41C7 /* HybridCaptureSession.m in Sources */,
 				8ABE3D8E1C78F77300AF659B /* main.m in Sources */,
-				8AD434AA1C9D909300A3C419 /* core_ext.c in Sources */,
 				8A748DC31C7CBA55007AA850 /* charact_ext.c in Sources */,
 				8A5494F21C8B4DE700FB24C2 /* CaptureSessionControllerFactory.m in Sources */,
 				8A54950B1C8B4E7300FB24C2 /* UIRecordingDurationLabelView.m in Sources */,
 				8A5494ED1C8B4DE700FB24C2 /* CaptureDevicePropertiesRetriever.m in Sources */,
 				8A5494F41C8B4DE700FB24C2 /* FramesCaptureSessionController.m in Sources */,
 				8A5494EE1C8B4DE700FB24C2 /* CaptureDevicePropertiesUtilities.m in Sources */,
+				8A83AD3C1C9F15FD008E3BFA /* UICaptureSessionOverlayControlsView.m in Sources */,
 				8A5494EC1C8B4DE700FB24C2 /* CaptureDeviceManager.m in Sources */,
 				8AAC3A971C8C7EE50098E6A2 /* UIHomeViewController.m in Sources */,
 				8A5494F61C8B4DE700FB24C2 /* MovieCaptureSession.m in Sources */,

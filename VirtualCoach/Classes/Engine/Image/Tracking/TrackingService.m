@@ -14,7 +14,7 @@
 {
     uint32_t *count = (uint32_t *)calloc(labels->count, sizeof(uint32_t));
     
-    uint32_t id = reg->id;
+    uint32_t reg_id = reg->id;
     pt2d_t start = reg->bounds.start, end = reg->bounds.end;
     
     uint32_t i = 0, j = 0, k = 0;
@@ -27,7 +27,7 @@
             uint32_t reflabel = reflabels->data[idx];
             uint32_t label = labels->data[idx]; // needs to implement width in labels datatype
             
-            if ((reflabel == id) && (label > 0))
+            if ((reflabel == reg_id) && (label > 0))
                 count[label-1]++;
         }
     }
