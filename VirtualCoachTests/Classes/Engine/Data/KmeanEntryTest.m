@@ -39,30 +39,35 @@
     interval.start.y = 30;
     interval.end.x = 90;
     interval.end.y = 90;
-    speedVector * speedVectors0 = (speedVector *) calloc(10000, sizeof(speedVector));
-    speedVector * speedVectors1 = (speedVector *) calloc(10000, sizeof(speedVector));
+    vect2darray_t * speedVectors0 = (vect2darray_t *) calloc(1, sizeof(vect2darray_t));
+    vect2darray_t * speedVectors1 = (vect2darray_t *) calloc(1, sizeof(vect2darray_t));
+    
+    speedVectors0->length=10000;
+    speedVectors0->data = (vect2d_t *) calloc(10000, sizeof(vect2d_t));
+    speedVectors1->length=10000;
+    speedVectors1->data = (vect2d_t *) calloc(10000, sizeof(vect2d_t));
     int i =0;
     for (i=0; i<10000; i++) {
-        speedVectors0[i].u =0;
-        speedVectors0[i].v =0;
-        speedVectors1[i].u =0;
-        speedVectors1[i].v =0;
+        speedVectors0->data[i].x =0;
+        speedVectors0->data[i].y =0;
+        speedVectors1->data[i].x =0;
+        speedVectors1->data[i].y =0;
     }
     int j=0;
     for (i=interval.start.y; i<interval.end.y; i++) {
         for (j=interval.start.x; j<interval.end.x; j++) {
-            speedVectors0[PXL_IDX(width, i, j)].u =0;
-            speedVectors0[PXL_IDX(width, i, j)].v =50;
-            speedVectors1[PXL_IDX(width, i, j)].u =-200;
-            speedVectors1[PXL_IDX(width, i, j)].v =0;
+            speedVectors0->data[PXL_IDX(width, i, j)].x =0;
+            speedVectors0->data[PXL_IDX(width, i, j)].y =50;
+            speedVectors1->data[PXL_IDX(width, i, j)].x =-200;
+            speedVectors1->data[PXL_IDX(width, i, j)].y =0;
         }
     }
     [_entry generateDataEntryForKmeanFromFirstSpeedVectorsTab:speedVectors0 andSecondSpeedVectorsTab:speedVectors1 betweenInterval:interval andWithImageWidth:width];
     
-    XCTAssertEqual((unsigned int)_entry.time, 0);
-    XCTAssertEqual((unsigned int)_entry.maxAngle, 180);
-    XCTAssertEqual((double)_entry.meanAcceleration, 540000.000000);
-
+    XCTAssertEqual((int)_entry.time, 0);
+    XCTAssertEqual((int)_entry.maxAngle, 180);
+    XCTAssertEqual((double)_entry.meanAcceleration, 150);
+    
 }
 
 - (void)testPerformanceExample {

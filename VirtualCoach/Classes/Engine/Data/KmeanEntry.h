@@ -14,8 +14,8 @@
 
 @interface KmeanEntry : NSObject <NSCoding>
 
-@property (nonatomic) unsigned int time;
-@property (nonatomic) unsigned int maxAngle;
+@property (nonatomic) int time;
+@property (nonatomic) int maxAngle;
 @property (nonatomic) double meanAcceleration;
 
 /*!
@@ -33,6 +33,8 @@
  Width of image using to generate speed of each pixel
  @discussion
  */
-- (void)generateDataEntryForKmeanFromFirstSpeedVectorsTab:(speedVector *)speed1 andSecondSpeedVectorsTab:(speedVector *)speed2 betweenInterval:(rect_t)interval andWithImageWidth:(uint16_t)width;
+
+- (void)generateDataEntryForKmeanFromFirstSpeedVectorsTab:(vect2darray_t *)speed1 andSecondSpeedVectorsTab:(vect2darray_t *)speed2 betweenInterval:(rect_t)interval andWithImageWidth:(uint16_t)width;
+
 
 @end
