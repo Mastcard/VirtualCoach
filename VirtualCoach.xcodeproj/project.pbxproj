@@ -27,12 +27,14 @@
 		8ABE3D8E1C78F77300AF659B /* main.m in Sources */ = {isa = PBXBuildFile; fileRef = 8ABE3D8D1C78F77300AF659B /* main.m */; };
 		8ABE3D911C78F77300AF659B /* AppDelegate.m in Sources */ = {isa = PBXBuildFile; fileRef = 8ABE3D901C78F77300AF659B /* AppDelegate.m */; };
 		8ABE3D991C78F77300AF659B /* Assets.xcassets in Resources */ = {isa = PBXBuildFile; fileRef = 8ABE3D981C78F77300AF659B /* Assets.xcassets */; };
-		8ABE3DA71C78F77300AF659B /* VirtualCoachTests.m in Sources */ = {isa = PBXBuildFile; fileRef = 8ABE3DA61C78F77300AF659B /* VirtualCoachTests.m */; };
-		8ABE3DB21C78F77300AF659B /* VirtualCoachUITests.m in Sources */ = {isa = PBXBuildFile; fileRef = 8ABE3DB11C78F77300AF659B /* VirtualCoachUITests.m */; };
+		8AC781AF1C961DB700551D3A /* CaptureProcessManager.m in Sources */ = {isa = PBXBuildFile; fileRef = 8AC781AE1C961DB700551D3A /* CaptureProcessManager.m */; };
+		8AFA90401C946F7C00AD3535 /* TrackingServiceTest.m in Sources */ = {isa = PBXBuildFile; fileRef = 8AFA903F1C946F7C00AD3535 /* TrackingServiceTest.m */; };
+		8AFA90411C946FCC00AD3535 /* TrackingService.m in Sources */ = {isa = PBXBuildFile; fileRef = 8A7E1FE41C936718005B41C7 /* TrackingService.m */; };
+		8AFA90431C94701600AD3535 /* Resources in Resources */ = {isa = PBXBuildFile; fileRef = 8AFA90421C94701600AD3535 /* Resources */; };
 /* End PBXBuildFile section */
 
 /* Begin PBXContainerItemProxy section */
-		8ABE3DA31C78F77300AF659B /* PBXContainerItemProxy */ = {
+		8A513D521C94812900A11C60 /* PBXContainerItemProxy */ = {
 			isa = PBXContainerItemProxy;
 			containerPortal = 8ABE3D811C78F77300AF659B /* Project object */;
 			proxyType = 1;
@@ -76,11 +78,13 @@
 		8ABE3D981C78F77300AF659B /* Assets.xcassets */ = {isa = PBXFileReference; lastKnownFileType = folder.assetcatalog; path = Assets.xcassets; sourceTree = "<group>"; };
 		8ABE3D9D1C78F77300AF659B /* Info.plist */ = {isa = PBXFileReference; lastKnownFileType = text.plist.xml; path = Info.plist; sourceTree = "<group>"; };
 		8ABE3DA21C78F77300AF659B /* VirtualCoachTests.xctest */ = {isa = PBXFileReference; explicitFileType = wrapper.cfbundle; includeInIndex = 0; path = VirtualCoachTests.xctest; sourceTree = BUILT_PRODUCTS_DIR; };
-		8ABE3DA61C78F77300AF659B /* VirtualCoachTests.m */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.objc; path = VirtualCoachTests.m; sourceTree = "<group>"; };
 		8ABE3DA81C78F77300AF659B /* Info.plist */ = {isa = PBXFileReference; lastKnownFileType = text.plist.xml; path = Info.plist; sourceTree = "<group>"; };
 		8ABE3DAD1C78F77300AF659B /* VirtualCoachUITests.xctest */ = {isa = PBXFileReference; explicitFileType = wrapper.cfbundle; includeInIndex = 0; path = VirtualCoachUITests.xctest; sourceTree = BUILT_PRODUCTS_DIR; };
-		8ABE3DB11C78F77300AF659B /* VirtualCoachUITests.m */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.objc; path = VirtualCoachUITests.m; sourceTree = "<group>"; };
 		8ABE3DB31C78F77300AF659B /* Info.plist */ = {isa = PBXFileReference; lastKnownFileType = text.plist.xml; path = Info.plist; sourceTree = "<group>"; };
+		8AC781AD1C961DB700551D3A /* CaptureProcessManager.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = CaptureProcessManager.h; sourceTree = "<group>"; };
+		8AC781AE1C961DB700551D3A /* CaptureProcessManager.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = CaptureProcessManager.m; sourceTree = "<group>"; };
+		8AFA903F1C946F7C00AD3535 /* TrackingServiceTest.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = TrackingServiceTest.m; sourceTree = "<group>"; };
+		8AFA90421C94701600AD3535 /* Resources */ = {isa = PBXFileReference; lastKnownFileType = folder; path = Resources; sourceTree = "<group>"; };
 /* End PBXFileReference section */
 
 /* Begin PBXFrameworksBuildPhase section */
@@ -445,6 +449,7 @@
 		8ABE3D8B1C78F77300AF659B /* VirtualCoach */ = {
 			isa = PBXGroup;
 			children = (
+				8A748DBA1C7CB984007AA850 /* Classes */,
 				8ABE3D8F1C78F77300AF659B /* AppDelegate.h */,
 				8ABE3D901C78F77300AF659B /* AppDelegate.m */,
 				8ABE3D981C78F77300AF659B /* Assets.xcassets */,
@@ -477,10 +482,105 @@
 		8ABE3DB01C78F77300AF659B /* VirtualCoachUITests */ = {
 			isa = PBXGroup;
 			children = (
-				8ABE3DB11C78F77300AF659B /* VirtualCoachUITests.m */,
 				8ABE3DB31C78F77300AF659B /* Info.plist */,
+				8A513D501C947F3800A11C60 /* VirtualCoachUITest.m */,
 			);
 			path = VirtualCoachUITests;
+			sourceTree = "<group>";
+		};
+		8AD459C41C7DF58E005D51BC /* Persistence */ = {
+			isa = PBXGroup;
+			children = (
+				8AD459C51C7DF58E005D51BC /* DAO */,
+				8AD459C61C7DF58E005D51BC /* Database */,
+			);
+			path = Persistence;
+			sourceTree = "<group>";
+		};
+		8AD459C51C7DF58E005D51BC /* DAO */ = {
+			isa = PBXGroup;
+			children = (
+			);
+			path = DAO;
+			sourceTree = "<group>";
+		};
+		8AD459C61C7DF58E005D51BC /* Database */ = {
+			isa = PBXGroup;
+			children = (
+				8AD459C71C7DF58E005D51BC /* Data */,
+			);
+			path = Database;
+			sourceTree = "<group>";
+		};
+		8AD459C71C7DF58E005D51BC /* Data */ = {
+			isa = PBXGroup;
+			children = (
+			);
+			path = Data;
+			sourceTree = "<group>";
+		};
+		8AD459CA1C7DF58E005D51BC /* Runtime */ = {
+			isa = PBXGroup;
+			children = (
+				8AD459CB1C7DF58E005D51BC /* Initialization */,
+				8AD459CC1C7DF58E005D51BC /* Preferences */,
+			);
+			path = Runtime;
+			sourceTree = "<group>";
+		};
+		8AD459CB1C7DF58E005D51BC /* Initialization */ = {
+			isa = PBXGroup;
+			children = (
+			);
+			path = Initialization;
+			sourceTree = "<group>";
+		};
+		8AD459CC1C7DF58E005D51BC /* Preferences */ = {
+			isa = PBXGroup;
+			children = (
+			);
+			path = Preferences;
+			sourceTree = "<group>";
+		};
+		8AD459CD1C7DF597005D51BC /* Analysis */ = {
+			isa = PBXGroup;
+			children = (
+				8A26297D1CE0E0C900AF7ABB /* Recognition */,
+				8AD459CE1C7DF597005D51BC /* Classification */,
+			);
+			path = Analysis;
+			sourceTree = "<group>";
+		};
+		8AD459CE1C7DF597005D51BC /* Classification */ = {
+			isa = PBXGroup;
+			children = (
+			);
+			path = Classification;
+			sourceTree = "<group>";
+		};
+		8AFA903C1C946F5900AD3535 /* Engine */ = {
+			isa = PBXGroup;
+			children = (
+				8A2629811CE0E0FB00AF7ABB /* Classes */,
+				8AFA903D1C946F5900AD3535 /* Image */,
+			);
+			path = Engine;
+			sourceTree = "<group>";
+		};
+		8AFA903D1C946F5900AD3535 /* Image */ = {
+			isa = PBXGroup;
+			children = (
+				8AFA903E1C946F5900AD3535 /* Tracking */,
+			);
+			path = Image;
+			sourceTree = "<group>";
+		};
+		8AFA903E1C946F5900AD3535 /* Tracking */ = {
+			isa = PBXGroup;
+			children = (
+				8AFA903F1C946F7C00AD3535 /* TrackingServiceTest.m */,
+			);
+			path = Tracking;
 			sourceTree = "<group>";
 		};
 /* End PBXGroup section */
@@ -514,7 +614,7 @@
 			buildRules = (
 			);
 			dependencies = (
-				8ABE3DA41C78F77300AF659B /* PBXTargetDependency */,
+				8A513D531C94812900A11C60 /* PBXTargetDependency */,
 			);
 			name = VirtualCoachTests;
 			productName = VirtualCoachTests;
@@ -647,17 +747,17 @@
 			isa = PBXSourcesBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
-				8ABE3DB21C78F77300AF659B /* VirtualCoachUITests.m in Sources */,
+				8A513D511C947F3800A11C60 /* VirtualCoachUITest.m in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
 /* End PBXSourcesBuildPhase section */
 
 /* Begin PBXTargetDependency section */
-		8ABE3DA41C78F77300AF659B /* PBXTargetDependency */ = {
+		8A513D531C94812900A11C60 /* PBXTargetDependency */ = {
 			isa = PBXTargetDependency;
 			target = 8ABE3D881C78F77300AF659B /* VirtualCoach */;
-			targetProxy = 8ABE3DA31C78F77300AF659B /* PBXContainerItemProxy */;
+			targetProxy = 8A513D521C94812900A11C60 /* PBXContainerItemProxy */;
 		};
 		8ABE3DAF1C78F77300AF659B /* PBXTargetDependency */ = {
 			isa = PBXTargetDependency;
@@ -753,6 +853,7 @@
 			isa = XCBuildConfiguration;
 			buildSettings = {
 				ASSETCATALOG_COMPILER_APPICON_NAME = AppIcon;
+				DEBUG_INFORMATION_FORMAT = "dwarf-with-dsym";
 				HEADER_SEARCH_PATHS = "$(SOURCE_ROOT)/Libraries/libimagic/include/**";
 				INFOPLIST_FILE = VirtualCoach/Info.plist;
 				LD_RUNPATH_SEARCH_PATHS = "$(inherited) @executable_path/Frameworks";

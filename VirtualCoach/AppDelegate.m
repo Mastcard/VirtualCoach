@@ -8,25 +8,31 @@
 
 #import "AppDelegate.h"
 
-@interface AppDelegate ()
+#import "UIApplicationNavigationViewController.h"
+#import "UICaptureSessionViewController.h"
+#import "UIHomeViewController.h"
 
-@end
+#import "CaptureProcessManager.h"
 
 @implementation AppDelegate
 
 
 - (BOOL)application:(UIApplication *)application didFinishLaunchingWithOptions:(NSDictionary *)launchOptions {
-    // Override point for customization after application launch.
     
     self.window = [[UIWindow alloc] initWithFrame:[[UIScreen mainScreen] bounds]];
     
-    self.window.rootViewController = [[UIViewController alloc] init];
+    UIHomeViewController *homeViewController = [[UIHomeViewController alloc] init];
     
-    self.window.rootViewController.view = [[UIView alloc] initWithFrame:[UIScreen mainScreen].bounds];
-    
-    self.window.rootViewController.view.backgroundColor = [UIColor redColor];
-    
+    UIApplicationNavigationViewController *appNavController = [[UIApplicationNavigationViewController alloc] initWithRootViewController:homeViewController];
+    self.window.rootViewController = appNavController;
     [self.window makeKeyAndVisible];
+    [appNavController popToRootViewControllerAnimated:NO];
+    
+    //appNavController.navigationBarHidden = YES;
+    
+    NSString *documentsDirectory = [NSSearchPathForDirectoriesInDomains(NSDocumentDirectory, NSUserDomainMask, YES) objectAtIndex:0];
+    appNavController.captureSessionViewController.videoDirectory = [NSURL fileURLWithPath:documentsDirectory];
+    
     return YES;
 }
 
