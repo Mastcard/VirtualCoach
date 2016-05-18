@@ -9,13 +9,7 @@
 #import <Foundation/Foundation.h>
 #include <geometry.h>
 #include <core.h>
-
-/** structure temporaire jusqu'à la réécriture du code de l'optical FLOW par adrien **/
-typedef struct _speedVector {
-    double u;
-    double v;
-}speedVector;
-
+ 
 @interface Histogram : NSObject <NSCoding>
 
 @property (nonatomic) NSMutableArray * data;
@@ -32,7 +26,9 @@ typedef struct _speedVector {
  Width of image using to generate speed of each pixel
  @discussion
  */
-- (void)generateHistogramFromSpeedVector:(speedVector *)speed betweenInterval:(rect_t)interval andWithImageWidth:(uint16_t)width;
+
+- (void)generateHistogramFromSpeedVector:(vect2darray_t *)speed betweenInterval:(rect_t)interval andWithImageWidth:(uint16_t)width;
+
 
 /*!
  @method writeHistogramAtPath:path
@@ -53,5 +49,9 @@ typedef struct _speedVector {
  @discussion
  */
 + (id)loadHistogramAtPath:(NSString *)path;
+
+- (void)writeHistogramForTestAtPath:(NSString *)path;
+
+
 
 @end

@@ -257,70 +257,79 @@
 /* End PBXFrameworksBuildPhase section */
 
 /* Begin PBXGroup section */
-		8A26297D1CE0E0C900AF7ABB /* Recognition */ = {
+		6EB1CFA91CEA2CB9006B6940 /* Base */ = {
 			isa = PBXGroup;
 			children = (
-				8A26297E1CE0E0C900AF7ABB /* MotionDeduction.h */,
-				8A26297F1CE0E0C900AF7ABB /* MotionDeduction.m */,
 			);
-			path = Recognition;
+			path = Base;
 			sourceTree = "<group>";
 		};
-		8A2629811CE0E0FB00AF7ABB /* Classes */ = {
+		6EB1CFAC1CEA2CB9006B6940 /* Extractor */ = {
 			isa = PBXGroup;
 			children = (
-				8A2629821CE0E0FB00AF7ABB /* Engine */,
+				6EB1CFAD1CEA2CB9006B6940 /* ExtractorProcess.h */,
+				6EB1CFAE1CEA2CB9006B6940 /* ExtractorProcess.m */,
 			);
-			name = Classes;
-			path = VirtualCoachTests/Classes;
-			sourceTree = SOURCE_ROOT;
-		};
-		8A2629821CE0E0FB00AF7ABB /* Engine */ = {
-			isa = PBXGroup;
-			children = (
-				8A2629831CE0E0FB00AF7ABB /* Analysis */,
-				8A2629861CE0E0FB00AF7ABB /* Data */,
-			);
-			path = Engine;
+			path = Extractor;
 			sourceTree = "<group>";
 		};
-		8A2629831CE0E0FB00AF7ABB /* Analysis */ = {
+		6EB1CFAF1CEA2CB9006B6940 /* Recording */ = {
 			isa = PBXGroup;
 			children = (
-				8A2629841CE0E0FB00AF7ABB /* Recognition */,
+				6EB1CFB01CEA2CB9006B6940 /* RecordingProcess.h */,
+				6EB1CFB11CEA2CB9006B6940 /* RecordingProcess.m */,
 			);
-			path = Analysis;
+			path = Recording;
 			sourceTree = "<group>";
 		};
-		8A2629841CE0E0FB00AF7ABB /* Recognition */ = {
+		6EB1CFB21CEA2CB9006B6940 /* ReferenceFrame */ = {
 			isa = PBXGroup;
 			children = (
-				8A2629851CE0E0FB00AF7ABB /* MotionDeductionTest.m */,
+				6EB1CFB31CEA2CB9006B6940 /* ReferenceFrameProcess.h */,
+				6EB1CFB41CEA2CB9006B6940 /* ReferenceFrameProcess.m */,
 			);
-			path = Recognition;
+			path = ReferenceFrame;
 			sourceTree = "<group>";
 		};
-		8A2629861CE0E0FB00AF7ABB /* Data */ = {
+		6EB1CFB51CEA2CB9006B6940 /* Tracking */ = {
 			isa = PBXGroup;
 			children = (
-				8A2629871CE0E0FB00AF7ABB /* HistogramTest.m */,
-				8A2629881CE0E0FB00AF7ABB /* KmeanEntryDataSetTest.m */,
-				8A2629891CE0E0FB00AF7ABB /* KmeanEntryTest.m */,
+				6EB1CFB61CEA2CB9006B6940 /* c */,
+				6EB1CFBA1CEA2CB9006B6940 /* TrackingProcess.h */,
+				6EB1CFBB1CEA2CB9006B6940 /* TrackingProcess.m */,
+				6EB1CFBC1CEA2CB9006B6940 /* TrackingService.h */,
+				6EB1CFBD1CEA2CB9006B6940 /* TrackingService.m */,
 			);
-			path = Data;
+			path = Tracking;
 			sourceTree = "<group>";
 		};
-		8A26298E1CE0E12200AF7ABB /* Data */ = {
+		6EB1CFB61CEA2CB9006B6940 /* c */ = {
 			isa = PBXGroup;
 			children = (
-				8A26298F1CE0E12200AF7ABB /* Histogram.h */,
-				8A2629901CE0E12200AF7ABB /* Histogram.m */,
-				8A2629911CE0E12200AF7ABB /* KmeanEntry.h */,
-				8A2629921CE0E12200AF7ABB /* KmeanEntry.m */,
-				8A2629931CE0E12200AF7ABB /* KmeanEntryDataSet.h */,
-				8A2629941CE0E12200AF7ABB /* KmeanEntryDataSet.m */,
+				6EB1CFB71CEA2CB9006B6940 /* charact_ext.c */,
+				6EB1CFB81CEA2CB9006B6940 /* include */,
 			);
-			path = Data;
+			path = c;
+			sourceTree = "<group>";
+		};
+		6EB1CFB81CEA2CB9006B6940 /* include */ = {
+			isa = PBXGroup;
+			children = (
+				6EB1CFB91CEA2CB9006B6940 /* charact_ext.h */,
+			);
+			path = include;
+			sourceTree = "<group>";
+		};
+		6EB1CFC51CEA2D0C006B6940 /* Foundation */ = {
+			isa = PBXGroup;
+			children = (
+				6EB1CFC61CEA2D0C006B6940 /* NSOrderedDictionary.h */,
+				6EB1CFC71CEA2D0C006B6940 /* NSOrderedDictionary.m */,
+				6EB1CFC81CEA2D0C006B6940 /* Protocols */,
+				6EB1CFCB1CEA2D0C006B6940 /* Queue.h */,
+				6EB1CFCC1CEA2D0C006B6940 /* Queue.m */,
+			);
+			path = Foundation;
 			sourceTree = "<group>";
 		};
 		8A2CA9CC1CE27B0100303ACA /* Process */ = {
@@ -355,113 +364,128 @@
 		8A3A15371C8D87DF0081F7E8 /* Protocols */ = {
 			isa = PBXGroup;
 			children = (
-				8A3A15381C8D88160081F7E8 /* Layout.h */,
+				6EB1CFC91CEA2D0C006B6940 /* Configurable.h */,
+				6EB1CFCA1CEA2D0C006B6940 /* Process.h */,
 			);
 			path = Protocols;
 			sourceTree = "<group>";
 		};
-		8A5494CD1C8B4DE700FB24C2 /* Device */ = {
+		6EB1CFCF1CEA2D5E006B6940 /* LiveCapture */ = {
 			isa = PBXGroup;
 			children = (
-				8A5494CE1C8B4DE700FB24C2 /* CaptureDeviceManager.h */,
-				8A5494CF1C8B4DE700FB24C2 /* CaptureDeviceManager.m */,
-				8A5494D01C8B4DE700FB24C2 /* CaptureDevicePropertiesRetriever.h */,
-				8A5494D11C8B4DE700FB24C2 /* CaptureDevicePropertiesRetriever.m */,
-				8A5494D21C8B4DE700FB24C2 /* CaptureDevicePropertiesUtilities.h */,
-				8A5494D31C8B4DE700FB24C2 /* CaptureDevicePropertiesUtilities.m */,
+				6EB1CFD01CEA2D5E006B6940 /* Device */,
+				6EB1CFD71CEA2D5E006B6940 /* Stream */,
+			);
+			path = LiveCapture;
+			sourceTree = "<group>";
+		};
+		6EB1CFD01CEA2D5E006B6940 /* Device */ = {
+			isa = PBXGroup;
+			children = (
+				6EB1CFD11CEA2D5E006B6940 /* CaptureDeviceManager.h */,
+				6EB1CFD21CEA2D5E006B6940 /* CaptureDeviceManager.m */,
+				6EB1CFD31CEA2D5E006B6940 /* CaptureDevicePropertiesRetriever.h */,
+				6EB1CFD41CEA2D5E006B6940 /* CaptureDevicePropertiesRetriever.m */,
+				6EB1CFD51CEA2D5E006B6940 /* CaptureDevicePropertiesUtilities.h */,
+				6EB1CFD61CEA2D5E006B6940 /* CaptureDevicePropertiesUtilities.m */,
 			);
 			path = Device;
 			sourceTree = "<group>";
 		};
-		8A5494D41C8B4DE700FB24C2 /* Stream */ = {
+		6EB1CFD71CEA2D5E006B6940 /* Stream */ = {
 			isa = PBXGroup;
 			children = (
-				8A7E1FD81C90717A005B41C7 /* HybridCaptureSession */,
-				8A5494D51C8B4DE700FB24C2 /* Base */,
-				8A5494DC1C8B4DE700FB24C2 /* CaptureSessionControllerFactory.h */,
-				8A5494DD1C8B4DE700FB24C2 /* CaptureSessionControllerFactory.m */,
-				8A5494DE1C8B4DE700FB24C2 /* FramesCaptureSession */,
-				8A5494E51C8B4DE700FB24C2 /* MovieCaptureSession */,
+				6EB1CFD81CEA2D5E006B6940 /* Base */,
+				6EB1CFDD1CEA2D5E006B6940 /* CaptureSessionControllerFactory.h */,
+				6EB1CFDE1CEA2D5E006B6940 /* CaptureSessionControllerFactory.m */,
+				6EB1CFDF1CEA2D5E006B6940 /* FramesCaptureSession */,
+				6EB1CFE41CEA2D5E006B6940 /* HybridCaptureSession */,
+				6EB1CFE91CEA2D5E006B6940 /* MovieCaptureSession */,
 			);
 			path = Stream;
 			sourceTree = "<group>";
 		};
-		8A5494D51C8B4DE700FB24C2 /* Base */ = {
+		6EB1CFD81CEA2D5E006B6940 /* Base */ = {
 			isa = PBXGroup;
 			children = (
-				8A5494D61C8B4DE700FB24C2 /* CaptureSession.h */,
-				8A5494D71C8B4DE700FB24C2 /* CaptureSession.m */,
-				8A5494D81C8B4DE700FB24C2 /* CaptureSessionController.h */,
-				8A5494D91C8B4DE700FB24C2 /* CaptureSessionController.m */,
+				6EB1CFD91CEA2D5E006B6940 /* CaptureSession.h */,
+				6EB1CFDA1CEA2D5E006B6940 /* CaptureSession.m */,
+				6EB1CFDB1CEA2D5E006B6940 /* CaptureSessionController.h */,
+				6EB1CFDC1CEA2D5E006B6940 /* CaptureSessionController.m */,
 			);
 			path = Base;
 			sourceTree = "<group>";
 		};
-		8A5494DE1C8B4DE700FB24C2 /* FramesCaptureSession */ = {
+		6EB1CFDF1CEA2D5E006B6940 /* FramesCaptureSession */ = {
 			isa = PBXGroup;
 			children = (
-				8A5494DF1C8B4DE700FB24C2 /* FramesCaptureSession.h */,
-				8A5494E01C8B4DE700FB24C2 /* FramesCaptureSession.m */,
-				8A5494E11C8B4DE700FB24C2 /* FramesCaptureSessionController.h */,
-				8A5494E21C8B4DE700FB24C2 /* FramesCaptureSessionController.m */,
+				6EB1CFE01CEA2D5E006B6940 /* FramesCaptureSession.h */,
+				6EB1CFE11CEA2D5E006B6940 /* FramesCaptureSession.m */,
+				6EB1CFE21CEA2D5E006B6940 /* FramesCaptureSessionController.h */,
+				6EB1CFE31CEA2D5E006B6940 /* FramesCaptureSessionController.m */,
 			);
 			path = FramesCaptureSession;
 			sourceTree = "<group>";
 		};
-		8A5494E51C8B4DE700FB24C2 /* MovieCaptureSession */ = {
+		6EB1CFE41CEA2D5E006B6940 /* HybridCaptureSession */ = {
 			isa = PBXGroup;
 			children = (
-				8A5494E61C8B4DE700FB24C2 /* MovieCaptureSession.h */,
-				8A5494E71C8B4DE700FB24C2 /* MovieCaptureSession.m */,
-				8A5494E81C8B4DE700FB24C2 /* MovieCaptureSessionController.h */,
-				8A5494E91C8B4DE700FB24C2 /* MovieCaptureSessionController.m */,
+				6EB1CFE51CEA2D5E006B6940 /* HybridCaptureSession.h */,
+				6EB1CFE61CEA2D5E006B6940 /* HybridCaptureSession.m */,
+				6EB1CFE71CEA2D5E006B6940 /* HybridCaptureSessionController.h */,
+				6EB1CFE81CEA2D5E006B6940 /* HybridCaptureSessionController.m */,
+			);
+			path = HybridCaptureSession;
+			sourceTree = "<group>";
+		};
+		6EB1CFE91CEA2D5E006B6940 /* MovieCaptureSession */ = {
+			isa = PBXGroup;
+			children = (
+				6EB1CFEA1CEA2D5E006B6940 /* MovieCaptureSession.h */,
+				6EB1CFEB1CEA2D5E006B6940 /* MovieCaptureSession.m */,
+				6EB1CFEC1CEA2D5E006B6940 /* MovieCaptureSessionController.h */,
+				6EB1CFED1CEA2D5E006B6940 /* MovieCaptureSessionController.m */,
 			);
 			path = MovieCaptureSession;
 			sourceTree = "<group>";
 		};
-		8A5494F91C8B4E4100FB24C2 /* UI */ = {
+		6EB1CFFA1CEA2D8B006B6940 /* UI */ = {
 			isa = PBXGroup;
 			children = (
-				8A3A15371C8D87DF0081F7E8 /* Protocols */,
-				8A5494FA1C8B4E4100FB24C2 /* ControllerLayer */,
-				8A5494FB1C8B4E4100FB24C2 /* PresentationLayer */,
+				6EB1CFFB1CEA2D8B006B6940 /* ControllerLayer */,
+				6EB1D00A1CEA2D8B006B6940 /* PresentationLayer */,
+				6EB1D0291CEA2D8B006B6940 /* Protocols */,
 			);
 			path = UI;
 			sourceTree = "<group>";
 		};
-		8A5494FA1C8B4E4100FB24C2 /* ControllerLayer */ = {
+		6EB1CFFB1CEA2D8B006B6940 /* ControllerLayer */ = {
 			isa = PBXGroup;
 			children = (
-				8A54950D1C8B55D300FB24C2 /* Base */,
-				8A5494FC1C8B4E6B00FB24C2 /* LiveCapture */,
-				8AAC3A801C8C76EE0098E6A2 /* UILaunchViewController.h */,
-				8AAC3A811C8C76EE0098E6A2 /* UILaunchViewController.m */,
-				8AAC3A831C8C78B70098E6A2 /* UIApplicationNavigationViewController.h */,
-				8AAC3A841C8C78B70098E6A2 /* UIApplicationNavigationViewController.m */,
-				8AAC3A891C8C79280098E6A2 /* UIAuthenticationViewController.h */,
-				8AAC3A8A1C8C79280098E6A2 /* UIAuthenticationViewController.m */,
-				8AAC3A951C8C7EE50098E6A2 /* UIHomeViewController.h */,
-				8AAC3A961C8C7EE50098E6A2 /* UIHomeViewController.m */,
+				6EB1CFFC1CEA2D8B006B6940 /* Base */,
+				6EB1CFFF1CEA2D8B006B6940 /* LiveCapture */,
+				6EB1D0021CEA2D8B006B6940 /* UIApplicationNavigationViewController.h */,
+				6EB1D0031CEA2D8B006B6940 /* UIApplicationNavigationViewController.m */,
+				6EB1D0041CEA2D8B006B6940 /* UIAuthenticationViewController.h */,
+				6EB1D0051CEA2D8B006B6940 /* UIAuthenticationViewController.m */,
+				6EB1D0061CEA2D8B006B6940 /* UIHomeViewController.h */,
+				6EB1D0071CEA2D8B006B6940 /* UIHomeViewController.m */,
+				6EB1D0081CEA2D8B006B6940 /* UILaunchViewController.h */,
+				6EB1D0091CEA2D8B006B6940 /* UILaunchViewController.m */,
 			);
 			path = ControllerLayer;
 			sourceTree = "<group>";
 		};
-		8A5494FB1C8B4E4100FB24C2 /* PresentationLayer */ = {
+		6EB1CFFC1CEA2D8B006B6940 /* Base */ = {
 			isa = PBXGroup;
 			children = (
-				8A5495111C8B55DF00FB24C2 /* Base */,
-				8A5495001C8B4E7300FB24C2 /* LiveCapture */,
-				8AAC3A8C1C8C7A310098E6A2 /* UILaunchView.h */,
-				8AAC3A8D1C8C7A310098E6A2 /* UILaunchView.m */,
-				8AAC3A8F1C8C7A870098E6A2 /* UIAuthenticationView.h */,
-				8AAC3A901C8C7A870098E6A2 /* UIAuthenticationView.m */,
-				8AAC3A921C8C7EC00098E6A2 /* UIHomeView.h */,
-				8AAC3A931C8C7EC00098E6A2 /* UIHomeView.m */,
+				6EB1CFFD1CEA2D8B006B6940 /* UIBaseViewController.h */,
+				6EB1CFFE1CEA2D8B006B6940 /* UIBaseViewController.m */,
 			);
-			path = PresentationLayer;
+			path = Base;
 			sourceTree = "<group>";
 		};
-		8A5494FC1C8B4E6B00FB24C2 /* LiveCapture */ = {
+		6EB1CFFF1CEA2D8B006B6940 /* LiveCapture */ = {
 			isa = PBXGroup;
 			children = (
 				8A5494FD1C8B4E6B00FB24C2 /* UICaptureSessionViewController.h */,
@@ -472,76 +496,109 @@
 			path = LiveCapture;
 			sourceTree = "<group>";
 		};
-		8A5495001C8B4E7300FB24C2 /* LiveCapture */ = {
+		6EB1D00A1CEA2D8B006B6940 /* PresentationLayer */ = {
 			isa = PBXGroup;
 			children = (
-				8A5495011C8B4E7300FB24C2 /* UICaptureSessionView.h */,
-				8A5495021C8B4E7300FB24C2 /* UICaptureSessionView.m */,
-				8A5495031C8B4E7300FB24C2 /* UIRecordingButton.h */,
-				8A5495041C8B4E7300FB24C2 /* UIRecordingButton.m */,
-				8A5495051C8B4E7300FB24C2 /* UIRecordingDurationLabelView.h */,
-				8A5495061C8B4E7300FB24C2 /* UIRecordingDurationLabelView.m */,
-				8A5495071C8B4E7300FB24C2 /* UIRecordingIconView.h */,
-				8A5495081C8B4E7300FB24C2 /* UIRecordingIconView.m */,
-				8AAC3A9B1C8CB07C0098E6A2 /* UICaptureSessionOverlayView.h */,
-				8AAC3A9C1C8CB07C0098E6A2 /* UICaptureSessionOverlayView.m */,
-				8A3A15341C8D85E80081F7E8 /* UICaptureSessionControlsView.h */,
-				8A3A15351C8D85E80081F7E8 /* UICaptureSessionControlsView.m */,
-				8A7E1FD51C903131005B41C7 /* UIActivityIndicatorTitledView.h */,
-				8A7E1FD61C903131005B41C7 /* UIActivityIndicatorTitledView.m */,
-				8A83AD3A1C9F15FD008E3BFA /* UICaptureSessionOverlayControlsView.h */,
-				8A83AD3B1C9F15FD008E3BFA /* UICaptureSessionOverlayControlsView.m */,
+				6EB1D00B1CEA2D8B006B6940 /* Base */,
+				6EB1D0121CEA2D8B006B6940 /* LiveCapture */,
+				6EB1D0231CEA2D8B006B6940 /* UIAuthenticationView.h */,
+				6EB1D0241CEA2D8B006B6940 /* UIAuthenticationView.m */,
+				6EB1D0251CEA2D8B006B6940 /* UIHomeView.h */,
+				6EB1D0261CEA2D8B006B6940 /* UIHomeView.m */,
+				6EB1D0271CEA2D8B006B6940 /* UILaunchView.h */,
+				6EB1D0281CEA2D8B006B6940 /* UILaunchView.m */,
+			);
+			path = PresentationLayer;
+			sourceTree = "<group>";
+		};
+		6EB1D00B1CEA2D8B006B6940 /* Base */ = {
+			isa = PBXGroup;
+			children = (
+				6EB1D00C1CEA2D8B006B6940 /* UIBaseButton.h */,
+				6EB1D00D1CEA2D8B006B6940 /* UIBaseButton.m */,
+				6EB1D00E1CEA2D8B006B6940 /* UIBaseLabel.h */,
+				6EB1D00F1CEA2D8B006B6940 /* UIBaseLabel.m */,
+				6EB1D0101CEA2D8B006B6940 /* UIBaseView.h */,
+				6EB1D0111CEA2D8B006B6940 /* UIBaseView.m */,
+			);
+			path = Base;
+			sourceTree = "<group>";
+		};
+		6EB1D0121CEA2D8B006B6940 /* LiveCapture */ = {
+			isa = PBXGroup;
+			children = (
+				6EB1D0131CEA2D8B006B6940 /* UIActivityIndicatorTitledView.h */,
+				6EB1D0141CEA2D8B006B6940 /* UIActivityIndicatorTitledView.m */,
+				6EB1D0151CEA2D8B006B6940 /* UICaptureSessionControlsView.h */,
+				6EB1D0161CEA2D8B006B6940 /* UICaptureSessionControlsView.m */,
+				6EB1D0171CEA2D8B006B6940 /* UICaptureSessionOverlayControlsView.h */,
+				6EB1D0181CEA2D8B006B6940 /* UICaptureSessionOverlayControlsView.m */,
+				6EB1D0191CEA2D8B006B6940 /* UICaptureSessionOverlayView.h */,
+				6EB1D01A1CEA2D8B006B6940 /* UICaptureSessionOverlayView.m */,
+				6EB1D01B1CEA2D8B006B6940 /* UICaptureSessionView.h */,
+				6EB1D01C1CEA2D8B006B6940 /* UICaptureSessionView.m */,
+				6EB1D01D1CEA2D8B006B6940 /* UIRecordingButton.h */,
+				6EB1D01E1CEA2D8B006B6940 /* UIRecordingButton.m */,
+				6EB1D01F1CEA2D8B006B6940 /* UIRecordingDurationLabelView.h */,
+				6EB1D0201CEA2D8B006B6940 /* UIRecordingDurationLabelView.m */,
+				6EB1D0211CEA2D8B006B6940 /* UIRecordingIconView.h */,
+				6EB1D0221CEA2D8B006B6940 /* UIRecordingIconView.m */,
 			);
 			path = LiveCapture;
 			sourceTree = "<group>";
 		};
-		8A54950D1C8B55D300FB24C2 /* Base */ = {
+		6EB1D0291CEA2D8B006B6940 /* Protocols */ = {
 			isa = PBXGroup;
 			children = (
-				8A54950E1C8B55D300FB24C2 /* UIBaseViewController.h */,
-				8A54950F1C8B55D300FB24C2 /* UIBaseViewController.m */,
+				6EB1D02A1CEA2D8B006B6940 /* Layout.h */,
 			);
-			path = Base;
+			path = Protocols;
 			sourceTree = "<group>";
 		};
-		8A5495111C8B55DF00FB24C2 /* Base */ = {
+		6EB1D0471CEA2E44006B6940 /* Engine */ = {
 			isa = PBXGroup;
 			children = (
-				8A5495121C8B55DF00FB24C2 /* UIBaseButton.h */,
-				8A5495131C8B55DF00FB24C2 /* UIBaseButton.m */,
-				8A5495141C8B55DF00FB24C2 /* UIBaseView.h */,
-				8A5495151C8B55DF00FB24C2 /* UIBaseView.m */,
-				8AAC3A981C8C8A5F0098E6A2 /* UIBaseLabel.h */,
-				8AAC3A991C8C8A5F0098E6A2 /* UIBaseLabel.m */,
+				6EB1D0481CEA2E44006B6940 /* Image */,
 			);
-			path = Base;
+			path = Engine;
 			sourceTree = "<group>";
 		};
-		8A5495181C8B56EC00FB24C2 /* Foundation */ = {
+		6EB1D0481CEA2E44006B6940 /* Image */ = {
 			isa = PBXGroup;
 			children = (
-				8AAC3A751C8C6A1A0098E6A2 /* Protocols */,
-				8A5495191C8B578600FB24C2 /* NSOrderedDictionary.h */,
-				8A54951A1C8B578600FB24C2 /* NSOrderedDictionary.m */,
-				8A54951B1C8B578600FB24C2 /* Queue.h */,
-				8A54951C1C8B578600FB24C2 /* Queue.m */,
+				6EB1D0491CEA2E44006B6940 /* Tracking */,
+			);
+			path = Image;
+			sourceTree = "<group>";
+		};
+		6EB1D0491CEA2E44006B6940 /* Tracking */ = {
+			isa = PBXGroup;
+			children = (
+				6EB1D04A1CEA2E44006B6940 /* TrackingServiceTest.m */,
+			);
+			path = Tracking;
+			sourceTree = "<group>";
+		};
+		6EB1D04B1CEA2E44006B6940 /* Foundation */ = {
+			isa = PBXGroup;
+			children = (
+				6EB1D04C1CEA2E44006B6940 /* QueueTest.m */,
 			);
 			path = Foundation;
 			sourceTree = "<group>";
 		};
-		8A748DBA1C7CB984007AA850 /* Classes */ = {
+		6EE37B5A1C87275E006E0626 /* Classes */ = {
 			isa = PBXGroup;
 			children = (
-				8A5495181C8B56EC00FB24C2 /* Foundation */,
-				8A5494F91C8B4E4100FB24C2 /* UI */,
-				8AD459C41C7DF58E005D51BC /* Persistence */,
-				8AD459CA1C7DF58E005D51BC /* Runtime */,
-				8A748DBB1C7CB984007AA850 /* Engine */,
+				6EE37B5B1C87275E006E0626 /* Engine */,
+				6EE37B621C87275E006E0626 /* Persistence */,
+				6EE37B661C87275E006E0626 /* PresentationLayer */,
+				6EE37B681C87275E006E0626 /* Runtime */,
 			);
 			path = Classes;
 			sourceTree = "<group>";
 		};
-		8A748DBB1C7CB984007AA850 /* Engine */ = {
+		6EE37B5B1C87275E006E0626 /* Engine */ = {
 			isa = PBXGroup;
 			children = (
 				8A2CA9CC1CE27B0100303ACA /* Process */,
@@ -553,7 +610,16 @@
 			path = Engine;
 			sourceTree = "<group>";
 		};
-		8A748DBC1C7CB984007AA850 /* Image */ = {
+		6EE37B5C1C87275E006E0626 /* Analysis */ = {
+			isa = PBXGroup;
+			children = (
+				6EE37BA51C8F54CE006E0626 /* Recognition */,
+				6EE37B5D1C87275E006E0626 /* Classification */,
+			);
+			path = Analysis;
+			sourceTree = "<group>";
+		};
+		6EE37B5D1C87275E006E0626 /* Classification */ = {
 			isa = PBXGroup;
 			children = (
 				8AB3C4871CE51726004022C0 /* Tools */,
@@ -567,7 +633,14 @@
 			path = Image;
 			sourceTree = "<group>";
 		};
-		8A748DBE1C7CB984007AA850 /* Tracking */ = {
+		6EE37B601C87275E006E0626 /* Base */ = {
+			isa = PBXGroup;
+			children = (
+			);
+			path = Base;
+			sourceTree = "<group>";
+		};
+		6EE37B611C87275E006E0626 /* Tracking */ = {
 			isa = PBXGroup;
 			children = (
 				8A748DBF1C7CB984007AA850 /* c */,
@@ -579,77 +652,69 @@
 			path = Tracking;
 			sourceTree = "<group>";
 		};
-		8A748DBF1C7CB984007AA850 /* c */ = {
+		6EE37B621C87275E006E0626 /* Persistence */ = {
 			isa = PBXGroup;
 			children = (
-				8A748DC01C7CB9B4007AA850 /* include */,
-				8A748DC21C7CBA55007AA850 /* charact_ext.c */,
+				6EE37B631C87275E006E0626 /* DAO */,
+				6EE37B641C87275E006E0626 /* Database */,
 			);
-			path = c;
+			path = Persistence;
 			sourceTree = "<group>";
 		};
-		8A748DC01C7CB9B4007AA850 /* include */ = {
+		6EE37B631C87275E006E0626 /* DAO */ = {
 			isa = PBXGroup;
 			children = (
-				8A748DC11C7CBA46007AA850 /* charact_ext.h */,
 			);
-			path = include;
+			path = DAO;
 			sourceTree = "<group>";
 		};
-		8A7E1FD81C90717A005B41C7 /* HybridCaptureSession */ = {
+		6EE37B641C87275E006E0626 /* Database */ = {
 			isa = PBXGroup;
 			children = (
-				8A7E1FD91C907448005B41C7 /* HybridCaptureSession.h */,
-				8A7E1FDA1C907448005B41C7 /* HybridCaptureSession.m */,
-				8A7E1FDC1C907A50005B41C7 /* HybridCaptureSessionController.h */,
-				8A7E1FDD1C907A50005B41C7 /* HybridCaptureSessionController.m */,
+				6EE37B651C87275E006E0626 /* Data */,
 			);
-			path = HybridCaptureSession;
+			path = Database;
 			sourceTree = "<group>";
 		};
-		8A7E1FDF1C908C26005B41C7 /* Recording */ = {
+		6EE37B651C87275E006E0626 /* Data */ = {
 			isa = PBXGroup;
 			children = (
-				8A7E1FE01C908C60005B41C7 /* RecordingProcess.h */,
-				8A7E1FE11C908C60005B41C7 /* RecordingProcess.m */,
 			);
-			path = Recording;
+			path = Data;
 			sourceTree = "<group>";
 		};
-		8A7E8CF51C871B0A00FF4866 /* LiveCapture */ = {
+		6EE37B661C87275E006E0626 /* PresentationLayer */ = {
 			isa = PBXGroup;
 			children = (
-				8A5494CD1C8B4DE700FB24C2 /* Device */,
-				8A5494D41C8B4DE700FB24C2 /* Stream */,
+				6EE37B671C87275E006E0626 /* ControllerLayer */,
 			);
-			path = LiveCapture;
+			path = PresentationLayer;
 			sourceTree = "<group>";
 		};
-		8A9089FF1C8F0B2600B2C5EC /* ReferenceFrame */ = {
+		6EE37B671C87275E006E0626 /* ControllerLayer */ = {
 			isa = PBXGroup;
 			children = (
 				8A908A001C8F0B3E00B2C5EC /* ReferenceFrameProcess.h */,
 				8A908A011C8F0B3E00B2C5EC /* ReferenceFrameProcess.m */,
 				8A1E4AF91CE67F4100A659F5 /* ReferenceFrameProcessDelegate.h */,
 			);
-			path = ReferenceFrame;
+			path = ControllerLayer;
 			sourceTree = "<group>";
 		};
-		8AAC3A751C8C6A1A0098E6A2 /* Protocols */ = {
+		6EE37B681C87275E006E0626 /* Runtime */ = {
 			isa = PBXGroup;
 			children = (
-				8AAC3A771C8C6C200098E6A2 /* Process.h */,
-				8AAC3A7B1C8C6E5B0098E6A2 /* Configurable.h */,
+				6EE37B691C87275E006E0626 /* Initialization */,
+				6EE37B6A1C87275E006E0626 /* Preferences */,
 			);
-			path = Protocols;
+			path = Runtime;
 			sourceTree = "<group>";
 		};
-		8AAC3A7C1C8C6FF80098E6A2 /* Foundation */ = {
+		6EE37B691C87275E006E0626 /* Initialization */ = {
 			isa = PBXGroup;
 			children = (
-				8AAC3A7D1C8C701E0098E6A2 /* QueueTest.m */,
 			);
-			path = Foundation;
+			path = Initialization;
 			sourceTree = "<group>";
 		};
 		8AB3C4871CE51726004022C0 /* Tools */ = {
@@ -670,10 +735,10 @@
 				8AC87E741CE3731B007278F7 /* ExtractorVideoDataOutputProcess.m */,
 				8AC87E761CE37365007278F7 /* ExtractorVideoDataOutputDelegate.h */,
 			);
-			path = Extractor;
+			path = Preferences;
 			sourceTree = "<group>";
 		};
-		8ABE3D801C78F77300AF659B = {
+		6EE37B831C8739E2006E0626 /* Classes */ = {
 			isa = PBXGroup;
 			children = (
 				8AB30FEC1CEBC63F00351240 /* MobileCoreServices.framework */,
@@ -684,6 +749,170 @@
 				8ABE3DA51C78F77300AF659B /* VirtualCoachTests */,
 				8ABE3DB01C78F77300AF659B /* VirtualCoachUITests */,
 				8ABE3D8A1C78F77300AF659B /* Products */,
+			);
+			path = Classes;
+			sourceTree = "<group>";
+		};
+		6EE37B841C8739E2006E0626 /* Engine */ = {
+			isa = PBXGroup;
+			children = (
+				6EB1CFCF1CEA2D5E006B6940 /* LiveCapture */,
+				6EE37BB21C981B32006E0626 /* Tools */,
+				6EE37B851C8739E2006E0626 /* Analysis */,
+				6EE37B871C8739E2006E0626 /* Data */,
+				6EE37B8A1C8739E2006E0626 /* Image */,
+			);
+			path = Engine;
+			sourceTree = "<group>";
+		};
+		6EE37B851C8739E2006E0626 /* Analysis */ = {
+			isa = PBXGroup;
+			children = (
+				6EE37BA41C8F5493006E0626 /* Recognition */,
+				6EE37B861C8739E2006E0626 /* Classification */,
+			);
+			path = Analysis;
+			sourceTree = "<group>";
+		};
+		6EE37B861C8739E2006E0626 /* Classification */ = {
+			isa = PBXGroup;
+			children = (
+				6EE37BAF1C98037A006E0626 /* Cluster.h */,
+				6EE37BB01C98037A006E0626 /* Cluster.m */,
+				6EE37BB61C981C37006E0626 /* KmeanCalculation.h */,
+				6EE37BB71C981C37006E0626 /* KmeanCalculation.m */,
+			);
+			path = Classification;
+			sourceTree = "<group>";
+		};
+		6EE37B871C8739E2006E0626 /* Data */ = {
+			isa = PBXGroup;
+			children = (
+				6EE37B881C8739E2006E0626 /* Histogram.h */,
+				6EE37B891C8739E2006E0626 /* Histogram.m */,
+				6EE37B981C88D07C006E0626 /* KmeanEntry.h */,
+				6EE37B991C88D07C006E0626 /* KmeanEntry.m */,
+				6EE37B9B1C8973C7006E0626 /* KmeanEntryDataSet.h */,
+				6EE37B9C1C8973C7006E0626 /* KmeanEntryDataSet.m */,
+			);
+			path = Data;
+			sourceTree = "<group>";
+		};
+		6EE37B8A1C8739E2006E0626 /* Image */ = {
+			isa = PBXGroup;
+			children = (
+				6EB1CFA91CEA2CB9006B6940 /* Base */,
+				6EB1CFAA1CEA2CB9006B6940 /* CaptureProcessManager.h */,
+				6EB1CFAB1CEA2CB9006B6940 /* CaptureProcessManager.m */,
+				6EB1CFAC1CEA2CB9006B6940 /* Extractor */,
+				6EB1CFAF1CEA2CB9006B6940 /* Recording */,
+				6EB1CFB21CEA2CB9006B6940 /* ReferenceFrame */,
+				6EB1CFB51CEA2CB9006B6940 /* Tracking */,
+			);
+			path = Image;
+			sourceTree = "<group>";
+		};
+		6EE37B8D1C8739E2006E0626 /* Persistence */ = {
+			isa = PBXGroup;
+			children = (
+				6EE37B8E1C8739E2006E0626 /* DAO */,
+				6EE37B8F1C8739E2006E0626 /* Database */,
+			);
+			path = Persistence;
+			sourceTree = "<group>";
+		};
+		6EE37B8E1C8739E2006E0626 /* DAO */ = {
+			isa = PBXGroup;
+			children = (
+			);
+			path = DAO;
+			sourceTree = "<group>";
+		};
+		6EE37B8F1C8739E2006E0626 /* Database */ = {
+			isa = PBXGroup;
+			children = (
+				6EE37B901C8739E2006E0626 /* Data */,
+			);
+			path = Database;
+			sourceTree = "<group>";
+		};
+		6EE37B901C8739E2006E0626 /* Data */ = {
+			isa = PBXGroup;
+			children = (
+			);
+			path = Data;
+			sourceTree = "<group>";
+		};
+		6EE37B911C8739E2006E0626 /* PresentationLayer */ = {
+			isa = PBXGroup;
+			children = (
+				6EE37B921C8739E2006E0626 /* ControllerLayer */,
+			);
+			path = PresentationLayer;
+			sourceTree = "<group>";
+		};
+		6EE37B921C8739E2006E0626 /* ControllerLayer */ = {
+			isa = PBXGroup;
+			children = (
+			);
+			path = ControllerLayer;
+			sourceTree = "<group>";
+		};
+		6EE37B931C8739E2006E0626 /* Runtime */ = {
+			isa = PBXGroup;
+			children = (
+				6EE37B941C8739E2006E0626 /* Initialization */,
+				6EE37B951C8739E2006E0626 /* Preferences */,
+			);
+			path = Runtime;
+			sourceTree = "<group>";
+		};
+		6EE37B941C8739E2006E0626 /* Initialization */ = {
+			isa = PBXGroup;
+			children = (
+			);
+			path = Initialization;
+			sourceTree = "<group>";
+		};
+		6EE37B951C8739E2006E0626 /* Preferences */ = {
+			isa = PBXGroup;
+			children = (
+			);
+			path = Preferences;
+			sourceTree = "<group>";
+		};
+		6EE37BA41C8F5493006E0626 /* Recognition */ = {
+			isa = PBXGroup;
+			children = (
+				6EE37BA61C9020A2006E0626 /* MotionDeduction.h */,
+				6EE37BA71C9020A2006E0626 /* MotionDeduction.m */,
+			);
+			path = Recognition;
+			sourceTree = "<group>";
+		};
+		6EE37BA51C8F54CE006E0626 /* Recognition */ = {
+			isa = PBXGroup;
+			children = (
+				6EE37BA91C902E0D006E0626 /* MotionDeductionTest.m */,
+			);
+			path = Recognition;
+			sourceTree = "<group>";
+		};
+		6EE37BB21C981B32006E0626 /* Tools */ = {
+			isa = PBXGroup;
+			children = (
+				8A396D601CEC8DDD005E928F /* Process */,
+				8A2629811CE0E0FB00AF7ABB /* Classes */,
+				8AFA903D1C946F5900AD3535 /* Image */,
+			);
+			path = Tools;
+			sourceTree = "<group>";
+		};
+		8ABE3D801C78F77300AF659B = {
+			isa = PBXGroup;
+			children = (
+				8A396D631CEC8E7C005E928F /* Extractor */,
+				8AFA903E1C946F5900AD3535 /* Tracking */,
 			);
 			sourceTree = "<group>";
 		};
@@ -700,10 +929,10 @@
 		8ABE3D8B1C78F77300AF659B /* VirtualCoach */ = {
 			isa = PBXGroup;
 			children = (
-				8A748DBA1C7CB984007AA850 /* Classes */,
 				8ABE3D8F1C78F77300AF659B /* AppDelegate.h */,
 				8ABE3D901C78F77300AF659B /* AppDelegate.m */,
 				8ABE3D981C78F77300AF659B /* Assets.xcassets */,
+				6EE37B831C8739E2006E0626 /* Classes */,
 				8ABE3D9D1C78F77300AF659B /* Info.plist */,
 				8ABE3D8C1C78F77300AF659B /* Supporting Files */,
 			);
@@ -721,9 +950,10 @@
 		8ABE3DA51C78F77300AF659B /* VirtualCoachTests */ = {
 			isa = PBXGroup;
 			children = (
-				8AFA90421C94701600AD3535 /* Resources */,
-				8AFA903C1C946F5900AD3535 /* Engine */,
-				8AAC3A7C1C8C6FF80098E6A2 /* Foundation */,
+				6EB1D0471CEA2E44006B6940 /* Engine */,
+				6EB1D04B1CEA2E44006B6940 /* Foundation */,
+				6EB1CF801CE39ABE006B6940 /* Resources */,
+				6EE37B5A1C87275E006E0626 /* Classes */,
 				8ABE3DA81C78F77300AF659B /* Info.plist */,
 			);
 			path = VirtualCoachTests;
@@ -733,106 +963,8 @@
 			isa = PBXGroup;
 			children = (
 				8ABE3DB31C78F77300AF659B /* Info.plist */,
-				8A513D501C947F3800A11C60 /* VirtualCoachUITest.m */,
 			);
 			path = VirtualCoachUITests;
-			sourceTree = "<group>";
-		};
-		8AD459C41C7DF58E005D51BC /* Persistence */ = {
-			isa = PBXGroup;
-			children = (
-				8AD459C51C7DF58E005D51BC /* DAO */,
-				8AD459C61C7DF58E005D51BC /* Database */,
-			);
-			path = Persistence;
-			sourceTree = "<group>";
-		};
-		8AD459C51C7DF58E005D51BC /* DAO */ = {
-			isa = PBXGroup;
-			children = (
-			);
-			path = DAO;
-			sourceTree = "<group>";
-		};
-		8AD459C61C7DF58E005D51BC /* Database */ = {
-			isa = PBXGroup;
-			children = (
-				8AD459C71C7DF58E005D51BC /* Data */,
-			);
-			path = Database;
-			sourceTree = "<group>";
-		};
-		8AD459C71C7DF58E005D51BC /* Data */ = {
-			isa = PBXGroup;
-			children = (
-			);
-			path = Data;
-			sourceTree = "<group>";
-		};
-		8AD459CA1C7DF58E005D51BC /* Runtime */ = {
-			isa = PBXGroup;
-			children = (
-				8AD459CB1C7DF58E005D51BC /* Initialization */,
-				8AD459CC1C7DF58E005D51BC /* Preferences */,
-			);
-			path = Runtime;
-			sourceTree = "<group>";
-		};
-		8AD459CB1C7DF58E005D51BC /* Initialization */ = {
-			isa = PBXGroup;
-			children = (
-			);
-			path = Initialization;
-			sourceTree = "<group>";
-		};
-		8AD459CC1C7DF58E005D51BC /* Preferences */ = {
-			isa = PBXGroup;
-			children = (
-			);
-			path = Preferences;
-			sourceTree = "<group>";
-		};
-		8AD459CD1C7DF597005D51BC /* Analysis */ = {
-			isa = PBXGroup;
-			children = (
-				8A26297D1CE0E0C900AF7ABB /* Recognition */,
-				8AD459CE1C7DF597005D51BC /* Classification */,
-			);
-			path = Analysis;
-			sourceTree = "<group>";
-		};
-		8AD459CE1C7DF597005D51BC /* Classification */ = {
-			isa = PBXGroup;
-			children = (
-			);
-			path = Classification;
-			sourceTree = "<group>";
-		};
-		8AFA903C1C946F5900AD3535 /* Engine */ = {
-			isa = PBXGroup;
-			children = (
-				8A396D601CEC8DDD005E928F /* Process */,
-				8A2629811CE0E0FB00AF7ABB /* Classes */,
-				8AFA903D1C946F5900AD3535 /* Image */,
-			);
-			path = Engine;
-			sourceTree = "<group>";
-		};
-		8AFA903D1C946F5900AD3535 /* Image */ = {
-			isa = PBXGroup;
-			children = (
-				8A396D631CEC8E7C005E928F /* Extractor */,
-				8AFA903E1C946F5900AD3535 /* Tracking */,
-			);
-			path = Image;
-			sourceTree = "<group>";
-		};
-		8AFA903E1C946F5900AD3535 /* Tracking */ = {
-			isa = PBXGroup;
-			children = (
-				8AFA903F1C946F7C00AD3535 /* TrackingServiceTest.m */,
-			);
-			path = Tracking;
 			sourceTree = "<group>";
 		};
 /* End PBXGroup section */
@@ -949,7 +1081,7 @@
 			isa = PBXResourcesBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
-				8AFA90431C94701600AD3535 /* Resources in Resources */,
+				6EB1CF811CE39ABE006B6940 /* Resources in Resources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
@@ -1003,22 +1135,11 @@
 				8A5494F31C8B4DE700FB24C2 /* FramesCaptureSession.m in Sources */,
 				8A7E1FDB1C907448005B41C7 /* HybridCaptureSession.m in Sources */,
 				8ABE3D8E1C78F77300AF659B /* main.m in Sources */,
-				8A2629801CE0E0C900AF7ABB /* MotionDeduction.m in Sources */,
-				8A748DC31C7CBA55007AA850 /* charact_ext.c in Sources */,
-				8A5494F21C8B4DE700FB24C2 /* CaptureSessionControllerFactory.m in Sources */,
-				8A54950B1C8B4E7300FB24C2 /* UIRecordingDurationLabelView.m in Sources */,
-				8A5494ED1C8B4DE700FB24C2 /* CaptureDevicePropertiesRetriever.m in Sources */,
-				8A5494F41C8B4DE700FB24C2 /* FramesCaptureSessionController.m in Sources */,
-				8A5494EE1C8B4DE700FB24C2 /* CaptureDevicePropertiesUtilities.m in Sources */,
-				8A83AD3C1C9F15FD008E3BFA /* UICaptureSessionOverlayControlsView.m in Sources */,
-				8A5494EC1C8B4DE700FB24C2 /* CaptureDeviceManager.m in Sources */,
-				8AAC3A971C8C7EE50098E6A2 /* UIHomeViewController.m in Sources */,
-				8A5494F61C8B4DE700FB24C2 /* MovieCaptureSession.m in Sources */,
-				8A5495091C8B4E7300FB24C2 /* UICaptureSessionView.m in Sources */,
-				8A54951E1C8B578600FB24C2 /* Queue.m in Sources */,
-				8A2629961CE0E12200AF7ABB /* KmeanEntry.m in Sources */,
-				8A7E1FDE1C907A50005B41C7 /* HybridCaptureSessionController.m in Sources */,
-				8A5495101C8B55D300FB24C2 /* UIBaseViewController.m in Sources */,
+				6EE37BB11C98037A006E0626 /* Cluster.m in Sources */,
+				6EB1CFEF1CEA2D5E006B6940 /* CaptureDevicePropertiesRetriever.m in Sources */,
+				6EE37B9D1C8973C7006E0626 /* KmeanEntryDataSet.m in Sources */,
+				6EB1D0311CEA2D8B006B6940 /* UIBaseButton.m in Sources */,
+				6EB1CFF11CEA2D5E006B6940 /* CaptureSession.m in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
@@ -1042,7 +1163,6 @@
 			isa = PBXSourcesBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
-				8A513D511C947F3800A11C60 /* VirtualCoachUITest.m in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
@@ -1180,8 +1300,7 @@
 				HEADER_SEARCH_PATHS = "$(SOURCE_ROOT)/Libraries/libimagic/include";
 				INFOPLIST_FILE = VirtualCoachTests/Info.plist;
 				LD_RUNPATH_SEARCH_PATHS = "$(inherited) @executable_path/Frameworks @loader_path/Frameworks";
-				LIBRARY_SEARCH_PATHS = "$(PROJECT_DIR)/Libraries/libimagic";
-				OTHER_CODE_SIGN_FLAGS = "--deep";
+				LIBRARY_SEARCH_PATHS = "$(SOURCE_ROOT)/Libraries/libimagic/";
 				OTHER_LDFLAGS = "-limagic_ios";
 				PRODUCT_BUNDLE_IDENTIFIER = eu.iseven.VirtualCoachTests;
 				PRODUCT_NAME = "$(TARGET_NAME)";
@@ -1196,8 +1315,7 @@
 				HEADER_SEARCH_PATHS = "$(SOURCE_ROOT)/Libraries/libimagic/include";
 				INFOPLIST_FILE = VirtualCoachTests/Info.plist;
 				LD_RUNPATH_SEARCH_PATHS = "$(inherited) @executable_path/Frameworks @loader_path/Frameworks";
-				LIBRARY_SEARCH_PATHS = "$(PROJECT_DIR)/Libraries/libimagic";
-				OTHER_CODE_SIGN_FLAGS = "--deep";
+				LIBRARY_SEARCH_PATHS = "$(SOURCE_ROOT)/Libraries/libimagic/";
 				OTHER_LDFLAGS = "-limagic_ios";
 				PRODUCT_BUNDLE_IDENTIFIER = eu.iseven.VirtualCoachTests;
 				PRODUCT_NAME = "$(TARGET_NAME)";
