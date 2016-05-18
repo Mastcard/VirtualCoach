@@ -8,11 +8,13 @@
 
 #import <Foundation/Foundation.h>
 #import "KmeanEntry.h"
+#include <stdlib.h>
+#include <stdio.h>
 
 @interface KmeanEntryDataSet : NSObject <NSCoding>
 
 @property (nonatomic) NSMutableArray * data;
-@property (nonatomic) unsigned int datacount;
+@property (nonatomic) int datacount;
 
 /*!
  @method addKmeanEntryToDataSetFromFirstSpeedVectorsTab:speed1 andSecondSpeedVectorsTab:speed2 betweenInterval:interval andWithImageWidth:width
@@ -29,7 +31,8 @@
  Width of image using to generate speed of each pixel
  @discussion
  */
-- (void)addKmeanEntryToDataSetFromFirstSpeedVectorsTab:(speedVector *)speed1 andSecondSpeedVectorsTab:(speedVector *)speed2 betweenInterval:(rect_t)interval andWithImageWidth:(uint16_t)width;
+
+- (void)addKmeanEntryToDataSetFromFirstSpeedVectorsTab:(vect2darray_t *)speed1 andSecondSpeedVectorsTab:(vect2darray_t *)speed2 betweenInterval:(rect_t)interval andWithImageWidth:(uint16_t)width;
 
 /*!
  @method writeHistogramAtPath:path
@@ -40,6 +43,7 @@
  @discussion
  */
 - (void)writeKmeanDatasetAtPath:(NSString *)path;
+
 /*!
  @method loadHistogramAtPath:path
  @abstract
@@ -49,5 +53,7 @@
  @discussion
  */
 + (id)loadKmeanDatasetAtPath:(NSString *)path;
+
+- (void)writeKmeanDatasetForTestAtPath:(NSString *)path;
 
 @end

@@ -27,6 +27,7 @@
     // Put teardown code here. This method is called after the invocation of each test method in the class.
     [super tearDown];
 }
+
 /*
  Generate an histogram of angle by using five tables of speeds.
  The first, the third and the fourth table of speed generate 10800 hit of angle 180 (speed.x < 0 and speed.y = 0)
@@ -42,37 +43,50 @@
     interval.start.y = 30;
     interval.end.x = 90;
     interval.end.y = 90;
-    speedVector * speedVectors0 = (speedVector *) calloc(10000, sizeof(speedVector));
-    speedVector * speedVectors1 = (speedVector *) calloc(10000, sizeof(speedVector));
-    speedVector * speedVectors2 = (speedVector *) calloc(10000, sizeof(speedVector));
-    speedVector * speedVectors3 = (speedVector *) calloc(10000, sizeof(speedVector));
-    speedVector * speedVectors4 = (speedVector *) calloc(10000, sizeof(speedVector));
+    
+    vect2darray_t * speedVectors0 = (vect2darray_t *) calloc(1, sizeof(vect2darray_t));
+    vect2darray_t * speedVectors1 = (vect2darray_t *) calloc(1, sizeof(vect2darray_t));
+    vect2darray_t * speedVectors2 = (vect2darray_t *) calloc(1, sizeof(vect2darray_t));
+    vect2darray_t * speedVectors3 = (vect2darray_t *) calloc(1, sizeof(vect2darray_t));
+    vect2darray_t * speedVectors4 = (vect2darray_t *) calloc(1, sizeof(vect2darray_t));
+    
+    speedVectors0->length=10000;
+    speedVectors0->data = (vect2d_t *) calloc(10000, sizeof(vect2d_t));
+    speedVectors1->length=10000;
+    speedVectors1->data = (vect2d_t *) calloc(10000, sizeof(vect2d_t));
+    speedVectors2->length=10000;
+    speedVectors2->data = (vect2d_t *) calloc(10000, sizeof(vect2d_t));
+    speedVectors3->length=10000;
+    speedVectors3->data = (vect2d_t *) calloc(10000, sizeof(vect2d_t));
+    speedVectors4->length=10000;
+    speedVectors4->data = (vect2d_t *) calloc(10000, sizeof(vect2d_t));
+    //vect2d_t
     int i =0;
     for (i=0; i<10000; i++) {
-        speedVectors0[i].u =0;
-        speedVectors0[i].v =0;
-        speedVectors1[i].u =0;
-        speedVectors1[i].v =0;
-        speedVectors2[i].u =0;
-        speedVectors2[i].v =0;
-        speedVectors3[i].u =0;
-        speedVectors3[i].v =0;
-        speedVectors4[i].u =0;
-        speedVectors4[i].v =0;
+        speedVectors0->data[i].x =0;
+        speedVectors0->data[i].y =0;
+        speedVectors1->data[i].x =0;
+        speedVectors1->data[i].y =0;
+        speedVectors2->data[i].x =0;
+        speedVectors2->data[i].y =0;
+        speedVectors3->data[i].x =0;
+        speedVectors3->data[i].y =0;
+        speedVectors4->data[i].x =0;
+        speedVectors4->data[i].y =0;
     }
     int j=0;
     for (i=interval.start.y; i<interval.end.y; i++) {
         for (j=interval.start.x; j<interval.end.x; j++) {
-            speedVectors0[PXL_IDX(width, i, j)].u =-200;
-            speedVectors0[PXL_IDX(width, i, j)].v =0;
-            speedVectors1[PXL_IDX(width, i, j)].u =200;
-            speedVectors1[PXL_IDX(width, i, j)].v =0;
-            speedVectors2[PXL_IDX(width, i, j)].u =-200;
-            speedVectors2[PXL_IDX(width, i, j)].v =0;
-            speedVectors3[PXL_IDX(width, i, j)].u =-200;
-            speedVectors3[PXL_IDX(width, i, j)].v =0;
-            speedVectors4[PXL_IDX(width, i, j)].u =0;
-            speedVectors4[PXL_IDX(width, i, j)].v =200;
+            speedVectors0->data[PXL_IDX(width, i, j)].x =-200;
+            speedVectors0->data[PXL_IDX(width, i, j)].y =0;
+            speedVectors1->data[PXL_IDX(width, i, j)].x =200;
+            speedVectors1->data[PXL_IDX(width, i, j)].y =0;
+            speedVectors2->data[PXL_IDX(width, i, j)].x =-200;
+            speedVectors2->data[PXL_IDX(width, i, j)].y =0;
+            speedVectors3->data[PXL_IDX(width, i, j)].x =-200;
+            speedVectors3->data[PXL_IDX(width, i, j)].y =0;
+            speedVectors4->data[PXL_IDX(width, i, j)].x =0;
+            speedVectors4->data[PXL_IDX(width, i, j)].y =200;
         }
     }
     [_angleHistogram generateHistogramFromSpeedVector:speedVectors0 betweenInterval:interval andWithImageWidth:width];
@@ -106,7 +120,8 @@
  So in the histogram we have 3600 hits of angle 0, 3600 hits of angle 270, 10800 hits of angle 180
  */
 - (void)testIOHistogram{
-    NSString * filePathHistogram = @"/Users/bizoro/Documents/master2/Projet_Synthese/VirtualCoach/histogramTest.plist";
+    
+    NSString *filePathHistogram = [[[NSBundle bundleForClass:[self class]] resourcePath] stringByAppendingString:@"/Engine/Data/Histograms/histogramModifTest.plist"];
     
     rect_t interval;
     uint16_t width= 100;
@@ -114,37 +129,50 @@
     interval.start.y = 30;
     interval.end.x = 90;
     interval.end.y = 90;
-    speedVector * speedVectors0 = (speedVector *) calloc(10000, sizeof(speedVector));
-    speedVector * speedVectors1 = (speedVector *) calloc(10000, sizeof(speedVector));
-    speedVector * speedVectors2 = (speedVector *) calloc(10000, sizeof(speedVector));
-    speedVector * speedVectors3 = (speedVector *) calloc(10000, sizeof(speedVector));
-    speedVector * speedVectors4 = (speedVector *) calloc(10000, sizeof(speedVector));
+    
+    vect2darray_t * speedVectors0 = (vect2darray_t *) calloc(1, sizeof(vect2darray_t));
+    vect2darray_t * speedVectors1 = (vect2darray_t *) calloc(1, sizeof(vect2darray_t));
+    vect2darray_t * speedVectors2 = (vect2darray_t *) calloc(1, sizeof(vect2darray_t));
+    vect2darray_t * speedVectors3 = (vect2darray_t *) calloc(1, sizeof(vect2darray_t));
+    vect2darray_t * speedVectors4 = (vect2darray_t *) calloc(1, sizeof(vect2darray_t));
+    
+    speedVectors0->length=10000;
+    speedVectors0->data = (vect2d_t *) calloc(10000, sizeof(vect2d_t));
+    speedVectors1->length=10000;
+    speedVectors1->data = (vect2d_t *) calloc(10000, sizeof(vect2d_t));
+    speedVectors2->length=10000;
+    speedVectors2->data = (vect2d_t *) calloc(10000, sizeof(vect2d_t));
+    speedVectors3->length=10000;
+    speedVectors3->data = (vect2d_t *) calloc(10000, sizeof(vect2d_t));
+    speedVectors4->length=10000;
+    speedVectors4->data = (vect2d_t *) calloc(10000, sizeof(vect2d_t));
+    
     int i =0;
     for (i=0; i<10000; i++) {
-        speedVectors0[i].u =0;
-        speedVectors0[i].v =0;
-        speedVectors1[i].u =0;
-        speedVectors1[i].v =0;
-        speedVectors2[i].u =0;
-        speedVectors2[i].v =0;
-        speedVectors3[i].u =0;
-        speedVectors3[i].v =0;
-        speedVectors4[i].u =0;
-        speedVectors4[i].v =0;
+        speedVectors0->data[i].x =0;
+        speedVectors0->data[i].y =0;
+        speedVectors1->data[i].x =0;
+        speedVectors1->data[i].y =0;
+        speedVectors2->data[i].x =0;
+        speedVectors2->data[i].y =0;
+        speedVectors3->data[i].x =0;
+        speedVectors3->data[i].y =0;
+        speedVectors4->data[i].x =0;
+        speedVectors4->data[i].y =0;
     }
     int j=0;
     for (i=interval.start.y; i<interval.end.y; i++) {
         for (j=interval.start.x; j<interval.end.x; j++) {
-            speedVectors0[PXL_IDX(width, i, j)].u =-200;
-            speedVectors0[PXL_IDX(width, i, j)].v =0;
-            speedVectors1[PXL_IDX(width, i, j)].u =200;
-            speedVectors1[PXL_IDX(width, i, j)].v =0;
-            speedVectors2[PXL_IDX(width, i, j)].u =-200;
-            speedVectors2[PXL_IDX(width, i, j)].v =0;
-            speedVectors3[PXL_IDX(width, i, j)].u =-200;
-            speedVectors3[PXL_IDX(width, i, j)].v =0;
-            speedVectors4[PXL_IDX(width, i, j)].u =0;
-            speedVectors4[PXL_IDX(width, i, j)].v =200;
+            speedVectors0->data[PXL_IDX(width, i, j)].x =-200;
+            speedVectors0->data[PXL_IDX(width, i, j)].y =0;
+            speedVectors1->data[PXL_IDX(width, i, j)].x =200;
+            speedVectors1->data[PXL_IDX(width, i, j)].y =0;
+            speedVectors2->data[PXL_IDX(width, i, j)].x =-200;
+            speedVectors2->data[PXL_IDX(width, i, j)].y =0;
+            speedVectors3->data[PXL_IDX(width, i, j)].x =-200;
+            speedVectors3->data[PXL_IDX(width, i, j)].y =0;
+            speedVectors4->data[PXL_IDX(width, i, j)].x =0;
+            speedVectors4->data[PXL_IDX(width, i, j)].y =200;
         }
     }
     [_angleHistogram generateHistogramFromSpeedVector:speedVectors0 betweenInterval:interval andWithImageWidth:width];
@@ -153,9 +181,7 @@
     [_angleHistogram generateHistogramFromSpeedVector:speedVectors3 betweenInterval:interval andWithImageWidth:width];
     [_angleHistogram generateHistogramFromSpeedVector:speedVectors4 betweenInterval:interval andWithImageWidth:width];
     
-    
     [_angleHistogram writeHistogramAtPath:filePathHistogram];
-    
     Histogram * result = [Histogram loadHistogramAtPath:filePathHistogram];
     for (NSInteger j=0; j<result.data.count; j++){
         
@@ -174,6 +200,7 @@
     }
     
 }
+
 
 - (void)testPerformanceExample {
     // This is an example of a performance test case.
