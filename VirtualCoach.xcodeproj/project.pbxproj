@@ -76,6 +76,7 @@
 		8ACF778A1CECAAF800248372 /* ImageTools.m in Sources */ = {isa = PBXBuildFile; fileRef = 8ACF77891CECAAF800248372 /* ImageTools.m */; };
 		8ACF778D1CECAB2300248372 /* UICaptureSessionOverlayViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = 8ACF778C1CECAB2300248372 /* UICaptureSessionOverlayViewController.m */; };
 		8ACF778E1CECABDC00248372 /* TrackingProcess.m in Sources */ = {isa = PBXBuildFile; fileRef = 6EB1CFBB1CEA2CB9006B6940 /* TrackingProcess.m */; };
+		8ACF778F1CECB25100248372 /* charact_ext.c in Sources */ = {isa = PBXBuildFile; fileRef = 6EB1CFB71CEA2CB9006B6940 /* charact_ext.c */; };
 /* End PBXBuildFile section */
 
 /* Begin PBXContainerItemProxy section */
@@ -1164,6 +1165,7 @@
 			isa = PBXSourcesBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
+				8ACF778F1CECB25100248372 /* charact_ext.c in Sources */,
 				6EB1D04F1CEA53A0006B6940 /* Queue.m in Sources */,
 				6EE37BAB1C90608C006E0626 /* MotionDeduction.m in Sources */,
 				6EE37BA31C8CCC49006E0626 /* KmeanEntryDataSet.m in Sources */,
