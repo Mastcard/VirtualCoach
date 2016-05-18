@@ -36,7 +36,7 @@
 
 + (HybridCaptureSessionController *)createHybridCaptureSessionControllerWithDevice:(AVCaptureDevice *)device preset:(NSString *)preset sampleBufferDelegate:(id<AVCaptureVideoDataOutputSampleBufferDelegate,Process>)sampleBufferDelegate recordingDelegate:(id<AVCaptureFileOutputRecordingDelegate, Process>)recordingDelegate
 {
-    HybridCaptureSession *hybridCaptureSession = [[HybridCaptureSession alloc] initWithDevice:device sessionPreset:preset framerate:25];
+    HybridCaptureSession *hybridCaptureSession = [[HybridCaptureSession alloc] initWithDevice:device sessionPreset:preset framerate:60];
     
     [hybridCaptureSession setup];
     

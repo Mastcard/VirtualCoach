@@ -40,21 +40,38 @@
     
     // setting to 60 fps by choosing highest rate range..
     
-    for ( AVCaptureDeviceFormat *format in [self.captureDevice formats] )
+    AVCaptureDevice *currentDevice = self.captureDevice;
+    
+    int32_t currentSessionPresetWidth = [CaptureDevicePropertiesUtilities widthForSessionPreset:self.captureSession.sessionPreset];
+    int32_t currentSessionPresetHeight = [CaptureDevicePropertiesUtilities heightForSessionPreset:self.captureSession.sessionPreset];
+    
+    BOOL validPreset = NO;
+    
+    for (AVCaptureDeviceFormat *format in [currentDevice formats])
     {
-        for ( AVFrameRateRange *range in format.videoSupportedFrameRateRanges )
+        CMFormatDescriptionRef formatDescription = format.formatDescription;
+        CMVideoDimensions dimensions = CMVideoFormatDescriptionGetDimensions(formatDescription);
+        
+        if ((dimensions.width == currentSessionPresetWidth) && (dimensions.height == currentSessionPresetHeight))
         {
-            if ( range.maxFrameRate > bestFrameRateRange.maxFrameRate )
+            for (AVFrameRateRange *range in format.videoSupportedFrameRateRanges)
             {
-                bestFormat = format;
-                bestFrameRateRange = range;
+                if ((self.framerate >= range.minFrameRate) && (self.framerate <= range.maxFrameRate))
+                {
+                    bestFormat = format;
+                    validPreset = YES;
+                    break;
+                }
             }
         }
+        
+        if (validPreset)
+            break;
     }
     
-    if ( bestFormat )
+    if (bestFormat)
     {
-        if ( [self.captureDevice lockForConfiguration:NULL] == YES )
+        if ([self.captureDevice lockForConfiguration:NULL] == YES)
         {
             self.captureDevice.activeFormat = bestFormat;
             self.captureDevice.activeVideoMinFrameDuration = bestFrameRateRange.minFrameDuration;

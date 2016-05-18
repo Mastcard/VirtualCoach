@@ -8,6 +8,7 @@
 
 #import "CaptureSession.h"
 #import "Process.h"
+#import "CaptureDevicePropertiesUtilities.h"
 
 @interface HybridCaptureSession : CaptureSession
 
