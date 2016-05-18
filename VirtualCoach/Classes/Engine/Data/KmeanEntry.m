@@ -19,50 +19,63 @@
     }
     return  self;
 }
+ 
+- (void)generateDataEntryForKmeanFromFirstSpeedVectorsTab:(vect2darray_t *)speed1 andSecondSpeedVectorsTab:(vect2darray_t *)speed2 betweenInterval:(rect_t)interval andWithImageWidth:(uint16_t)width{
 
-- (void)generateDataEntryForKmeanFromFirstSpeedVectorsTab:(speedVector *)speed1 andSecondSpeedVectorsTab:(speedVector *)speed2 betweenInterval:(rect_t)interval andWithImageWidth:(uint16_t)width{
-    
     NSMutableArray * tmpHistogram = [[NSMutableArray alloc] initWithCapacity:360];
     for (NSInteger i=0; i<360; i++) {
         [tmpHistogram insertObject:@0 atIndex:i];
     }
     
-    unsigned int minHit =0;
+    int minHit =0;
     double u1 = 0, u2 = 0, v1 = 0, v2= 0;
     double angle = 0;
     double norm1 = 0, norm2 =0;
     double meanSpeed1=0, meanSpeed2=0;
-    unsigned int countSpeed1=0, countSpeed2=0;
+    int countSpeed1=0, countSpeed2=0;
     for (NSInteger y=interval.start.y; y<interval.end.y; y++) {
         for (NSInteger x=interval.start.x; x<interval.end.x; x++){
-            u2= speed2[PXL_IDX(width, x, y)].u;
-            v2= speed2[PXL_IDX(width, x, y)].v;
-            norm2 += sqrt(u2*u2 + v2*v2);
-            countSpeed1 ++;
-            u1= speed1[PXL_IDX(width, x, y)].u;
-            v1= speed1[PXL_IDX(width, x, y)].v;
-            norm1 += sqrt(u1*u1 + v1*v1);
-            countSpeed2++;
-            if (norm2 > 0.00){
+            u2= speed2->data[PXL_IDX(width, x, y)].x;
+            v2= speed2->data[PXL_IDX(width, x, y)].y;
+            
+            float tmpNorm2 = sqrt(u2*u2 + v2*v2);
+            if(tmpNorm2 > 0.04){
+                norm2 += tmpNorm2;
+                countSpeed2++;
+            }
+            
+            u1= speed1->data[PXL_IDX(width, x, y)].x;
+            v1= speed1->data[PXL_IDX(width, x, y)].y;
+            
+            float tmpNorm1 = sqrt(u1*u1 + v1*v1);
+            if(tmpNorm1 >0.04){
+                norm1 += tmpNorm1;
+                countSpeed1 ++;
+            }
+            
+            
+            if (norm2 > 0.0){
                 angle = atan2(-v2, u2) * 180 / M_PI;
-                if (angle < 0) {
+                if ((int)angle < 0) {
                     angle += 360;
                 }
-                tmpHistogram[(unsigned int) angle] = @([[tmpHistogram objectAtIndex:(unsigned int) angle] intValue] + 1);
+                tmpHistogram[(int) angle] = @([[tmpHistogram objectAtIndex:(int) angle] intValue] + 1);
             }
         }
     }
     meanSpeed1 = norm1/countSpeed1;
     meanSpeed2 = norm2/countSpeed2;
-    _meanAcceleration = norm2 - norm1;
+    _meanAcceleration = meanSpeed2 - meanSpeed1;
     
     for (NSInteger i=0; i<360; i++) {
         if ([[tmpHistogram objectAtIndex:i] intValue] > minHit) {
             minHit = [[tmpHistogram objectAtIndex:i] intValue];
-            _maxAngle = (unsigned int)i;
+            _maxAngle = (int)i;
         }
     }
     [tmpHistogram removeAllObjects];
+
+
 }
 
 - (void)encodeWithCoder:(NSCoder *)aCoder

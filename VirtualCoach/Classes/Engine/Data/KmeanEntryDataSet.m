@@ -19,13 +19,14 @@
     return  self;
 }
 
--(void)addKmeanEntryToDataSetFromFirstSpeedVectorsTab:(speedVector *)speed1 andSecondSpeedVectorsTab:(speedVector *)speed2 betweenInterval:(rect_t)interval andWithImageWidth:(uint16_t)width{
-    
+- (void)addKmeanEntryToDataSetFromFirstSpeedVectorsTab:(vect2darray_t *)speed1 andSecondSpeedVectorsTab:(vect2darray_t *)speed2 betweenInterval:(rect_t)interval andWithImageWidth:(uint16_t)width{
+
     KmeanEntry * entry = [[KmeanEntry alloc] init];
     [entry generateDataEntryForKmeanFromFirstSpeedVectorsTab:speed1 andSecondSpeedVectorsTab:speed2 betweenInterval:interval andWithImageWidth:width];
     [_data insertObject:entry atIndex:_datacount];
     _datacount ++;
     entry.time = _datacount;
+
 }
 
 -(void)encodeWithCoder:(NSCoder *)aCoder
@@ -57,5 +58,25 @@
     return [NSKeyedUnarchiver unarchiveObjectWithFile:path];
 }
 
+- (void)writeKmeanDatasetForTestAtPath:(NSString *)path{
+    
+    const char * pathChar = path.UTF8String;
+    FILE* fichier = NULL;
+    fichier = fopen(pathChar, "w+");
+    if (fichier != NULL){
+        
+        for (NSInteger i =0; i<_datacount; i++) {
+            NSString *line = [NSString stringWithFormat:@"%d %f\n", ((KmeanEntry *)[_data objectAtIndex:i]).time, ((KmeanEntry *)[_data objectAtIndex:i]).meanAcceleration];
+            const char * lineChar = line.UTF8String;
+            fputs(lineChar, fichier);
+        }
+        
+        fclose(fichier);
+    }
+    else{
+        NSLog(@"Your file %@ does not exist",path);
+    }
+    
+}
 
 @end

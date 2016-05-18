@@ -21,27 +21,31 @@
     return  self;
 }
 
-- (void)generateHistogramFromSpeedVector:(speedVector *)speed betweenInterval:(rect_t)interval andWithImageWidth:(uint16_t)width{
+- (void)generateHistogramFromSpeedVector:(vect2darray_t *)speed betweenInterval:(rect_t)interval andWithImageWidth:(uint16_t)width{
     
     double u = 0, v = 0;
     double angle = 0;
     double norm = 0;
     for (NSInteger y=interval.start.y; y<interval.end.y; y++) {
         for (NSInteger x=interval.start.x; x<interval.end.x; x++){
-            u= speed[PXL_IDX(width, x, y)].u;
-            v= speed[PXL_IDX(width, x, y)].v;
+            u = speed->data[PXL_IDX(width, x, y)].x;
+            v = speed->data[PXL_IDX(width, x, y)].y;
             norm = sqrt(u*u + v*v);
-            if (norm > 0.00){
+            if (norm > 0.0){
                 angle = atan2(-v, u) * 180 / M_PI;
-                if (angle < 0) {
+                //NSLog(@"angle before: %d", (int)angle);
+                if ((int)angle < 0) {
                     angle += 360;
                 }
-                _data[(unsigned int) angle] = @([[_data objectAtIndex:(unsigned int) angle] intValue] + 1);
+                //NSLog(@"angle: %d",(unsigned int)angle);
+                //NSLog(@"angle after: %d", (int)angle);
+                _data[(int) angle] = @([[_data objectAtIndex:(int) angle] intValue] + 1);
             }
         }
     }
 }
 
+ 
 - (void)encodeWithCoder:(NSCoder *)aCoder
 {
     [aCoder encodeObject:self.data forKey:@"angle"];
@@ -67,6 +71,29 @@
 + (id)loadHistogramAtPath:(NSString *)path
 {
     return [NSKeyedUnarchiver unarchiveObjectWithFile:path];
+}
+
+- (void)writeHistogramForTestAtPath:(NSString *)path{
+
+    const char * pathChar = path.UTF8String;
+    FILE* fichier = NULL;
+    fichier = fopen(pathChar, "w+");
+    if (fichier != NULL){
+        
+        for (NSInteger i =0; i<_data.count; i++) {
+            
+            NSString *line = [NSString stringWithFormat:@"%ld %@\n", (long)i,[_data objectAtIndex:i]];
+            const char * lineChar = line.UTF8String;
+            fputs(lineChar, fichier);
+        }
+        
+        fclose(fichier);
+    }
+    else{
+        NSLog(@"Your file %@ does not exist",path);
+    }
+
+
 }
 
 

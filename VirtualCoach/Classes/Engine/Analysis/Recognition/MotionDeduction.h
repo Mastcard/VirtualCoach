@@ -28,5 +28,9 @@
  @discussion
  */
 + (NSString *)recognizeTennisMotionWithHistogram:(Histogram *)anglesHistogram andLeftHanded:(Boolean)leftHanded;
+/*
++ (NSNumber *)bhattacharyyaBetweenFirstAngleHistogram:(Histogram *)histo1 andSecondHistogram:(Histogram *)histo2;
 
++ (NSNumber *) compareHistogramReference:(Histogram *)hRef isLeftHanded:(Boolean)leftHandedRef withHistogramofPLayer:(Histogram *)hMvt isLeftHanded:(Boolean)leftHandedPlayer andThreshold:(int)threshold;
+*/
 @end
