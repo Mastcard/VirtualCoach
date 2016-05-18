@@ -56,7 +56,9 @@
     
     NSLog(@"ReferenceFrameProcess finished : reference built!");
     
-    [[NSNotificationCenter defaultCenter] postNotificationName:@"referenceframe.action.internal.finished" object:self userInfo:nil];
+    [_delegate didFinishReferenceFrameProcess];
+    
+    //[[NSNotificationCenter defaultCenter] postNotificationName:@"referenceframe.action.internal.finished" object:self userInfo:nil];
 }
 
 - (gray8i_t *)retrieveReferenceFrame
@@ -98,6 +100,11 @@
     
     if (_result != NULL)
         gray8ifree(_result);
+    
+    if (_acc != NULL)
+        free(_acc);
+    
+    //memset(_acc, 0, N * sizeof(*_acc));
     
     _result = NULL;
     _width = 0;

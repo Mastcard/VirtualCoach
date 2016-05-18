@@ -24,4 +24,16 @@
 - (ReferenceFrameProcess *)referenceFrameProcess;
 - (RecordingProcess *)recordingProcess;
 
++ (void)startReferenceFrameProcess;
++ (void)startTrackingProcess;
++ (void)startRecordingProcessAtPath:(NSURL *)path;
+
++ (void)stopReferenceFrameProcess;
+//+ (void)referenceFrameProcessDidFinish;
++ (void)stopTrackingProcess;
++ (void)stopRecordingProcess;
+
+//temp
+
+
 @end
