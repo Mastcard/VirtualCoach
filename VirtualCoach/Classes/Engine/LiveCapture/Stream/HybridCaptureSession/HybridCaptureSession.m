@@ -74,8 +74,8 @@
         if ([self.captureDevice lockForConfiguration:NULL] == YES)
         {
             self.captureDevice.activeFormat = bestFormat;
-            self.captureDevice.activeVideoMinFrameDuration = bestFrameRateRange.minFrameDuration;
-            self.captureDevice.activeVideoMaxFrameDuration = bestFrameRateRange.minFrameDuration;
+            self.captureDevice.activeVideoMinFrameDuration = CMTimeMake(1, 60);
+            self.captureDevice.activeVideoMaxFrameDuration = CMTimeMake(1, 60);
             [self.captureDevice unlockForConfiguration];
         }
     }
