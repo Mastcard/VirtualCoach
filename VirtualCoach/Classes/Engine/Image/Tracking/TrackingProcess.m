@@ -11,6 +11,10 @@
 #include <drawing.h>
 #include "charact_ext.h"
 
+#define ALPHA 0.8
+#define BETA -1
+#define GRAV_SPEED_THRESHOLD 5
+
 @interface TrackingProcess ()
 
 @property (nonatomic) BOOL canRetrieveFrames;
@@ -25,13 +29,11 @@
 
 @property (nonatomic, assign) unsigned int clicRegionZoneRadius;
 
+@property (nonatomic, assign) float previousGravityCenterSpeed;
+
 // temp
 @property (nonatomic) NSUInteger count;
 @property (nonatomic) NSUInteger lazyCount;
-
-- (void)setBinaryThresholdFromNotification:(NSNotification *)notification;
-- (void)setShouldSendBinaryFramesFromNotification:(NSNotification *)notification;
-- (void)tapOnScreenToLocateRegionNotification:(NSNotification *)notification;
 
 @end
 
@@ -51,23 +53,9 @@
         _binaryThreshold = 30;
         _referenceFrame = NULL;
         _clicRegionZoneRadius = 20;
+        _previousGravityCenterSpeed = 0.f;
         
         _canTrackRegion = NO;
-        
-        [[NSNotificationCenter defaultCenter] addObserver:self
-                                                 selector:@selector(setBinaryThresholdFromNotification:)
-                                                     name:@"tracking.binarythreshold.changed"
-                                                   object:nil];
-        
-        [[NSNotificationCenter defaultCenter] addObserver:self
-                                                 selector:@selector(tapOnScreenToLocateRegionNotification:)
-                                                     name:@"overlay.view.singletap.region.detected"
-                                                   object:nil];
-        
-        [[NSNotificationCenter defaultCenter] addObserver:self
-                                                 selector:@selector(setShouldSendBinaryFramesFromNotification:)
-                                                     name:@"tracking.binarymode.button.clicked"
-                                                   object:nil];
         
         _clicRegionZone.start.x = 0;
         _clicRegionZone.start.y = 0;
@@ -124,12 +112,39 @@
         uint8_t *myPixelBuf = malloc(bufferSize);
         memmove(myPixelBuf, tempAddress, bufferSize);
         
-        rgb8i_t *rgb = rgb8iallocwd_bgra((uint16_t)width, (uint16_t)height, myPixelBuf);
+        //rgb8i_t *rgb = rgb8ialloc((uint16_t)width, (uint16_t)height);
+        
+        gray8i_t *grayscaleImg = gray8ialloc((uint16_t)width, (uint16_t)height);
+        //gray8i_t *grayscaleSubstract = subgray8i(grayscaleImg, _referenceFrame); //
+        bini_t *binaryImg = binialloc((uint16_t)width, (uint16_t)height);
+        
+        unsigned long length = width * height * 4;
+        unsigned int i = 0, j = 0;
+        
+        for (i = 0; i < length; i+=4)
+        {
+            uint8_t r = myPixelBuf[i+2];
+            uint8_t g = myPixelBuf[i+1];
+            uint8_t b = myPixelBuf[i];
+            
+            grayscaleImg->data[j] = (uint8_t)((r + g + b) / 3);
+            binaryImg->data[j] = !(abs(grayscaleImg->data[j] - _referenceFrame->data[j]) > _binaryThreshold);
+            
+            j++;
+        }
+        
         free(myPixelBuf);
         
-        gray8i_t *grayscaleImg = grayscale(rgb);
-        gray8i_t *grayscaleSubstract = subgray8i(grayscaleImg, _referenceFrame);
-        bini_t *binaryImg = binarise(grayscaleSubstract, _binaryThreshold);
+        /** DO BELOW IN ONE LOOP TO OPTIMIZE **/
+        
+//        rgb8i_t *rgb = rgb8iallocwd_bgra((uint16_t)width, (uint16_t)height, myPixelBuf);
+//        free(myPixelBuf);
+//        
+//        gray8i_t *grayscaleImg = grayscale(rgb);
+//        gray8i_t *grayscaleSubstract = subgray8i(grayscaleImg, _referenceFrame);
+//        bini_t *binaryImg = binarise(grayscaleSubstract, _binaryThreshold);
+        
+        /** DO ABOVE IN ONE LOOP TO OPTIMIZE **/
         
         if (_shouldSendBinaryFrames)
         {
@@ -143,9 +158,7 @@
             CGDataProviderRelease(provider);
             CGColorSpaceRelease(colorspace);
             
-            NSDictionary *userInfoDebugImage = [NSDictionary dictionaryWithObject:(__bridge id _Nonnull)(binaryImageRef) forKey:@"debugImage"];
-            
-            [[NSNotificationCenter defaultCenter] postNotificationName:@"debug.image.changed" object:self userInfo:userInfoDebugImage];
+            [_delegate didSendImage:binaryImageRef];
             
             gray8ifree(unbinaryImg);
         }
@@ -158,44 +171,31 @@
             if (_canTrackRegion)
             {
                 //int32_t bestRegId = [TrackingService trackRegion:previousReg byOverlapping:previousLabels withReferenceLabels:nextLabels];
-                int32_t bestRegId = overlappingreg(_previousReg, _previousLabels, nextLabels, width);
+                int32_t bestRegId = overlappingreg(_previousReg, _previousLabels, nextLabels);
                 
                 //NSLog(@"bestRegId : %d", bestRegId);
-                
-                NSDictionary *userInfo = nil;
                 
                 if ((bestRegId > 0) && (bestRegId <= charact->count))
                 {
                     regchar_t *bestReg = charact->data[bestRegId-1];
                     
-                    rgb8 c;
+                    vect2d_t gravvect;
+                    gravvect.x = (double)bestReg->gravity.x - (double)_previousReg->gravity.x;
+                    gravvect.y = (double)bestReg->gravity.y - (double)_previousReg->gravity.y;
                     
-                    c.r = 0;
-                    c.g = 255;
-                    c.b = 0;
+                    //printf("gravvect.x : %f, gravvect.y : %f\n", gravvect.x, gravvect.y);
                     
-                    userInfo = [NSDictionary dictionaryWithObjects:[NSArray
-                                                                    arrayWithObjects:
-                                                                    [NSNumber numberWithInt:bestReg->bounds.start.y],
-                                                                    [NSNumber numberWithInt:bestReg->bounds.start.x],
-                                                                    [NSNumber numberWithInt:bestReg->bounds.end.y],
-                                                                    [NSNumber numberWithInt:bestReg->bounds.end.x],
-                                                                    [NSNumber numberWithUnsignedInt:(uint16_t)width],
-                                                                    [NSNumber numberWithUnsignedInt:(uint16_t)height],
-                                                                    [NSNumber numberWithUnsignedInt:(uint8_t)c.r],
-                                                                    [NSNumber numberWithUnsignedInt:(uint8_t)c.g],
-                                                                    [NSNumber numberWithUnsignedInt:(uint8_t)c.b],
-                                                                    nil]
-                                                           forKeys:[NSArray arrayWithObjects:
-                                                                    @"startPoint.i",
-                                                                    @"startPoint.j",
-                                                                    @"endPoint.i",
-                                                                    @"endPoint.j",
-                                                                    @"image.width",
-                                                                    @"image.height",
-                                                                    @"color.red",
-                                                                    @"color.green",
-                                                                    @"color.blue",nil]];
+                    float gravityCenterSpeed = gravCenterSpeed(gravvect, _previousGravityCenterSpeed, ALPHA, BETA);
+                    
+                    //printf("gravityCenterSpeed : %f\n", gravityCenterSpeed);
+                    
+                    _previousGravityCenterSpeed = gravityCenterSpeed;
+                    
+                    unsigned int reg_bounds_x_diff = bestReg->bounds.end.x - bestReg->bounds.start.x;
+                    float grav_speed_threshold = 0.025 * reg_bounds_x_diff; //0.024593
+                    //printf("gravityCenterSpeed %f < grav_speed_threshold %f\n", gravityCenterSpeed, grav_speed_threshold);
+                    
+                    [_delegate didDetectObjectMotion:gravityCenterSpeed < grav_speed_threshold ? NO : YES];
                     
                     _playerBounds.start.x = bestReg->bounds.start.x;
                     _playerBounds.start.y = bestReg->bounds.start.y;
@@ -213,7 +213,10 @@
                     labfree(nextLabels);
                 }
                 
-                [[NSNotificationCenter defaultCenter] postNotificationName:@"tracking.bounds.changed" object:self userInfo:userInfo];
+//                NSLog(@"");
+//                NSLog(@"BOUNDS : (%u, %u, %u, %u)", _playerBounds.start.x, _playerBounds.start.y, _playerBounds.end.x, _playerBounds.end.y);
+                
+                [_delegate didSendRegionBounds:_playerBounds forImageSize:CGSizeMake((CGFloat)width, (CGFloat)height)];
             }
             
             else
@@ -240,10 +243,10 @@
         }
         
         binifree(binaryImg);
-        gray8ifree(grayscaleSubstract);
+        //gray8ifree(grayscaleSubstract);
         gray8ifree(grayscaleImg);
         
-        rgb8ifree(rgb);
+        //rgb8ifree(rgb);
     }
 }
 
@@ -252,45 +255,36 @@
     
 }
 
-- (void)setBinaryThresholdFromNotification:(NSNotification *)notification
+// testing delegate
+
+- (void)didBinaryThresholdChange:(uint8_t)threshold
 {
-    NSDictionary *userInfo = notification.userInfo;
-    
-    if (userInfo)
-    {
-        uint8_t binaryThreshold = (uint8_t)[[userInfo objectForKey:@"threshold"] intValue];
-        _binaryThreshold = binaryThreshold;
-    }
+    _binaryThreshold = threshold;
 }
 
-- (void)setShouldSendBinaryFramesFromNotification:(NSNotification *)notification
+- (void)didEnterInBinaryMode
 {
     _shouldSendBinaryFrames = !_shouldSendBinaryFrames;
 }
 
-- (void)tapOnScreenToLocateRegionNotification:(NSNotification *)notification
+- (void)didReceiveSingleTapAt:(CGPoint)touchPoint
 {
-    NSDictionary *userInfo = notification.userInfo;
+    CGFloat x = touchPoint.x;
+    CGFloat y = touchPoint.y;
     
-    if (userInfo)
-    {
-        uint32_t x = ((NSNumber *)[userInfo objectForKey:@"touchPoint.x"]).unsignedIntValue;
-        uint32_t y = ((NSNumber *)[userInfo objectForKey:@"touchPoint.y"]).unsignedIntValue;
-        
-        CGFloat screenWidth = [UIScreen mainScreen].bounds.size.width, screenHeight = [UIScreen mainScreen].bounds.size.height;
-        
-        unsigned int touch_x = x * (1280 / screenWidth);
-        unsigned int touch_y = y * (720 / screenHeight);
-        
-        _clicRegionZone.start.x = touch_x - _clicRegionZoneRadius;
-        _clicRegionZone.start.y = touch_y - _clicRegionZoneRadius;
-        _clicRegionZone.end.x = touch_x + _clicRegionZoneRadius;
-        _clicRegionZone.end.y = touch_y + _clicRegionZoneRadius;
-        
-        _canLabelAndEstablish = YES;
-        _canFindRegionFromZone = YES;
-        _canTrackRegion = NO;
-    }
+    CGFloat screenWidth = [UIScreen mainScreen].bounds.size.width, screenHeight = [UIScreen mainScreen].bounds.size.height;
+    
+    unsigned int touch_x = x * (1280 / screenWidth);
+    unsigned int touch_y = y * (720 / screenHeight);
+    
+    _clicRegionZone.start.x = touch_x - _clicRegionZoneRadius;
+    _clicRegionZone.start.y = touch_y - _clicRegionZoneRadius;
+    _clicRegionZone.end.x = touch_x + _clicRegionZoneRadius;
+    _clicRegionZone.end.y = touch_y + _clicRegionZoneRadius;
+    
+    _canLabelAndEstablish = YES;
+    _canFindRegionFromZone = YES;
+    _canTrackRegion = NO;
 }
 
 @end

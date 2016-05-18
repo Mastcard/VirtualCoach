@@ -12,6 +12,7 @@
 #import "CaptureDevicePropertiesUtilities.h"
 #import "FramesCaptureSessionController.h"
 #import "MovieCaptureSessionController.h"
+#import "UICaptureSessionOverlayViewController.h"
 
 @interface UICaptureSessionViewController ()
 
@@ -20,10 +21,11 @@
 @property (nonatomic) UITapGestureRecognizer *locateRegionTapGestureRecognizer;
 
 - (void)hideOrShowControlsView;
-- (void)referenceFrameProcessDidFinish:(NSNotification *)notification;
 - (void)singleTapGestureToLocateRegion:(UITapGestureRecognizer *)recognizer;
 - (void)binaryThresholdSliderAction:(UISlider *)sender;
 - (void)binaryModeButtonAction;
+
+@property (nonatomic, strong) UICaptureSessionOverlayViewController *overlayViewController;
 
 @end
 
@@ -48,10 +50,7 @@
         
         [[self navigationController] setNavigationBarHidden:YES animated:NO];
         
-        [[NSNotificationCenter defaultCenter] addObserver:self
-                                                 selector:@selector(referenceFrameProcessDidFinish:)
-                                                     name:@"referenceframe.action.finished"
-                                                   object:nil];
+        _overlayViewController = [[UICaptureSessionOverlayViewController alloc] init];
     }
     
     return self;
@@ -86,7 +85,9 @@
     
     if (!_recording)
     {
-        [[NSNotificationCenter defaultCenter] postNotificationName:@"recording.action.started" object:self userInfo:[NSDictionary dictionaryWithObject:_videoDirectory forKey:@"video.path"]];
+        //[[NSNotificationCenter defaultCenter] postNotificationName:@"recording.action.started" object:self userInfo:[NSDictionary dictionaryWithObject:_videoDirectory forKey:@"video.path"]];
+        
+        [CaptureProcessManager startRecordingProcessAtPath:_videoDirectory];
         
         // Starts label time
         
@@ -96,7 +97,9 @@
     
     else
     {
-        [[NSNotificationCenter defaultCenter] postNotificationName:@"recording.action.stopped" object:self userInfo:nil];
+        //[[NSNotificationCenter defaultCenter] postNotificationName:@"recording.action.stopped" object:self userInfo:nil];
+        
+        [CaptureProcessManager stopRecordingProcess];
         
         [_captureSessionView.controlsView.recordingDurationLabelView stopDuration];
         [_captureSessionView.controlsView.recordingIconView stopFlickering];
@@ -119,7 +122,9 @@
     
     if (!_recording)
     {
-        [[NSNotificationCenter defaultCenter] postNotificationName:@"referenceframe.action.started" object:self userInfo:nil];
+        //[[NSNotificationCenter defaultCenter] postNotificationName:@"referenceframe.action.started" object:self userInfo:nil];
+        
+        [CaptureProcessManager startReferenceFrameProcess];
         
         [_captureSessionView.overlayView addSubview:_captureSessionView.overlayView.adjustmentActivityIndicatorView alignment:UIViewCentered];
         [_captureSessionView.overlayView.adjustmentActivityIndicatorView.activityIndicatorView startAnimating];
@@ -127,7 +132,9 @@
     
     else
     {
-        [[NSNotificationCenter defaultCenter] postNotificationName:@"referenceframe.action.stopped" object:self userInfo:nil];
+        //[[NSNotificationCenter defaultCenter] postNotificationName:@"referenceframe.action.stopped" object:self userInfo:nil];
+        
+        [CaptureProcessManager stopReferenceFrameProcess];
         
         [_captureSessionView.overlayView.adjustmentActivityIndicatorView.activityIndicatorView stopAnimating];
         [_captureSessionView.overlayView.adjustmentActivityIndicatorView removeFromSuperview];
@@ -159,20 +166,21 @@
         [path moveToPoint:CGPointMake(0, 0)];
         [path closePath];
         
-        [_captureSessionView.overlayView.regionBoundShapeView setPath:path.CGPath];
-        [_captureSessionView.overlayView.layer addSublayer:_captureSessionView.overlayView.regionBoundShapeView];
+        [_captureSessionView.overlayView.regionBoundsShapeView setPath:path.CGPath];
+        [_captureSessionView.overlayView.layer addSublayer:_captureSessionView.overlayView.regionBoundsShapeView];
         
-        [[NSNotificationCenter defaultCenter] postNotificationName:@"tracker.action.started" object:self userInfo:nil];
+        [CaptureProcessManager startTrackingProcess];
     }
     
     else
     {
-        [[NSNotificationCenter defaultCenter] postNotificationName:@"tracker.action.stopped" object:self userInfo:nil];
+        [CaptureProcessManager stopTrackingProcess];
+        
         [self.view removeGestureRecognizer:_locateRegionTapGestureRecognizer];
         
-        [_captureSessionView.overlayView.regionBoundShapeView removeFromSuperlayer];
+        [_captureSessionView.overlayView.regionBoundsShapeView removeFromSuperlayer];
         
-        if (_captureSessionView.overlayView.debugImageView.image != nil)
+        if (_captureSessionView.overlayView.imageView.image != nil)
             [self binaryModeButtonAction];
     }
     
@@ -225,6 +233,14 @@
     
     [_captureSessionView.overlayView.controlsView.binaryThresholdSlider addTarget:self action:@selector(binaryThresholdSliderAction:) forControlEvents:UIControlEventValueChanged];
     [_captureSessionView.overlayView.controlsView.binaryModeButton addTarget:self action:@selector(binaryModeButtonAction) forControlEvents:UIControlEventTouchUpInside];
+    
+    //crap, but need to do this
+    [_overlayViewController setOverlayView:_captureSessionView.overlayView];
+    TrackingProcess *trackingProcess = [[CaptureProcessManager sharedInstance] trackingProcess];
+    [self setDelegate:trackingProcess];
+    [trackingProcess setDelegate:_overlayViewController];
+    ReferenceFrameProcess *referenceFrameProcess = [[CaptureProcessManager sharedInstance] referenceFrameProcess];
+    [referenceFrameProcess setDelegate:self];
 }
 
 - (void)prepareForReuse
@@ -234,31 +250,35 @@
 
 - (void)binaryThresholdSliderAction:(UISlider *)sender
 {
-    [[NSNotificationCenter defaultCenter] postNotificationName:@"tracking.binarythreshold.changed" object:self userInfo:[NSDictionary dictionaryWithObject:[NSNumber numberWithFloat:sender.value] forKey:@"threshold"]];
+    [_delegate didBinaryThresholdChange:(uint8_t)sender.value];
 }
 
 - (void)binaryModeButtonAction
 {
-    if (_captureSessionView.overlayView.debugImageView.image == nil)
+    /** NEED TO TEST FURTHER THIS BUGGY PIECE OF SHIT **/
+    if (_captureSessionView.overlayView.imageView.image == nil)
     {
+        //[_captureSessionView.overlayView addSubview:_captureSessionView.overlayView.imageView];
+        [_captureSessionView.overlayView insertSubview:_captureSessionView.overlayView.imageView belowSubview:_captureSessionView.overlayView.controlsView];
         [_captureSessionView.captureVideoPreviewLayer removeFromSuperlayer];
     }
     
     else
     {
         [[_captureSessionView layer] insertSublayer:_captureSessionView.captureVideoPreviewLayer atIndex:0];
-        [_captureSessionView.overlayView.debugImageView setImage:nil];
+        [_captureSessionView.overlayView.imageView removeFromSuperview];
+        [_captureSessionView.overlayView.imageView setImage:nil];
     }
+    
+    /** NEED TO TEST FURTHER THIS BUGGY PIECE OF SHIT (ABOVE)**/
     
     _captureSessionView.overlayView.controlsView.binaryModeButton.selected = !_captureSessionView.overlayView.controlsView.binaryModeButton.selected;
     
-    [[NSNotificationCenter defaultCenter] postNotificationName:@"tracking.binarymode.button.clicked" object:self userInfo:nil];
+    [_delegate didEnterInBinaryMode];
 }
 
-- (void)referenceFrameProcessDidFinish:(NSNotification *)notification
+- (void)didFinishReferenceFrameProcess
 {
-    NSLog(@"referenceFrameProcessDidFinish notification received");
-    
     dispatch_async(dispatch_get_main_queue(), ^{
         
         [self hideOrShowControlsView];
@@ -278,9 +298,7 @@
 - (void)singleTapGestureToLocateRegion:(UITapGestureRecognizer *)recognizer
 {
     CGPoint touchPoint = [recognizer locationInView:_captureSessionView.overlayView];
-    NSLog(@"touchPoint : (%f, %f)", touchPoint.x, touchPoint.y);
-    
-    [[NSNotificationCenter defaultCenter] postNotificationName:@"overlay.view.singletap.region.detected" object:self userInfo:[NSDictionary dictionaryWithObjects:[NSArray arrayWithObjects:[NSNumber numberWithFloat:touchPoint.x], [NSNumber numberWithFloat:touchPoint.y], nil] forKeys:[NSArray arrayWithObjects:@"touchPoint.x", @"touchPoint.y", nil]]];
+    [_delegate didReceiveSingleTapAt:touchPoint];
 }
 
 @end

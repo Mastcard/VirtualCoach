@@ -15,15 +15,10 @@
 @interface UICaptureSessionOverlayView : UIBaseView
 
 @property (nonatomic, strong) UIBezierPath *trackedRegionBoundsPath;
-@property (nonatomic, strong) CAShapeLayer *regionBoundShapeView;
-@property (nonatomic, strong) UIImageView *debugImageView;
+@property (nonatomic, strong) CAShapeLayer *regionBoundsShapeView;
+@property (nonatomic, strong) UIImageView *imageView;
 @property (nonatomic, strong) UIActivityIndicatorTitledView *adjustmentActivityIndicatorView;
 @property (nonatomic, strong) UICaptureSessionOverlayControlsView *controlsView;
 @property (nonatomic, strong) UIBaseView *gestureView;
-
-@property (nonatomic, strong) UIColor *regionBoundsColor;
-
-- (void)updateDebugImage:(NSNotification *)notification;
-- (void)updateRegionBounds:(NSNotification *)notification;
 
 @end

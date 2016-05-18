@@ -8,10 +8,16 @@
 
 #import "UIHomeViewController.h"
 
+#import "VideoProcess.h"
+
 @interface UIHomeViewController ()
 
 - (void)captureButtonAction;
 - (void)processButtonAction;
+
+//temp
+@property (nonatomic, strong) NSString *lastInformationPath;
+- (void)lastInformationsFilePath:(NSNotification *)notification;
 
 @end
 
@@ -35,6 +41,13 @@
                                          style:UIBarButtonItemStylePlain
                                         target:nil
                                         action:nil];
+        
+        //temp
+        
+        [[NSNotificationCenter defaultCenter] addObserver:self
+                                                 selector:@selector(lastInformationsFilePath:)
+                                                     name:@"lastInformationPath"
+                                                   object:nil];
     }
     
     return self;
@@ -56,7 +69,20 @@
 
 - (void)processButtonAction
 {
+    NSDictionary *videoInfo = [[NSDictionary alloc] initWithContentsOfFile:_lastInformationPath];
+    VideoProcess *vidProc = [[VideoProcess alloc] initWithDictionary:videoInfo];
     
+    [vidProc setup];
+    [vidProc start];
+}
+
+//temp
+
+- (void)lastInformationsFilePath:(NSNotification *)notification
+{
+    NSDictionary *userInfo = notification.userInfo;
+    
+    _lastInformationPath = [userInfo objectForKey:@"lastInformationPathKey"];
 }
 
 @end

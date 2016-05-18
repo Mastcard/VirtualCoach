@@ -8,11 +8,11 @@
 
 #import <XCTest/XCTest.h>
 
-#import "TrackingService.h"
-
 #include <io.h>
 #include <labelling.h>
 #include <arithmetic.h>
+
+#include "charact_ext.h"
 
 @interface TrackingServiceTest : XCTestCase
 
@@ -53,7 +53,7 @@
     bini_t *oneSquare2Bin = binarise(oneSquare2, 10);
     labels_t *oneSquare2Labels = label(oneSquare2Bin);
     
-    int32_t reg1in2Id = [TrackingService trackRegion:oneSquare1Charact->data[0] byOverlapping:oneSquare2Labels withReferenceLabels:oneSquare1Labels];
+    int32_t reg1in2Id = overlappingreg(oneSquare1Charact->data[0], oneSquare2Labels, oneSquare1Labels);
     
     XCTAssertEqual(reg1in2Id, 1);
     
@@ -64,7 +64,7 @@
     bini_t *oneSquare3Bin = binarise(oneSquare3, 10);
     labels_t *oneSquare3Labels = label(oneSquare3Bin);
     
-    int32_t reg2in3Id = [TrackingService trackRegion:oneSquare2Charact->data[0] byOverlapping:oneSquare3Labels withReferenceLabels:oneSquare2Labels];
+    int32_t reg2in3Id = overlappingreg(oneSquare2Charact->data[0], oneSquare3Labels, oneSquare2Labels);
     
     XCTAssertEqual(reg2in3Id, 1);
     
@@ -75,11 +75,11 @@
     bini_t *oneSquare4Bin = binarise(oneSquare4, 10);
     labels_t *oneSquare4Labels = label(oneSquare4Bin);
     
-    int32_t reg3in4Id = [TrackingService trackRegion:oneSquare3Charact->data[0] byOverlapping:oneSquare4Labels withReferenceLabels:oneSquare3Labels];
+    int32_t reg3in4Id = overlappingreg(oneSquare3Charact->data[0], oneSquare4Labels, oneSquare3Labels);
     
     XCTAssertEqual(reg3in4Id, 1);
     
-    int32_t reg1in4Id = [TrackingService trackRegion:oneSquare1Charact->data[0] byOverlapping:oneSquare4Labels withReferenceLabels:oneSquare1Labels];
+    int32_t reg1in4Id = overlappingreg(oneSquare1Charact->data[0], oneSquare4Labels, oneSquare1Labels);
     
     XCTAssertEqual(reg1in4Id, -1);
     
@@ -125,7 +125,7 @@
     bini_t *twoSquare2Bin = binarise(twoSquare2, 10);
     labels_t *twoSquare2Labels = label(twoSquare2Bin);
     
-    int32_t reg1in2Id = [TrackingService trackRegion:twoSquare1Charact->data[0] byOverlapping:twoSquare2Labels withReferenceLabels:twoSquare1Labels];
+    int32_t reg1in2Id = overlappingreg(twoSquare1Charact->data[0], twoSquare1Labels, twoSquare2Labels);
     
     XCTAssertEqual(reg1in2Id, 2);
     
@@ -136,7 +136,9 @@
     bini_t *twoSquare3Bin = binarise(twoSquare3, 10);
     labels_t *twoSquare3Labels = label(twoSquare3Bin);
     
-    int32_t reg2in3Id = [TrackingService trackRegion:twoSquare2Charact->data[1] byOverlapping:twoSquare3Labels withReferenceLabels:twoSquare2Labels];
+    //int32_t reg2in3Id = [TrackingService trackRegion:twoSquare2Charact->data[1] byOverlapping:twoSquare3Labels withReferenceLabels:twoSquare2Labels];
+    
+    int32_t reg2in3Id = overlappingreg(twoSquare2Charact->data[1], twoSquare2Labels, twoSquare3Labels);
     
     XCTAssertEqual(reg2in3Id, 2);
     
@@ -147,7 +149,7 @@
     bini_t *twoSquare4Bin = binarise(twoSquare4, 10);
     labels_t *twoSquare4Labels = label(twoSquare4Bin);
     
-    int32_t reg3in4Id = [TrackingService trackRegion:twoSquare3Charact->data[1] byOverlapping:twoSquare4Labels withReferenceLabels:twoSquare3Labels];
+    int32_t reg3in4Id = overlappingreg(twoSquare3Charact->data[1], twoSquare3Labels, twoSquare4Labels);
     
     XCTAssertEqual(reg3in4Id, 2);
     
@@ -214,7 +216,7 @@
         
         else
         {
-            int32_t regIdFound = [TrackingService trackRegion:previousReg byOverlapping:nextLabels withReferenceLabels:previousLabels];
+            int32_t regIdFound = overlappingreg(previousReg, previousLabels, nextLabels);
             
             if ((regIdFound > 0) && (regIdFound <= ch->count))
             {
@@ -281,7 +283,7 @@
         
         else
         {
-            int32_t regIdFound = [TrackingService trackRegion:previousReg byOverlapping:nextLabels withReferenceLabels:previousLabels];
+            int32_t regIdFound = overlappingreg(previousReg, previousLabels, nextLabels);
             
             if ((regIdFound > 0) && (regIdFound <= ch->count))
             {

@@ -8,18 +8,9 @@
 
 #import "CaptureProcessManager.h"
 
-#import "ExtractorProcess.h"
-
 @interface CaptureProcessManager ()
 
-+ (void)startReferenceFrameProcess:(NSNotification *)notification;
-+ (void)startTrackingProcess:(NSNotification *)notification;
-+ (void)startRecordingProcess:(NSNotification *)notification;
 
-+ (void)stopReferenceFrameProcess:(NSNotification *)notification;
-+ (void)referenceFrameProcessDidFinish:(NSNotification *)notification;
-+ (void)stopTrackingProcess:(NSNotification *)notification;
-+ (void)stopRecordingProcess:(NSNotification *)notification;
 
 @end
 
@@ -57,46 +48,10 @@ static RecordingProcess *recordingProcess;
         captureSessionController = [CaptureSessionControllerFactory createHybridCaptureSessionControllerWithDevice:camera preset:AVCaptureSessionPreset1280x720 sampleBufferDelegate:referenceFrameProcess recordingDelegate:recordingProcess];
     });
     
-    [[NSNotificationCenter defaultCenter] addObserver:[self class]
-                                             selector:@selector(startReferenceFrameProcess:)
-                                                 name:@"referenceframe.action.started"
-                                               object:nil];
-    
-    [[NSNotificationCenter defaultCenter] addObserver:[self class]
-                                             selector:@selector(startTrackingProcess:)
-                                                 name:@"tracker.action.started"
-                                               object:nil];
-    
-    [[NSNotificationCenter defaultCenter] addObserver:[self class]
-                                             selector:@selector(startRecordingProcess:)
-                                                 name:@"recording.action.started"
-                                               object:nil];
-    
-    
-    [[NSNotificationCenter defaultCenter] addObserver:[self class]
-                                             selector:@selector(stopReferenceFrameProcess:)
-                                                 name:@"referenceframe.action.stopped"
-                                               object:nil];
-    
-    [[NSNotificationCenter defaultCenter] addObserver:[self class]
-                                             selector:@selector(referenceFrameProcessDidFinish:)
-                                                 name:@"referenceframe.action.internal.finished"
-                                               object:nil];
-    
-    [[NSNotificationCenter defaultCenter] addObserver:[self class]
-                                             selector:@selector(stopTrackingProcess:)
-                                                 name:@"tracker.action.stopped"
-                                               object:nil];
-    
-    [[NSNotificationCenter defaultCenter] addObserver:[self class]
-                                             selector:@selector(stopRecordingProcess:)
-                                                 name:@"recording.action.stopped"
-                                               object:nil];
-    
     return sharedInstance;
 }
 
-+ (void)startReferenceFrameProcess:(NSNotification *)notification
++ (void)startReferenceFrameProcess
 {
     //NSLog(@"startReferenceFrameProcess");
     
@@ -114,7 +69,7 @@ static RecordingProcess *recordingProcess;
     [captureSessionController startRetrievingFrames];
 }
 
-+ (void)startTrackingProcess:(NSNotification *)notification
++ (void)startTrackingProcess
 {
     //NSLog(@"startTrackingProcess");
     
@@ -132,21 +87,19 @@ static RecordingProcess *recordingProcess;
     [captureSessionController startRetrievingFrames];
 }
 
-+ (void)startRecordingProcess:(NSNotification *)notification
++ (void)startRecordingProcessAtPath:(NSURL *)path
 {
     //NSLog(@"startRecordingProcess");
-    
-    NSDictionary *userInfo = notification.userInfo;
     
     [captureSessionController removeOutput];
     [captureSessionController addMovieFileOutput];
     
     [captureSessionController setRecordingDelegate:recordingProcess];
     
-    [captureSessionController startRecordingMovieAtURL:(NSURL *)[userInfo objectForKey:@"video.path"]];
+    [captureSessionController startRecordingMovieAtURL:path];
 }
 
-+ (void)stopReferenceFrameProcess:(NSNotification *)notification
++ (void)stopReferenceFrameProcess
 {
     //NSLog(@"stopReferenceFrameProcess");
     [captureSessionController stopRetrievingFrames];
@@ -154,14 +107,14 @@ static RecordingProcess *recordingProcess;
     
 }
 
-+ (void)stopTrackingProcess:(NSNotification *)notification
++ (void)stopTrackingProcess
 {
     //NSLog(@"stopTrackingProcess");
     [captureSessionController stopRetrievingFrames];
     [captureSessionController removeOutput];
 }
 
-+ (void)stopRecordingProcess:(NSNotification *)notification
++ (void)stopRecordingProcess
 {
     //NSLog(@"stopRecordingProcess");
     [captureSessionController stopRecordingMovie];
@@ -189,13 +142,16 @@ static RecordingProcess *recordingProcess;
                                                      forKeys:[NSArray arrayWithObjects:@"videoPath", @"referenceFramePath", @"binaryThreshold", @"lastPlayerBounds", nil]];
     
     [dict writeToFile:dataFilePath atomically:YES];
+    
+    //temp
+    [[NSNotificationCenter defaultCenter] postNotificationName:@"lastInformationPath" object:self userInfo:[NSDictionary dictionaryWithObject:dataFilePath forKey:@"lastInformationPathKey"]];
 }
 
-+ (void)referenceFrameProcessDidFinish:(NSNotification *)notification
-{
-    [captureSessionController removeOutput];
-    [[NSNotificationCenter defaultCenter] postNotificationName:@"referenceframe.action.finished" object:self userInfo:nil];
-}
+//+ (void)referenceFrameProcessDidFinish
+//{
+//    [captureSessionController removeOutput];
+//    [[NSNotificationCenter defaultCenter] postNotificationName:@"referenceframe.action.finished" object:[CaptureProcessManager sharedInstance] userInfo:nil];
+//}
 
 - (HybridCaptureSessionController *)captureSessionController
 {

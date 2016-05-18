@@ -8,13 +8,14 @@
 
 #include "charact_ext.h"
 
-int32_t overlappingreg(regchar_t *ref, labels_t *reflabels, labels_t *labels, uint16_t width)
+int32_t overlappingreg(regchar_t *ref, labels_t *reflabels, labels_t *labels)
 {
     uint32_t *count = (uint32_t *)calloc(labels->count, sizeof(uint32_t));
     
     uint32_t id = ref->id;
     pt2d_t start = ref->bounds.start, end = ref->bounds.end;
     
+    uint16_t width = labels->width;
     uint32_t i = 0, j = 0, k = 0;
     
     for (i = start.y; i <= end.y; i++)
@@ -102,4 +103,20 @@ int32_t regionAtZone(rect_t rect, labels_t *labels)
     free(count);
     
     return bestRegAcc == 0 ? -1 : (bestReg + 1);
+}
+
+float gravCenterSpeed(vect2d_t gravvect, float previousSpeed, float alpha, float beta)
+{
+    float vTx = (float)gravvect.x;
+    float vTy = (float)gravvect.y;
+    
+    if (beta > 0)
+    {
+        vTx = beta * (float)gravvect.x;
+        vTy = (1 - beta) * (float)gravvect.y;
+    }
+    
+    float vT = sqrtf(powf(vTx, 2.0) + powf(vTy, 2.0));
+    
+    return ((alpha * previousSpeed) + ((1 - alpha) * vT));
 }
