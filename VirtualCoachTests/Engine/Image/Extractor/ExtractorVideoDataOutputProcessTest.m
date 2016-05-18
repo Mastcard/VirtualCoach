@@ -10,6 +10,8 @@
 
 #import "ExtractorVideoDataOutputProcess.h"
 
+#include <io.h>
+
 @interface ExtractorVDOP : NSObject <ExtractorVideoDataOutputDelegate>
 
 @property (nonatomic, strong) NSString *extractedImageDir;
