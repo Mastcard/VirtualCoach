@@ -31,14 +31,11 @@
             u = speed->data[PXL_IDX(width, x, y)].x;
             v = speed->data[PXL_IDX(width, x, y)].y;
             norm = sqrt(u*u + v*v);
-            if (norm > 0.0){
+            if (norm > 0.00){
                 angle = atan2(-v, u) * 180 / M_PI;
-                //NSLog(@"angle before: %d", (int)angle);
                 if ((int)angle < 0) {
                     angle += 360;
                 }
-                //NSLog(@"angle: %d",(unsigned int)angle);
-                //NSLog(@"angle after: %d", (int)angle);
                 _data[(int) angle] = @([[_data objectAtIndex:(int) angle] intValue] + 1);
             }
         }
