@@ -7,6 +7,14 @@
 	objects = {
 
 /* Begin PBXBuildFile section */
+		0D4FC0801D05A52A008D18B6 /* CoachDataEngine.m in Sources */ = {isa = PBXBuildFile; fileRef = 0D4FC07F1D05A52A008D18B6 /* CoachDataEngine.m */; };
+		0D4FC0831D05A549008D18B6 /* PlayerDataEngine.m in Sources */ = {isa = PBXBuildFile; fileRef = 0D4FC0821D05A549008D18B6 /* PlayerDataEngine.m */; };
+		0D4FC0861D05A55F008D18B6 /* MovementDataEngine.m in Sources */ = {isa = PBXBuildFile; fileRef = 0D4FC0851D05A55F008D18B6 /* MovementDataEngine.m */; };
+		0D4FC0891D05A587008D18B6 /* StatisticalDataEngine.m in Sources */ = {isa = PBXBuildFile; fileRef = 0D4FC0881D05A587008D18B6 /* StatisticalDataEngine.m */; };
+		0D4FC08C1D05A5A1008D18B6 /* TrainingDataEngine.m in Sources */ = {isa = PBXBuildFile; fileRef = 0D4FC08B1D05A5A1008D18B6 /* TrainingDataEngine.m */; };
+		0D4FC08F1D05A5BD008D18B6 /* VideoDataEngine.m in Sources */ = {isa = PBXBuildFile; fileRef = 0D4FC08E1D05A5BD008D18B6 /* VideoDataEngine.m */; };
+		0D4FC0921D05A5D3008D18B6 /* VideoReferenceDataEngine.m in Sources */ = {isa = PBXBuildFile; fileRef = 0D4FC0911D05A5D3008D18B6 /* VideoReferenceDataEngine.m */; };
+		0D4FC0951D05A5E3008D18B6 /* MovementReferenceDataEngine.m in Sources */ = {isa = PBXBuildFile; fileRef = 0D4FC0941D05A5E3008D18B6 /* MovementReferenceDataEngine.m */; };
 		0D95DFD31D0599DD0007F35E /* CheckDatabaseDAO.m in Sources */ = {isa = PBXBuildFile; fileRef = 0D95DFBA1D0599DD0007F35E /* CheckDatabaseDAO.m */; };
 		0D95DFD41D0599DD0007F35E /* CoachDAO.m in Sources */ = {isa = PBXBuildFile; fileRef = 0D95DFBC1D0599DD0007F35E /* CoachDAO.m */; };
 		0D95DFD51D0599DD0007F35E /* CoachPlayerDAO.m in Sources */ = {isa = PBXBuildFile; fileRef = 0D95DFBE1D0599DD0007F35E /* CoachPlayerDAO.m */; };
@@ -129,6 +137,22 @@
 /* End PBXContainerItemProxy section */
 
 /* Begin PBXFileReference section */
+		0D4FC07E1D05A52A008D18B6 /* CoachDataEngine.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = CoachDataEngine.h; sourceTree = "<group>"; };
+		0D4FC07F1D05A52A008D18B6 /* CoachDataEngine.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = CoachDataEngine.m; sourceTree = "<group>"; };
+		0D4FC0811D05A549008D18B6 /* PlayerDataEngine.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = PlayerDataEngine.h; sourceTree = "<group>"; };
+		0D4FC0821D05A549008D18B6 /* PlayerDataEngine.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = PlayerDataEngine.m; sourceTree = "<group>"; };
+		0D4FC0841D05A55F008D18B6 /* MovementDataEngine.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = MovementDataEngine.h; sourceTree = "<group>"; };
+		0D4FC0851D05A55F008D18B6 /* MovementDataEngine.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = MovementDataEngine.m; sourceTree = "<group>"; };
+		0D4FC0871D05A587008D18B6 /* StatisticalDataEngine.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = StatisticalDataEngine.h; sourceTree = "<group>"; };
+		0D4FC0881D05A587008D18B6 /* StatisticalDataEngine.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = StatisticalDataEngine.m; sourceTree = "<group>"; };
+		0D4FC08A1D05A5A1008D18B6 /* TrainingDataEngine.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = TrainingDataEngine.h; sourceTree = "<group>"; };
+		0D4FC08B1D05A5A1008D18B6 /* TrainingDataEngine.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = TrainingDataEngine.m; sourceTree = "<group>"; };
+		0D4FC08D1D05A5BD008D18B6 /* VideoDataEngine.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = VideoDataEngine.h; sourceTree = "<group>"; };
+		0D4FC08E1D05A5BD008D18B6 /* VideoDataEngine.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = VideoDataEngine.m; sourceTree = "<group>"; };
+		0D4FC0901D05A5D3008D18B6 /* VideoReferenceDataEngine.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = VideoReferenceDataEngine.h; sourceTree = "<group>"; };
+		0D4FC0911D05A5D3008D18B6 /* VideoReferenceDataEngine.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = VideoReferenceDataEngine.m; sourceTree = "<group>"; };
+		0D4FC0931D05A5E3008D18B6 /* MovementReferenceDataEngine.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = MovementReferenceDataEngine.h; sourceTree = "<group>"; };
+		0D4FC0941D05A5E3008D18B6 /* MovementReferenceDataEngine.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = MovementReferenceDataEngine.m; sourceTree = "<group>"; };
 		0D95DFB91D0599DD0007F35E /* CheckDatabaseDAO.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = CheckDatabaseDAO.h; sourceTree = "<group>"; };
 		0D95DFBA1D0599DD0007F35E /* CheckDatabaseDAO.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = CheckDatabaseDAO.m; sourceTree = "<group>"; };
 		0D95DFBB1D0599DD0007F35E /* CoachDAO.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = CoachDAO.h; sourceTree = "<group>"; };
@@ -340,6 +364,29 @@
 				0D95DFE71D059A2F0007F35E /* DatabaseTest.m */,
 			);
 			path = Database;
+			sourceTree = "<group>";
+		};
+		0DCE22FD1D05A3A800654B0E /* DataEngine */ = {
+			isa = PBXGroup;
+			children = (
+				0D4FC07E1D05A52A008D18B6 /* CoachDataEngine.h */,
+				0D4FC07F1D05A52A008D18B6 /* CoachDataEngine.m */,
+				0D4FC0811D05A549008D18B6 /* PlayerDataEngine.h */,
+				0D4FC0821D05A549008D18B6 /* PlayerDataEngine.m */,
+				0D4FC0841D05A55F008D18B6 /* MovementDataEngine.h */,
+				0D4FC0851D05A55F008D18B6 /* MovementDataEngine.m */,
+				0D4FC0871D05A587008D18B6 /* StatisticalDataEngine.h */,
+				0D4FC0881D05A587008D18B6 /* StatisticalDataEngine.m */,
+				0D4FC08A1D05A5A1008D18B6 /* TrainingDataEngine.h */,
+				0D4FC08B1D05A5A1008D18B6 /* TrainingDataEngine.m */,
+				0D4FC08D1D05A5BD008D18B6 /* VideoDataEngine.h */,
+				0D4FC08E1D05A5BD008D18B6 /* VideoDataEngine.m */,
+				0D4FC0901D05A5D3008D18B6 /* VideoReferenceDataEngine.h */,
+				0D4FC0911D05A5D3008D18B6 /* VideoReferenceDataEngine.m */,
+				0D4FC0931D05A5E3008D18B6 /* MovementReferenceDataEngine.h */,
+				0D4FC0941D05A5E3008D18B6 /* MovementReferenceDataEngine.m */,
+			);
+			path = DataEngine;
 			sourceTree = "<group>";
 		};
 		6EB1CFA91CEA2CB9006B6940 /* Base */ = {
@@ -805,6 +852,7 @@
 		6EE37B841C8739E2006E0626 /* Engine */ = {
 			isa = PBXGroup;
 			children = (
+				0DCE22FD1D05A3A800654B0E /* DataEngine */,
 				8ACF77791CECAADB00248372 /* Process */,
 				8ACF77801CECAADB00248372 /* Tools */,
 				6EB1CFCF1CEA2D5E006B6940 /* LiveCapture */,
@@ -1233,8 +1281,12 @@
 				6EB1D0301CEA2D8B006B6940 /* UILaunchViewController.m in Sources */,
 				0D95DFDA1D0599DD0007F35E /* PlayerTrophyDAO.m in Sources */,
 				0D95DFD51D0599DD0007F35E /* CoachPlayerDAO.m in Sources */,
+				0D4FC0861D05A55F008D18B6 /* MovementDataEngine.m in Sources */,
+				0D4FC08F1D05A5BD008D18B6 /* VideoDataEngine.m in Sources */,
 				6EB1CFF81CEA2D5E006B6940 /* MovieCaptureSession.m in Sources */,
+				0D4FC0891D05A587008D18B6 /* StatisticalDataEngine.m in Sources */,
 				8ACF77781CECAAC600248372 /* ExtractorVideoDataOutputProcess.m in Sources */,
+				0D4FC0921D05A5D3008D18B6 /* VideoReferenceDataEngine.m in Sources */,
 				6EB1CFF91CEA2D5E006B6940 /* MovieCaptureSessionController.m in Sources */,
 				6EB1CFCE1CEA2D0C006B6940 /* Queue.m in Sources */,
 				8ACF778A1CECAAF800248372 /* ImageTools.m in Sources */,
@@ -1245,6 +1297,7 @@
 				6EE37B961C8739E2006E0626 /* Histogram.m in Sources */,
 				6EB1CFBF1CEA2CB9006B6940 /* ExtractorProcess.m in Sources */,
 				6EB1CFF01CEA2D5E006B6940 /* CaptureDevicePropertiesUtilities.m in Sources */,
+				0D4FC0801D05A52A008D18B6 /* CoachDataEngine.m in Sources */,
 				0D95DFD81D0599DD0007F35E /* PlayerDAO.m in Sources */,
 				6EB1CFF41CEA2D5E006B6940 /* FramesCaptureSession.m in Sources */,
 				0D95DFDE1D0599DD0007F35E /* VideoDAO.m in Sources */,
@@ -1255,7 +1308,9 @@
 				6EE37BB51C981B6D006E0626 /* DistanceUtilities.m in Sources */,
 				6EE37BB81C981C37006E0626 /* KmeanCalculation.m in Sources */,
 				6EB1D0391CEA2D8B006B6940 /* UIRecordingButton.m in Sources */,
+				0D4FC0831D05A549008D18B6 /* PlayerDataEngine.m in Sources */,
 				8ACF77831CECAADB00248372 /* DataAnalysisProcess.m in Sources */,
+				0D4FC0951D05A5E3008D18B6 /* MovementReferenceDataEngine.m in Sources */,
 				0D95DFD61D0599DD0007F35E /* MovementDAO.m in Sources */,
 				6EB1D0361CEA2D8B006B6940 /* UICaptureSessionOverlayControlsView.m in Sources */,
 				0D95DFDC1D0599DD0007F35E /* TrainingDAO.m in Sources */,
@@ -1280,6 +1335,7 @@
 				6EE37BB11C98037A006E0626 /* Cluster.m in Sources */,
 				6EB1CFEF1CEA2D5E006B6940 /* CaptureDevicePropertiesRetriever.m in Sources */,
 				0D95DFD31D0599DD0007F35E /* CheckDatabaseDAO.m in Sources */,
+				0D4FC08C1D05A5A1008D18B6 /* TrainingDataEngine.m in Sources */,
 				6EE37B9D1C8973C7006E0626 /* KmeanEntryDataSet.m in Sources */,
 				6EB1D0311CEA2D8B006B6940 /* UIBaseButton.m in Sources */,
 				6EB1CFF11CEA2D5E006B6940 /* CaptureSession.m in Sources */,
