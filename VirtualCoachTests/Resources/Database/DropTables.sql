@@ -1,0 +1,12 @@
+Drop table if exists CoachPlayer;
+Drop table if exists PlayerTrainingVideo;
+Drop table if exists Movement;
+Drop table if exists MovementReference;
+Drop table if exists VideoReference;
+Drop table if exists PlayerTrophy;
+Drop table if exists Statistical;
+Drop table if exists Coach;
+Drop table if exists Player;
+Drop table if exists Training;
+Drop table if exists Video;
+Drop table if exists Trophy;

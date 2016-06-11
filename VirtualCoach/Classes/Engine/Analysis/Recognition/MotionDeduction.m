@@ -8,6 +8,12 @@
 
 #import "MotionDeduction.h"
 
+@interface MotionDeduction()
+
++ (NSNumber *) compareHistogramReference:(Histogram *)hRef isLeftHanded:(Boolean)leftHandedRef withHistogramofPLayer:(Histogram *)hMvt isLeftHanded:(Boolean)leftHandedPlayer andThreshold:(int)threshold;
+
+@end
+
 @implementation MotionDeduction
 
 + (NSString *)recognizeTennisMotionWithHistogram:(Histogram *)anglesHistogram andLeftHanded:(Boolean)leftHanded{
@@ -33,9 +39,7 @@
         if(angle == 180){
             return result = @"backhand";
         }
-    }
-    
-    if (leftHanded==true) {
+    }else if (leftHanded==true) {
         if (angle == 0) {
             return result = @"backhand";
         }
@@ -43,14 +47,36 @@
             return result = @"forehand";
         }
     }
-    
-    // else angle != 0 || 180 || 270
     NSString *angleMax = [ NSString stringWithFormat:@"%d", angle] ;
     NSString *nbOccuMax = [ NSString stringWithFormat:@"%d", max] ;
     NSString *message = @"Motion not recognized";
     return result = [NSString stringWithFormat:@"%@ %@°:%@",message, angleMax, nbOccuMax];
     
 }
+
++ (NSString *)recognizeTennisMotionWithFilterHistogram:(Histogram *)anglesHistogram andLeftHanded:(Boolean)leftHanded{
+    
+    NSString * result;
+    
+    if([[anglesHistogram.data objectAtIndex:270] intValue] > [[anglesHistogram.data objectAtIndex:0] intValue] && [[anglesHistogram.data objectAtIndex:270] intValue] > [[anglesHistogram.data objectAtIndex:180] intValue]){
+        return result = @"serve";
+    }
+    if (leftHanded==false){
+        if([[anglesHistogram.data objectAtIndex:0] intValue] > [[anglesHistogram.data objectAtIndex:180] intValue] && [[anglesHistogram.data objectAtIndex:0] intValue] > [[anglesHistogram.data objectAtIndex:270] intValue]){
+            return result = @"forehand";
+        } else if([[anglesHistogram.data objectAtIndex:180] intValue] > [[anglesHistogram.data objectAtIndex:0] intValue] && [[anglesHistogram.data objectAtIndex:180] intValue] > [[anglesHistogram.data objectAtIndex:270] intValue]){
+            return result = @"backhand";
+        }
+    } else if (leftHanded==true) {
+        if([[anglesHistogram.data objectAtIndex:0] intValue] > [[anglesHistogram.data objectAtIndex:180] intValue] && [[anglesHistogram.data objectAtIndex:0] intValue] > [[anglesHistogram.data objectAtIndex:270] intValue]){
+            return result = @"backhand";
+        } else if([[anglesHistogram.data objectAtIndex:180] intValue] > [[anglesHistogram.data objectAtIndex:0] intValue] && [[anglesHistogram.data objectAtIndex:180] intValue] > [[anglesHistogram.data objectAtIndex:270] intValue]){
+            return result = @"forehand";
+        }
+    }
+    return result;
+}
+
 /*
 + (NSNumber *)bhattacharyyaBetweenFirstAngleHistogram:(Histogram *)histo1 andSecondHistogram:(Histogram *)histo2{
 
@@ -81,7 +107,7 @@
     return result;
 }
 */
-/*
+
 + (NSNumber *) compareHistogramReference:(Histogram *)hRef isLeftHanded:(Boolean)leftHandedRef withHistogramofPLayer:(Histogram *)hMvt isLeftHanded:(Boolean)leftHandedPlayer andThreshold:(int)threshold{
     
     float resultFloat = 0;
@@ -93,13 +119,82 @@
     float curentMvtCountAngle=0;
     float dif = 0;
     long error = 0;
-    float percentSeuil =0;
+    float percentThreshold =0;
 
     NSNumber * result;
     
     if(leftHandedRef != leftHandedPlayer){
-        percentError = 100;
-        resultFloat = fabsf(100 - percentError);
+        
+        if(leftHandedRef == true){
+            
+            Histogram * newHref = [[Histogram alloc] init];
+            for (NSInteger i=0; i<[[newHref data] count]; i++) {
+                int newAngle = (int) (180 - i);
+                if(newAngle<0){
+                    newAngle = newAngle +360;
+                }
+                [[newHref data] replaceObjectAtIndex:i withObject:[[hRef data] objectAtIndex:newAngle]];
+            }
+            
+            if ([newHref data].count > 0 && [hMvt data].count > 0){
+                for (int i=0; i<[hMvt data].count; i++) {
+                    countTotalOccAngleMvt += [newHref.data[i] floatValue];
+                    countTotalOccAngleRef += [hMvt.data[i] floatValue];
+                }
+                if (countTotalOccAngleRef > 0){
+                    for (int j=0; j<[hMvt data].count; j++){
+                        curentRefCountAngle = [newHref.data[j] floatValue];
+                        curentMvtCountAngle = [hMvt.data[j] floatValue];
+                        echcurentRefCountAngle =(countTotalOccAngleMvt*curentRefCountAngle)/countTotalOccAngleRef;
+                        dif = fabsf(curentMvtCountAngle-echcurentRefCountAngle);
+                        percentThreshold = (echcurentRefCountAngle * threshold)/100;
+                        if (dif > percentThreshold) {
+                            error += dif;
+                        }
+                    }
+                    percentError = (error*100)/countTotalOccAngleMvt;
+                    resultFloat = fabsf(100 - percentError);
+                } else {
+                    NSLog(@"Bug: histogram reference have no value");
+                }
+            }
+            
+        } else if(leftHandedPlayer == true){
+            
+            Histogram * newhMvt = [[Histogram alloc] init];
+            for (NSInteger i=0; i<[[newhMvt data] count]; i++) {
+                int newAngle = (int) (180 - i);
+                if(newAngle<0){
+                    newAngle = newAngle +360;
+                }
+                [[newhMvt data] replaceObjectAtIndex:i withObject:[[hMvt data] objectAtIndex:newAngle]];
+            }
+            
+            if ([hRef data].count > 0 && [newhMvt data].count > 0){
+                for (int i=0; i<[hMvt data].count; i++) {
+                    countTotalOccAngleMvt += [hRef.data[i] floatValue];
+                    countTotalOccAngleRef += [newhMvt.data[i] floatValue];
+                }
+                if (countTotalOccAngleRef > 0){
+                    for (int j=0; j<[hMvt data].count; j++){
+                        curentRefCountAngle = [hRef.data[j] floatValue];
+                        curentMvtCountAngle = [newhMvt.data[j] floatValue];
+                        echcurentRefCountAngle =(countTotalOccAngleMvt*curentRefCountAngle)/countTotalOccAngleRef;
+                        dif = fabsf(curentMvtCountAngle-echcurentRefCountAngle);
+                        percentThreshold = (echcurentRefCountAngle * threshold)/100;
+                        if (dif > percentThreshold) {
+                            error += dif;
+                        }
+                    }
+                    percentError = (error*100)/countTotalOccAngleMvt;
+                    resultFloat = fabsf(100 - percentError);
+                } else {
+                    NSLog(@"Bug: histogram reference have no value");
+                }
+            }
+            
+        }
+        
     } else {
         if ([hRef data].count > 0 && [hMvt data].count > 0){
             for (int i=0; i<[hMvt data].count; i++) {
@@ -110,8 +205,17 @@
                 for (int j=0; j<[hMvt data].count; j++){
                     curentRefCountAngle = [hRef.data[j] floatValue];
                     curentMvtCountAngle = [hMvt.data[j] floatValue];
-                    
+                    echcurentRefCountAngle =(countTotalOccAngleMvt*curentRefCountAngle)/countTotalOccAngleRef;
+                    dif = fabsf(curentMvtCountAngle-echcurentRefCountAngle);
+                    percentThreshold = (echcurentRefCountAngle * threshold)/100;
+                    if (dif > percentThreshold) {
+                        error += dif;
+                    }
                 }
+                percentError = (error*100)/countTotalOccAngleMvt;
+                resultFloat = fabsf(100 - percentError);
+            } else {
+                NSLog(@"Bug: histogram reference have no value");
             }
         }
     }
@@ -120,55 +224,20 @@
     return result;
     
 }
-*/
-/*
-+ (NSNumber *) compare:(VCHistogram *)hRef histo:(VCHistogram *)hMvt seuil:(int)seuil{
+
++(NSString *)compareHistogram:(Histogram *)mvt isPlayerLeftHanded:(Boolean)leftHandedPlayer pathHistogramRef:(NSString *)path isCoachLeftHanded:(Boolean)leftHandedCoatch withThreshold:(int)threshold{
     
-    float resultFloat = 0;
-    float percentError = 0;
-    NSNumber * result;
-    float nbTotalOccAngleMvt=0;
-    float nbTotalOccAngleRef=0;
-    float echcurentRefNbAngle=0;
-    float curentRefNbAngle=0;
-    float curentMvtNbAngle=0;
-    float dif = 0;
-    long error = 0;
-    float percentSeuil =0;
+    NSString * percentResultString = @"0";
     
-    for (int i=0; i<(hRef.size); i++) {
-        nbTotalOccAngleMvt = nbTotalOccAngleMvt + hMvt.content[i];
-        nbTotalOccAngleRef = nbTotalOccAngleRef + hRef.content[i];
-    }
-    if (nbTotalOccAngleMvt == 0) {
-        result =0;
-        return result;
-    }
-    else{
-        
-        for(int i=0; i<(hRef.size); i++){
-            
-            curentRefNbAngle = hRef.content[i];
-            curentMvtNbAngle = hMvt.content[i];
-            echcurentRefNbAngle = (nbTotalOccAngleMvt*curentRefNbAngle)/nbTotalOccAngleRef;
-            dif = fabsf(curentMvtNbAngle-echcurentRefNbAngle);
-            percentSeuil = (echcurentRefNbAngle * seuil)/100;
-            
-            if (dif > percentSeuil) {
-                error += dif;
-            }
-            else{
-                printf("%lf\t and %lf\n", dif, percentSeuil);
-            }
-            
-        }
-        percentError = (error*100)/nbTotalOccAngleMvt;
-        resultFloat = fabsf(100 - percentError);
-        result = [NSNumber numberWithFloat:resultFloat];
-        return result;
-        
-    }
+    Histogram * histogramRef;
+    histogramRef = [Histogram loadHistogramAtPath:path];
+    
+    NSNumber * percentResult = [MotionDeduction compareHistogramReference:histogramRef isLeftHanded:leftHandedCoatch withHistogramofPLayer:mvt isLeftHanded:leftHandedPlayer andThreshold:threshold];
+    
+    percentResultString = [percentResult stringValue];
+    
+    return percentResultString;
     
 }
-*/
+
 @end
