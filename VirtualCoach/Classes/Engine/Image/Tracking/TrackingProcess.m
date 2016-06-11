@@ -170,7 +170,6 @@
             
             if (_canTrackRegion)
             {
-                //int32_t bestRegId = [TrackingService trackRegion:previousReg byOverlapping:previousLabels withReferenceLabels:nextLabels];
                 int32_t bestRegId = overlappingreg(_previousReg, _previousLabels, nextLabels);
                 
                 //NSLog(@"bestRegId : %d", bestRegId);
