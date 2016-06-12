@@ -28,6 +28,8 @@
         _trainingsPanelLabel = [[UIBaseLabel alloc] init];
         _videosPanelLabel = [[UIBaseLabel alloc] init];
         _playersPanelLabel = [[UIBaseLabel alloc] init];
+        
+        _processVideoProgressView = [[UIProcessProgressView alloc] init];
     }
     
     return self;
@@ -170,13 +172,24 @@
     [removeSelectedPlayerButtonTitle addAttribute:NSForegroundColorAttributeName value:[UIColor colorWithRed:(252 / 255.f) green:(61 / 255.f) blue:(57 / 255.f) alpha:1.f] range:NSMakeRange(0, [removeSelectedPlayerButtonTitle length])];
     
     [_removeSelectedPlayerButton setAttributedTitle:removeSelectedPlayerButtonTitle forState:UIControlStateNormal];
+    
+    // setting process progress view
+    
+    CGSize processVideoProgressViewSize = CGSizeMake(350, 150);
+    CGPoint processVideoProgressViewOrigin = CGPointMake(([UIScreen mainScreen].bounds.size.width - processAllVideosButtonSize.width) / 2, ([UIScreen mainScreen].bounds.size.height - processAllVideosButtonSize.height) / 2);
+    
+    [_processVideoProgressView setFrame:CGRectMake(processVideoProgressViewOrigin.x, processVideoProgressViewOrigin.y, processVideoProgressViewSize.width, processVideoProgressViewSize.height)];
 }
 
 - (void)layout
 {
     [super layout];
     
+    
+    
     [self prepareForUse];
+    
+    [_processVideoProgressView layout];
     
     [self addSubview:_trainingsTableView];
     [self addSubview:_playersTableView];
