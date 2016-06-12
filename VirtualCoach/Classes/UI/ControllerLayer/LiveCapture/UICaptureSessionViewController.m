@@ -179,13 +179,6 @@
     _recording = !_recording;
 }
 
-//- (void)loadView
-//{
-//    [super loadView];
-//    
-//    [self.view addSubview:_captureSessionView];
-//}
-
 - (void)viewDidLoad
 {
     [super viewDidLoad];
@@ -198,18 +191,7 @@
     if ([previewLayerConnection isVideoOrientationSupported])
         [previewLayerConnection setVideoOrientation:AVCaptureVideoOrientationLandscapeRight];
     
-    [self.navigationController.navigationBar setBackgroundImage:[UIImage new] forBarMetrics:UIBarMetricsDefault];
-    self.navigationController.navigationBar.shadowImage = [UIImage new];
-    self.navigationController.navigationBar.translucent = YES;
-    
     [_captureSessionController startSession];
-}
-
-- (void)viewWillDisappear:(BOOL)animated
-{
-    [self.navigationController.navigationBar setBackgroundImage:nil forBarMetrics:UIBarMetricsDefault];
-    self.navigationController.navigationBar.shadowImage = nil;
-    self.navigationController.navigationBar.translucent = NO;
 }
 
 - (void)viewDidDisappear:(BOOL)animated
