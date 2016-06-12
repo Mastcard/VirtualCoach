@@ -70,7 +70,22 @@
     
     _trainingsTableViewData = @[@"Training1", @"Training2", @"Training3", @"Training4", @"Training5", @"Training6", @"Training7", @"Training8", @"Training9", @"Training10", @"Training11", @"Training12"];
     _playersTableViewData = [NSMutableArray arrayWithObjects:@"Joe", @"David", @"Luke", @"Steve P", @"Jeffrey", nil];
-    _videosTableViewData = [NSMutableArray arrayWithObjects:@"2016-05-25_11.00.47", @"2016-05-25_11.27.59", @"2016-06-05_10.10.07", @"2016-06-05_10.24.25", nil];
+    
+    _videosTableViewData = [NSMutableArray array];
+    
+    // temporary : load all videos in Documents directory
+    
+    NSArray *directoryContent = [[NSFileManager defaultManager] contentsOfDirectoryAtPath:[NSSearchPathForDirectoriesInDomains(NSDocumentDirectory, NSUserDomainMask, YES) objectAtIndex:0] error:NULL];
+    
+    for (NSUInteger i = 0; i < [directoryContent count]; i++)
+    {
+        if ([[[directoryContent objectAtIndex:i] pathExtension] isEqualToString:@"mov"])
+        {
+            [_videosTableViewData addObject:[[directoryContent objectAtIndex:i] stringByDeletingPathExtension]];
+        }
+    }
+    
+    //temporary end
 }
 
 - (void)processVideoButtonAction:(UIBaseButton *)sender
@@ -88,6 +103,76 @@
                                handler:^(UIAlertAction * action)
                                {
                                    // process video
+                                   
+                                   NSString *videoName = [parentCell.textLabel text];
+                                   NSString *documentsDirectory = [NSSearchPathForDirectoriesInDomains(NSDocumentDirectory, NSUserDomainMask, YES) objectAtIndex:0];
+                                   
+                                   NSString *videoDataFilePath = [documentsDirectory stringByAppendingPathComponent:[NSString stringWithFormat:@"%@-data.plist", videoName]];
+                                   
+                                   NSDictionary *videoInfo = [[NSDictionary alloc] initWithContentsOfFile:videoDataFilePath];
+                                   
+                                   // workaround to update data file of example video as the application id changes everytime (so does the data file path) ...
+                                   
+                                   NSMutableDictionary *videoInfoMutable = [videoInfo mutableCopy];
+                                   
+                                   [videoInfoMutable setObject:[documentsDirectory stringByAppendingPathComponent:[NSString stringWithFormat:@"%@.mov", videoName]] forKey:@"videoPath"];
+                                   
+                                   [videoInfoMutable setObject:[documentsDirectory stringByAppendingPathComponent:[NSString stringWithFormat:@"%@-reference.pgm", videoName]] forKey:@"referenceFramePath"];
+                                   
+                                   videoInfo = [videoInfoMutable copy];
+                                   
+                                   
+                                   // end workaround
+                                   
+                                   __block NSUInteger serviceCount = 0, forehandCount = 0, backhandCount = 0;
+                                   
+                                   __block VideoProcess *vidProc;
+                                   
+                                   dispatch_async(dispatch_get_global_queue(DISPATCH_QUEUE_PRIORITY_DEFAULT, 0), ^{
+                                       
+                                       dispatch_sync(dispatch_get_main_queue(), ^{
+                                           [_trainingView addSubview:_trainingView.processVideoProgressView alignment:UIViewCentered];
+                                           
+                                           [parentCell.detailTextLabel setText:[NSString stringWithFormat:@"Length: 1:13\nForehand : %lu, backhand : %lu, service : %lu", (unsigned long)forehandCount, (unsigned long)backhandCount, (unsigned long)serviceCount]];
+                                       });
+                                       
+                                       vidProc = [[VideoProcess alloc] initWithDictionary:videoInfo];
+                                       [vidProc setDelegate:self];
+                                       
+                                       vidProc.samplingCount = 10;
+                                       vidProc.overlappingRate = 0.6;
+                                       vidProc.scale = 0.5;
+                                       vidProc.shouldDeleteIrrelevantSequences = YES;
+                                       
+                                       [vidProc setup];
+                                       [vidProc start];
+                                       
+                                       /**
+                                        
+                                            Retreive result datas and process them with RequestEngine
+                                        
+                                        **/
+                                       
+                                       serviceCount = [vidProc.dataAnalysisProcess serviceCount];
+                                       forehandCount = [vidProc.dataAnalysisProcess forehandCount];
+                                       backhandCount = [vidProc.dataAnalysisProcess backhandCount];
+                                       
+                                       dispatch_sync(dispatch_get_main_queue(), ^{
+                                           [_trainingView.processVideoProgressView removeFromSuperview];
+                                           
+                                           [parentCell.detailTextLabel setText:[NSString stringWithFormat:@"Length: 1:13\nForehand : %lu, backhand : %lu, service : %lu", (unsigned long)forehandCount, (unsigned long)backhandCount, (unsigned long)serviceCount]];
+                                           
+                                           [sender setEnabled:NO];
+                                       });
+                                   });
+                                   
+                                   
+                                   
+                                   // lazy way, have to think about it...
+                                   
+                                   
+                                   
+                                   
                                }];
     
     UIAlertAction* cancelButton = [UIAlertAction
@@ -293,7 +378,7 @@
     else if (tableView.tag == VIDEOS_TABLEVIEW_TAG)
     {
         [cell.textLabel setText:[_videosTableViewData objectAtIndex:indexPath.row]];
-        [cell.detailTextLabel setText:@"Length: 1:13\nForehand and service"];
+        [cell.detailTextLabel setText:@"Length: 1:13\n------------"];
         
         CGSize playButtonSize = CGSizeMake(40, 40);
         
@@ -340,6 +425,30 @@
     }
     
     return height;
+}
+
+- (void)didUpdateStatusWithProgress:(float)progress message:(NSString *)message
+{
+    if (progress > 0)
+    {
+        dispatch_async(dispatch_get_main_queue(), ^{
+            
+            UIProgressView *progressView = _trainingView.processVideoProgressView.progressView;
+            [progressView setProgress:progressView.progress + progress animated:YES];
+        });
+    }
+    
+    if (message)
+    {
+        dispatch_async(dispatch_get_main_queue(), ^{
+            
+            if ([_trainingView.processVideoProgressView.progressLabel.attributedText length])
+            {
+                NSDictionary *attributes = [(NSAttributedString *)_trainingView.processVideoProgressView.progressLabel.attributedText attributesAtIndex:0 effectiveRange:NULL];
+                _trainingView.processVideoProgressView.progressLabel.attributedText = [[NSAttributedString alloc] initWithString:message attributes:attributes];
+            }
+        });
+    }
 }
 
 @end

@@ -9,11 +9,13 @@
 #import "UIBaseViewController.h"
 #import "UITrainingView.h"
 #import "UIApplicationNavigationViewController.h"
+#import "VideoProcess.h"
+#import "SimpleProcessStatusDelegate.h"
 #import <AVKit/AVKit.h>
 
 @class UITrainingView;
 
-@interface UITrainingViewController : UIBaseViewController <UITableViewDelegate, UITableViewDataSource>
+@interface UITrainingViewController : UIBaseViewController <UITableViewDelegate, UITableViewDataSource, SimpleProcessStatusDelegate>
 
 @property (nonatomic, strong) UITrainingView *trainingView;
 
