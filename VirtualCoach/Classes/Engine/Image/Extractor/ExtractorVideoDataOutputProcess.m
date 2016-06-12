@@ -54,6 +54,9 @@
     {
         AVAssetTrack *videoTrack = [videoTracks objectAtIndex:0];
         
+        Float64 frameCount = CMTimeGetSeconds(_url.duration) * videoTrack.nominalFrameRate;
+        [_delegate didEstimateFrameCount:frameCount];
+        
         NSMutableDictionary *dict = [[NSMutableDictionary alloc] init];
         
         [dict setObject:[NSNumber numberWithInt:kCVPixelFormatType_32BGRA] forKey:(NSString *)kCVPixelBufferPixelFormatTypeKey];
@@ -125,7 +128,7 @@
             }
         }
         
-        NSLog(@"Extractor : all frames have been decoded. (%lu)", [_delegate sampleCount]);
+        NSLog(@"Extractor : all frames have been decoded.");
     }
     
     else
