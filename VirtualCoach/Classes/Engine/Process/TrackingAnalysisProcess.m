@@ -8,15 +8,10 @@
 
 #import "TrackingAnalysisProcess.h"
 
-#import <ImageIO/ImageIO.h>
-#import <MobileCoreServices/MobileCoreServices.h>
-
-#define ALPHA 0.8
-#define BETA -1
-
 @interface TrackingAnalysisProcess ()
 
 @property (nonatomic, strong) NSDictionary *videoInfo;
+@property (nonatomic, assign) NSUInteger frameCount;
 @property (nonatomic, assign) uint8_t binaryThreshold;
 @property (nonatomic, assign) rect_t playerBounds;
 @property (nonatomic, assign) gray8i_t *referenceFrame;
@@ -28,13 +23,16 @@
 
 @property (nonatomic, assign) regchar_t *previousReg;
 @property (nonatomic, assign) labels_t *previousLabels;
-@property (nonatomic, assign) float previousGravityCenterSpeed;
 
-@property (nonatomic, strong) NSMutableArray *imageMotionsArray;
-@property (nonatomic, assign) int *relevantImageSequences;
+@property (nonatomic, strong) NSMutableArray *objectsMotionArray;
+@property (nonatomic, strong) NSMutableArray *objectsPositionArray;
 
 //temp
+@property (nonatomic, assign) regchar_t *previousMotionReg;
+@property (nonatomic, assign) labels_t *previousMotionLabels;
+
 @property (nonatomic, assign) NSUInteger count;
+@property (nonatomic, assign) NSUInteger exportCount;
 
 @end
 
@@ -49,9 +47,15 @@
         _videoInfo = videoInfo;
         _canTrack = NO;
         _scale = 1.f;
-        _imageMotionsArray = [[NSMutableArray alloc] init];
+        
         //temp
         _count = 0;
+        _exportCount = 1;
+        
+        _frameCount = 0;
+        
+        _motionImageFactor = 10;
+        _overlappingRate = 0.6;
     }
     
     return self;
@@ -77,7 +81,7 @@
 
 - (void)loadTrackingInformations
 {
-    _binaryThreshold = (uint8_t)((NSNumber *)[_videoInfo objectForKey:@"binaryThreshold"]).unsignedCharValue;
+    _binaryThreshold = (uint8_t)((NSNumber *)[_videoInfo objectForKey:@"binaryThreshold"]).unsignedIntValue;
     
     NSDictionary *playerBoundsDict = [_videoInfo objectForKey:@"lastPlayerBounds"];
     
@@ -92,11 +96,16 @@
     [self loadReferenceFrame];
     [self loadTrackingInformations];
     
-    // lazy way to avoid the first two images
-    [_imageMotionsArray addObject:[NSNumber numberWithInt:0]];
-    [_imageMotionsArray addObject:[NSNumber numberWithInt:0]];
+    _objectsMotionArray = [[NSMutableArray alloc] initWithCapacity:_frameCount];
+    _objectsPositionArray = [[NSMutableArray alloc] initWithCapacity:_frameCount];
     
     _canTrack = YES;
+}
+
+- (void)didEstimateFrameCount:(Float64)frameCount
+{
+    _frameCount = (NSUInteger)frameCount;
+    //NSLog(@"TrackingAnalysisProcess frame count received : %lu", (unsigned long)_frameCount);
 }
 
 - (void)didOutputSampleBuffer:(CMSampleBufferRef)sampleBuffer
@@ -109,16 +118,12 @@
         CGImageRef rgbImage = [ImageTools cgImageFromSampleBuffer:sampleBuffer];
         CGImageRef rgbImageScaled = [ImageTools scaleCgimage:rgbImage scale:_scale];
         
-//        NSString *tmpDir = NSTemporaryDirectory();
-//        
-//        NSString *imagePath = [tmpDir stringByAppendingPathComponent:[NSString stringWithFormat:@"%lu.pgm", (unsigned long)_count]];
-        
         gray8i_t *src = [ImageTools cgImageToGrayImage:rgbImageScaled];
         
         CGImageRelease(rgbImage);
         CGImageRelease(rgbImageScaled);
         
-        if (_count == 1)
+        if (_count == _skippedFrameCount)
         {
             gray8i_t *pre_isubstract = subgray8i(src, _referenceFrame);
             bini_t *pre_binary = binarise(pre_isubstract, _binaryThreshold);
@@ -136,17 +141,23 @@
             gray8ifree(pre_isubstract);
             binifree(pre_binary);
             
-            _previousReg = regcharalloc(playerRegionId);
-            _previousReg->bounds = newPLayerBounds;
-            _previousReg->gravity = pre_characterization->data[playerRegionId-1]->gravity;
+            _previousReg = regcharcpy(pre_characterization->data[playerRegionId-1]);
             
             charactfree(pre_characterization);
             
             _previousLabels = pre_labels;
+            _previousMotionLabels = labcpy(pre_labels);
+            _previousMotionReg = regcharcpy(_previousReg);
+            
+            // lazy way to add the first image
+            [_objectsPositionArray addObject:[NSNull null]];
+            [_objectsMotionArray addObject:[NSNumber numberWithInt:1]];
         }
         
-        else
+        else if (_count > _skippedFrameCount)
         {
+            _exportCount++;
+            
             gray8i_t *isubstract = subgray8i(src, _referenceFrame);
             
             bini_t *binary = binarise(isubstract, _binaryThreshold);
@@ -155,54 +166,44 @@
             
             charact_t *ch = characterize(NULL, src, nextLabels);
             
-            NSLog(@"count : %lu", (unsigned long)_count);
+            //            NSLog(@"export count : %lu", (unsigned long)_exportCount);
+            
+            //            float seconds_elapsed = (float)_exportCount / 60;
+            //            NSLog(@"seconds_elpased : %f", seconds_elapsed);
             
             int32_t bestRegId = overlappingreg(_previousReg, _previousLabels, nextLabels);
             
-            printf("bestRegId : %d\n", bestRegId);
+//            printf("bestRegId : %d\n", bestRegId);
+            
+            int isStatic = -1;
+            
+            
+            rect_t bds;
+            
             
             if ((bestRegId > 0) && (bestRegId <= ch->count))
             {
                 regchar_t *bestReg = ch->data[bestRegId-1];
                 
-                gray8i_t *cpy = gray8icpy(src);
-                
-                uint8_t c = 255;
-                
-                vect2d_t gravvect;
-                gravvect.x = (double)bestReg->gravity.x - (double)_previousReg->gravity.x;
-                gravvect.y = (double)bestReg->gravity.y - (double)_previousReg->gravity.y;
-                
-                //printf("gravvect.x : %f, gravvect.y : %f\n", gravvect.x, gravvect.y);
-                
-                float gravityCenterSpeed = gravCenterSpeed(gravvect, _previousGravityCenterSpeed, ALPHA, BETA);
-                
-                //printf("gravityCenterSpeed : %f\n", gravityCenterSpeed);
-                
-                _previousGravityCenterSpeed = gravityCenterSpeed;
-                
-                unsigned int reg_bounds_x_diff = bestReg->bounds.end.x - bestReg->bounds.start.x;
-                float grav_speed_threshold = 0.025 * reg_bounds_x_diff; //0.024593
-                //printf("gravityCenterSpeed %f < grav_speed_threshold %f\n", gravityCenterSpeed, grav_speed_threshold);
-                
-                [_imageMotionsArray addObject:[NSNumber numberWithInt:gravityCenterSpeed < grav_speed_threshold ? 1: 0]];
-                
-                if (gravityCenterSpeed < grav_speed_threshold)
-                {
-                    c = 0;
-                }
-                
-                rect_t bds;
                 bds.start.y = bestReg->bounds.start.y;
                 bds.start.x = bestReg->bounds.start.x;
                 bds.end.y = bestReg->bounds.end.y;
                 bds.end.x = bestReg->bounds.end.x;
                 
-                drawrctgray8i(cpy, bds, c);
-                
-                //pgmwrite(cpy, [imagePath cStringUsingEncoding:NSASCIIStringEncoding], PGM_BINARY);
-                
-                gray8ifree(cpy);
+                if ((_exportCount % _motionImageFactor) == 0)
+                {
+                    int32_t comPixels = commonPixels(_previousMotionReg, _previousMotionLabels, bestReg, nextLabels);
+                    
+                    float comPixelsPercentage = (float)comPixels / _previousMotionReg->size;
+                    
+                    isStatic = comPixelsPercentage > _overlappingRate ? 1 : 0;
+                    
+                    free(_previousMotionReg);
+                    _previousMotionReg = regcharcpy(bestReg);
+                    
+                    labfree(_previousMotionLabels);
+                    _previousMotionLabels = labcpy(nextLabels);
+                }
                 
                 free(_previousReg);
                 _previousReg = regcharcpy(bestReg);
@@ -212,43 +213,65 @@
             
             else
             {
-                //pgmwrite(src, [imagePath cStringUsingEncoding:NSASCIIStringEncoding], PGM_BINARY);
                 labfree(nextLabels);
+                
+                bds.start.y = 0;
+                bds.start.x = 0;
+                bds.end.y = 0;
+                bds.end.x = 0;
             }
             
+            TrackingObjectPosition *objPos = [[TrackingObjectPosition alloc] init];
+            [objPos setBounds:bds];
+            [objPos setImageId:_count];
+            
+            [_objectsPositionArray addObject:objPos];
+            [_objectsMotionArray addObject:[NSNumber numberWithInt:isStatic]];
             
             gray8ifree(isubstract);
             binifree(binary);
             charactfree(ch);
+            
+            //
+            
+            NSUInteger rate = (NSUInteger)(_frameCount / 100);
+            
+            if (_count % rate == 0)
+            {
+                [_delegate didUpdateStatusWithProgress:0.0025 message:[NSString stringWithFormat:@"Tracking player.. (%lu / %lu)", (unsigned long)_count, (unsigned long)_frameCount]];
+            }
         }
         
         gray8ifree(src);
     }
 }
 
-- (NSUInteger)sampleCount
+- (NSDictionary *)motionData
 {
-    return _count;
+    NSDictionary *motionData = [NSDictionary dictionaryWithObjects:[NSArray arrayWithObjects:_objectsPositionArray, _objectsMotionArray, nil] forKeys:[NSArray arrayWithObjects:@"objectsPosition", @"objectsMotion", nil]];
+    
+    return motionData;
 }
 
-- (int *)retreiveRelevantImageSequences
+@end
+
+@implementation TrackingObjectPosition
+
+- (instancetype)init
 {
-    int *dst = (int *)calloc(_imageMotionsArray.count, sizeof(int));
+    self = [super init];
     
-//    NSLog(@"_imageMotionsArray count : %lu", (unsigned long)_imageMotionsArray.count);
-//    
-//    NSString *tmpDir = NSTemporaryDirectory();
-//
-//    NSString *imagePath = [tmpDir stringByAppendingPathComponent:@"relevant-sequences.plist"];
-//    
-//    NSArray *arry = [_imageMotionsArray copy];
-//    
-//    [arry writeToFile:imagePath atomically:YES];
+    if (self)
+    {
+        _motionValue = -1;
+        
+        _bounds.start.x = 0;
+        _bounds.end.x = 0;
+        _bounds.start.y = 0;
+        _bounds.end.y = 0;
+    }
     
-    for (NSUInteger i = 0; i < _imageMotionsArray.count; i++)
-        dst[i] = ((NSNumber *)[_imageMotionsArray objectAtIndex:i]).intValue;
-    
-    return dst;
+    return self;
 }
 
 @end

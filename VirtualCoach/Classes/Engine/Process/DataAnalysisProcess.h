@@ -7,7 +7,37 @@
 //
 
 #import <Foundation/Foundation.h>
+#import <CoreGraphics/CoreGraphics.h>
 
-@interface DataAnalysisProcess : NSObject
+#import "ExtractorVideoDataOutputDelegate.h"
+#import "Configurable.h"
+#import "ImageTools.h"
+#import "Histogram.h"
+#import "MotionDeduction.h"
+
+#import "SimpleProcessStatusDelegate.h"
+
+#include <core.h>
+#include <io.h>
+#include <labelling.h>
+#include <arithmetic.h>
+#include <characterization.h>
+#include <geometry.h>
+#include <drawing.h>
+#include <opticalflow.h>
+
+@interface DataAnalysisProcess : NSObject <ExtractorVideoDataOutputDelegate, Configurable>
+
+@property (nonatomic) NSUInteger skippedFrameCount;
+@property (nonatomic) CGFloat scale;
+
+@property (nonatomic, weak) id <SimpleProcessStatusDelegate> delegate;
+
+- (instancetype)initWithDictionary:(NSDictionary *)videoInfo relevantSequences:(NSArray *)relevantSequences;
+
+//temp
+- (NSUInteger)serviceCount;
+- (NSUInteger)forehandCount;
+- (NSUInteger)backhandCount;
 
 @end
