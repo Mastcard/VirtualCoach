@@ -42,7 +42,6 @@
 		6E43B7E21CD0B4810077F51B /* AVFoundation.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 6E43B7E01CD0B45E0077F51B /* AVFoundation.framework */; };
 		6EB1CF811CE39ABE006B6940 /* Resources in Resources */ = {isa = PBXBuildFile; fileRef = 6EB1CF801CE39ABE006B6940 /* Resources */; };
 		6EB1CFBE1CEA2CB9006B6940 /* CaptureProcessManager.m in Sources */ = {isa = PBXBuildFile; fileRef = 6EB1CFAB1CEA2CB9006B6940 /* CaptureProcessManager.m */; };
-		6EB1CFBF1CEA2CB9006B6940 /* ExtractorProcess.m in Sources */ = {isa = PBXBuildFile; fileRef = 6EB1CFAE1CEA2CB9006B6940 /* ExtractorProcess.m */; };
 		6EB1CFC01CEA2CB9006B6940 /* RecordingProcess.m in Sources */ = {isa = PBXBuildFile; fileRef = 6EB1CFB11CEA2CB9006B6940 /* RecordingProcess.m */; };
 		6EB1CFC11CEA2CB9006B6940 /* ReferenceFrameProcess.m in Sources */ = {isa = PBXBuildFile; fileRef = 6EB1CFB41CEA2CB9006B6940 /* ReferenceFrameProcess.m */; };
 		6EB1CFC21CEA2CB9006B6940 /* charact_ext.c in Sources */ = {isa = PBXBuildFile; fileRef = 6EB1CFB71CEA2CB9006B6940 /* charact_ext.c */; };
@@ -109,6 +108,18 @@
 		7AE75D861D05B4AB0094A93E /* TrainingDO.m in Sources */ = {isa = PBXBuildFile; fileRef = 7AE75D791D05B4AB0094A93E /* TrainingDO.m */; };
 		7AE75D871D05B4AB0094A93E /* TrophyDO.m in Sources */ = {isa = PBXBuildFile; fileRef = 7AE75D7B1D05B4AB0094A93E /* TrophyDO.m */; };
 		7AE75D881D05B4AB0094A93E /* VideoDO.m in Sources */ = {isa = PBXBuildFile; fileRef = 7AE75D7D1D05B4AB0094A93E /* VideoDO.m */; };
+		8A2512C91D0DAF9900DADFAD /* TrackingIrrelevantSequencesRemover.m in Sources */ = {isa = PBXBuildFile; fileRef = 8A2512C61D0DAF9900DADFAD /* TrackingIrrelevantSequencesRemover.m */; };
+		8A2512CA1D0DAF9900DADFAD /* TrackingRelevantSequencesBuilder.m in Sources */ = {isa = PBXBuildFile; fileRef = 8A2512C81D0DAF9900DADFAD /* TrackingRelevantSequencesBuilder.m */; };
+		8A2512CD1D0DB5D200DADFAD /* UIProcessProgressView.m in Sources */ = {isa = PBXBuildFile; fileRef = 8A2512CC1D0DB5D200DADFAD /* UIProcessProgressView.m */; };
+		8AB35A9A1D0C68D70026503B /* UIBaseTextField.m in Sources */ = {isa = PBXBuildFile; fileRef = 8AB35A971D0C68D70026503B /* UIBaseTextField.m */; };
+		8AB35A9B1D0C68D70026503B /* UICheckbox.m in Sources */ = {isa = PBXBuildFile; fileRef = 8AB35A991D0C68D70026503B /* UICheckbox.m */; };
+		8AB35AA61D0C68E70026503B /* UIAccountCreationCredentialsView.m in Sources */ = {isa = PBXBuildFile; fileRef = 8AB35A9D1D0C68E70026503B /* UIAccountCreationCredentialsView.m */; };
+		8AB35AA71D0C68E70026503B /* UIAccountCreationPresentationView.m in Sources */ = {isa = PBXBuildFile; fileRef = 8AB35A9F1D0C68E70026503B /* UIAccountCreationPresentationView.m */; };
+		8AB35AA81D0C68E70026503B /* UIAccountCreationView.m in Sources */ = {isa = PBXBuildFile; fileRef = 8AB35AA11D0C68E70026503B /* UIAccountCreationView.m */; };
+		8AB35AA91D0C68E70026503B /* UIAuthenticationCredentialsView.m in Sources */ = {isa = PBXBuildFile; fileRef = 8AB35AA31D0C68E70026503B /* UIAuthenticationCredentialsView.m */; };
+		8AB35AAA1D0C68E70026503B /* UITrainingView.m in Sources */ = {isa = PBXBuildFile; fileRef = 8AB35AA51D0C68E70026503B /* UITrainingView.m */; };
+		8AB35AAF1D0C68F50026503B /* UIAccountCreationViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = 8AB35AAC1D0C68F50026503B /* UIAccountCreationViewController.m */; };
+		8AB35AB01D0C68F50026503B /* UITrainingViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = 8AB35AAE1D0C68F50026503B /* UITrainingViewController.m */; };
 		8ABE3D8E1C78F77300AF659B /* main.m in Sources */ = {isa = PBXBuildFile; fileRef = 8ABE3D8D1C78F77300AF659B /* main.m */; };
 		8ABE3D911C78F77300AF659B /* AppDelegate.m in Sources */ = {isa = PBXBuildFile; fileRef = 8ABE3D901C78F77300AF659B /* AppDelegate.m */; };
 		8ABE3D991C78F77300AF659B /* Assets.xcassets in Resources */ = {isa = PBXBuildFile; fileRef = 8ABE3D981C78F77300AF659B /* Assets.xcassets */; };
@@ -175,8 +186,6 @@
 		6EB1CF801CE39ABE006B6940 /* Resources */ = {isa = PBXFileReference; lastKnownFileType = folder; path = Resources; sourceTree = "<group>"; };
 		6EB1CFAA1CEA2CB9006B6940 /* CaptureProcessManager.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = CaptureProcessManager.h; sourceTree = "<group>"; };
 		6EB1CFAB1CEA2CB9006B6940 /* CaptureProcessManager.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = CaptureProcessManager.m; sourceTree = "<group>"; };
-		6EB1CFAD1CEA2CB9006B6940 /* ExtractorProcess.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = ExtractorProcess.h; sourceTree = "<group>"; };
-		6EB1CFAE1CEA2CB9006B6940 /* ExtractorProcess.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = ExtractorProcess.m; sourceTree = "<group>"; };
 		6EB1CFB01CEA2CB9006B6940 /* RecordingProcess.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = RecordingProcess.h; sourceTree = "<group>"; };
 		6EB1CFB11CEA2CB9006B6940 /* RecordingProcess.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = RecordingProcess.m; sourceTree = "<group>"; };
 		6EB1CFB31CEA2CB9006B6940 /* ReferenceFrameProcess.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = ReferenceFrameProcess.h; sourceTree = "<group>"; };
@@ -299,6 +308,31 @@
 		7AE75D7C1D05B4AB0094A93E /* VideoDO.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = VideoDO.h; sourceTree = "<group>"; };
 		7AE75D7D1D05B4AB0094A93E /* VideoDO.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = VideoDO.m; sourceTree = "<group>"; };
 		7AE75D891D05B4C50094A93E /* MovementEnum.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = MovementEnum.h; sourceTree = "<group>"; };
+		8A2512C51D0DAF9900DADFAD /* TrackingIrrelevantSequencesRemover.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = TrackingIrrelevantSequencesRemover.h; sourceTree = "<group>"; };
+		8A2512C61D0DAF9900DADFAD /* TrackingIrrelevantSequencesRemover.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = TrackingIrrelevantSequencesRemover.m; sourceTree = "<group>"; };
+		8A2512C71D0DAF9900DADFAD /* TrackingRelevantSequencesBuilder.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = TrackingRelevantSequencesBuilder.h; sourceTree = "<group>"; };
+		8A2512C81D0DAF9900DADFAD /* TrackingRelevantSequencesBuilder.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = TrackingRelevantSequencesBuilder.m; sourceTree = "<group>"; };
+		8A2512CB1D0DB5D200DADFAD /* UIProcessProgressView.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = UIProcessProgressView.h; sourceTree = "<group>"; };
+		8A2512CC1D0DB5D200DADFAD /* UIProcessProgressView.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = UIProcessProgressView.m; sourceTree = "<group>"; };
+		8A2512CE1D0DB92700DADFAD /* SimpleProcessStatusDelegate.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = SimpleProcessStatusDelegate.h; sourceTree = "<group>"; };
+		8AB35A961D0C68D70026503B /* UIBaseTextField.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = UIBaseTextField.h; sourceTree = "<group>"; };
+		8AB35A971D0C68D70026503B /* UIBaseTextField.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = UIBaseTextField.m; sourceTree = "<group>"; };
+		8AB35A981D0C68D70026503B /* UICheckbox.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = UICheckbox.h; sourceTree = "<group>"; };
+		8AB35A991D0C68D70026503B /* UICheckbox.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = UICheckbox.m; sourceTree = "<group>"; };
+		8AB35A9C1D0C68E70026503B /* UIAccountCreationCredentialsView.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = UIAccountCreationCredentialsView.h; sourceTree = "<group>"; };
+		8AB35A9D1D0C68E70026503B /* UIAccountCreationCredentialsView.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = UIAccountCreationCredentialsView.m; sourceTree = "<group>"; };
+		8AB35A9E1D0C68E70026503B /* UIAccountCreationPresentationView.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = UIAccountCreationPresentationView.h; sourceTree = "<group>"; };
+		8AB35A9F1D0C68E70026503B /* UIAccountCreationPresentationView.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = UIAccountCreationPresentationView.m; sourceTree = "<group>"; };
+		8AB35AA01D0C68E70026503B /* UIAccountCreationView.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = UIAccountCreationView.h; sourceTree = "<group>"; };
+		8AB35AA11D0C68E70026503B /* UIAccountCreationView.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = UIAccountCreationView.m; sourceTree = "<group>"; };
+		8AB35AA21D0C68E70026503B /* UIAuthenticationCredentialsView.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = UIAuthenticationCredentialsView.h; sourceTree = "<group>"; };
+		8AB35AA31D0C68E70026503B /* UIAuthenticationCredentialsView.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = UIAuthenticationCredentialsView.m; sourceTree = "<group>"; };
+		8AB35AA41D0C68E70026503B /* UITrainingView.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = UITrainingView.h; sourceTree = "<group>"; };
+		8AB35AA51D0C68E70026503B /* UITrainingView.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = UITrainingView.m; sourceTree = "<group>"; };
+		8AB35AAB1D0C68F50026503B /* UIAccountCreationViewController.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = UIAccountCreationViewController.h; sourceTree = "<group>"; };
+		8AB35AAC1D0C68F50026503B /* UIAccountCreationViewController.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = UIAccountCreationViewController.m; sourceTree = "<group>"; };
+		8AB35AAD1D0C68F50026503B /* UITrainingViewController.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = UITrainingViewController.h; sourceTree = "<group>"; };
+		8AB35AAE1D0C68F50026503B /* UITrainingViewController.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = UITrainingViewController.m; sourceTree = "<group>"; };
 		8ABE3D891C78F77300AF659B /* VirtualCoach.app */ = {isa = PBXFileReference; explicitFileType = wrapper.application; includeInIndex = 0; path = VirtualCoach.app; sourceTree = BUILT_PRODUCTS_DIR; };
 		8ABE3D8D1C78F77300AF659B /* main.m */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.objc; path = main.m; sourceTree = "<group>"; };
 		8ABE3D8F1C78F77300AF659B /* AppDelegate.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = AppDelegate.h; sourceTree = "<group>"; };
@@ -387,8 +421,6 @@
 				8ACF77751CECAAC600248372 /* ExtractorVideoDataOutputDelegate.h */,
 				8ACF77761CECAAC600248372 /* ExtractorVideoDataOutputProcess.h */,
 				8ACF77771CECAAC600248372 /* ExtractorVideoDataOutputProcess.m */,
-				6EB1CFAD1CEA2CB9006B6940 /* ExtractorProcess.h */,
-				6EB1CFAE1CEA2CB9006B6940 /* ExtractorProcess.m */,
 			);
 			path = Extractor;
 			sourceTree = "<group>";
@@ -554,6 +586,10 @@
 		6EB1CFFB1CEA2D8B006B6940 /* ControllerLayer */ = {
 			isa = PBXGroup;
 			children = (
+				8AB35AAB1D0C68F50026503B /* UIAccountCreationViewController.h */,
+				8AB35AAC1D0C68F50026503B /* UIAccountCreationViewController.m */,
+				8AB35AAD1D0C68F50026503B /* UITrainingViewController.h */,
+				8AB35AAE1D0C68F50026503B /* UITrainingViewController.m */,
 				6EB1CFFC1CEA2D8B006B6940 /* Base */,
 				6EB1CFFF1CEA2D8B006B6940 /* LiveCapture */,
 				6EB1D0021CEA2D8B006B6940 /* UIApplicationNavigationViewController.h */,
@@ -591,6 +627,16 @@
 		6EB1D00A1CEA2D8B006B6940 /* PresentationLayer */ = {
 			isa = PBXGroup;
 			children = (
+				8AB35A9C1D0C68E70026503B /* UIAccountCreationCredentialsView.h */,
+				8AB35A9D1D0C68E70026503B /* UIAccountCreationCredentialsView.m */,
+				8AB35A9E1D0C68E70026503B /* UIAccountCreationPresentationView.h */,
+				8AB35A9F1D0C68E70026503B /* UIAccountCreationPresentationView.m */,
+				8AB35AA01D0C68E70026503B /* UIAccountCreationView.h */,
+				8AB35AA11D0C68E70026503B /* UIAccountCreationView.m */,
+				8AB35AA21D0C68E70026503B /* UIAuthenticationCredentialsView.h */,
+				8AB35AA31D0C68E70026503B /* UIAuthenticationCredentialsView.m */,
+				8AB35AA41D0C68E70026503B /* UITrainingView.h */,
+				8AB35AA51D0C68E70026503B /* UITrainingView.m */,
 				6EB1D00B1CEA2D8B006B6940 /* Base */,
 				6EB1D0121CEA2D8B006B6940 /* LiveCapture */,
 				6EB1D0231CEA2D8B006B6940 /* UIAuthenticationView.h */,
@@ -599,6 +645,8 @@
 				6EB1D0261CEA2D8B006B6940 /* UIHomeView.m */,
 				6EB1D0271CEA2D8B006B6940 /* UILaunchView.h */,
 				6EB1D0281CEA2D8B006B6940 /* UILaunchView.m */,
+				8A2512CB1D0DB5D200DADFAD /* UIProcessProgressView.h */,
+				8A2512CC1D0DB5D200DADFAD /* UIProcessProgressView.m */,
 			);
 			path = PresentationLayer;
 			sourceTree = "<group>";
@@ -606,6 +654,10 @@
 		6EB1D00B1CEA2D8B006B6940 /* Base */ = {
 			isa = PBXGroup;
 			children = (
+				8AB35A961D0C68D70026503B /* UIBaseTextField.h */,
+				8AB35A971D0C68D70026503B /* UIBaseTextField.m */,
+				8AB35A981D0C68D70026503B /* UICheckbox.h */,
+				8AB35A991D0C68D70026503B /* UICheckbox.m */,
 				6EB1D00C1CEA2D8B006B6940 /* UIBaseButton.h */,
 				6EB1D00D1CEA2D8B006B6940 /* UIBaseButton.m */,
 				6EB1D00E1CEA2D8B006B6940 /* UIBaseLabel.h */,
@@ -1117,12 +1169,17 @@
 		8ACF77791CECAADB00248372 /* Process */ = {
 			isa = PBXGroup;
 			children = (
+				8A2512C51D0DAF9900DADFAD /* TrackingIrrelevantSequencesRemover.h */,
+				8A2512C61D0DAF9900DADFAD /* TrackingIrrelevantSequencesRemover.m */,
+				8A2512C71D0DAF9900DADFAD /* TrackingRelevantSequencesBuilder.h */,
+				8A2512C81D0DAF9900DADFAD /* TrackingRelevantSequencesBuilder.m */,
 				8ACF777A1CECAADB00248372 /* DataAnalysisProcess.h */,
 				8ACF777B1CECAADB00248372 /* DataAnalysisProcess.m */,
 				8ACF777C1CECAADB00248372 /* TrackingAnalysisProcess.h */,
 				8ACF777D1CECAADB00248372 /* TrackingAnalysisProcess.m */,
 				8ACF777E1CECAADB00248372 /* VideoProcess.h */,
 				8ACF777F1CECAADB00248372 /* VideoProcess.m */,
+				8A2512CE1D0DB92700DADFAD /* SimpleProcessStatusDelegate.h */,
 			);
 			path = Process;
 			sourceTree = "<group>";
@@ -1203,6 +1260,7 @@
 				TargetAttributes = {
 					8ABE3D881C78F77300AF659B = {
 						CreatedOnToolsVersion = 7.2.1;
+						DevelopmentTeam = QQ64R4PS8Q;
 					};
 					8ABE3DA11C78F77300AF659B = {
 						CreatedOnToolsVersion = 7.2.1;
@@ -1283,13 +1341,16 @@
 				6EB1CFCD1CEA2D0C006B6940 /* NSOrderedDictionary.m in Sources */,
 				6EB1CFEE1CEA2D5E006B6940 /* CaptureDeviceManager.m in Sources */,
 				6EB1D0351CEA2D8B006B6940 /* UICaptureSessionControlsView.m in Sources */,
+				8AB35AA81D0C68E70026503B /* UIAccountCreationView.m in Sources */,
 				0D95DFD41D0599DD0007F35E /* CoachDAO.m in Sources */,
 				6EB1D03C1CEA2D8B006B6940 /* UIAuthenticationView.m in Sources */,
 				6EB1D0301CEA2D8B006B6940 /* UILaunchViewController.m in Sources */,
 				0D95DFDA1D0599DD0007F35E /* PlayerTrophyDAO.m in Sources */,
+				8A2512C91D0DAF9900DADFAD /* TrackingIrrelevantSequencesRemover.m in Sources */,
 				0D95DFD51D0599DD0007F35E /* CoachPlayerDAO.m in Sources */,
 				6EB1CFF81CEA2D5E006B6940 /* MovieCaptureSession.m in Sources */,
 				8ACF77781CECAAC600248372 /* ExtractorVideoDataOutputProcess.m in Sources */,
+				8A2512CA1D0DAF9900DADFAD /* TrackingRelevantSequencesBuilder.m in Sources */,
 				6EB1CFF91CEA2D5E006B6940 /* MovieCaptureSessionController.m in Sources */,
 				6EB1CFCE1CEA2D0C006B6940 /* Queue.m in Sources */,
 				8ACF778A1CECAAF800248372 /* ImageTools.m in Sources */,
@@ -1298,8 +1359,9 @@
 				6EB1CFF71CEA2D5E006B6940 /* HybridCaptureSessionController.m in Sources */,
 				6EB1CFF61CEA2D5E006B6940 /* HybridCaptureSession.m in Sources */,
 				6EE37B961C8739E2006E0626 /* Histogram.m in Sources */,
+				8AB35AA91D0C68E70026503B /* UIAuthenticationCredentialsView.m in Sources */,
+				8AB35AB01D0C68F50026503B /* UITrainingViewController.m in Sources */,
 				7AE75D811D05B4AB0094A93E /* MovementDO.m in Sources */,
-				6EB1CFBF1CEA2CB9006B6940 /* ExtractorProcess.m in Sources */,
 				7AE75D7F1D05B4AB0094A93E /* InterfaceMovementDO.m in Sources */,
 				6EB1CFF01CEA2D5E006B6940 /* CaptureDevicePropertiesUtilities.m in Sources */,
 				0D95DFD81D0599DD0007F35E /* PlayerDAO.m in Sources */,
@@ -1308,7 +1370,9 @@
 				6EB1D03B1CEA2D8B006B6940 /* UIRecordingIconView.m in Sources */,
 				6EB1D02E1CEA2D8B006B6940 /* UIAuthenticationViewController.m in Sources */,
 				6EB1D0321CEA2D8B006B6940 /* UIBaseLabel.m in Sources */,
+				8AB35AAA1D0C68E70026503B /* UITrainingView.m in Sources */,
 				6EB1CFF31CEA2D5E006B6940 /* CaptureSessionControllerFactory.m in Sources */,
+				8A2512CD1D0DB5D200DADFAD /* UIProcessProgressView.m in Sources */,
 				6EE37BB51C981B6D006E0626 /* DistanceUtilities.m in Sources */,
 				6EE37BB81C981C37006E0626 /* KmeanCalculation.m in Sources */,
 				6EB1D0391CEA2D8B006B6940 /* UIRecordingButton.m in Sources */,
@@ -1321,13 +1385,16 @@
 				6EB1D0331CEA2D8B006B6940 /* UIBaseView.m in Sources */,
 				7AE75D7E1D05B4AB0094A93E /* CoachDO.m in Sources */,
 				6EB1D0371CEA2D8B006B6940 /* UICaptureSessionOverlayView.m in Sources */,
+				8AB35AA71D0C68E70026503B /* UIAccountCreationPresentationView.m in Sources */,
 				6EB1D03D1CEA2D8B006B6940 /* UIHomeView.m in Sources */,
+				8AB35A9B1D0C68D70026503B /* UICheckbox.m in Sources */,
 				8ACF77851CECAADB00248372 /* VideoProcess.m in Sources */,
 				6EE37B9A1C88D07C006E0626 /* KmeanEntry.m in Sources */,
 				6EB1CFF21CEA2D5E006B6940 /* CaptureSessionController.m in Sources */,
 				6EB1CFC01CEA2CB9006B6940 /* RecordingProcess.m in Sources */,
 				6EB1D03A1CEA2D8B006B6940 /* UIRecordingDurationLabelView.m in Sources */,
 				7AE75D871D05B4AB0094A93E /* TrophyDO.m in Sources */,
+				8AB35AA61D0C68E70026503B /* UIAccountCreationCredentialsView.m in Sources */,
 				0D95DFDF1D0599DD0007F35E /* VideoReferenceDAO.m in Sources */,
 				6EB1CFC11CEA2CB9006B6940 /* ReferenceFrameProcess.m in Sources */,
 				8ABE3D911C78F77300AF659B /* AppDelegate.m in Sources */,
@@ -1343,9 +1410,11 @@
 				7AE75D801D05B4AB0094A93E /* InterfaceVideoDO.m in Sources */,
 				6EE37BB11C98037A006E0626 /* Cluster.m in Sources */,
 				6EB1CFEF1CEA2D5E006B6940 /* CaptureDevicePropertiesRetriever.m in Sources */,
+				8AB35AAF1D0C68F50026503B /* UIAccountCreationViewController.m in Sources */,
 				0D95DFD31D0599DD0007F35E /* CheckDatabaseDAO.m in Sources */,
 				6EE37B9D1C8973C7006E0626 /* KmeanEntryDataSet.m in Sources */,
 				6EB1D0311CEA2D8B006B6940 /* UIBaseButton.m in Sources */,
+				8AB35A9A1D0C68D70026503B /* UIBaseTextField.m in Sources */,
 				6EB1CFF11CEA2D5E006B6940 /* CaptureSession.m in Sources */,
 				0D95DFD71D0599DD0007F35E /* MovementReferenceDAO.m in Sources */,
 			);
@@ -1495,6 +1564,7 @@
 			buildSettings = {
 				ASSETCATALOG_COMPILER_APPICON_NAME = AppIcon;
 				CODE_SIGN_IDENTITY = "iPhone Developer";
+				"CODE_SIGN_IDENTITY[sdk=iphoneos*]" = "iPhone Developer";
 				DEBUG_INFORMATION_FORMAT = "dwarf-with-dsym";
 				HEADER_SEARCH_PATHS = "$(SOURCE_ROOT)/Libraries/libimagic/include/**";
 				INFOPLIST_FILE = VirtualCoach/Info.plist;
@@ -1503,6 +1573,7 @@
 				OTHER_LDFLAGS = "-limagic_ios";
 				PRODUCT_BUNDLE_IDENTIFIER = eu.iseven.VirtualCoach;
 				PRODUCT_NAME = "$(TARGET_NAME)";
+				PROVISIONING_PROFILE = "";
 			};
 			name = Debug;
 		};
@@ -1511,6 +1582,7 @@
 			buildSettings = {
 				ASSETCATALOG_COMPILER_APPICON_NAME = AppIcon;
 				CODE_SIGN_IDENTITY = "iPhone Developer";
+				"CODE_SIGN_IDENTITY[sdk=iphoneos*]" = "iPhone Developer";
 				HEADER_SEARCH_PATHS = "$(SOURCE_ROOT)/Libraries/libimagic/include/**";
 				INFOPLIST_FILE = VirtualCoach/Info.plist;
 				LD_RUNPATH_SEARCH_PATHS = "$(inherited) @executable_path/Frameworks";
@@ -1518,6 +1590,7 @@
 				OTHER_LDFLAGS = "-limagic_ios";
 				PRODUCT_BUNDLE_IDENTIFIER = eu.iseven.VirtualCoach;
 				PRODUCT_NAME = "$(TARGET_NAME)";
+				PROVISIONING_PROFILE = "";
 			};
 			name = Release;
 		};
