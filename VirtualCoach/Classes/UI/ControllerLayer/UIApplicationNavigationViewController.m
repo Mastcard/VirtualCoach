@@ -19,15 +19,24 @@
     
     if (self)
     {
-        _authenticationViewController = [[UIAuthenticationViewController alloc] init];
+        _authenticationViewController = (UIAuthenticationViewController *)rootViewController;
+        //_homeViewController = (UIHomeViewController *)rootViewController;
+        //_accounCreationViewController = (UIAccountCreationViewController *)rootViewController;
         _homeViewController = [[UIHomeViewController alloc] init];
+        _accountCreationViewController = [[UIAccountCreationViewController alloc] init];
+        _trainingViewController = [[UITrainingViewController alloc] init];
+        
+        [_authenticationViewController prepareForUse];
+        [_accountCreationViewController prepareForUse];
+        [_homeViewController prepareForUse];
+        [_trainingViewController prepareForUse];
         
         CaptureProcessManager *captureProcessManager = [CaptureProcessManager sharedInstance];
         _captureSessionViewController = [[UICaptureSessionViewController alloc] initWithSessionController:[captureProcessManager captureSessionController]];
         
         [_captureSessionViewController prepareForUse];
         
-        self.viewControllers = @[rootViewController];//, _authenticationViewController, _homeViewController];
+        [self popToRootViewControllerAnimated:NO];
     }
     
     return self;

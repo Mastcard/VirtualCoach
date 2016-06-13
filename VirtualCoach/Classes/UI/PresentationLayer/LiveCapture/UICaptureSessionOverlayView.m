@@ -33,7 +33,7 @@
     [path closePath];
     
     [_regionBoundsShapeView setFillColor:[UIColor clearColor].CGColor];
-    [_regionBoundsShapeView setStrokeColor:[UIColor greenColor].CGColor];
+    [_regionBoundsShapeView setStrokeColor:[UIColor blueColor].CGColor];
     [_regionBoundsShapeView setLineWidth:3.0];
     [_regionBoundsShapeView setPath:path.CGPath];
     

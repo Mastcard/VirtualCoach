@@ -36,7 +36,6 @@
     _captureMovieFileOutput.maxRecordedDuration = kCMTimeInvalid;
     
     AVCaptureDeviceFormat *bestFormat = nil;
-    AVFrameRateRange *bestFrameRateRange = nil;
     
     // setting to 60 fps by choosing highest rate range..
     
