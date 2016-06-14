@@ -7,8 +7,9 @@
 //
 
 #import <XCTest/XCTest.h>
-
+#import <CoreMedia/CoreMedia.h>
 #import "ExtractorVideoDataOutputProcess.h"
+#import "ExtractorVideoDataOutputDelegate.h"
 
 #include <io.h>
 
@@ -66,9 +67,9 @@
     rgb8ifree(extractedRgb);
 }
 
-- (NSUInteger)sampleCount
+- (void)didEstimateFrameCount:(Float64)frameCount
 {
-    return _count;
+    
 }
 
 @end
@@ -109,7 +110,7 @@
 {
     [_extractorVideoDataOutputProcess start];
     
-    XCTAssertEqual([_extractorDelegate sampleCount], 31);
+    XCTAssertEqual([_extractorVideoDataOutputProcess estimatedFrameCount], 30);
     XCTAssertEqual([_extractorDelegate comparisonCount], 0);
 }
 

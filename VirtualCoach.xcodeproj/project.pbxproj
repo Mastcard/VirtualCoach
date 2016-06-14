@@ -25,20 +25,6 @@
 		0D95DFE81D059A2F0007F35E /* DatabaseTest.m in Sources */ = {isa = PBXBuildFile; fileRef = 0D95DFE71D059A2F0007F35E /* DatabaseTest.m */; };
 		0D95DFEA1D059AA60007F35E /* libsqlite3.0.tbd in Frameworks */ = {isa = PBXBuildFile; fileRef = 0D95DFE91D059AA60007F35E /* libsqlite3.0.tbd */; };
 		0D95DFEB1D059AC80007F35E /* libsqlite3.0.tbd in Frameworks */ = {isa = PBXBuildFile; fileRef = 0D95DFE91D059AA60007F35E /* libsqlite3.0.tbd */; };
-		0D95DFEC1D059AF10007F35E /* CheckDatabaseDAO.m in Sources */ = {isa = PBXBuildFile; fileRef = 0D95DFBA1D0599DD0007F35E /* CheckDatabaseDAO.m */; };
-		0D95DFED1D059AF10007F35E /* CoachDAO.m in Sources */ = {isa = PBXBuildFile; fileRef = 0D95DFBC1D0599DD0007F35E /* CoachDAO.m */; };
-		0D95DFEE1D059AF10007F35E /* CoachPlayerDAO.m in Sources */ = {isa = PBXBuildFile; fileRef = 0D95DFBE1D0599DD0007F35E /* CoachPlayerDAO.m */; };
-		0D95DFEF1D059AF10007F35E /* MovementDAO.m in Sources */ = {isa = PBXBuildFile; fileRef = 0D95DFC01D0599DD0007F35E /* MovementDAO.m */; };
-		0D95DFF01D059AF10007F35E /* MovementReferenceDAO.m in Sources */ = {isa = PBXBuildFile; fileRef = 0D95DFC21D0599DD0007F35E /* MovementReferenceDAO.m */; };
-		0D95DFF11D059AF10007F35E /* PlayerDAO.m in Sources */ = {isa = PBXBuildFile; fileRef = 0D95DFC41D0599DD0007F35E /* PlayerDAO.m */; };
-		0D95DFF21D059AF10007F35E /* PlayerTrainingVideoDAO.m in Sources */ = {isa = PBXBuildFile; fileRef = 0D95DFC61D0599DD0007F35E /* PlayerTrainingVideoDAO.m */; };
-		0D95DFF31D059AF10007F35E /* PlayerTrophyDAO.m in Sources */ = {isa = PBXBuildFile; fileRef = 0D95DFC81D0599DD0007F35E /* PlayerTrophyDAO.m */; };
-		0D95DFF41D059AF10007F35E /* StatisticalDAO.m in Sources */ = {isa = PBXBuildFile; fileRef = 0D95DFCA1D0599DD0007F35E /* StatisticalDAO.m */; };
-		0D95DFF51D059AF10007F35E /* TrainingDAO.m in Sources */ = {isa = PBXBuildFile; fileRef = 0D95DFCC1D0599DD0007F35E /* TrainingDAO.m */; };
-		0D95DFF61D059AF10007F35E /* TrophyDAO.m in Sources */ = {isa = PBXBuildFile; fileRef = 0D95DFCE1D0599DD0007F35E /* TrophyDAO.m */; };
-		0D95DFF71D059AF10007F35E /* VideoDAO.m in Sources */ = {isa = PBXBuildFile; fileRef = 0D95DFD01D0599DD0007F35E /* VideoDAO.m */; };
-		0D95DFF81D059AF10007F35E /* VideoReferenceDAO.m in Sources */ = {isa = PBXBuildFile; fileRef = 0D95DFD21D0599DD0007F35E /* VideoReferenceDAO.m */; };
-		0D95DFF91D059AF10007F35E /* DatabaseService.m in Sources */ = {isa = PBXBuildFile; fileRef = 0D95DFE11D0599ED0007F35E /* DatabaseService.m */; };
 		6E43B7E21CD0B4810077F51B /* AVFoundation.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 6E43B7E01CD0B45E0077F51B /* AVFoundation.framework */; };
 		6EB1CF811CE39ABE006B6940 /* Resources in Resources */ = {isa = PBXBuildFile; fileRef = 6EB1CF801CE39ABE006B6940 /* Resources */; };
 		6EB1CFBE1CEA2CB9006B6940 /* CaptureProcessManager.m in Sources */ = {isa = PBXBuildFile; fileRef = 6EB1CFAB1CEA2CB9006B6940 /* CaptureProcessManager.m */; };
@@ -81,19 +67,14 @@
 		6EB1D03E1CEA2D8B006B6940 /* UILaunchView.m in Sources */ = {isa = PBXBuildFile; fileRef = 6EB1D0281CEA2D8B006B6940 /* UILaunchView.m */; };
 		6EB1D04D1CEA2E44006B6940 /* TrackingServiceTest.m in Sources */ = {isa = PBXBuildFile; fileRef = 6EB1D04A1CEA2E44006B6940 /* TrackingServiceTest.m */; };
 		6EB1D04E1CEA2E44006B6940 /* QueueTest.m in Sources */ = {isa = PBXBuildFile; fileRef = 6EB1D04C1CEA2E44006B6940 /* QueueTest.m */; };
-		6EB1D04F1CEA53A0006B6940 /* Queue.m in Sources */ = {isa = PBXBuildFile; fileRef = 6EB1CFCC1CEA2D0C006B6940 /* Queue.m */; };
 		6EE37B6C1C872970006E0626 /* HistogramTest.m in Sources */ = {isa = PBXBuildFile; fileRef = 6EE37B6B1C872970006E0626 /* HistogramTest.m */; };
 		6EE37B961C8739E2006E0626 /* Histogram.m in Sources */ = {isa = PBXBuildFile; fileRef = 6EE37B891C8739E2006E0626 /* Histogram.m */; };
-		6EE37B971C873A7A006E0626 /* Histogram.m in Sources */ = {isa = PBXBuildFile; fileRef = 6EE37B891C8739E2006E0626 /* Histogram.m */; };
 		6EE37B9A1C88D07C006E0626 /* KmeanEntry.m in Sources */ = {isa = PBXBuildFile; fileRef = 6EE37B991C88D07C006E0626 /* KmeanEntry.m */; };
 		6EE37B9D1C8973C7006E0626 /* KmeanEntryDataSet.m in Sources */ = {isa = PBXBuildFile; fileRef = 6EE37B9C1C8973C7006E0626 /* KmeanEntryDataSet.m */; };
 		6EE37B9F1C8A0711006E0626 /* KmeanEntryTest.m in Sources */ = {isa = PBXBuildFile; fileRef = 6EE37B9E1C8A0711006E0626 /* KmeanEntryTest.m */; };
-		6EE37BA01C8A23D6006E0626 /* KmeanEntry.m in Sources */ = {isa = PBXBuildFile; fileRef = 6EE37B991C88D07C006E0626 /* KmeanEntry.m */; };
 		6EE37BA21C8B76D6006E0626 /* KmeanEntryDataSetTest.m in Sources */ = {isa = PBXBuildFile; fileRef = 6EE37BA11C8B76D6006E0626 /* KmeanEntryDataSetTest.m */; };
-		6EE37BA31C8CCC49006E0626 /* KmeanEntryDataSet.m in Sources */ = {isa = PBXBuildFile; fileRef = 6EE37B9C1C8973C7006E0626 /* KmeanEntryDataSet.m */; };
 		6EE37BA81C9020A2006E0626 /* MotionDeduction.m in Sources */ = {isa = PBXBuildFile; fileRef = 6EE37BA71C9020A2006E0626 /* MotionDeduction.m */; };
 		6EE37BAA1C902E0D006E0626 /* MotionDeductionTest.m in Sources */ = {isa = PBXBuildFile; fileRef = 6EE37BA91C902E0D006E0626 /* MotionDeductionTest.m */; };
-		6EE37BAB1C90608C006E0626 /* MotionDeduction.m in Sources */ = {isa = PBXBuildFile; fileRef = 6EE37BA71C9020A2006E0626 /* MotionDeduction.m */; };
 		6EE37BB11C98037A006E0626 /* Cluster.m in Sources */ = {isa = PBXBuildFile; fileRef = 6EE37BB01C98037A006E0626 /* Cluster.m */; };
 		6EE37BB51C981B6D006E0626 /* DistanceUtilities.m in Sources */ = {isa = PBXBuildFile; fileRef = 6EE37BB41C981B6D006E0626 /* DistanceUtilities.m */; };
 		6EE37BB81C981C37006E0626 /* KmeanCalculation.m in Sources */ = {isa = PBXBuildFile; fileRef = 6EE37BB71C981C37006E0626 /* KmeanCalculation.m */; };
@@ -123,6 +104,22 @@
 		8ABE3D8E1C78F77300AF659B /* main.m in Sources */ = {isa = PBXBuildFile; fileRef = 8ABE3D8D1C78F77300AF659B /* main.m */; };
 		8ABE3D911C78F77300AF659B /* AppDelegate.m in Sources */ = {isa = PBXBuildFile; fileRef = 8ABE3D901C78F77300AF659B /* AppDelegate.m */; };
 		8ABE3D991C78F77300AF659B /* Assets.xcassets in Resources */ = {isa = PBXBuildFile; fileRef = 8ABE3D981C78F77300AF659B /* Assets.xcassets */; };
+		8AC06D461D0F51EF00D29DF0 /* main.m in Sources */ = {isa = PBXBuildFile; fileRef = 8AC06D451D0F51EF00D29DF0 /* main.m */; };
+		8AC06D4A1D0F526900D29DF0 /* TrackingIrrelevantSequencesRemover.m in Sources */ = {isa = PBXBuildFile; fileRef = 8A2512C61D0DAF9900DADFAD /* TrackingIrrelevantSequencesRemover.m */; };
+		8AC06D4B1D0F526900D29DF0 /* TrackingRelevantSequencesBuilder.m in Sources */ = {isa = PBXBuildFile; fileRef = 8A2512C81D0DAF9900DADFAD /* TrackingRelevantSequencesBuilder.m */; };
+		8AC06D4C1D0F526900D29DF0 /* DataAnalysisProcess.m in Sources */ = {isa = PBXBuildFile; fileRef = 8ACF777B1CECAADB00248372 /* DataAnalysisProcess.m */; };
+		8AC06D4D1D0F526900D29DF0 /* TrackingAnalysisProcess.m in Sources */ = {isa = PBXBuildFile; fileRef = 8ACF777D1CECAADB00248372 /* TrackingAnalysisProcess.m */; };
+		8AC06D4E1D0F526900D29DF0 /* VideoProcess.m in Sources */ = {isa = PBXBuildFile; fileRef = 8ACF777F1CECAADB00248372 /* VideoProcess.m */; };
+		8AC06D4F1D0F526900D29DF0 /* DistanceUtilities.m in Sources */ = {isa = PBXBuildFile; fileRef = 6EE37BB41C981B6D006E0626 /* DistanceUtilities.m */; };
+		8AC06D501D0F526900D29DF0 /* MotionDeduction.m in Sources */ = {isa = PBXBuildFile; fileRef = 6EE37BA71C9020A2006E0626 /* MotionDeduction.m */; };
+		8AC06D511D0F526900D29DF0 /* Cluster.m in Sources */ = {isa = PBXBuildFile; fileRef = 6EE37BB01C98037A006E0626 /* Cluster.m */; };
+		8AC06D521D0F526900D29DF0 /* KmeanCalculation.m in Sources */ = {isa = PBXBuildFile; fileRef = 6EE37BB71C981C37006E0626 /* KmeanCalculation.m */; };
+		8AC06D531D0F526900D29DF0 /* Histogram.m in Sources */ = {isa = PBXBuildFile; fileRef = 6EE37B891C8739E2006E0626 /* Histogram.m */; };
+		8AC06D541D0F526900D29DF0 /* KmeanEntry.m in Sources */ = {isa = PBXBuildFile; fileRef = 6EE37B991C88D07C006E0626 /* KmeanEntry.m */; };
+		8AC06D551D0F526900D29DF0 /* KmeanEntryDataSet.m in Sources */ = {isa = PBXBuildFile; fileRef = 6EE37B9C1C8973C7006E0626 /* KmeanEntryDataSet.m */; };
+		8AC06D561D0F526900D29DF0 /* ImageTools.m in Sources */ = {isa = PBXBuildFile; fileRef = 8ACF77891CECAAF800248372 /* ImageTools.m */; };
+		8AC06D571D0F526900D29DF0 /* ExtractorVideoDataOutputProcess.m in Sources */ = {isa = PBXBuildFile; fileRef = 8ACF77771CECAAC600248372 /* ExtractorVideoDataOutputProcess.m */; };
+		8AC06D581D0F526900D29DF0 /* charact_ext.c in Sources */ = {isa = PBXBuildFile; fileRef = 6EB1CFB71CEA2CB9006B6940 /* charact_ext.c */; };
 		8ACF77781CECAAC600248372 /* ExtractorVideoDataOutputProcess.m in Sources */ = {isa = PBXBuildFile; fileRef = 8ACF77771CECAAC600248372 /* ExtractorVideoDataOutputProcess.m */; };
 		8ACF77831CECAADB00248372 /* DataAnalysisProcess.m in Sources */ = {isa = PBXBuildFile; fileRef = 8ACF777B1CECAADB00248372 /* DataAnalysisProcess.m */; };
 		8ACF77841CECAADB00248372 /* TrackingAnalysisProcess.m in Sources */ = {isa = PBXBuildFile; fileRef = 8ACF777D1CECAADB00248372 /* TrackingAnalysisProcess.m */; };
@@ -130,7 +127,10 @@
 		8ACF778A1CECAAF800248372 /* ImageTools.m in Sources */ = {isa = PBXBuildFile; fileRef = 8ACF77891CECAAF800248372 /* ImageTools.m */; };
 		8ACF778D1CECAB2300248372 /* UICaptureSessionOverlayViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = 8ACF778C1CECAB2300248372 /* UICaptureSessionOverlayViewController.m */; };
 		8ACF778E1CECABDC00248372 /* TrackingProcess.m in Sources */ = {isa = PBXBuildFile; fileRef = 6EB1CFBB1CEA2CB9006B6940 /* TrackingProcess.m */; };
-		8ACF778F1CECB25100248372 /* charact_ext.c in Sources */ = {isa = PBXBuildFile; fileRef = 6EB1CFB71CEA2CB9006B6940 /* charact_ext.c */; };
+		8ADBB4DA1D0FCEA1005359F6 /* TrackingAnalysisProcessTest.m in Sources */ = {isa = PBXBuildFile; fileRef = 8ADBB4D91D0FCEA1005359F6 /* TrackingAnalysisProcessTest.m */; };
+		8ADBB4DC1D0FCEBF005359F6 /* TrackingRelevantSequencesBuilderTest.m in Sources */ = {isa = PBXBuildFile; fileRef = 8ADBB4DB1D0FCEBF005359F6 /* TrackingRelevantSequencesBuilderTest.m */; };
+		8ADBB4DE1D0FCF07005359F6 /* TrackingIrrelevantSequencesRemoverTest.m in Sources */ = {isa = PBXBuildFile; fileRef = 8ADBB4DD1D0FCF07005359F6 /* TrackingIrrelevantSequencesRemoverTest.m */; };
+		8ADBB4E51D1024B5005359F6 /* ExtractorVideoDataOutputProcessTest.m in Sources */ = {isa = PBXBuildFile; fileRef = 8ADBB4E41D1024B5005359F6 /* ExtractorVideoDataOutputProcessTest.m */; };
 /* End PBXBuildFile section */
 
 /* Begin PBXContainerItemProxy section */
@@ -149,6 +149,18 @@
 			remoteInfo = VirtualCoach;
 		};
 /* End PBXContainerItemProxy section */
+
+/* Begin PBXCopyFilesBuildPhase section */
+		8AC06D411D0F51EF00D29DF0 /* CopyFiles */ = {
+			isa = PBXCopyFilesBuildPhase;
+			buildActionMask = 2147483647;
+			dstPath = /usr/share/man/man1/;
+			dstSubfolderSpec = 0;
+			files = (
+			);
+			runOnlyForDeploymentPostprocessing = 1;
+		};
+/* End PBXCopyFilesBuildPhase section */
 
 /* Begin PBXFileReference section */
 		0D95DFB91D0599DD0007F35E /* CheckDatabaseDAO.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = CheckDatabaseDAO.h; sourceTree = "<group>"; };
@@ -343,6 +355,8 @@
 		8ABE3DA81C78F77300AF659B /* Info.plist */ = {isa = PBXFileReference; lastKnownFileType = text.plist.xml; path = Info.plist; sourceTree = "<group>"; };
 		8ABE3DAD1C78F77300AF659B /* VirtualCoachUITests.xctest */ = {isa = PBXFileReference; explicitFileType = wrapper.cfbundle; includeInIndex = 0; path = VirtualCoachUITests.xctest; sourceTree = BUILT_PRODUCTS_DIR; };
 		8ABE3DB31C78F77300AF659B /* Info.plist */ = {isa = PBXFileReference; lastKnownFileType = text.plist.xml; path = Info.plist; sourceTree = "<group>"; };
+		8AC06D431D0F51EF00D29DF0 /* TestChaineComplete */ = {isa = PBXFileReference; explicitFileType = "compiled.mach-o.executable"; includeInIndex = 0; path = TestChaineComplete; sourceTree = BUILT_PRODUCTS_DIR; };
+		8AC06D451D0F51EF00D29DF0 /* main.m */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.objc; path = main.m; sourceTree = "<group>"; };
 		8AC87E731CE3731B007278F7 /* ExtractorVideoDataOutputProcess.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = ExtractorVideoDataOutputProcess.h; sourceTree = "<group>"; };
 		8AC87E741CE3731B007278F7 /* ExtractorVideoDataOutputProcess.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = ExtractorVideoDataOutputProcess.m; sourceTree = "<group>"; };
 		8AC87E761CE37365007278F7 /* ExtractorVideoDataOutputDelegate.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = ExtractorVideoDataOutputDelegate.h; sourceTree = "<group>"; };
@@ -362,6 +376,10 @@
 		8ACF77891CECAAF800248372 /* ImageTools.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = ImageTools.m; sourceTree = "<group>"; };
 		8ACF778B1CECAB2300248372 /* UICaptureSessionOverlayViewController.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = UICaptureSessionOverlayViewController.h; sourceTree = "<group>"; };
 		8ACF778C1CECAB2300248372 /* UICaptureSessionOverlayViewController.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = UICaptureSessionOverlayViewController.m; sourceTree = "<group>"; };
+		8ADBB4D91D0FCEA1005359F6 /* TrackingAnalysisProcessTest.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = TrackingAnalysisProcessTest.m; sourceTree = "<group>"; };
+		8ADBB4DB1D0FCEBF005359F6 /* TrackingRelevantSequencesBuilderTest.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = TrackingRelevantSequencesBuilderTest.m; sourceTree = "<group>"; };
+		8ADBB4DD1D0FCF07005359F6 /* TrackingIrrelevantSequencesRemoverTest.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = TrackingIrrelevantSequencesRemoverTest.m; sourceTree = "<group>"; };
+		8ADBB4E41D1024B5005359F6 /* ExtractorVideoDataOutputProcessTest.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = ExtractorVideoDataOutputProcessTest.m; sourceTree = "<group>"; };
 /* End PBXFileReference section */
 
 /* Begin PBXFrameworksBuildPhase section */
@@ -383,6 +401,13 @@
 			runOnlyForDeploymentPostprocessing = 0;
 		};
 		8ABE3DAA1C78F77300AF659B /* Frameworks */ = {
+			isa = PBXFrameworksBuildPhase;
+			buildActionMask = 2147483647;
+			files = (
+			);
+			runOnlyForDeploymentPostprocessing = 0;
+		};
+		8AC06D401D0F51EF00D29DF0 /* Frameworks */ = {
 			isa = PBXFrameworksBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
@@ -702,6 +727,7 @@
 		6EB1D0471CEA2E44006B6940 /* Engine */ = {
 			isa = PBXGroup;
 			children = (
+				8ADBB4D81D0FCEA1005359F6 /* Process */,
 				6EB1D0481CEA2E44006B6940 /* Image */,
 			);
 			path = Engine;
@@ -710,6 +736,7 @@
 		6EB1D0481CEA2E44006B6940 /* Image */ = {
 			isa = PBXGroup;
 			children = (
+				8ADBB4E31D1024B5005359F6 /* Extractor */,
 				6EB1D0491CEA2E44006B6940 /* Tracking */,
 			);
 			path = Image;
@@ -1110,6 +1137,7 @@
 				8ABE3D8B1C78F77300AF659B /* VirtualCoach */,
 				8ABE3DA51C78F77300AF659B /* VirtualCoachTests */,
 				8ABE3DB01C78F77300AF659B /* VirtualCoachUITests */,
+				8AC06D441D0F51EF00D29DF0 /* TestChaineComplete */,
 				8ABE3D8A1C78F77300AF659B /* Products */,
 			);
 			sourceTree = "<group>";
@@ -1120,6 +1148,7 @@
 				8ABE3D891C78F77300AF659B /* VirtualCoach.app */,
 				8ABE3DA21C78F77300AF659B /* VirtualCoachTests.xctest */,
 				8ABE3DAD1C78F77300AF659B /* VirtualCoachUITests.xctest */,
+				8AC06D431D0F51EF00D29DF0 /* TestChaineComplete */,
 			);
 			name = Products;
 			sourceTree = "<group>";
@@ -1166,6 +1195,14 @@
 			path = VirtualCoachUITests;
 			sourceTree = "<group>";
 		};
+		8AC06D441D0F51EF00D29DF0 /* TestChaineComplete */ = {
+			isa = PBXGroup;
+			children = (
+				8AC06D451D0F51EF00D29DF0 /* main.m */,
+			);
+			path = TestChaineComplete;
+			sourceTree = "<group>";
+		};
 		8ACF77791CECAADB00248372 /* Process */ = {
 			isa = PBXGroup;
 			children = (
@@ -1191,6 +1228,24 @@
 				8ACF77891CECAAF800248372 /* ImageTools.m */,
 			);
 			path = Tools;
+			sourceTree = "<group>";
+		};
+		8ADBB4D81D0FCEA1005359F6 /* Process */ = {
+			isa = PBXGroup;
+			children = (
+				8ADBB4D91D0FCEA1005359F6 /* TrackingAnalysisProcessTest.m */,
+				8ADBB4DD1D0FCF07005359F6 /* TrackingIrrelevantSequencesRemoverTest.m */,
+				8ADBB4DB1D0FCEBF005359F6 /* TrackingRelevantSequencesBuilderTest.m */,
+			);
+			path = Process;
+			sourceTree = "<group>";
+		};
+		8ADBB4E31D1024B5005359F6 /* Extractor */ = {
+			isa = PBXGroup;
+			children = (
+				8ADBB4E41D1024B5005359F6 /* ExtractorVideoDataOutputProcessTest.m */,
+			);
+			path = Extractor;
 			sourceTree = "<group>";
 		};
 /* End PBXGroup section */
@@ -1249,6 +1304,23 @@
 			productReference = 8ABE3DAD1C78F77300AF659B /* VirtualCoachUITests.xctest */;
 			productType = "com.apple.product-type.bundle.ui-testing";
 		};
+		8AC06D421D0F51EF00D29DF0 /* TestChaineComplete */ = {
+			isa = PBXNativeTarget;
+			buildConfigurationList = 8AC06D491D0F51EF00D29DF0 /* Build configuration list for PBXNativeTarget "TestChaineComplete" */;
+			buildPhases = (
+				8AC06D3F1D0F51EF00D29DF0 /* Sources */,
+				8AC06D401D0F51EF00D29DF0 /* Frameworks */,
+				8AC06D411D0F51EF00D29DF0 /* CopyFiles */,
+			);
+			buildRules = (
+			);
+			dependencies = (
+			);
+			name = TestChaineComplete;
+			productName = TestChaineComplete;
+			productReference = 8AC06D431D0F51EF00D29DF0 /* TestChaineComplete */;
+			productType = "com.apple.product-type.tool";
+		};
 /* End PBXNativeTarget section */
 
 /* Begin PBXProject section */
@@ -1272,6 +1344,9 @@
 						DevelopmentTeam = QQ64R4PS8Q;
 						TestTargetID = 8ABE3D881C78F77300AF659B;
 					};
+					8AC06D421D0F51EF00D29DF0 = {
+						CreatedOnToolsVersion = 7.3.1;
+					};
 				};
 			};
 			buildConfigurationList = 8ABE3D841C78F77300AF659B /* Build configuration list for PBXProject "VirtualCoach" */;
@@ -1290,6 +1365,7 @@
 				8ABE3D881C78F77300AF659B /* VirtualCoach */,
 				8ABE3DA11C78F77300AF659B /* VirtualCoachTests */,
 				8ABE3DAC1C78F77300AF659B /* VirtualCoachUITests */,
+				8AC06D421D0F51EF00D29DF0 /* TestChaineComplete */,
 			);
 		};
 /* End PBXProject section */
@@ -1424,32 +1500,16 @@
 			isa = PBXSourcesBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
-				0D95DFEC1D059AF10007F35E /* CheckDatabaseDAO.m in Sources */,
-				0D95DFED1D059AF10007F35E /* CoachDAO.m in Sources */,
-				0D95DFEE1D059AF10007F35E /* CoachPlayerDAO.m in Sources */,
-				0D95DFEF1D059AF10007F35E /* MovementDAO.m in Sources */,
-				0D95DFF01D059AF10007F35E /* MovementReferenceDAO.m in Sources */,
-				0D95DFF11D059AF10007F35E /* PlayerDAO.m in Sources */,
-				0D95DFF21D059AF10007F35E /* PlayerTrainingVideoDAO.m in Sources */,
-				0D95DFF31D059AF10007F35E /* PlayerTrophyDAO.m in Sources */,
-				0D95DFF41D059AF10007F35E /* StatisticalDAO.m in Sources */,
-				0D95DFF51D059AF10007F35E /* TrainingDAO.m in Sources */,
-				0D95DFF61D059AF10007F35E /* TrophyDAO.m in Sources */,
-				0D95DFF71D059AF10007F35E /* VideoDAO.m in Sources */,
-				0D95DFF81D059AF10007F35E /* VideoReferenceDAO.m in Sources */,
-				0D95DFF91D059AF10007F35E /* DatabaseService.m in Sources */,
-				8ACF778F1CECB25100248372 /* charact_ext.c in Sources */,
-				6EB1D04F1CEA53A0006B6940 /* Queue.m in Sources */,
-				6EE37BAB1C90608C006E0626 /* MotionDeduction.m in Sources */,
-				6EE37BA31C8CCC49006E0626 /* KmeanEntryDataSet.m in Sources */,
-				6EE37BA01C8A23D6006E0626 /* KmeanEntry.m in Sources */,
-				6EE37B971C873A7A006E0626 /* Histogram.m in Sources */,
 				6EB1D04D1CEA2E44006B6940 /* TrackingServiceTest.m in Sources */,
 				6EB1D04E1CEA2E44006B6940 /* QueueTest.m in Sources */,
+				8ADBB4E51D1024B5005359F6 /* ExtractorVideoDataOutputProcessTest.m in Sources */,
 				6EE37BA21C8B76D6006E0626 /* KmeanEntryDataSetTest.m in Sources */,
+				8ADBB4DC1D0FCEBF005359F6 /* TrackingRelevantSequencesBuilderTest.m in Sources */,
 				0D95DFE81D059A2F0007F35E /* DatabaseTest.m in Sources */,
 				6EE37B9F1C8A0711006E0626 /* KmeanEntryTest.m in Sources */,
 				6EE37BAA1C902E0D006E0626 /* MotionDeductionTest.m in Sources */,
+				8ADBB4DA1D0FCEA1005359F6 /* TrackingAnalysisProcessTest.m in Sources */,
+				8ADBB4DE1D0FCF07005359F6 /* TrackingIrrelevantSequencesRemoverTest.m in Sources */,
 				6EE37B6C1C872970006E0626 /* HistogramTest.m in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
@@ -1458,6 +1518,29 @@
 			isa = PBXSourcesBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
+			);
+			runOnlyForDeploymentPostprocessing = 0;
+		};
+		8AC06D3F1D0F51EF00D29DF0 /* Sources */ = {
+			isa = PBXSourcesBuildPhase;
+			buildActionMask = 2147483647;
+			files = (
+				8AC06D4A1D0F526900D29DF0 /* TrackingIrrelevantSequencesRemover.m in Sources */,
+				8AC06D4B1D0F526900D29DF0 /* TrackingRelevantSequencesBuilder.m in Sources */,
+				8AC06D4C1D0F526900D29DF0 /* DataAnalysisProcess.m in Sources */,
+				8AC06D4D1D0F526900D29DF0 /* TrackingAnalysisProcess.m in Sources */,
+				8AC06D4E1D0F526900D29DF0 /* VideoProcess.m in Sources */,
+				8AC06D4F1D0F526900D29DF0 /* DistanceUtilities.m in Sources */,
+				8AC06D501D0F526900D29DF0 /* MotionDeduction.m in Sources */,
+				8AC06D511D0F526900D29DF0 /* Cluster.m in Sources */,
+				8AC06D521D0F526900D29DF0 /* KmeanCalculation.m in Sources */,
+				8AC06D531D0F526900D29DF0 /* Histogram.m in Sources */,
+				8AC06D541D0F526900D29DF0 /* KmeanEntry.m in Sources */,
+				8AC06D551D0F526900D29DF0 /* KmeanEntryDataSet.m in Sources */,
+				8AC06D561D0F526900D29DF0 /* ImageTools.m in Sources */,
+				8AC06D571D0F526900D29DF0 /* ExtractorVideoDataOutputProcess.m in Sources */,
+				8AC06D581D0F526900D29DF0 /* charact_ext.c in Sources */,
+				8AC06D461D0F51EF00D29DF0 /* main.m in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
@@ -1566,6 +1649,7 @@
 				CODE_SIGN_IDENTITY = "iPhone Developer";
 				"CODE_SIGN_IDENTITY[sdk=iphoneos*]" = "iPhone Developer";
 				DEBUG_INFORMATION_FORMAT = "dwarf-with-dsym";
+				GCC_SYMBOLS_PRIVATE_EXTERN = NO;
 				HEADER_SEARCH_PATHS = "$(SOURCE_ROOT)/Libraries/libimagic/include/**";
 				INFOPLIST_FILE = VirtualCoach/Info.plist;
 				LD_RUNPATH_SEARCH_PATHS = "$(inherited) @executable_path/Frameworks";
@@ -1583,6 +1667,7 @@
 				ASSETCATALOG_COMPILER_APPICON_NAME = AppIcon;
 				CODE_SIGN_IDENTITY = "iPhone Developer";
 				"CODE_SIGN_IDENTITY[sdk=iphoneos*]" = "iPhone Developer";
+				GCC_SYMBOLS_PRIVATE_EXTERN = NO;
 				HEADER_SEARCH_PATHS = "$(SOURCE_ROOT)/Libraries/libimagic/include/**";
 				INFOPLIST_FILE = VirtualCoach/Info.plist;
 				LD_RUNPATH_SEARCH_PATHS = "$(inherited) @executable_path/Frameworks";
@@ -1648,6 +1733,36 @@
 			};
 			name = Release;
 		};
+		8AC06D471D0F51EF00D29DF0 /* Debug */ = {
+			isa = XCBuildConfiguration;
+			buildSettings = {
+				CLANG_ANALYZER_NONNULL = YES;
+				CODE_SIGN_IDENTITY = "-";
+				GCC_SYMBOLS_PRIVATE_EXTERN = YES;
+				HEADER_SEARCH_PATHS = "$(SOURCE_ROOT)/Libraries/libimagic/include/**";
+				LIBRARY_SEARCH_PATHS = /Users/iSeven/Desktop;
+				MACOSX_DEPLOYMENT_TARGET = 10.11;
+				OTHER_LDFLAGS = "-limagic_std";
+				PRODUCT_NAME = "$(TARGET_NAME)";
+				SDKROOT = macosx;
+			};
+			name = Debug;
+		};
+		8AC06D481D0F51EF00D29DF0 /* Release */ = {
+			isa = XCBuildConfiguration;
+			buildSettings = {
+				CLANG_ANALYZER_NONNULL = YES;
+				CODE_SIGN_IDENTITY = "-";
+				GCC_SYMBOLS_PRIVATE_EXTERN = YES;
+				HEADER_SEARCH_PATHS = "$(SOURCE_ROOT)/Libraries/libimagic/include/**";
+				LIBRARY_SEARCH_PATHS = /Users/iSeven/Desktop;
+				MACOSX_DEPLOYMENT_TARGET = 10.11;
+				OTHER_LDFLAGS = "-limagic_std";
+				PRODUCT_NAME = "$(TARGET_NAME)";
+				SDKROOT = macosx;
+			};
+			name = Release;
+		};
 /* End XCBuildConfiguration section */
 
 /* Begin XCConfigurationList section */
@@ -1683,6 +1798,15 @@
 			buildConfigurations = (
 				8ABE3DBD1C78F77300AF659B /* Debug */,
 				8ABE3DBE1C78F77300AF659B /* Release */,
+			);
+			defaultConfigurationIsVisible = 0;
+			defaultConfigurationName = Release;
+		};
+		8AC06D491D0F51EF00D29DF0 /* Build configuration list for PBXNativeTarget "TestChaineComplete" */ = {
+			isa = XCConfigurationList;
+			buildConfigurations = (
+				8AC06D471D0F51EF00D29DF0 /* Debug */,
+				8AC06D481D0F51EF00D29DF0 /* Release */,
 			);
 			defaultConfigurationIsVisible = 0;
 			defaultConfigurationName = Release;

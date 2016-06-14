@@ -42,5 +42,6 @@
 @property (nonatomic, assign) rect_t bounds;
 @property (nonatomic, assign) int motionValue;
 
++ (instancetype)initWithImageId:(unsigned long)imageId startX:(unsigned int)startX startY:(unsigned int)startY endX:(unsigned int)endX endY:(unsigned int)endY motionValue:(int)motionValue;
 
 @end

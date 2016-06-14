@@ -32,10 +32,14 @@
 // data analysis process
 @property (nonatomic, assign) BOOL sequenceStarted;
 @property (nonatomic, strong) Histogram *histogram;
+@property (nonatomic, strong) KmeanEntryDataSet *entryDataset;
 
 // optical flow properties
 @property (nonatomic, assign) gray8i_t *previousFrame;
-
+//
+@property (nonatomic, assign) gray8i_t *firstFrame;
+@property (nonatomic, assign) gray8i_t *secondFrame;
+@property (nonatomic, assign) gray8i_t *thirdFrame;
 
 // miscalenneous
 
@@ -44,6 +48,10 @@
 @property (nonatomic, assign) NSUInteger serviceCount;
 @property (nonatomic, assign) NSUInteger forehandCount;
 @property (nonatomic, assign) NSUInteger backhandCount;
+
+
+@property (nonatomic, assign) int sequenceImageStart;
+@property (nonatomic, assign) int sequenceImageEnd;
 
 @end
 
@@ -64,6 +72,17 @@
         _serviceCount = 0;
         _forehandCount = 0;
         _backhandCount = 0;
+        
+        _firstFrame = NULL;
+        _secondFrame = NULL;
+        _thirdFrame = NULL;
+        
+        
+        //tmp
+        _entryDatasetsArray = [[NSMutableArray alloc] init];
+        
+        _sequenceStarted = 0;
+        _sequenceStarted = 0;
     }
     
     return self;
@@ -96,6 +115,7 @@
     [self loadTrackingInformations];
     
     _histogram = [[Histogram alloc] init];
+    _entryDataset = [[KmeanEntryDataSet alloc] init];
     
     _canAnalyze = YES;
 }
@@ -131,6 +151,15 @@
                     
                     gray8i_t *substract = subgray8i(src, _referenceFrame);
                     
+                    int allah = 0;
+                    
+                    for (allah = 0; allah < substract->width * substract->height; allah++)
+                    {
+                        substract->data[allah] = (substract->data[allah] > _binaryThreshold) * substract->data[allah];
+                    }
+                    
+                    //pgmwrite(substract, [[NSString stringWithFormat:@"/Users/iSeven/Downloads/eu.iseven.VirtualCoach 2016-06-13 17:03.47.253.xcappdata/AppData/Documents/%d.pgm", (int)_count] cStringUsingEncoding:NSASCIIStringEncoding], PGM_BINARY);
+                    
                     if (_sequenceStarted)       // sequence continues
                     {
                         // get rect coordinates
@@ -148,27 +177,50 @@
                         playerBounds.start.y = startY.unsignedIntValue;
                         playerBounds.end.y = endY.unsignedIntValue;
                         
-                        // calculating optical flow
+                        if (_secondFrame == NULL)
+                        {
+                            _secondFrame = substract;
+                        }
                         
-                        vect2darray_t *speedVectors = opticalflow(_previousFrame, substract);
-                        
-                        // generating histogram
-                        
-                        [_histogram generateHistogramFromSpeedVector:speedVectors betweenInterval:playerBounds andWithImageWidth:substract->width];
-                        
-                        // process
-                        
-                        gray8ifree(_previousFrame);
-                        vect2darrfree(speedVectors);
-                        _previousFrame = substract;
+                        else
+                        {
+                            if (_thirdFrame == NULL)
+                            {
+                                _thirdFrame = substract;
+                            }
+                            
+                            vect2darray_t *speedVectors1 = opticalflow(_firstFrame, _secondFrame);
+                            vect2darray_t *speedVectors2 = opticalflow(_secondFrame, _thirdFrame);
+                            
+                            [_histogram generateHistogramFromSpeedVector:speedVectors1 betweenInterval:playerBounds andWithImageWidth:substract->width];
+                            [_histogram generateHistogramFromSpeedVector:speedVectors2 betweenInterval:playerBounds andWithImageWidth:substract->width];
+                            
+                            [_entryDataset addKmeanEntryToDataSetFromFirstSpeedVectorsTab:speedVectors1 andSecondSpeedVectorsTab:speedVectors2 betweenInterval:playerBounds andWithImageWidth:substract->width];
+                            
+                            gray8ifree(_firstFrame);
+                            _firstFrame = NULL;
+                            gray8ifree(_secondFrame);
+                            _secondFrame = NULL;
+                            
+                            _firstFrame = _thirdFrame;
+                            _thirdFrame = NULL;
+                            
+                            vect2darrfree(speedVectors1);
+                            vect2darrfree(speedVectors2);
+                        }
                     }
                     
                     else                        // sequence starts
                     {
                         _sequenceStarted = YES;
-                        _previousFrame = substract;
+//                        _previousFrame = substract;
                         
                         NSLog(@"Sequence starts at %f", (float)(_count / 60));
+                        
+                        //test
+                        _firstFrame = substract;
+                        //tmp
+                        _sequenceImageStart = (int)(_count);
                     }
                     
                     gray8ifree(src);
@@ -179,6 +231,9 @@
                     if (_sequenceStarted)       // sequence ends
                     {
                         _sequenceStarted = NO;
+                        
+                        //test
+                        _sequenceImageEnd = (int)(_count);
                         
                         // do
                         
@@ -195,8 +250,15 @@
                         if ([foundMotion isEqualToString:@"backhand"])
                             _backhandCount++;
                         
+                        NSDictionary *dictEntryDataset = [NSDictionary dictionaryWithObjects:[NSArray arrayWithObjects:_entryDataset, [NSNumber numberWithInt:_sequenceImageStart], [NSNumber numberWithInt:_sequenceImageEnd], nil] forKeys:[NSArray arrayWithObjects:@"entryDataset", @"startSequenceImage", @"endSequenceImage", nil]];
+                        
+                        [_entryDatasetsArray addObject:dictEntryDataset];
+                        
                         _histogram = nil;
                         _histogram = [[Histogram alloc] init];
+                        
+                        _entryDataset = nil;
+                        _entryDataset = [[KmeanEntryDataSet alloc] init];
                         
                         NSLog(@"Sequence ends at %f", (float)(_count / 60));
                     }
