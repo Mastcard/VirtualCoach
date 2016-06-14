@@ -13,7 +13,10 @@
 #import "Configurable.h"
 #import "ImageTools.h"
 #import "Histogram.h"
+#import "KmeanEntry.h"
+#import "KmeanEntryDataSet.h"
 #import "MotionDeduction.h"
+#import "KmeanCalculation.h"
 
 #import "SimpleProcessStatusDelegate.h"
 
@@ -39,5 +42,7 @@
 - (NSUInteger)serviceCount;
 - (NSUInteger)forehandCount;
 - (NSUInteger)backhandCount;
+
+@property (nonatomic, strong) NSMutableArray *entryDatasetsArray;
 
 @end

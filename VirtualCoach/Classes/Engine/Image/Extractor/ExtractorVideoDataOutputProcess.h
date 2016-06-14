@@ -17,5 +17,6 @@
 @property (nonatomic, weak) id <ExtractorVideoDataOutputDelegate> delegate;
 
 - (instancetype)initWithFile:(NSString *)filePath;
+- (NSUInteger)estimatedFrameCount;
 
 @end

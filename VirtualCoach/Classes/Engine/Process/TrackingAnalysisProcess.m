@@ -50,7 +50,7 @@
         
         //temp
         _count = 0;
-        _exportCount = 1;
+        _exportCount = 0;
         
         _frameCount = 0;
         
@@ -272,6 +272,24 @@
     }
     
     return self;
+}
+
++ (instancetype)initWithImageId:(unsigned long)imageId startX:(unsigned int)startX startY:(unsigned int)startY endX:(unsigned int)endX endY:(unsigned int)endY motionValue:(int)motionValue
+{
+    TrackingObjectPosition *top = [[TrackingObjectPosition alloc] init];
+    
+    top.imageId = imageId;
+    
+    rect_t bds;
+    bds.start.x = startX;
+    bds.start.y = startY;
+    bds.end.x = endX;
+    bds.end.y = endY;
+    
+    top.bounds = bds;
+    top.motionValue = motionValue;
+    
+    return top;
 }
 
 @end

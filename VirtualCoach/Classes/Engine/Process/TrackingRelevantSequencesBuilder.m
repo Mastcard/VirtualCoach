@@ -39,16 +39,13 @@
     
     NSUInteger currentMarkerIndex;
     NSUInteger previousMarkerIndex = 0;
-    int previousMarker = 1;
+    int previousMarker = ((NSNumber *)[finalObjectsMotion objectAtIndex:0]).intValue;
     
-    for (NSUInteger i = _motionImageFactor-1; i < finalObjectsMotion.count; i += _motionImageFactor)
+    for (NSUInteger i = _motionImageFactor; i < finalObjectsMotion.count; i += _motionImageFactor)
     {
         currentMarkerIndex = i;
         
         int currentMarker = ((NSNumber *)[finalObjectsMotion objectAtIndex:currentMarkerIndex]).intValue;
-        
-        //        NSLog(@"currentMarkerIndex : %lu, previousMarkerIndex : %lu", (unsigned long)currentMarkerIndex, (unsigned long)previousMarkerIndex);
-//        NSLog(@"currentMarker : %d, previousMarker : %d (%d, %d)", currentMarker, previousMarker, (int)currentMarkerIndex, (int)previousMarkerIndex);
         
         int newValue = (currentMarker == 0 && previousMarker == 0) ? 0 : 1;
         

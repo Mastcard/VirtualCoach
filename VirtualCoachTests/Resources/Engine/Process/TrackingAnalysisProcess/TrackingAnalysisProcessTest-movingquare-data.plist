@@ -1,0 +1,23 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE plist PUBLIC "-//Apple//DTD PLIST 1.0//EN" "http://www.apple.com/DTDs/PropertyList-1.0.dtd">
+<plist version="1.0">
+<dict>
+	<key>binaryThreshold</key>
+	<integer>50</integer>
+	<key>lastPlayerBounds</key>
+	<dict>
+		<key>end.x</key>
+		<integer>378</integer>
+		<key>end.y</key>
+		<integer>298</integer>
+		<key>start.x</key>
+		<integer>218</integer>
+		<key>start.y</key>
+		<integer>180</integer>
+	</dict>
+	<key>referenceFramePath</key>
+	<string>TrackingAnalysisProcessTest-movingquare-reference.pgm</string>
+	<key>videoPath</key>
+	<string>TrackingAnalysisProcessTest-movingquare.mov</string>
+</dict>
+</plist>
