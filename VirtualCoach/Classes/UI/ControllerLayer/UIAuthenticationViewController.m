@@ -51,7 +51,7 @@
     {
         UIApplicationNavigationViewController *nav = (UIApplicationNavigationViewController *)self.navigationController;
         
-        [nav pushViewController:nav.trainingViewController animated:YES];
+        [nav pushViewController:nav.menuViewController animated:YES];
     }
     
     else

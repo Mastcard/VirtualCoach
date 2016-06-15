@@ -25,11 +25,15 @@
         _homeViewController = [[UIHomeViewController alloc] init];
         _accountCreationViewController = [[UIAccountCreationViewController alloc] init];
         _trainingViewController = [[UITrainingViewController alloc] init];
+        _menuViewController = [[UIMenuViewController alloc] init];
+        _playerViewController = [[UIPlayerViewController alloc] init];
         
         [_authenticationViewController prepareForUse];
         [_accountCreationViewController prepareForUse];
         [_homeViewController prepareForUse];
         [_trainingViewController prepareForUse];
+        [_menuViewController prepareForUse];
+        [_playerViewController prepareForUse];
         
         CaptureProcessManager *captureProcessManager = [CaptureProcessManager sharedInstance];
         _captureSessionViewController = [[UICaptureSessionViewController alloc] initWithSessionController:[captureProcessManager captureSessionController]];
