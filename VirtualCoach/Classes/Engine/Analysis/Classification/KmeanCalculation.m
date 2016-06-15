@@ -79,9 +79,10 @@
     int index_min_cluster = 100;
     for (NSInteger i=0; i< _dataEntries.datacount; i++) {
         double distance_point_to_cluster = MAXFLOAT;
+        //NSLog(@"data[i]: %@", [_dataEntries.data objectAtIndex:i]);
         for (NSInteger j=0; j< _clusterCount; j++) {
             double tmpDistance = [DistanceUtilities euclidianDistance2DBetweenFirstKmeanEntry:[_dataEntries.data objectAtIndex:i] andSecondKmeanEntry:((Cluster *)[clusterResult objectAtIndex:j]).center ];
-            //NSLog(@"tmpDistance: %f and maxFloat: %f",tmpDistance,distance_point_to_cluster);
+            //NSLog(@"tmpDistance: %f and distance_point_to_cluster: %f",tmpDistance,distance_point_to_cluster);
             if (tmpDistance < distance_point_to_cluster) {
                 distance_point_to_cluster = tmpDistance;
                 index_min_cluster = (int) j;
@@ -89,7 +90,7 @@
             }
         }
         KmeanEntry * entry = ((KmeanEntry *)[_dataEntries.data objectAtIndex:i]);
-        
+        //NSLog(@"indexMinCluster: %d", index_min_cluster);
         [((Cluster *)[clusterResult objectAtIndex:index_min_cluster]).members insertObject:entry atIndex:((Cluster *)[clusterResult objectAtIndex:index_min_cluster]).countMember];
         
         ((Cluster *)[clusterResult objectAtIndex:index_min_cluster]).countMember++;
