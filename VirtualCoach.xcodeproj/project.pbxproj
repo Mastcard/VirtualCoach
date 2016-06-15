@@ -25,6 +25,15 @@
 		0D95DFE81D059A2F0007F35E /* DatabaseTest.m in Sources */ = {isa = PBXBuildFile; fileRef = 0D95DFE71D059A2F0007F35E /* DatabaseTest.m */; };
 		0D95DFEA1D059AA60007F35E /* libsqlite3.0.tbd in Frameworks */ = {isa = PBXBuildFile; fileRef = 0D95DFE91D059AA60007F35E /* libsqlite3.0.tbd */; };
 		0D95DFEB1D059AC80007F35E /* libsqlite3.0.tbd in Frameworks */ = {isa = PBXBuildFile; fileRef = 0D95DFE91D059AA60007F35E /* libsqlite3.0.tbd */; };
+		6E0EC2B61D11832400F9C818 /* DateUtilities.m in Sources */ = {isa = PBXBuildFile; fileRef = 6E0EC2B51D11832400F9C818 /* DateUtilities.m */; };
+		6E0EC2BD1D11847A00F9C818 /* Axis.m in Sources */ = {isa = PBXBuildFile; fileRef = 6E0EC2BC1D11847A00F9C818 /* Axis.m */; };
+		6E0EC2C01D1184B300F9C818 /* CoordinateSystem.m in Sources */ = {isa = PBXBuildFile; fileRef = 6E0EC2BF1D1184B300F9C818 /* CoordinateSystem.m */; };
+		6E0EC2C31D11853400F9C818 /* CoordinateSystem2D.m in Sources */ = {isa = PBXBuildFile; fileRef = 6E0EC2C21D11853400F9C818 /* CoordinateSystem2D.m */; };
+		6E0EC2C61D11864600F9C818 /* Curve.m in Sources */ = {isa = PBXBuildFile; fileRef = 6E0EC2C51D11864600F9C818 /* Curve.m */; };
+		6E0EC2C91D11874C00F9C818 /* UIAxis.m in Sources */ = {isa = PBXBuildFile; fileRef = 6E0EC2C81D11874C00F9C818 /* UIAxis.m */; };
+		6E0EC2CC1D11879000F9C818 /* UICoordinateSystem2D.m in Sources */ = {isa = PBXBuildFile; fileRef = 6E0EC2CB1D11879000F9C818 /* UICoordinateSystem2D.m */; };
+		6E0EC2CF1D1187F300F9C818 /* UICurve.m in Sources */ = {isa = PBXBuildFile; fileRef = 6E0EC2CE1D1187F300F9C818 /* UICurve.m */; };
+		6E0EC2D21D11885500F9C818 /* UICoordinateSystemFactory.m in Sources */ = {isa = PBXBuildFile; fileRef = 6E0EC2D11D11885500F9C818 /* UICoordinateSystemFactory.m */; };
 		6E43B7E21CD0B4810077F51B /* AVFoundation.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 6E43B7E01CD0B45E0077F51B /* AVFoundation.framework */; };
 		6EB1CF811CE39ABE006B6940 /* Resources in Resources */ = {isa = PBXBuildFile; fileRef = 6EB1CF801CE39ABE006B6940 /* Resources */; };
 		6EB1CFBE1CEA2CB9006B6940 /* CaptureProcessManager.m in Sources */ = {isa = PBXBuildFile; fileRef = 6EB1CFAB1CEA2CB9006B6940 /* CaptureProcessManager.m */; };
@@ -194,6 +203,25 @@
 		0D95DFE41D059A160007F35E /* CreationTables.sql */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text; path = CreationTables.sql; sourceTree = "<group>"; };
 		0D95DFE71D059A2F0007F35E /* DatabaseTest.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = DatabaseTest.m; sourceTree = "<group>"; };
 		0D95DFE91D059AA60007F35E /* libsqlite3.0.tbd */ = {isa = PBXFileReference; lastKnownFileType = "sourcecode.text-based-dylib-definition"; name = libsqlite3.0.tbd; path = usr/lib/libsqlite3.0.tbd; sourceTree = SDKROOT; };
+		6E0EC2B41D11832400F9C818 /* DateUtilities.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = DateUtilities.h; sourceTree = "<group>"; };
+		6E0EC2B51D11832400F9C818 /* DateUtilities.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = DateUtilities.m; sourceTree = "<group>"; };
+		6E0EC2BA1D11845C00F9C818 /* Element.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = Element.h; sourceTree = "<group>"; };
+		6E0EC2BB1D11847A00F9C818 /* Axis.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = Axis.h; sourceTree = "<group>"; };
+		6E0EC2BC1D11847A00F9C818 /* Axis.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = Axis.m; sourceTree = "<group>"; };
+		6E0EC2BE1D1184B300F9C818 /* CoordinateSystem.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = CoordinateSystem.h; sourceTree = "<group>"; };
+		6E0EC2BF1D1184B300F9C818 /* CoordinateSystem.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = CoordinateSystem.m; sourceTree = "<group>"; };
+		6E0EC2C11D11853400F9C818 /* CoordinateSystem2D.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = CoordinateSystem2D.h; sourceTree = "<group>"; };
+		6E0EC2C21D11853400F9C818 /* CoordinateSystem2D.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = CoordinateSystem2D.m; sourceTree = "<group>"; };
+		6E0EC2C41D11864600F9C818 /* Curve.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = Curve.h; sourceTree = "<group>"; };
+		6E0EC2C51D11864600F9C818 /* Curve.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = Curve.m; sourceTree = "<group>"; };
+		6E0EC2C71D11874C00F9C818 /* UIAxis.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = UIAxis.h; sourceTree = "<group>"; };
+		6E0EC2C81D11874C00F9C818 /* UIAxis.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = UIAxis.m; sourceTree = "<group>"; };
+		6E0EC2CA1D11879000F9C818 /* UICoordinateSystem2D.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = UICoordinateSystem2D.h; sourceTree = "<group>"; };
+		6E0EC2CB1D11879000F9C818 /* UICoordinateSystem2D.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = UICoordinateSystem2D.m; sourceTree = "<group>"; };
+		6E0EC2CD1D1187F300F9C818 /* UICurve.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = UICurve.h; sourceTree = "<group>"; };
+		6E0EC2CE1D1187F300F9C818 /* UICurve.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = UICurve.m; sourceTree = "<group>"; };
+		6E0EC2D01D11885500F9C818 /* UICoordinateSystemFactory.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = UICoordinateSystemFactory.h; sourceTree = "<group>"; };
+		6E0EC2D11D11885500F9C818 /* UICoordinateSystemFactory.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = UICoordinateSystemFactory.m; sourceTree = "<group>"; };
 		6E43B7E01CD0B45E0077F51B /* AVFoundation.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = AVFoundation.framework; path = System/Library/Frameworks/AVFoundation.framework; sourceTree = SDKROOT; };
 		6EB1CF801CE39ABE006B6940 /* Resources */ = {isa = PBXFileReference; lastKnownFileType = folder; path = Resources; sourceTree = "<group>"; };
 		6EB1CFAA1CEA2CB9006B6940 /* CaptureProcessManager.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = CaptureProcessManager.h; sourceTree = "<group>"; };
@@ -433,6 +461,56 @@
 			path = Database;
 			sourceTree = "<group>";
 		};
+		6E0EC2B01D1182AE00F9C818 /* ChartAPI */ = {
+			isa = PBXGroup;
+			children = (
+				6E0EC2B11D1182DF00F9C818 /* Model */,
+				6E0EC2B21D1182DF00F9C818 /* Tools */,
+				6E0EC2B31D1182DF00F9C818 /* UI */,
+			);
+			path = ChartAPI;
+			sourceTree = "<group>";
+		};
+		6E0EC2B11D1182DF00F9C818 /* Model */ = {
+			isa = PBXGroup;
+			children = (
+				6E0EC2BB1D11847A00F9C818 /* Axis.h */,
+				6E0EC2BC1D11847A00F9C818 /* Axis.m */,
+				6E0EC2BE1D1184B300F9C818 /* CoordinateSystem.h */,
+				6E0EC2BF1D1184B300F9C818 /* CoordinateSystem.m */,
+				6E0EC2C11D11853400F9C818 /* CoordinateSystem2D.h */,
+				6E0EC2C21D11853400F9C818 /* CoordinateSystem2D.m */,
+				6E0EC2C41D11864600F9C818 /* Curve.h */,
+				6E0EC2C51D11864600F9C818 /* Curve.m */,
+				6E0EC2BA1D11845C00F9C818 /* Element.h */,
+			);
+			path = Model;
+			sourceTree = "<group>";
+		};
+		6E0EC2B21D1182DF00F9C818 /* Tools */ = {
+			isa = PBXGroup;
+			children = (
+				6E0EC2B41D11832400F9C818 /* DateUtilities.h */,
+				6E0EC2B51D11832400F9C818 /* DateUtilities.m */,
+			);
+			path = Tools;
+			sourceTree = "<group>";
+		};
+		6E0EC2B31D1182DF00F9C818 /* UI */ = {
+			isa = PBXGroup;
+			children = (
+				6E0EC2C71D11874C00F9C818 /* UIAxis.h */,
+				6E0EC2C81D11874C00F9C818 /* UIAxis.m */,
+				6E0EC2CA1D11879000F9C818 /* UICoordinateSystem2D.h */,
+				6E0EC2CB1D11879000F9C818 /* UICoordinateSystem2D.m */,
+				6E0EC2CD1D1187F300F9C818 /* UICurve.h */,
+				6E0EC2CE1D1187F300F9C818 /* UICurve.m */,
+				6E0EC2D01D11885500F9C818 /* UICoordinateSystemFactory.h */,
+				6E0EC2D11D11885500F9C818 /* UICoordinateSystemFactory.m */,
+			);
+			path = UI;
+			sourceTree = "<group>";
+		};
 		6EB1CFA91CEA2CB9006B6940 /* Base */ = {
 			isa = PBXGroup;
 			children = (
@@ -601,6 +679,7 @@
 		6EB1CFFA1CEA2D8B006B6940 /* UI */ = {
 			isa = PBXGroup;
 			children = (
+				6E0EC2B01D1182AE00F9C818 /* ChartAPI */,
 				6EB1CFFB1CEA2D8B006B6940 /* ControllerLayer */,
 				6EB1D00A1CEA2D8B006B6940 /* PresentationLayer */,
 				6EB1D0291CEA2D8B006B6940 /* Protocols */,
@@ -1423,6 +1502,7 @@
 				6EB1D0301CEA2D8B006B6940 /* UILaunchViewController.m in Sources */,
 				0D95DFDA1D0599DD0007F35E /* PlayerTrophyDAO.m in Sources */,
 				8A2512C91D0DAF9900DADFAD /* TrackingIrrelevantSequencesRemover.m in Sources */,
+				6E0EC2CC1D11879000F9C818 /* UICoordinateSystem2D.m in Sources */,
 				0D95DFD51D0599DD0007F35E /* CoachPlayerDAO.m in Sources */,
 				6EB1CFF81CEA2D5E006B6940 /* MovieCaptureSession.m in Sources */,
 				8ACF77781CECAAC600248372 /* ExtractorVideoDataOutputProcess.m in Sources */,
@@ -1430,10 +1510,13 @@
 				6EB1CFF91CEA2D5E006B6940 /* MovieCaptureSessionController.m in Sources */,
 				6EB1CFCE1CEA2D0C006B6940 /* Queue.m in Sources */,
 				8ACF778A1CECAAF800248372 /* ImageTools.m in Sources */,
+				6E0EC2BD1D11847A00F9C818 /* Axis.m in Sources */,
+				6E0EC2C01D1184B300F9C818 /* CoordinateSystem.m in Sources */,
 				6EB1D03E1CEA2D8B006B6940 /* UILaunchView.m in Sources */,
 				6EB1D02F1CEA2D8B006B6940 /* UIHomeViewController.m in Sources */,
 				6EB1CFF71CEA2D5E006B6940 /* HybridCaptureSessionController.m in Sources */,
 				6EB1CFF61CEA2D5E006B6940 /* HybridCaptureSession.m in Sources */,
+				6E0EC2B61D11832400F9C818 /* DateUtilities.m in Sources */,
 				6EE37B961C8739E2006E0626 /* Histogram.m in Sources */,
 				8AB35AA91D0C68E70026503B /* UIAuthenticationCredentialsView.m in Sources */,
 				8AB35AB01D0C68F50026503B /* UITrainingViewController.m in Sources */,
@@ -1441,6 +1524,8 @@
 				7AE75D7F1D05B4AB0094A93E /* InterfaceMovementDO.m in Sources */,
 				6EB1CFF01CEA2D5E006B6940 /* CaptureDevicePropertiesUtilities.m in Sources */,
 				0D95DFD81D0599DD0007F35E /* PlayerDAO.m in Sources */,
+				6E0EC2CF1D1187F300F9C818 /* UICurve.m in Sources */,
+				6E0EC2C61D11864600F9C818 /* Curve.m in Sources */,
 				6EB1CFF41CEA2D5E006B6940 /* FramesCaptureSession.m in Sources */,
 				0D95DFDE1D0599DD0007F35E /* VideoDAO.m in Sources */,
 				6EB1D03B1CEA2D8B006B6940 /* UIRecordingIconView.m in Sources */,
@@ -1449,6 +1534,7 @@
 				8AB35AAA1D0C68E70026503B /* UITrainingView.m in Sources */,
 				6EB1CFF31CEA2D5E006B6940 /* CaptureSessionControllerFactory.m in Sources */,
 				8A2512CD1D0DB5D200DADFAD /* UIProcessProgressView.m in Sources */,
+				6E0EC2C31D11853400F9C818 /* CoordinateSystem2D.m in Sources */,
 				6EE37BB51C981B6D006E0626 /* DistanceUtilities.m in Sources */,
 				6EE37BB81C981C37006E0626 /* KmeanCalculation.m in Sources */,
 				6EB1D0391CEA2D8B006B6940 /* UIRecordingButton.m in Sources */,
@@ -1459,6 +1545,7 @@
 				0D95DFDC1D0599DD0007F35E /* TrainingDAO.m in Sources */,
 				7AE75D861D05B4AB0094A93E /* TrainingDO.m in Sources */,
 				6EB1D0331CEA2D8B006B6940 /* UIBaseView.m in Sources */,
+				6E0EC2C91D11874C00F9C818 /* UIAxis.m in Sources */,
 				7AE75D7E1D05B4AB0094A93E /* CoachDO.m in Sources */,
 				6EB1D0371CEA2D8B006B6940 /* UICaptureSessionOverlayView.m in Sources */,
 				8AB35AA71D0C68E70026503B /* UIAccountCreationPresentationView.m in Sources */,
@@ -1466,6 +1553,7 @@
 				8AB35A9B1D0C68D70026503B /* UICheckbox.m in Sources */,
 				8ACF77851CECAADB00248372 /* VideoProcess.m in Sources */,
 				6EE37B9A1C88D07C006E0626 /* KmeanEntry.m in Sources */,
+				6E0EC2D21D11885500F9C818 /* UICoordinateSystemFactory.m in Sources */,
 				6EB1CFF21CEA2D5E006B6940 /* CaptureSessionController.m in Sources */,
 				6EB1CFC01CEA2CB9006B6940 /* RecordingProcess.m in Sources */,
 				6EB1D03A1CEA2D8B006B6940 /* UIRecordingDurationLabelView.m in Sources */,
