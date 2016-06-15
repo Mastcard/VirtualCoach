@@ -16,7 +16,6 @@
     
     if (self)
     {
-        self.backgroundColor = [UIColor whiteColor];
         
         _titleLabel = [[UILabel alloc] initWithFrame:CGRectMake(0, 200, 200, 50)];
         [_titleLabel setText:@"VirtualCoach"];

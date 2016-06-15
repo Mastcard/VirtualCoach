@@ -8,13 +8,14 @@
 
 #include "charact_ext.h"
 
-int32_t overlappingreg(regchar_t *ref, labels_t *reflabels, labels_t *labels, uint16_t width)
+int32_t overlappingreg(regchar_t *ref, labels_t *reflabels, labels_t *labels)
 {
     uint32_t *count = (uint32_t *)calloc(labels->count, sizeof(uint32_t));
     
     uint32_t id = ref->id;
     pt2d_t start = ref->bounds.start, end = ref->bounds.end;
     
+    uint16_t width = labels->width;
     uint32_t i = 0, j = 0, k = 0;
     
     for (i = start.y; i <= end.y; i++)
@@ -102,4 +103,30 @@ int32_t regionAtZone(rect_t rect, labels_t *labels)
     free(count);
     
     return bestRegAcc == 0 ? -1 : (bestReg + 1);
+}
+
+int32_t commonPixels(regchar_t *ref, labels_t *reflabels, regchar_t *reg, labels_t *labels)
+{
+    uint32_t refid = ref->id, regid = reg->id;
+    pt2d_t start = ref->bounds.start, end = ref->bounds.end;
+    
+    uint16_t width = labels->width;
+    uint32_t i = 0, j = 0, pixcount = 0;
+    
+    for (i = start.y; i <= end.y; i++)
+    {
+        for (j = start.x; j <= end.x; j++)
+        {
+            uint32_t idx = (uint32_t)PXL_IDX(width, j, i);
+            uint32_t reflabel = reflabels->data[idx];
+            uint32_t label = labels->data[idx];
+            
+            //printf("reflabel : %d, label %d (%d, %d)\n", reflabel, label, j, i);
+            
+            if ((reflabel == refid) && (label == regid))
+                pixcount++;
+        }
+    }
+    
+    return pixcount;
 }

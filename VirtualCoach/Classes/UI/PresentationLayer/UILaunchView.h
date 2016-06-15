@@ -9,7 +9,6 @@
 #import "UIBaseView.h"
 #import "UIBaseButton.h"
 
-
 @interface UILaunchView : UIBaseView
 
 @property (nonatomic) UILabel *titleLabel;

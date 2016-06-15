@@ -12,11 +12,17 @@
 #import "UIBaseViewController.h"
 #import "HybridCaptureSessionController.h"
 #import "UIApplicationNavigationViewController.h"
+#import "TrackingProcessDelegate.h"
+#import "ReferenceFrameProcess.h"
+#import "ReferenceFrameProcessDelegate.h"
+#import "CaptureProcessManager.h"
 
-@interface UICaptureSessionViewController : UIBaseViewController <UIGestureRecognizerDelegate>
+@interface UICaptureSessionViewController : UIBaseViewController <UIGestureRecognizerDelegate, ReferenceFrameProcessDelegate>
 
 @property (nonatomic, strong) CaptureSessionController *captureSessionController;
 @property (nonatomic, strong) UICaptureSessionView *captureSessionView;
+
+@property (nonatomic, weak) id <TrackingProcessDelegate> delegate;
 
 //temp
 @property (nonatomic, strong) NSURL *videoDirectory;

@@ -56,7 +56,9 @@
     
     NSLog(@"ReferenceFrameProcess finished : reference built!");
     
-    [[NSNotificationCenter defaultCenter] postNotificationName:@"referenceframe.action.internal.finished" object:self userInfo:nil];
+    [_delegate didFinishReferenceFrameProcess];
+    
+    //[[NSNotificationCenter defaultCenter] postNotificationName:@"referenceframe.action.internal.finished" object:self userInfo:nil];
 }
 
 - (gray8i_t *)retrieveReferenceFrame
@@ -99,6 +101,11 @@
     if (_result != NULL)
         gray8ifree(_result);
     
+    if (_acc != NULL)
+        free(_acc);
+    
+    //memset(_acc, 0, N * sizeof(*_acc));
+    
     _result = NULL;
     _width = 0;
     _height = 0;
@@ -124,7 +131,7 @@
         uint8_t *myPixelBuf = malloc(bufferSize);
         memmove(myPixelBuf, tempAddress, bufferSize);
         
-        rgb8i_t *rgb = rgb8iallocwd_bgra(_width, _height, myPixelBuf);
+        rgb8i_t *rgb = rgb8iallocwd_bgra(width, height, myPixelBuf);
         free(myPixelBuf);
         
         if (_count < _maxAccumulatedFrames)
