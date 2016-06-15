@@ -19,7 +19,8 @@
 #import "arithmetic.h"
 #import <AVFoundation/AVFoundation.h>
 
-#define REFERENCE_IMAGE_PATH "/Users/bizoro/Documents/master2/Projet_Synthese/sequence_coup_droit/2016-05-11_20.50.14-reference.pgm"
+//#define REFERENCE_IMAGE_PATH "/Volumes/ZORO 1/VideoTest/2016-06-06_19.33.09-reference.pgm"
+//#define REFERENCE_IMAGE_PATH "/Users/bizoro/Documents/master2/Projet_Synthese/VideoTest/eloise_first-reference.pgm"
 
 #include <dirent.h>
 #include <stdio.h>
@@ -678,11 +679,11 @@ int main(int argc, char * argv[]) {
     NSLog(@"%d %f", [((Cluster *)[kmeanCalculation.clusters objectAtIndex:1]) center].time, [((Cluster *)[kmeanCalculation.clusters objectAtIndex:1]) center].meanAcceleration );
     */
     
-    /*
-    // ################## Soustraction image de référence ########################
     
+    // ################## Soustraction image de référence ########################
+    /*
     gray8i_t *referenceImage = pgmopen(REFERENCE_IMAGE_PATH);
-    NSString *sourcePathExtract = @"/Users/bizoro/Documents/master2/Projet_Synthese/sequence_coup_droit_eloise";
+    NSString *sourcePathExtract = @"/Volumes/ZORO 1/VideoTest/extract_eloise_first/";
     NSArray* dirsExtract = [[NSFileManager defaultManager] contentsOfDirectoryAtPath:sourcePathExtract
                                                                         error:NULL];
     NSMutableArray *ppmFilesExtract = [[NSMutableArray alloc] init];
@@ -698,14 +699,204 @@ int main(int argc, char * argv[]) {
         gray8i_t *src_gray = grayscale(src);
         gray8i_t *pre_isubstract = subgray8i(src_gray, referenceImage);
         char *filename = (char *)malloc(sizeof(char) * 1200);
-        sprintf(filename, "/Users/bizoro/Documents/master2/Projet_Synthese/sub_sequence_coup_droit_eloise/out-%010d-subRef.pgm", z);
+        sprintf(filename, "/Volumes/ZORO 1/VideoTest/extract_eloise_first_substract/out-%010d-subRef.pgm", z);
         pgmwrite(pre_isubstract, filename, PGM_ASCII);
+        
+        rgb8ifree(src);
+        gray8ifree(src_gray);
+        gray8ifree(pre_isubstract);
+    }
+    gray8ifree(referenceImage);
+    */
+    
+    /*
+    // ########### Process motions of one video ###############
+    NSLog(@"WTF");
+    NSString *path = @"/Volumes/ZORO 1/VideoTest/param_2016-06-06_19.19.40.txt";
+    
+    NSString *sourcePath = @"/Volumes/ZORO 1/VideoTest/extract_2016-06-06_19.19.40_subtract";
+    NSArray* dirs = [[NSFileManager defaultManager] contentsOfDirectoryAtPath:sourcePath
+                                                                        error:NULL];
+    NSMutableArray *pgmFiles = [[NSMutableArray alloc] init];
+    [dirs enumerateObjectsUsingBlock:^(id obj, NSUInteger idx, BOOL *stop) {
+        NSString *filename = (NSString *)obj;
+        NSString *extension = [[filename pathExtension] lowercaseString];
+        if ([extension isEqualToString:@"pgm"]) {
+            [pgmFiles addObject:[sourcePath stringByAppendingPathComponent:filename]];
+        }
+    }];
+    
+    int motion=1;
+    NSError *error = nil;
+    NSString *parameters = [[NSString alloc] initWithContentsOfFile:path
+                                                      encoding:NSUTF8StringEncoding error:&error];
+    for (NSString *lineParameters in [parameters componentsSeparatedByCharactersInSet:[NSCharacterSet newlineCharacterSet]]) {
+        
+        int beginSequenceImage, endSequenceImage;
+        uint32_t startX, stratY, endX, endY;
+        NSArray * parametersOfOneLines = [lineParameters componentsSeparatedByString:@":"];
+        beginSequenceImage = [[parametersOfOneLines objectAtIndex:0] intValue];
+        endSequenceImage = [[parametersOfOneLines objectAtIndex:1] intValue];
+        startX = [[parametersOfOneLines objectAtIndex:2] intValue];
+        stratY = [[parametersOfOneLines objectAtIndex:3] intValue];
+        endX = [[parametersOfOneLines objectAtIndex:4] intValue];
+        endY = [[parametersOfOneLines objectAtIndex:5] intValue];
+        
+        NSLog(@"countFiles: %lu motion: %d", (unsigned long)pgmFiles.count,motion);
+        
+        Histogram * angleHistogram = [[Histogram alloc] init];
+        KmeanEntryDataSet * datasetEntry = [[KmeanEntryDataSet alloc] init];
+        rect_t interval;
+        interval.start.x = startX;
+        interval.start.y = stratY;
+        interval.end.x = endX;
+        interval.end.y = endY;
+        
+        uint8_t threshold = 44;
+        
+        for(int i=beginSequenceImage; i<endSequenceImage; i++){
+            
+            gray8i_t * img1Gray;
+            gray8i_t * img2Gray;
+            gray8i_t * img3Gray;
+            
+            gray8i_t * img1GrayNew;
+            gray8i_t * img2GrayNew;
+            gray8i_t * img3GrayNew;
+            
+            if(i < endSequenceImage-2){
+                
+                img1Gray = pgmopen([[pgmFiles objectAtIndex:i] UTF8String]);
+                img2Gray = pgmopen([[pgmFiles objectAtIndex:i+1] UTF8String]);
+                img3Gray = pgmopen([[pgmFiles objectAtIndex:i+2] UTF8String]);
+                
+                int allah = 0;
+                
+                img1GrayNew = gray8ialloc(img1Gray->width, img1Gray->height);
+                img2GrayNew = gray8ialloc(img1Gray->width, img1Gray->height);
+                img3GrayNew = gray8ialloc(img1Gray->width, img1Gray->height);
+                
+                for (allah = 0; allah < img1Gray->width * img1Gray->height; allah++)
+                {
+                    img1GrayNew->data[allah] = (img1Gray->data[allah] > threshold) * img1Gray->data[allah];
+                    img2GrayNew->data[allah] = (img2Gray->data[allah] > threshold) * img2Gray->data[allah];
+                    img3GrayNew->data[allah] = (img3Gray->data[allah] > threshold) * img3Gray->data[allah];
+                }
+                
+                //char *filename1 = (char *)malloc(sizeof(char) * 1200);
+                //sprintf(filename1, "/Volumes/ZORO 1/VideoTest/clean_sequence_motions_eloise_first/out-%010d-binary.pgm", i);
+                //char *filename2 = (char *)malloc(sizeof(char) * 1200);
+                //sprintf(filename2, "/Volumes/ZORO 1/VideoTest/clean_sequence_motions_eloise_first/out-%010d-binary.pgm", i+1);
+                //char *filename3 = (char *)malloc(sizeof(char) * 1200);
+                //sprintf(filename3, "/Volumes/ZORO 1/VideoTest/clean_sequence_motions_eloise_first/out-%010d-binary.pgm", i+2);
+                
+                //pgmwrite(img1GrayNew, filename1, PGM_BINARY);
+                //pgmwrite(img2GrayNew, filename2, PGM_BINARY);
+                //pgmwrite(img3GrayNew, filename3, PGM_BINARY);
+                
+                vect2darray_t * v1 = opticalflow(img1GrayNew, img2GrayNew);
+                vect2darray_t * v2 = opticalflow(img2GrayNew, img3GrayNew);
+                
+                //            vect2darray_t * v1 = opticalflow(img1Gray, img2Gray);
+                //            vect2darray_t * v2 = opticalflow(img2Gray, img3Gray);
+                
+                //[angleHistogram generateHistogramFromSpeedVector:v1 betweenInterval:interval andWithImageWidth:img2Gray->width];
+                //[datasetEntry addKmeanEntryToDataSetFromFirstSpeedVectorsTab:v1 andSecondSpeedVectorsTab:v2 betweenInterval:interval andWithImageWidth:img2Gray->width];
+                [angleHistogram generateHistogramFromSpeedVector:v1 betweenInterval:interval andWithImageWidth:img2GrayNew->width];
+                [datasetEntry addKmeanEntryToDataSetFromFirstSpeedVectorsTab:v1 andSecondSpeedVectorsTab:v2 betweenInterval:interval andWithImageWidth:img2GrayNew->width];
+                
+                vect2darrfree(v1);
+                vect2darrfree(v2);
+                gray8ifree(img1Gray);
+                gray8ifree(img2Gray);
+                gray8ifree(img3Gray);
+                
+                gray8ifree(img1GrayNew);
+                gray8ifree(img2GrayNew);
+                gray8ifree(img3GrayNew);
+                
+            }else if(i < endSequenceImage-1){
+                img1Gray = pgmopen([[pgmFiles objectAtIndex:i] UTF8String]);
+                img2Gray = pgmopen([[pgmFiles objectAtIndex:i+1] UTF8String]);
+                
+                int allah = 0;
+                
+                img1GrayNew = gray8ialloc(img1Gray->width, img1Gray->height);
+                img2GrayNew = gray8ialloc(img1Gray->width, img1Gray->height);
+                
+                for (allah = 0; allah < img1Gray->width * img1Gray->height; allah++)
+                {
+                    img1GrayNew->data[allah] = (img1Gray->data[allah] > threshold) * img1Gray->data[allah];
+                    img2GrayNew->data[allah] = (img2Gray->data[allah] > threshold) * img2Gray->data[allah];
+                    
+                }
+                
+                //char *filename1 = (char *)malloc(sizeof(char) * 1200);
+                //sprintf(filename1, "/Volumes/ZORO 1/VideoTest/clean_sequence_motions_eloise_first/out-%010d-binary.pgm", i);
+                //char *filename2 = (char *)malloc(sizeof(char) * 1200);
+                //sprintf(filename2, "/Volumes/ZORO 1/VideoTest/clean_sequence_motions_eloise_first/out-%010d-binary.pgm", i+1);
+                
+                //pgmwrite(img1GrayNew, filename1, PGM_BINARY);
+                //pgmwrite(img2GrayNew, filename2, PGM_BINARY);
+                //vect2darray_t * v1 = opticalflow(img1Gray, img2Gray);
+                vect2darray_t * v1 = opticalflow(img1GrayNew, img2GrayNew);
+                //[angleHistogram generateHistogramFromSpeedVector:v1 betweenInterval:interval andWithImageWidth:img2Gray->width];
+                [angleHistogram generateHistogramFromSpeedVector:v1 betweenInterval:interval andWithImageWidth:img2GrayNew->width];
+                vect2darrfree(v1);
+                gray8ifree(img1Gray);
+                gray8ifree(img2Gray);
+                gray8ifree(img1GrayNew);
+                gray8ifree(img2GrayNew);
+                
+            }
+
+            
+        }
+        NSLog(@"end optical flow");
+        NSString * filePathKmeanEntryDatasetPlist = [[NSString alloc] initWithFormat:@"Users/bizoro/Documents/master2/Projet_Synthese/VideoTest/results/2016-06-06_19.19.40/KmeanEntryDataSetMotion%d_2016-06-06_191940_15062016_seuil000005.plist",motion];
+        
+        NSString * filePathKmeanEntryDatasetTxt = [[NSString alloc] initWithFormat:@"Users/bizoro/Documents/master2/Projet_Synthese/VideoTest/results/2016-06-06_19.19.40/KmeanEntryDataSetMotion%d_2016-06-06_191940_15062016_seuil000005.txt",motion];
+        
+        NSString * fileHistogramTxt = [[NSString alloc] initWithFormat:@"Users/bizoro/Documents/master2/Projet_Synthese/VideoTest/results/2016-06-06_19.19.40/HistogramMotion%d_2016-06-06_191940_15062016_seuil000005.txt",motion];
+
+        motion++;
+        [datasetEntry writeKmeanDatasetAtPath:filePathKmeanEntryDatasetPlist];
+        
+        [datasetEntry writeKmeanDatasetForTestAtPath:filePathKmeanEntryDatasetTxt];
+        [angleHistogram writeHistogramForTestAtPath:fileHistogramTxt];
+        
+        NSString * angleMax = [MotionDeduction recognizeTennisMotionWithHistogram:angleHistogram andLeftHanded:false];
+        //NSString * angleMax = [MotionDeduction recognizeTennisMotionWithFilterHistogram:angleHistogram andLeftHanded:false];
+        
+        NSLog(@"déduction: %@", angleMax);
+        
+        // begin kmean
+        
+        KmeanCalculation * kmeanCalculation = [[KmeanCalculation alloc]initKmeanCalculationWithPathOfDataEntries:filePathKmeanEntryDatasetPlist andClusterCount:3];
+        [kmeanCalculation kmeanProcessWithMaxIteration:60];
+        
+        NSLog(@"%d %d %d", [[kmeanCalculation.clusters objectAtIndex:0] countMember] , [[kmeanCalculation.clusters objectAtIndex:1] countMember] , [[kmeanCalculation.clusters objectAtIndex:2] countMember]);
+        
+        //NSLog(@"%d %d", [[kmeanCalculation.clusters objectAtIndex:0] countMember] , [[kmeanCalculation.clusters objectAtIndex:1] countMember]);
+        
+        //NSLog(@"%d %d %d %d", [[kmeanCalculation.clusters objectAtIndex:0] countMember] , [[kmeanCalculation.clusters objectAtIndex:1] countMember] , [[kmeanCalculation.clusters objectAtIndex:2] countMember], [[kmeanCalculation.clusters objectAtIndex:3] countMember]);
+        
+        NSLog(@"%d %f", [((Cluster *)[kmeanCalculation.clusters objectAtIndex:0]) center].time, [((Cluster *)[kmeanCalculation.clusters objectAtIndex:0]) center].meanAcceleration );
+        
+        NSLog(@"%d %f", [((Cluster *)[kmeanCalculation.clusters objectAtIndex:1]) center].time, [((Cluster *)[kmeanCalculation.clusters objectAtIndex:1]) center].meanAcceleration );
+        
+        NSLog(@"%d %f", [((Cluster *)[kmeanCalculation.clusters objectAtIndex:2]) center].time, [((Cluster *)[kmeanCalculation.clusters objectAtIndex:2]) center].meanAcceleration );
+        
+        //NSLog(@"%d %f", [((Cluster *)[kmeanCalculation.clusters objectAtIndex:3]) center].time, [((Cluster *)[kmeanCalculation.clusters objectAtIndex:3]) center].meanAcceleration );
+        
+        // End kmean
+        
     }
     */
     /*
-    // ########### Coup droit éloïse 1 ###############
+    // ########### Coup droit eloïse 1 ###############
     
-    NSString *sourcePath = @"/Users/bizoro/Documents/master2/Projet_Synthese/sub_sequence_coup_droit_eloise";
+    NSString *sourcePath = @"/Users/bizoro/Documents/master2/Projet_Synthese/VideoTest/extract_2016-05-27_17.34.41_substract";
     NSArray* dirs = [[NSFileManager defaultManager] contentsOfDirectoryAtPath:sourcePath
                                                                         error:NULL];
     NSMutableArray *pgmFiles = [[NSMutableArray alloc] init];
@@ -722,14 +913,14 @@ int main(int argc, char * argv[]) {
     Histogram * angleHistogram = [[Histogram alloc] init];
     KmeanEntryDataSet * datasetEntry = [[KmeanEntryDataSet alloc] init];
     rect_t interval;
-    interval.start.x = 378;
-    interval.start.y = 255;
-    interval.end.x = 537;
-    interval.end.y = 369;
+    interval.start.x = 675;
+    interval.start.y = 367;
+    interval.end.x = 829;
+    interval.end.y = 486;
     
     uint8_t threshold = 25;
     
-    for(int i=75; i<125; i++){
+    for(int i=340; i<370; i++){
         
         gray8i_t * img1Gray;
         gray8i_t * img2Gray;
@@ -739,7 +930,7 @@ int main(int argc, char * argv[]) {
         gray8i_t * img2GrayNew;
         gray8i_t * img3GrayNew;
         
-        if(i < pgmFiles.count-2){
+        if(i < 370-2){
            
             img1Gray = pgmopen([[pgmFiles objectAtIndex:i] UTF8String]);
             img2Gray = pgmopen([[pgmFiles objectAtIndex:i+1] UTF8String]);
@@ -759,11 +950,11 @@ int main(int argc, char * argv[]) {
             }
             
             char *filename1 = (char *)malloc(sizeof(char) * 1200);
-            sprintf(filename1, "/Users/bizoro/Documents/master2/Projet_Synthese/exportTest/out-%010d-binary.pgm", i);
+            sprintf(filename1, "/Users/bizoro/Documents/master2/Projet_Synthese/VideoTest/clean_sequence_motion1_2016-05-27_17.34.41/out-%010d-binary.pgm", i);
             char *filename2 = (char *)malloc(sizeof(char) * 1200);
-            sprintf(filename2, "/Users/bizoro/Documents/master2/Projet_Synthese/exportTest/out-%010d-binary.pgm", i+1);
+            sprintf(filename2, "/Users/bizoro/Documents/master2/Projet_Synthese/VideoTest/clean_sequence_motion1_2016-05-27_17.34.41/out-%010d-binary.pgm", i+1);
             char *filename3 = (char *)malloc(sizeof(char) * 1200);
-            sprintf(filename3, "/Users/bizoro/Documents/master2/Projet_Synthese/exportTest/out-%010d-binary.pgm", i+2);
+            sprintf(filename3, "/Users/bizoro/Documents/master2/Projet_Synthese/VideoTest/clean_sequence_motion1_2016-05-27_17.34.41/out-%010d-binary.pgm", i+2);
             
             pgmwrite(img1GrayNew, filename1, PGM_BINARY);
             pgmwrite(img2GrayNew, filename2, PGM_BINARY);
@@ -788,10 +979,8 @@ int main(int argc, char * argv[]) {
             [angleHistogram generateHistogramFromSpeedVector:v1 betweenInterval:interval andWithImageWidth:img2GrayNew->width];
             [datasetEntry addKmeanEntryToDataSetFromFirstSpeedVectorsTab:v1 andSecondSpeedVectorsTab:v2 betweenInterval:interval andWithImageWidth:img2GrayNew->width];
             
-            free(v1->data);
-            free(v1);
-            free(v2->data);
-            free(v2);
+            vect2darrfree(v1);
+            vect2darrfree(v2);
             gray8ifree(img1Gray);
             gray8ifree(img2Gray);
             gray8ifree(img3Gray);
@@ -800,7 +989,7 @@ int main(int argc, char * argv[]) {
             gray8ifree(img2GrayNew);
             gray8ifree(img3GrayNew);
             
-        }else if(i < pgmFiles.count-1){
+        }else if(i < 370-1){
             img1Gray = pgmopen([[pgmFiles objectAtIndex:i] UTF8String]);
             img2Gray = pgmopen([[pgmFiles objectAtIndex:i+1] UTF8String]);
             
@@ -817,9 +1006,9 @@ int main(int argc, char * argv[]) {
             }
             
             char *filename1 = (char *)malloc(sizeof(char) * 1200);
-            sprintf(filename1, "/Users/bizoro/Documents/master2/Projet_Synthese/exportTest/out-%010d-binary.pgm", i);
+            sprintf(filename1, "/Users/bizoro/Documents/master2/Projet_Synthese/VideoTest/clean_sequence_motion1_2016-05-27_17.34.41/out-%010d-binary.pgm", i);
             char *filename2 = (char *)malloc(sizeof(char) * 1200);
-            sprintf(filename2, "/Users/bizoro/Documents/master2/Projet_Synthese/exportTest/out-%010d-binary.pgm", i+1);
+            sprintf(filename2, "/Users/bizoro/Documents/master2/Projet_Synthese/VideoTest/clean_sequence_motion1_2016-05-27_17.34.41/out-%010d-binary.pgm", i+1);
             
             pgmwrite(img1GrayNew, filename1, PGM_BINARY);
             pgmwrite(img2GrayNew, filename2, PGM_BINARY);
@@ -827,8 +1016,7 @@ int main(int argc, char * argv[]) {
             vect2darray_t * v1 = opticalflow(img1GrayNew, img2GrayNew);
             //[angleHistogram generateHistogramFromSpeedVector:v1 betweenInterval:interval andWithImageWidth:img2Gray->width];
             [angleHistogram generateHistogramFromSpeedVector:v1 betweenInterval:interval andWithImageWidth:img2GrayNew->width];
-            free(v1->data);
-            free(v1);
+            vect2darrfree(v1);
             gray8ifree(img1Gray);
             gray8ifree(img2Gray);
             gray8ifree(img1GrayNew);
@@ -838,13 +1026,11 @@ int main(int argc, char * argv[]) {
             //NSLog(@"########################################################");
         }
         
-       
-        
     }
     
-    NSString * filePathKmeanEntryDatasetPlist = @"/Users/bizoro/Documents/master2/Projet_Synthese/VirtualCoach/MainTestCoupDroitEloise/KmeanEntryDataSetMainTestCoupDroit1_24052016.plist";
-    NSString * filePathKmeanEntryDatasetTxt = @"/Users/bizoro/Documents/master2/Projet_Synthese/VirtualCoach/MainTestCoupDroitEloise/KmeanEntryDataSetMainTestCoupDroit1_24052016.txt";
-    NSString * fileHistogramTxt = @"/Users/bizoro/Documents/master2/Projet_Synthese/VirtualCoach/MainTestCoupDroitEloise/HistogramTestCoupDroit1_24052016.txt";
+    NSString * filePathKmeanEntryDatasetPlist = @"/Users/bizoro/Documents/master2/Projet_Synthese/VideoTest/results/KmeanEntryDataSetMotion1_2016-05-27_17.34.41_29052016.plist";
+    NSString * filePathKmeanEntryDatasetTxt = @"/Users/bizoro/Documents/master2/Projet_Synthese/VideoTest/results/KmeanEntryDataSetMotion1_2016-05-27_17.34.41_24052016.txt";
+    NSString * fileHistogramTxt = @"/Users/bizoro/Documents/master2/Projet_Synthese/VideoTest/results/HistogramMotion1_2016-05-27_17.34.41_24052016.txt";
     [datasetEntry writeKmeanDatasetAtPath:filePathKmeanEntryDatasetPlist];
     
     [datasetEntry writeKmeanDatasetForTestAtPath:filePathKmeanEntryDatasetTxt];
@@ -871,8 +1057,8 @@ int main(int argc, char * argv[]) {
     
     // End kmean
     
-    //NSString * angleMax = [MotionDeduction recognizeTennisMotionWithHistogram:angleHistogram andLeftHanded:false];
-    NSString * angleMax = [MotionDeduction recognizeTennisMotionWithFilterHistogram:angleHistogram andLeftHanded:false];
+    NSString * angleMax = [MotionDeduction recognizeTennisMotionWithHistogram:angleHistogram andLeftHanded:false];
+    //NSString * angleMax = [MotionDeduction recognizeTennisMotionWithFilterHistogram:angleHistogram andLeftHanded:false];
     
     NSLog(@"déduction: %@", angleMax);
     */
