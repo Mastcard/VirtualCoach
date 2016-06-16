@@ -13,6 +13,6 @@
 @protocol ExtractorVideoDataOutputDelegate <NSObject>
 
 - (void)didOutputSampleBuffer:(CMSampleBufferRef)sampleBuffer;
-- (NSUInteger)sampleCount;
+- (void)didEstimateFrameCount:(Float64)frameCount;
 
 @end

@@ -170,7 +170,6 @@
             
             if (_canTrackRegion)
             {
-                //int32_t bestRegId = [TrackingService trackRegion:previousReg byOverlapping:previousLabels withReferenceLabels:nextLabels];
                 int32_t bestRegId = overlappingreg(_previousReg, _previousLabels, nextLabels);
                 
                 //NSLog(@"bestRegId : %d", bestRegId);
@@ -179,23 +178,23 @@
                 {
                     regchar_t *bestReg = charact->data[bestRegId-1];
                     
-                    vect2d_t gravvect;
-                    gravvect.x = (double)bestReg->gravity.x - (double)_previousReg->gravity.x;
-                    gravvect.y = (double)bestReg->gravity.y - (double)_previousReg->gravity.y;
+//                    vect2d_t gravvect;
+//                    gravvect.x = (double)bestReg->gravity.x - (double)_previousReg->gravity.x;
+//                    gravvect.y = (double)bestReg->gravity.y - (double)_previousReg->gravity.y;
                     
                     //printf("gravvect.x : %f, gravvect.y : %f\n", gravvect.x, gravvect.y);
                     
-                    float gravityCenterSpeed = gravCenterSpeed(gravvect, _previousGravityCenterSpeed, ALPHA, BETA);
+//                    float gravityCenterSpeed = gravCenterSpeed(gravvect, _previousGravityCenterSpeed, ALPHA, BETA);
                     
                     //printf("gravityCenterSpeed : %f\n", gravityCenterSpeed);
                     
-                    _previousGravityCenterSpeed = gravityCenterSpeed;
+//                    _previousGravityCenterSpeed = gravityCenterSpeed;
                     
-                    unsigned int reg_bounds_x_diff = bestReg->bounds.end.x - bestReg->bounds.start.x;
-                    float grav_speed_threshold = 0.025 * reg_bounds_x_diff; //0.024593
+//                    unsigned int reg_bounds_x_diff = bestReg->bounds.end.x - bestReg->bounds.start.x;
+//                    float grav_speed_threshold = 0.025 * reg_bounds_x_diff; //0.024593
                     //printf("gravityCenterSpeed %f < grav_speed_threshold %f\n", gravityCenterSpeed, grav_speed_threshold);
                     
-                    [_delegate didDetectObjectMotion:gravityCenterSpeed < grav_speed_threshold ? NO : YES];
+                    //[_delegate didDetectObjectMotion:gravityCenterSpeed < grav_speed_threshold ? NO : YES];
                     
                     _playerBounds.start.x = bestReg->bounds.start.x;
                     _playerBounds.start.y = bestReg->bounds.start.y;
