@@ -18,7 +18,6 @@
 -(int)searchIdByLogin:(NSString *) login password:(NSString *) pass;
 //DELETE
 -(id)deleteCoachById:(NSString *) idCoach;
-//UPDATE
 
 
 @end

@@ -7,7 +7,14 @@
 //
 
 #import <Foundation/Foundation.h>
+#import "MovementDAO.h"
+#import "MovementDO.h"
 
 @interface MovementDataEngine : NSObject
+
+@property (nonatomic) MovementDAO *movementDAO;
+
+//INSERT
+-(id)insertMovment:(MovementDO*)movementDO;
 
 @end

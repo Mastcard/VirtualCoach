@@ -10,4 +10,10 @@
 
 @implementation MovementDataEngine
 
+//INSERT
+/*-(id)insertMovment:(MovementDO*)movementDO
+{
+    return [_movementDAO insertIntoMovement:movementDO.type winner:movementDO.winning losing:movementDO.loosing success_rate:movementDO.successRate id_video:nil];
+}*/
+
 @end
