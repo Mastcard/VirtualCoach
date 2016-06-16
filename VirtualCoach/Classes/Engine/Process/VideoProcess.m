@@ -12,8 +12,7 @@
 
 @property (nonatomic, strong) NSDictionary *videoInfo;
 
-@property (nonatomic, strong) ExtractorVideoDataOutputProcess *extractorProcess;
-@property (nonatomic, strong) TrackingAnalysisProcess *trackingAnalysisProcess;
+@property (nonatomic) float globalProcessProgress;
 
 @end
 
@@ -26,6 +25,13 @@
     if (self)
     {
         _videoInfo = videoInfo;
+        
+        _scale = 0.5;
+        _skippedFrameCount = 200;
+        _samplingCount = 10;
+        _overlappingRate = 0.6;
+        _shouldDeleteIrrelevantSequences = NO;
+        _globalProcessProgress = 0.f;
     }
     
     return self;
@@ -36,130 +42,102 @@
     NSString *videoPath = [_videoInfo objectForKey:@"videoPath"];
     _extractorProcess = [[ExtractorVideoDataOutputProcess alloc] initWithFile:videoPath];
     _trackingAnalysisProcess = [[TrackingAnalysisProcess alloc] initWithDictionary:_videoInfo];
-    _trackingAnalysisProcess.scale = 0.5;
+    _trackingAnalysisProcess.scale = _scale;
+    _trackingAnalysisProcess.skippedFrameCount = _skippedFrameCount;
+    _trackingAnalysisProcess.motionImageFactor = _samplingCount;
+    _trackingAnalysisProcess.overlappingRate = _overlappingRate;
+
     [_extractorProcess setDelegate:_trackingAnalysisProcess];
+    [_trackingAnalysisProcess setDelegate:self];
     
-    
-    
-    [_trackingAnalysisProcess setup];
     [_extractorProcess setup];
-    
+    [_trackingAnalysisProcess setup];
 }
 
 - (void)start
 {
+    // Starting tracking tracking analysis process
+    
+    [_delegate didUpdateStatusWithProgress:0.f message:@"Tracking player.."];
     [_extractorProcess start];
     
-    int *data = [_trackingAnalysisProcess retreiveRelevantImageSequences];
+    NSDictionary *motionData = [_trackingAnalysisProcess motionData];
+    
+    NSArray *objectsMotion = (NSArray *)[motionData objectForKey:@"objectsMotion"];
+    
+    [_delegate didUpdateStatusWithProgress:0 message:@"Building relevant sequences.."];
+    
+    // build relevant sequences
+    
+    TrackingRelevantSequencesBuilder *relevantSequencesBuilder = [[TrackingRelevantSequencesBuilder alloc] initWithPartialMotionArray:objectsMotion motionImageFactor:_samplingCount];
+    [relevantSequencesBuilder buildRelevantSequences];
+    
+    [_delegate didUpdateStatusWithProgress:0.25 message:@"Removing irrelevant sequences.."];
+    
+    NSMutableArray *finalObjectsMotion = [relevantSequencesBuilder retreiveRelevantSequences];
+    
+    NSArray *objectsPosition = (NSArray *)[motionData objectForKey:@"objectsPosition"];
+    
+    if (_shouldDeleteIrrelevantSequences)
+    {
+        TrackingIrrelevantSequencesRemover *irrelevantSequencesRemover = [[TrackingIrrelevantSequencesRemover alloc] initWithMotionArray:finalObjectsMotion objectsPosition:objectsPosition];
+        [irrelevantSequencesRemover removeIrrelevantSequences];
+    }
+    
+    //     choose relevant images (according to sequences) DEBUG : we take all but in the final process, we should only take the frames where the player doesn't move
+    
+    NSMutableArray *relevantSequencesInformations = [NSMutableArray array];
+    
+    for (NSUInteger i = 1; i < finalObjectsMotion.count; i++)
+    {
+        NSNumber *motionInfo = (NSNumber *)[finalObjectsMotion objectAtIndex:i];
+        
+        TrackingObjectPosition *objPos = (TrackingObjectPosition *)[objectsPosition objectAtIndex:i];
+        
+        pt2d_t start = objPos.bounds.start, end = objPos.bounds.end;
+        uint32_t tmp = start.x + start.y + end.x + end.y;
+        
+        if (tmp != 0) // we only take the images when the object was tracked (where the bounds are real motherfucker)
+        {
+            NSArray *imageInformationKeys = [NSArray arrayWithObjects:@"imageId", @"start.x", @"start.y", @"end.x", @"end.y", @"moves", nil];
+            
+            NSArray *imageInformationObjects = [NSArray arrayWithObjects:[NSNumber numberWithUnsignedInt:(unsigned int)objPos.imageId], [NSNumber numberWithUnsignedInt:objPos.bounds.start.x], [NSNumber numberWithUnsignedInt:objPos.bounds.start.y], [NSNumber numberWithUnsignedInt:objPos.bounds.end.x], [NSNumber numberWithUnsignedInt:objPos.bounds.end.y], [NSNumber numberWithInt:motionInfo.intValue], nil];
+            
+            NSDictionary *imageInformation = [NSDictionary dictionaryWithObjects:imageInformationObjects forKeys:imageInformationKeys];
+            
+            [relevantSequencesInformations addObject:imageInformation];
+        }
+    }
+    
+    // initializing data analysis process where optical flow and analysis will be called
+    
+    _dataAnalysisProcess = [[DataAnalysisProcess alloc] initWithDictionary:_videoInfo relevantSequences:relevantSequencesInformations];
+    _dataAnalysisProcess.scale = _scale;
+    _dataAnalysisProcess.skippedFrameCount = _skippedFrameCount;
+    
+    NSString *videoPath = [_videoInfo objectForKey:@"videoPath"];
+    _extractorProcess = [[ExtractorVideoDataOutputProcess alloc] initWithFile:videoPath];
+    [_extractorProcess setDelegate:_dataAnalysisProcess];
+    [_dataAnalysisProcess setDelegate:self];
+    
+    [_extractorProcess setup];
+    [_dataAnalysisProcess setup];
+    
+    [_delegate didUpdateStatusWithProgress:0.25 message:@"Analyzing motions.."];
+    
+    [_extractorProcess start];
+    
+    [_delegate didUpdateStatusWithProgress:0 message:@"Done!"];
+}
+
+- (void)didUpdateStatusWithProgress:(float)progress message:(NSString *)message
+{
+    [_delegate didUpdateStatusWithProgress:progress message:message];
 }
 
 - (void)stop
 {
     
 }
-
-//- (void)trackPlayer
-//{
-//    gray8i_t *src;
-//    
-//    int i = 1;
-//    
-//    NSString *imagePath = [_framesDirectoryPath stringByAppendingPathComponent:[NSString stringWithFormat:@"%d.pgm", i]];
-//    
-//    NSString *imagePathExport = @"";
-//    
-//    src = pgmopen([imagePath cStringUsingEncoding:NSASCIIStringEncoding]);
-//    gray8i_t *pre_isubstract = subgray8i(src, _referenceFrame);
-//    bini_t *pre_binary = binarise(pre_isubstract, _binaryThreshold);
-//    labels_t *pre_labels = label(pre_binary);
-//    int32_t playerRegionId = regionAtZone(_playerBounds, pre_labels);
-//    
-//    gray8ifree(pre_isubstract);
-//    binifree(pre_binary);
-//    gray8ifree(src);
-//    
-//    i++;
-//    
-//    regchar_t *previousReg = regcharalloc(playerRegionId);
-//    previousReg->bounds = _playerBounds;
-//    
-//    labels_t *previousLabels = pre_labels;
-//    
-//    uint16_t width = _referenceFrame->width;
-//    
-//    while ((src = pgmopen([imagePath cStringUsingEncoding:NSASCIIStringEncoding])) != NULL)
-//    {
-//        gray8i_t *isubstract = subgray8i(src, _referenceFrame);
-//        bini_t *binary = binarise(isubstract, _binaryThreshold);
-//        
-//        //bini_t *eroded = distension(binary, 1);
-//        
-//        //        gray8i_t *unbinary = unbinarise(binary);
-//        //        pgmwrite(unbinary, imagePathExport, PGM_BINARY);
-//        //        gray8ifree(unbinary);
-//        
-//        labels_t *nextLabels = label(binary);
-//        
-//        charact_t *ch = characterize(NULL, src, nextLabels);
-//        
-//        printf("i : %d\n", i);
-//        
-//        int32_t bestRegId = overlappingreg(previousReg, previousLabels, nextLabels, width);
-//        
-//        printf("bestRegId : %d\n", bestRegId);
-//        
-//        if ((bestRegId > 0) && (bestRegId <= ch->count))
-//        {
-//            regchar_t *bestReg = ch->data[bestRegId-1];
-//            
-//            gray8i_t *cpy = gray8icpy(src);
-//            
-//            rgb8 c;
-//            
-//            c.r = 255;
-//            c.g = 0;
-//            c.b = 0;
-//            
-//            rect_t bds;
-//            bds.start.y = bestReg->bounds.start.y;
-//            bds.start.x = bestReg->bounds.start.x;
-//            bds.end.y = bestReg->bounds.end.y;
-//            bds.end.x = bestReg->bounds.end.x;
-//            
-//            drawrctgray8i(cpy, bds, 255);
-//            
-//            imagePathExport = [_framesDirectoryPath stringByAppendingPathComponent:[NSString stringWithFormat:@"%d-track.pgm", i]];
-//            
-//            pgmwrite(cpy, [imagePathExport cStringUsingEncoding:NSASCIIStringEncoding], PGM_BINARY);
-//            
-//            gray8ifree(cpy);
-//            
-//            free(previousReg);
-//            previousReg = regcharcpy(bestReg);
-//            labfree(previousLabels);
-//            previousLabels = nextLabels;
-//        }
-//        
-//        else
-//        {
-//            pgmwrite(src, [imagePathExport cStringUsingEncoding:NSASCIIStringEncoding], PGM_BINARY);
-//            labfree(nextLabels);
-//        }
-//        
-//        
-//        gray8ifree(isubstract);
-//        binifree(binary);
-//        //binifree(eroded);
-//        
-//        gray8ifree(src);
-//        charactfree(ch);
-//        
-//        i++;
-//        
-//        imagePath = [_framesDirectoryPath stringByAppendingPathComponent:[NSString stringWithFormat:@"%d.pgm", i]];
-//    }
-//    
-//    puts("Done!");
-//}
 
 @end

@@ -61,7 +61,7 @@
 {
 //    CGColorRef colorRef;
 //    colorRef = moved ? [UIColor redColor].CGColor : [UIColor greenColor].CGColor;
-    [_overlayView.regionBoundsShapeView setStrokeColor:moved ? [UIColor redColor].CGColor : [UIColor greenColor].CGColor];
+//    [_overlayView.regionBoundsShapeView setStrokeColor:moved ? [UIColor redColor].CGColor : [UIColor greenColor].CGColor];
 }
 
 @end

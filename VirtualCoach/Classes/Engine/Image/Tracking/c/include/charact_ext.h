@@ -18,6 +18,6 @@ int32_t largerRegion(charact_t *charact);
 int32_t regionAtPoint(labels_t *labels, pt2d_t p);
 int32_t regionAtZone(rect_t rect, labels_t *labels);
 
-float gravCenterSpeed(vect2d_t gravvect, float previousSpeed, float alpha, float beta);
+int32_t commonPixels(regchar_t *ref, labels_t *reflabels, regchar_t *reg, labels_t *labels);
 
 #endif /* charact_ext_h */

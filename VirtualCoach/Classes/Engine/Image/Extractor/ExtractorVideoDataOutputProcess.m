@@ -15,6 +15,7 @@
 @property (nonatomic, strong) AVURLAsset *url;
 @property (nonatomic, strong) AVAssetReader *reader;
 @property (nonatomic, strong) AVAssetReaderTrackOutput *readerTrackOutput;
+@property (nonatomic) NSUInteger estimatedFrameCount;
 
 @end
 
@@ -36,6 +37,7 @@
     {
         _filePath = filePath;
         _canExtract = NO;
+        _estimatedFrameCount = 0;
         
         NSURL *movieURL = [[NSURL alloc] initFileURLWithPath:filePath];
         
@@ -53,6 +55,10 @@
     if ([videoTracks count] > 0)
     {
         AVAssetTrack *videoTrack = [videoTracks objectAtIndex:0];
+        
+        Float64 frameCount = CMTimeGetSeconds(_url.duration) * videoTrack.nominalFrameRate;
+        [_delegate didEstimateFrameCount:frameCount];
+        _estimatedFrameCount = (NSUInteger)frameCount;
         
         NSMutableDictionary *dict = [[NSMutableDictionary alloc] init];
         
@@ -125,13 +131,18 @@
             }
         }
         
-        NSLog(@"Extractor : all frames have been decoded. (%lu)", [_delegate sampleCount]);
+        NSLog(@"Extractor : all frames have been decoded.");
     }
     
     else
     {
         NSLog(@"Extractor can not extract.");
     }
+}
+
+- (NSUInteger)estimatedFrameCount
+{
+    return _estimatedFrameCount;
 }
 
 - (void)stop

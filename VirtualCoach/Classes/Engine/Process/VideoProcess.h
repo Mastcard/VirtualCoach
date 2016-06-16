@@ -9,22 +9,32 @@
 #import <Foundation/Foundation.h>
 #import "Configurable.h"
 #import "Process.h"
-#import "ExtractorProcess.h"
+
+#import "SimpleProcessStatusDelegate.h"
 
 #import "ExtractorVideoDataOutputProcess.h"
 #import "TrackingAnalysisProcess.h"
-
-#include <core.h>
-#include <io.h>
-#include <labelling.h>
-#include <arithmetic.h>
-#include <characterization.h>
-#include <geometry.h>
-#include <drawing.h>
+#import "DataAnalysisProcess.h"
+#import "TrackingRelevantSequencesBuilder.h"
+#import "TrackingIrrelevantSequencesRemover.h"
 
 #include "charact_ext.h"
 
-@interface VideoProcess : NSObject <Configurable, Process>
+@interface VideoProcess : NSObject <Configurable, Process, SimpleProcessStatusDelegate>
+
+@property (nonatomic, strong) ExtractorVideoDataOutputProcess *extractorProcess;
+@property (nonatomic, strong) TrackingAnalysisProcess *trackingAnalysisProcess;
+@property (nonatomic, strong) DataAnalysisProcess *dataAnalysisProcess;
+
+@property (nonatomic, weak) id <SimpleProcessStatusDelegate> delegate;
+
+@property (nonatomic) NSUInteger skippedFrameCount;
+
+@property (nonatomic) CGFloat scale;
+@property (nonatomic) NSUInteger samplingCount;
+@property (nonatomic) CGFloat overlappingRate;
+
+@property (nonatomic) BOOL shouldDeleteIrrelevantSequences;
 
 - (instancetype)initWithDictionary:(NSDictionary *)videoInfo;
 

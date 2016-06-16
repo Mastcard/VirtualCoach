@@ -9,9 +9,13 @@
 #import "UIBaseViewController.h"
 
 #import "UIAuthenticationView.h"
+#import "UIApplicationNavigationViewController.h"
+#import "UIHomeViewController.h"
 
 @interface UIAuthenticationViewController : UIBaseViewController
 
 @property (nonatomic) UIAuthenticationView *authenticationView;
+
+- (void)loginButtonAction;
 
 @end
