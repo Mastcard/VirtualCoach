@@ -35,11 +35,14 @@
 @property (nonatomic, strong) KmeanEntryDataSet *entryDataset;
 
 // optical flow properties
-@property (nonatomic, assign) gray8i_t *previousFrame;
-//
+
 @property (nonatomic, assign) gray8i_t *firstFrame;
 @property (nonatomic, assign) gray8i_t *secondFrame;
 @property (nonatomic, assign) gray8i_t *thirdFrame;
+
+@property (nonatomic, assign) rect_t firstFrameBounds;
+@property (nonatomic, assign) rect_t secondFrameBounds;
+@property (nonatomic, assign) rect_t thirdFrameBounds;
 
 // miscalenneous
 
@@ -149,16 +152,7 @@
                     CGImageRelease(rgbImage);
                     CGImageRelease(rgbImageScaled);
                     
-                    gray8i_t *substract = subgray8i(src, _referenceFrame);
-                    
-                    int allah = 0;
-                    
-                    for (allah = 0; allah < substract->width * substract->height; allah++)
-                    {
-                        substract->data[allah] = (substract->data[allah] > _binaryThreshold) * substract->data[allah];
-                    }
-                    
-                    //pgmwrite(substract, [[NSString stringWithFormat:@"/Users/iSeven/Downloads/eu.iseven.VirtualCoach 2016-06-13 17:03.47.253.xcappdata/AppData/Documents/%d.pgm", (int)_count] cStringUsingEncoding:NSASCIIStringEncoding], PGM_BINARY);
+                    rect_t playerBounds;
                     
                     if (_sequenceStarted)       // sequence continues
                     {
@@ -171,7 +165,6 @@
                         
                         // initializing rect_t with rect coordinates
                         
-                        rect_t playerBounds;
                         playerBounds.start.x = startX.unsignedIntValue;
                         playerBounds.end.x = endX.unsignedIntValue;
                         playerBounds.start.y = startY.unsignedIntValue;
@@ -179,23 +172,62 @@
                         
                         if (_secondFrame == NULL)
                         {
-                            _secondFrame = substract;
+                            _secondFrame = src;
+                            _secondFrameBounds = playerBounds;
                         }
                         
                         else
                         {
                             if (_thirdFrame == NULL)
                             {
-                                _thirdFrame = substract;
+                                _thirdFrame = src;
+                                _thirdFrameBounds = playerBounds;
                             }
                             
+                            // optical flow
+                            
                             vect2darray_t *speedVectors1 = opticalflow(_firstFrame, _secondFrame);
+                            
+                            double u = 0, v = 0;
+                            
+                            for (NSUInteger y = _secondFrameBounds.start.y; y < _secondFrameBounds.end.y; y++)
+                            {
+                                for (NSUInteger x = _secondFrameBounds.start.x; x < _secondFrameBounds.end.x; x++)
+                                {
+                                    unsigned long idx = PXL_IDX(src->width, x, y);
+                                    
+                                    u = speedVectors1->data[idx].x;
+                                    v = speedVectors1->data[idx].y;
+                                    
+                                    speedVectors1->data[idx].x = (_firstFrame->data[idx] > _binaryThreshold) * u;
+                                    speedVectors1->data[idx].y = (_firstFrame->data[idx] > _binaryThreshold) * v;
+                                }
+                            }
+                            
+                            // optical flow
+                            
                             vect2darray_t *speedVectors2 = opticalflow(_secondFrame, _thirdFrame);
                             
-                            [_histogram generateHistogramFromSpeedVector:speedVectors1 betweenInterval:playerBounds andWithImageWidth:substract->width];
-                            [_histogram generateHistogramFromSpeedVector:speedVectors2 betweenInterval:playerBounds andWithImageWidth:substract->width];
+                            double w = 0, z = 0;
                             
-                            [_entryDataset addKmeanEntryToDataSetFromFirstSpeedVectorsTab:speedVectors1 andSecondSpeedVectorsTab:speedVectors2 betweenInterval:playerBounds andWithImageWidth:substract->width];
+                            for (NSUInteger y = _thirdFrameBounds.start.y; y < _thirdFrameBounds.end.y; y++)
+                            {
+                                for (NSUInteger x = _thirdFrameBounds.start.x; x < _thirdFrameBounds.end.x; x++)
+                                {
+                                    unsigned long idx = PXL_IDX(src->width, x, y);
+                                    
+                                    w = speedVectors2->data[idx].x;
+                                    z = speedVectors2->data[idx].y;
+                                    
+                                    speedVectors2->data[idx].x = (_secondFrame->data[idx] > _binaryThreshold) * w;
+                                    speedVectors2->data[idx].y = (_secondFrame->data[idx] > _binaryThreshold) * z;
+                                }
+                            }
+                            
+                            [_histogram generateHistogramFromSpeedVector:speedVectors1 betweenInterval:playerBounds andWithImageWidth:src->width];
+                            [_histogram generateHistogramFromSpeedVector:speedVectors2 betweenInterval:playerBounds andWithImageWidth:src->width];
+                            
+                            [_entryDataset addKmeanEntryToDataSetFromFirstSpeedVectorsTab:speedVectors1 andSecondSpeedVectorsTab:speedVectors2 betweenInterval:playerBounds andWithImageWidth:src->width];
                             
                             gray8ifree(_firstFrame);
                             _firstFrame = NULL;
@@ -207,23 +239,36 @@
                             
                             vect2darrfree(speedVectors1);
                             vect2darrfree(speedVectors2);
+                            
+                            _firstFrameBounds.start.x = 0;
+                            _firstFrameBounds.start.y = 0;
+                            _firstFrameBounds.end.x = 0;
+                            _firstFrameBounds.end.y = 0;
+                            
+                            _secondFrameBounds.start.x = 0;
+                            _secondFrameBounds.start.y = 0;
+                            _secondFrameBounds.end.x = 0;
+                            _secondFrameBounds.end.y = 0;
+                            
+                            _thirdFrameBounds.start.x = 0;
+                            _thirdFrameBounds.start.y = 0;
+                            _thirdFrameBounds.end.x = 0;
+                            _thirdFrameBounds.end.y = 0;
                         }
                     }
                     
                     else                        // sequence starts
                     {
                         _sequenceStarted = YES;
-//                        _previousFrame = substract;
                         
                         NSLog(@"Sequence starts at %f", (float)(_count / 60));
                         
                         //test
-                        _firstFrame = substract;
+                        _firstFrame = src;
+                        _firstFrameBounds = playerBounds;
                         //tmp
                         _sequenceImageStart = (int)(_count);
                     }
-                    
-                    gray8ifree(src);
                 }
                 
                 else
