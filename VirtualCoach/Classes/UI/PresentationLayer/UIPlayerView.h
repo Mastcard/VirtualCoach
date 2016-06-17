@@ -9,6 +9,7 @@
 #import "UIBaseView.h"
 #import "UIBaseLabel.h"
 #import "UIBaseButton.h"
+#import "UICoordinateSystem2D.h"
 
 @interface UIPlayerView : UIBaseView
 
@@ -26,8 +27,7 @@
 @property (nonatomic, strong) UIBaseLabel *trainingsPaneLabel;
 @property (nonatomic, strong) UITableView *trainingsTableView;
 
-//temp
-@property (nonatomic, strong) UIBaseView *curvesView;
+@property (nonatomic, strong) UICoordinateSystem2D *coordinateSystemView;
 
 @property (nonatomic, strong) UIBaseLabel *dataSelectionLabel;
 @property (nonatomic, strong) UIPickerView *dataPickerView;
