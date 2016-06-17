@@ -23,6 +23,8 @@
         [_menuView.captureViewButton addTarget:self action:@selector(captureViewButtonAction) forControlEvents:UIControlEventTouchUpInside];
         [_menuView.trainingViewButton addTarget:self action:@selector(trainingViewButtonAction) forControlEvents:UIControlEventTouchUpInside];
         [_menuView.playerViewButton addTarget:self action:@selector(playerViewButtonAction) forControlEvents:UIControlEventTouchUpInside];
+        
+        self.navigationItem.title = @"Menu";
     }
     
     return self;
