@@ -16,6 +16,7 @@
 //SELECT
 -(NSArray *) allPlayers;
 -(int)searchIdByName:(NSString *) name firstName:(NSString *) fname;
+-(NSArray *) searchPlayerById:(NSString *)idP;
 //DELETE
 -(id)deletePlayerById:(NSString *) idPlayer;
 

@@ -43,6 +43,18 @@
     return desc;
 }
 
+-(NSArray*)searchIdPlayersByCoach:(NSString *) idCoach
+{
+    NSString *query = @"select idplayer from CoachPlayer where idcoach='";
+    query = [query stringByAppendingString:idCoach];
+    query = [query stringByAppendingString:@"';"];
+    
+    NSArray * result =[[NSArray alloc]init];
+    result = [DatabaseService query:query mode:VCSelectIntegerIndexedResult];
+    
+    return result;
+}
+
 //DELETE
 -(id)deleteCoachPlayerByIdCoach:(NSString *) idCoach
 {

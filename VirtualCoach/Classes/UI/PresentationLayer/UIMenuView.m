@@ -19,10 +19,6 @@
         _captureViewButton = [[UIBaseButton alloc] init];
         _trainingViewButton = [[UIBaseButton alloc] init];
         _playerViewButton = [[UIBaseButton alloc] init];
-        
-        _captureViewInformationsLabel = [[UIBaseLabel alloc] init];
-        _trainingsViewInformationsLabel = [[UIBaseLabel alloc] init];
-        _playersViewInformationsLabel = [[UIBaseLabel alloc] init];
     }
     
     return self;
@@ -35,18 +31,8 @@
     CGSize captureViewButtonSize = CGSizeMake(80, 80);
     CGPoint captureViewButtonOrigin = CGPointMake(((3 * self.frame.size.width) / 4) - (captureViewButtonSize.width / 2), (self.frame.size.height / 4) - (captureViewButtonSize.height / 2));
     
-    //_captureViewButton.backgroundColor = [UIColor yellowColor];
-    
     [_captureViewButton setFrame:CGRectMake(captureViewButtonOrigin.x, captureViewButtonOrigin.y, captureViewButtonSize.width, captureViewButtonSize.height)];
     [_captureViewButton setImage:[UIImage imageNamed:@"camera.png"] forState:UIControlStateNormal];
-    
-    NSMutableAttributedString *captureViewButtonTitle = [[NSMutableAttributedString alloc] initWithString:@"Capture"];
-    [captureViewButtonTitle addAttribute:NSFontAttributeName
-                                   value:[UIFont systemFontOfSize:18.0]
-                                   range:NSMakeRange(0, [captureViewButtonTitle length])];
-    [captureViewButtonTitle addAttribute:NSForegroundColorAttributeName value:[UIColor whiteColor] range:NSMakeRange(0, [captureViewButtonTitle length])];
-    
-    [_captureViewButton setAttributedTitle:captureViewButtonTitle forState:UIControlStateNormal];
     
     CGSize trainingViewButtonSize = CGSizeMake(200, 200);
     CGPoint trainingViewButtonOrigin = CGPointMake(((3 * self.frame.size.width) / 4) - (trainingViewButtonSize.width / 2), ((2 * self.frame.size.height) / 4) - (trainingViewButtonSize.height / 2));
@@ -54,7 +40,13 @@
     [_trainingViewButton setFrame:CGRectMake(trainingViewButtonOrigin.x, trainingViewButtonOrigin.y, trainingViewButtonSize.width, trainingViewButtonSize.height)];
     [_trainingViewButton setImage:[UIImage imageNamed:@"training.png"] forState:UIControlStateNormal];
     
-    
+//    NSMutableAttributedString *captureViewButtonTitle = [[NSMutableAttributedString alloc] initWithString:@"Capture"];
+//    [captureViewButtonTitle addAttribute:NSFontAttributeName
+//                                        value:[UIFont systemFontOfSize:18.0]
+//                                        range:NSMakeRange(0, [captureViewButtonTitle length])];
+//    [captureViewButtonTitle addAttribute:NSForegroundColorAttributeName value:[UIColor whiteColor] range:NSMakeRange(0, [captureViewButtonTitle length])];
+//    
+//    [_captureViewButton setAttributedTitle:captureViewButtonTitle forState:UIControlStateNormal];
     
     CGSize playerViewButtonSize = CGSizeMake(captureViewButtonSize.width, captureViewButtonSize.height);
     CGPoint playerViewButtonOrigin = CGPointMake(((3 * self.frame.size.width) / 4) - (captureViewButtonSize.width / 2), ((3 * self.frame.size.height) / 4) - (captureViewButtonSize.height / 2));
