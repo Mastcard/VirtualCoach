@@ -11,6 +11,8 @@
 #import "UIApplicationNavigationViewController.h"
 #import "UICaptureSessionViewController.h"
 #import "UIHomeViewController.h"
+#import "UIAuthenticationViewController.h"
+#import "UIAccountCreationViewController.h"
 
 #import "CaptureProcessManager.h"
 
@@ -21,12 +23,12 @@
     
     self.window = [[UIWindow alloc] initWithFrame:[[UIScreen mainScreen] bounds]];
     
-    UIHomeViewController *homeViewController = [[UIHomeViewController alloc] init];
+    UIAuthenticationViewController *authenticationViewController = [[UIAuthenticationViewController alloc] init];
     
-    UIApplicationNavigationViewController *appNavController = [[UIApplicationNavigationViewController alloc] initWithRootViewController:homeViewController];
+    UIApplicationNavigationViewController *appNavController = [[UIApplicationNavigationViewController alloc] initWithRootViewController:authenticationViewController];
     self.window.rootViewController = appNavController;
     [self.window makeKeyAndVisible];
-    [appNavController popToRootViewControllerAnimated:NO];
+    
     
     //appNavController.navigationBarHidden = YES;
     

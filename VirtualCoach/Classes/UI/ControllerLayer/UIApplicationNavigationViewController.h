@@ -9,14 +9,22 @@
 #import <UIKit/UIKit.h>
 
 #import "UIAuthenticationViewController.h"
+#import "UIAccountCreationViewController.h"
+#import "UITrainingViewController.h"
+#import "UIMenuViewController.h"
+#import "UIPlayerViewController.h"
 #import "CaptureProcessManager.h"
 
-@class UIHomeViewController, UICaptureSessionViewController;
+@class UIHomeViewController, UICaptureSessionViewController, UIAuthenticationViewController, UIAccountCreationViewController, UITrainingViewController, UIMenuViewController;
 
 @interface UIApplicationNavigationViewController : UINavigationController
 
 @property (nonatomic, strong) UIAuthenticationViewController *authenticationViewController;
+@property (nonatomic, strong) UIAccountCreationViewController *accountCreationViewController;
 @property (nonatomic, strong) UICaptureSessionViewController *captureSessionViewController;
 @property (nonatomic, strong) UIHomeViewController *homeViewController;
+@property (nonatomic, strong) UITrainingViewController *trainingViewController;
+@property (nonatomic, strong) UIMenuViewController *menuViewController;
+@property (nonatomic, strong) UIPlayerViewController *playerViewController;
 
 @end

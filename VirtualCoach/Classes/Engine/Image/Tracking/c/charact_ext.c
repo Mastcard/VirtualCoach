@@ -105,18 +105,28 @@ int32_t regionAtZone(rect_t rect, labels_t *labels)
     return bestRegAcc == 0 ? -1 : (bestReg + 1);
 }
 
-float gravCenterSpeed(vect2d_t gravvect, float previousSpeed, float alpha, float beta)
+int32_t commonPixels(regchar_t *ref, labels_t *reflabels, regchar_t *reg, labels_t *labels)
 {
-    float vTx = (float)gravvect.x;
-    float vTy = (float)gravvect.y;
+    uint32_t refid = ref->id, regid = reg->id;
+    pt2d_t start = ref->bounds.start, end = ref->bounds.end;
     
-    if (beta > 0)
+    uint16_t width = labels->width;
+    uint32_t i = 0, j = 0, pixcount = 0;
+    
+    for (i = start.y; i <= end.y; i++)
     {
-        vTx = beta * (float)gravvect.x;
-        vTy = (1 - beta) * (float)gravvect.y;
+        for (j = start.x; j <= end.x; j++)
+        {
+            uint32_t idx = (uint32_t)PXL_IDX(width, j, i);
+            uint32_t reflabel = reflabels->data[idx];
+            uint32_t label = labels->data[idx];
+            
+            //printf("reflabel : %d, label %d (%d, %d)\n", reflabel, label, j, i);
+            
+            if ((reflabel == refid) && (label == regid))
+                pixcount++;
+        }
     }
     
-    float vT = sqrtf(powf(vTx, 2.0) + powf(vTy, 2.0));
-    
-    return ((alpha * previousSpeed) + ((1 - alpha) * vT));
+    return pixcount;
 }

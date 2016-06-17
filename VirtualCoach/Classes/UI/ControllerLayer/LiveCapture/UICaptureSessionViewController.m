@@ -51,6 +51,8 @@
         [[self navigationController] setNavigationBarHidden:YES animated:NO];
         
         _overlayViewController = [[UICaptureSessionOverlayViewController alloc] init];
+        
+        self.view = _captureSessionView;
     }
     
     return self;
@@ -85,8 +87,6 @@
     
     if (!_recording)
     {
-        //[[NSNotificationCenter defaultCenter] postNotificationName:@"recording.action.started" object:self userInfo:[NSDictionary dictionaryWithObject:_videoDirectory forKey:@"video.path"]];
-        
         [CaptureProcessManager startRecordingProcessAtPath:_videoDirectory];
         
         // Starts label time
@@ -97,8 +97,6 @@
     
     else
     {
-        //[[NSNotificationCenter defaultCenter] postNotificationName:@"recording.action.stopped" object:self userInfo:nil];
-        
         [CaptureProcessManager stopRecordingProcess];
         
         [_captureSessionView.controlsView.recordingDurationLabelView stopDuration];
@@ -116,14 +114,10 @@
     [_captureSessionView.controlsView.recordButton setHidden:!_recording];
     [_captureSessionView.controlsView.recordingDurationLabelView setHidden:!_recording];
     [self.navigationItem.leftBarButtonItem setEnabled:!_recording];
-    //[((UIApplicationNavigationViewController *)self.navigationController).navigationItem.leftBarButtonItem setEnabled:!_recording];
-    //[_captureSessionView.controlsView.adjustmentButton setHidden:!_recording];
     [_captureSessionView.controlsView.trackerButton setHidden:!_recording];
     
     if (!_recording)
     {
-        //[[NSNotificationCenter defaultCenter] postNotificationName:@"referenceframe.action.started" object:self userInfo:nil];
-        
         [CaptureProcessManager startReferenceFrameProcess];
         
         [_captureSessionView.overlayView addSubview:_captureSessionView.overlayView.adjustmentActivityIndicatorView alignment:UIViewCentered];
@@ -132,8 +126,6 @@
     
     else
     {
-        //[[NSNotificationCenter defaultCenter] postNotificationName:@"referenceframe.action.stopped" object:self userInfo:nil];
-        
         [CaptureProcessManager stopReferenceFrameProcess];
         
         [_captureSessionView.overlayView.adjustmentActivityIndicatorView.activityIndicatorView stopAnimating];
@@ -187,13 +179,6 @@
     _recording = !_recording;
 }
 
-- (void)loadView
-{
-    [super loadView];
-    
-    [self.view addSubview:_captureSessionView];
-}
-
 - (void)viewDidLoad
 {
     [super viewDidLoad];
@@ -206,18 +191,7 @@
     if ([previewLayerConnection isVideoOrientationSupported])
         [previewLayerConnection setVideoOrientation:AVCaptureVideoOrientationLandscapeRight];
     
-    [self.navigationController.navigationBar setBackgroundImage:[UIImage new] forBarMetrics:UIBarMetricsDefault];
-    self.navigationController.navigationBar.shadowImage = [UIImage new];
-    self.navigationController.navigationBar.translucent = YES;
-    
     [_captureSessionController startSession];
-}
-
-- (void)viewWillDisappear:(BOOL)animated
-{
-    [self.navigationController.navigationBar setBackgroundImage:nil forBarMetrics:UIBarMetricsDefault];
-    self.navigationController.navigationBar.shadowImage = nil;
-    self.navigationController.navigationBar.translucent = NO;
 }
 
 - (void)viewDidDisappear:(BOOL)animated

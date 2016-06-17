@@ -131,7 +131,7 @@
         uint8_t *myPixelBuf = malloc(bufferSize);
         memmove(myPixelBuf, tempAddress, bufferSize);
         
-        rgb8i_t *rgb = rgb8iallocwd_bgra(_width, _height, myPixelBuf);
+        rgb8i_t *rgb = rgb8iallocwd_bgra(width, height, myPixelBuf);
         free(myPixelBuf);
         
         if (_count < _maxAccumulatedFrames)
