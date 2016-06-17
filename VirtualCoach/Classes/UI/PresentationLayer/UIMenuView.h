@@ -8,6 +8,7 @@
 
 #import "UIBaseView.h"
 #import "UIBaseButton.h"
+#import "UIBaseLabel.h"
 
 @interface UIMenuView : UIBaseView
 
@@ -16,5 +17,9 @@
 @property (nonatomic, strong) UIBaseButton *playerViewButton;
 
 @property (nonatomic, strong) UIImageView *tennisCourtImage;
+
+@property (nonatomic, strong) UIBaseLabel *captureViewInformationsLabel;
+@property (nonatomic, strong) UIBaseLabel *trainingsViewInformationsLabel;
+@property (nonatomic, strong) UIBaseLabel *playersViewInformationsLabel;
 
 @end
