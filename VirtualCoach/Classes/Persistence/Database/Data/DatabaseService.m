@@ -30,8 +30,8 @@ static BOOL initialized;
 + (void)initWithFile:(NSString *)filePath
 {
     initialized = NO;
-    
-    if ((sqlite3_open([filePath UTF8String], &database) != SQLITE_OK))
+    //(sqlite3_open([filePath UTF8String], &database)
+    if ((sqlite3_open_v2([filePath UTF8String], &database, SQLITE_OPEN_CREATE | SQLITE_OPEN_READWRITE, NULL )) != SQLITE_OK)
     {
         NSLog(@"Can't open the database file at %@", filePath);
     }

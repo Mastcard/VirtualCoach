@@ -7,6 +7,53 @@
 	objects = {
 
 /* Begin PBXBuildFile section */
+		0D09BAD41D0EF62D009A5F09 /* Queue.m in Sources */ = {isa = PBXBuildFile; fileRef = 6EB1CFCC1CEA2D0C006B6940 /* Queue.m */; };
+		0D09BAD51D0EF62D009A5F09 /* CoachDataEngine.m in Sources */ = {isa = PBXBuildFile; fileRef = 0D4FC07F1D05A52A008D18B6 /* CoachDataEngine.m */; };
+		0D09BAD61D0EF62D009A5F09 /* PlayerDataEngine.m in Sources */ = {isa = PBXBuildFile; fileRef = 0D4FC0821D05A549008D18B6 /* PlayerDataEngine.m */; };
+		0D09BAD71D0EF62D009A5F09 /* MovementDataEngine.m in Sources */ = {isa = PBXBuildFile; fileRef = 0D4FC0851D05A55F008D18B6 /* MovementDataEngine.m */; };
+		0D09BAD81D0EF62D009A5F09 /* StatisticalDataEngine.m in Sources */ = {isa = PBXBuildFile; fileRef = 0D4FC0881D05A587008D18B6 /* StatisticalDataEngine.m */; };
+		0D09BAD91D0EF62D009A5F09 /* TrainingDataEngine.m in Sources */ = {isa = PBXBuildFile; fileRef = 0D4FC08B1D05A5A1008D18B6 /* TrainingDataEngine.m */; };
+		0D09BADA1D0EF62D009A5F09 /* VideoDataEngine.m in Sources */ = {isa = PBXBuildFile; fileRef = 0D4FC08E1D05A5BD008D18B6 /* VideoDataEngine.m */; };
+		0D09BADB1D0EF62D009A5F09 /* VideoReferenceDataEngine.m in Sources */ = {isa = PBXBuildFile; fileRef = 0D4FC0911D05A5D3008D18B6 /* VideoReferenceDataEngine.m */; };
+		0D09BADC1D0EF62D009A5F09 /* MovementReferenceDataEngine.m in Sources */ = {isa = PBXBuildFile; fileRef = 0D4FC0941D05A5E3008D18B6 /* MovementReferenceDataEngine.m */; };
+		0D09BADD1D0EF62D009A5F09 /* TrophyDataEngine.m in Sources */ = {isa = PBXBuildFile; fileRef = 0D4FC0971D0848CD008D18B6 /* TrophyDataEngine.m */; };
+		0D09BADE1D0EF62D009A5F09 /* MotionDeduction.m in Sources */ = {isa = PBXBuildFile; fileRef = 6EE37BA71C9020A2006E0626 /* MotionDeduction.m */; };
+		0D09BADF1D0EF62D009A5F09 /* Cluster.m in Sources */ = {isa = PBXBuildFile; fileRef = 6EE37BB01C98037A006E0626 /* Cluster.m */; };
+		0D09BAE01D0EF62D009A5F09 /* KmeanCalculation.m in Sources */ = {isa = PBXBuildFile; fileRef = 6EE37BB71C981C37006E0626 /* KmeanCalculation.m */; };
+		0D09BAE11D0EF62D009A5F09 /* Histogram.m in Sources */ = {isa = PBXBuildFile; fileRef = 6EE37B891C8739E2006E0626 /* Histogram.m */; };
+		0D09BAE21D0EF62D009A5F09 /* KmeanEntry.m in Sources */ = {isa = PBXBuildFile; fileRef = 6EE37B991C88D07C006E0626 /* KmeanEntry.m */; };
+		0D09BAE31D0EF62D009A5F09 /* KmeanEntryDataSet.m in Sources */ = {isa = PBXBuildFile; fileRef = 6EE37B9C1C8973C7006E0626 /* KmeanEntryDataSet.m */; };
+		0D09BAE41D0EF62D009A5F09 /* ImageTools.m in Sources */ = {isa = PBXBuildFile; fileRef = 8ACF77891CECAAF800248372 /* ImageTools.m */; };
+		0D09BAE51D0EF63B009A5F09 /* DatabaseService.m in Sources */ = {isa = PBXBuildFile; fileRef = 0D95DFE11D0599ED0007F35E /* DatabaseService.m */; };
+		0D09BAE61D0EF656009A5F09 /* ExtractorVideoDataOutputProcess.m in Sources */ = {isa = PBXBuildFile; fileRef = 8ACF77771CECAAC600248372 /* ExtractorVideoDataOutputProcess.m */; };
+		0D09BAE71D0EF656009A5F09 /* ExtractorProcess.m in Sources */ = {isa = PBXBuildFile; fileRef = 6EB1CFAE1CEA2CB9006B6940 /* ExtractorProcess.m */; };
+		0D09BAE81D0EF656009A5F09 /* CheckDatabaseDAO.m in Sources */ = {isa = PBXBuildFile; fileRef = 0D95DFBA1D0599DD0007F35E /* CheckDatabaseDAO.m */; };
+		0D09BAE91D0EF656009A5F09 /* CoachDAO.m in Sources */ = {isa = PBXBuildFile; fileRef = 0D95DFBC1D0599DD0007F35E /* CoachDAO.m */; };
+		0D09BAEA1D0EF656009A5F09 /* CoachPlayerDAO.m in Sources */ = {isa = PBXBuildFile; fileRef = 0D95DFBE1D0599DD0007F35E /* CoachPlayerDAO.m */; };
+		0D09BAEB1D0EF656009A5F09 /* MovementDAO.m in Sources */ = {isa = PBXBuildFile; fileRef = 0D95DFC01D0599DD0007F35E /* MovementDAO.m */; };
+		0D09BAEC1D0EF656009A5F09 /* MovementReferenceDAO.m in Sources */ = {isa = PBXBuildFile; fileRef = 0D95DFC21D0599DD0007F35E /* MovementReferenceDAO.m */; };
+		0D09BAED1D0EF656009A5F09 /* PlayerDAO.m in Sources */ = {isa = PBXBuildFile; fileRef = 0D95DFC41D0599DD0007F35E /* PlayerDAO.m */; };
+		0D09BAEE1D0EF656009A5F09 /* PlayerTrainingVideoDAO.m in Sources */ = {isa = PBXBuildFile; fileRef = 0D95DFC61D0599DD0007F35E /* PlayerTrainingVideoDAO.m */; };
+		0D09BAEF1D0EF656009A5F09 /* PlayerTrophyDAO.m in Sources */ = {isa = PBXBuildFile; fileRef = 0D95DFC81D0599DD0007F35E /* PlayerTrophyDAO.m */; };
+		0D09BAF01D0EF656009A5F09 /* StatisticalDAO.m in Sources */ = {isa = PBXBuildFile; fileRef = 0D95DFCA1D0599DD0007F35E /* StatisticalDAO.m */; };
+		0D09BAF11D0EF656009A5F09 /* TrainingDAO.m in Sources */ = {isa = PBXBuildFile; fileRef = 0D95DFCC1D0599DD0007F35E /* TrainingDAO.m */; };
+		0D09BAF21D0EF656009A5F09 /* TrophyDAO.m in Sources */ = {isa = PBXBuildFile; fileRef = 0D95DFCE1D0599DD0007F35E /* TrophyDAO.m */; };
+		0D09BAF31D0EF656009A5F09 /* VideoDAO.m in Sources */ = {isa = PBXBuildFile; fileRef = 0D95DFD01D0599DD0007F35E /* VideoDAO.m */; };
+		0D09BAF41D0EF656009A5F09 /* VideoReferenceDAO.m in Sources */ = {isa = PBXBuildFile; fileRef = 0D95DFD21D0599DD0007F35E /* VideoReferenceDAO.m */; };
+		0D09BAF51D0EF699009A5F09 /* DistanceUtilities.m in Sources */ = {isa = PBXBuildFile; fileRef = 6EE37BB41C981B6D006E0626 /* DistanceUtilities.m */; };
+		0D09BAF61D0EF6A1009A5F09 /* charact_ext.c in Sources */ = {isa = PBXBuildFile; fileRef = 6EB1CFB71CEA2CB9006B6940 /* charact_ext.c */; };
+		0D09BAF71D0EF6E2009A5F09 /* CoachDO.m in Sources */ = {isa = PBXBuildFile; fileRef = 7AE75D691D05B4AB0094A93E /* CoachDO.m */; };
+		0D09BAF91D1290D2009A5F09 /* DataEngineTest.m in Sources */ = {isa = PBXBuildFile; fileRef = 0D09BAF81D1290D2009A5F09 /* DataEngineTest.m */; };
+		0D4FC0801D05A52A008D18B6 /* CoachDataEngine.m in Sources */ = {isa = PBXBuildFile; fileRef = 0D4FC07F1D05A52A008D18B6 /* CoachDataEngine.m */; };
+		0D4FC0831D05A549008D18B6 /* PlayerDataEngine.m in Sources */ = {isa = PBXBuildFile; fileRef = 0D4FC0821D05A549008D18B6 /* PlayerDataEngine.m */; };
+		0D4FC0861D05A55F008D18B6 /* MovementDataEngine.m in Sources */ = {isa = PBXBuildFile; fileRef = 0D4FC0851D05A55F008D18B6 /* MovementDataEngine.m */; };
+		0D4FC0891D05A587008D18B6 /* StatisticalDataEngine.m in Sources */ = {isa = PBXBuildFile; fileRef = 0D4FC0881D05A587008D18B6 /* StatisticalDataEngine.m */; };
+		0D4FC08C1D05A5A1008D18B6 /* TrainingDataEngine.m in Sources */ = {isa = PBXBuildFile; fileRef = 0D4FC08B1D05A5A1008D18B6 /* TrainingDataEngine.m */; };
+		0D4FC08F1D05A5BD008D18B6 /* VideoDataEngine.m in Sources */ = {isa = PBXBuildFile; fileRef = 0D4FC08E1D05A5BD008D18B6 /* VideoDataEngine.m */; };
+		0D4FC0921D05A5D3008D18B6 /* VideoReferenceDataEngine.m in Sources */ = {isa = PBXBuildFile; fileRef = 0D4FC0911D05A5D3008D18B6 /* VideoReferenceDataEngine.m */; };
+		0D4FC0951D05A5E3008D18B6 /* MovementReferenceDataEngine.m in Sources */ = {isa = PBXBuildFile; fileRef = 0D4FC0941D05A5E3008D18B6 /* MovementReferenceDataEngine.m */; };
+		0D4FC0981D0848CD008D18B6 /* TrophyDataEngine.m in Sources */ = {isa = PBXBuildFile; fileRef = 0D4FC0971D0848CD008D18B6 /* TrophyDataEngine.m */; };
+		0D4FC0A01D086277008D18B6 /* TrackingServiceTest.m in Sources */ = {isa = PBXBuildFile; fileRef = 0D4FC09E1D086277008D18B6 /* TrackingServiceTest.m */; };
 		0D95DFD31D0599DD0007F35E /* CheckDatabaseDAO.m in Sources */ = {isa = PBXBuildFile; fileRef = 0D95DFBA1D0599DD0007F35E /* CheckDatabaseDAO.m */; };
 		0D95DFD41D0599DD0007F35E /* CoachDAO.m in Sources */ = {isa = PBXBuildFile; fileRef = 0D95DFBC1D0599DD0007F35E /* CoachDAO.m */; };
 		0D95DFD51D0599DD0007F35E /* CoachPlayerDAO.m in Sources */ = {isa = PBXBuildFile; fileRef = 0D95DFBE1D0599DD0007F35E /* CoachPlayerDAO.m */; };
@@ -25,15 +72,6 @@
 		0D95DFE81D059A2F0007F35E /* DatabaseTest.m in Sources */ = {isa = PBXBuildFile; fileRef = 0D95DFE71D059A2F0007F35E /* DatabaseTest.m */; };
 		0D95DFEA1D059AA60007F35E /* libsqlite3.0.tbd in Frameworks */ = {isa = PBXBuildFile; fileRef = 0D95DFE91D059AA60007F35E /* libsqlite3.0.tbd */; };
 		0D95DFEB1D059AC80007F35E /* libsqlite3.0.tbd in Frameworks */ = {isa = PBXBuildFile; fileRef = 0D95DFE91D059AA60007F35E /* libsqlite3.0.tbd */; };
-		6E0EC2B61D11832400F9C818 /* DateUtilities.m in Sources */ = {isa = PBXBuildFile; fileRef = 6E0EC2B51D11832400F9C818 /* DateUtilities.m */; };
-		6E0EC2BD1D11847A00F9C818 /* Axis.m in Sources */ = {isa = PBXBuildFile; fileRef = 6E0EC2BC1D11847A00F9C818 /* Axis.m */; };
-		6E0EC2C01D1184B300F9C818 /* CoordinateSystem.m in Sources */ = {isa = PBXBuildFile; fileRef = 6E0EC2BF1D1184B300F9C818 /* CoordinateSystem.m */; };
-		6E0EC2C31D11853400F9C818 /* CoordinateSystem2D.m in Sources */ = {isa = PBXBuildFile; fileRef = 6E0EC2C21D11853400F9C818 /* CoordinateSystem2D.m */; };
-		6E0EC2C61D11864600F9C818 /* Curve.m in Sources */ = {isa = PBXBuildFile; fileRef = 6E0EC2C51D11864600F9C818 /* Curve.m */; };
-		6E0EC2C91D11874C00F9C818 /* UIAxis.m in Sources */ = {isa = PBXBuildFile; fileRef = 6E0EC2C81D11874C00F9C818 /* UIAxis.m */; };
-		6E0EC2CC1D11879000F9C818 /* UICoordinateSystem2D.m in Sources */ = {isa = PBXBuildFile; fileRef = 6E0EC2CB1D11879000F9C818 /* UICoordinateSystem2D.m */; };
-		6E0EC2CF1D1187F300F9C818 /* UICurve.m in Sources */ = {isa = PBXBuildFile; fileRef = 6E0EC2CE1D1187F300F9C818 /* UICurve.m */; };
-		6E0EC2D21D11885500F9C818 /* UICoordinateSystemFactory.m in Sources */ = {isa = PBXBuildFile; fileRef = 6E0EC2D11D11885500F9C818 /* UICoordinateSystemFactory.m */; };
 		6E43B7E21CD0B4810077F51B /* AVFoundation.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 6E43B7E01CD0B45E0077F51B /* AVFoundation.framework */; };
 		6EB1CF811CE39ABE006B6940 /* Resources in Resources */ = {isa = PBXBuildFile; fileRef = 6EB1CF801CE39ABE006B6940 /* Resources */; };
 		6EB1CFBE1CEA2CB9006B6940 /* CaptureProcessManager.m in Sources */ = {isa = PBXBuildFile; fileRef = 6EB1CFAB1CEA2CB9006B6940 /* CaptureProcessManager.m */; };
@@ -74,7 +112,6 @@
 		6EB1D03C1CEA2D8B006B6940 /* UIAuthenticationView.m in Sources */ = {isa = PBXBuildFile; fileRef = 6EB1D0241CEA2D8B006B6940 /* UIAuthenticationView.m */; };
 		6EB1D03D1CEA2D8B006B6940 /* UIHomeView.m in Sources */ = {isa = PBXBuildFile; fileRef = 6EB1D0261CEA2D8B006B6940 /* UIHomeView.m */; };
 		6EB1D03E1CEA2D8B006B6940 /* UILaunchView.m in Sources */ = {isa = PBXBuildFile; fileRef = 6EB1D0281CEA2D8B006B6940 /* UILaunchView.m */; };
-		6EB1D04D1CEA2E44006B6940 /* TrackingServiceTest.m in Sources */ = {isa = PBXBuildFile; fileRef = 6EB1D04A1CEA2E44006B6940 /* TrackingServiceTest.m */; };
 		6EB1D04E1CEA2E44006B6940 /* QueueTest.m in Sources */ = {isa = PBXBuildFile; fileRef = 6EB1D04C1CEA2E44006B6940 /* QueueTest.m */; };
 		6EE37B6C1C872970006E0626 /* HistogramTest.m in Sources */ = {isa = PBXBuildFile; fileRef = 6EE37B6B1C872970006E0626 /* HistogramTest.m */; };
 		6EE37B961C8739E2006E0626 /* Histogram.m in Sources */ = {isa = PBXBuildFile; fileRef = 6EE37B891C8739E2006E0626 /* Histogram.m */; };
@@ -136,14 +173,10 @@
 		8ACF778A1CECAAF800248372 /* ImageTools.m in Sources */ = {isa = PBXBuildFile; fileRef = 8ACF77891CECAAF800248372 /* ImageTools.m */; };
 		8ACF778D1CECAB2300248372 /* UICaptureSessionOverlayViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = 8ACF778C1CECAB2300248372 /* UICaptureSessionOverlayViewController.m */; };
 		8ACF778E1CECABDC00248372 /* TrackingProcess.m in Sources */ = {isa = PBXBuildFile; fileRef = 6EB1CFBB1CEA2CB9006B6940 /* TrackingProcess.m */; };
-		8ADBB4DA1D0FCEA1005359F6 /* TrackingAnalysisProcessTest.m in Sources */ = {isa = PBXBuildFile; fileRef = 8ADBB4D91D0FCEA1005359F6 /* TrackingAnalysisProcessTest.m */; };
-		8ADBB4DC1D0FCEBF005359F6 /* TrackingRelevantSequencesBuilderTest.m in Sources */ = {isa = PBXBuildFile; fileRef = 8ADBB4DB1D0FCEBF005359F6 /* TrackingRelevantSequencesBuilderTest.m */; };
-		8ADBB4DE1D0FCF07005359F6 /* TrackingIrrelevantSequencesRemoverTest.m in Sources */ = {isa = PBXBuildFile; fileRef = 8ADBB4DD1D0FCF07005359F6 /* TrackingIrrelevantSequencesRemoverTest.m */; };
-		8ADBB4E51D1024B5005359F6 /* ExtractorVideoDataOutputProcessTest.m in Sources */ = {isa = PBXBuildFile; fileRef = 8ADBB4E41D1024B5005359F6 /* ExtractorVideoDataOutputProcessTest.m */; };
 /* End PBXBuildFile section */
 
 /* Begin PBXContainerItemProxy section */
-		8A513D521C94812900A11C60 /* PBXContainerItemProxy */ = {
+		0D09BAD21D0EF5AE009A5F09 /* PBXContainerItemProxy */ = {
 			isa = PBXContainerItemProxy;
 			containerPortal = 8ABE3D811C78F77300AF659B /* Project object */;
 			proxyType = 1;
@@ -172,6 +205,27 @@
 /* End PBXCopyFilesBuildPhase section */
 
 /* Begin PBXFileReference section */
+		0D09BAF81D1290D2009A5F09 /* DataEngineTest.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = DataEngineTest.m; sourceTree = "<group>"; };
+		0D4FC07E1D05A52A008D18B6 /* CoachDataEngine.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = CoachDataEngine.h; sourceTree = "<group>"; };
+		0D4FC07F1D05A52A008D18B6 /* CoachDataEngine.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = CoachDataEngine.m; sourceTree = "<group>"; };
+		0D4FC0811D05A549008D18B6 /* PlayerDataEngine.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = PlayerDataEngine.h; sourceTree = "<group>"; };
+		0D4FC0821D05A549008D18B6 /* PlayerDataEngine.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = PlayerDataEngine.m; sourceTree = "<group>"; };
+		0D4FC0841D05A55F008D18B6 /* MovementDataEngine.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = MovementDataEngine.h; sourceTree = "<group>"; };
+		0D4FC0851D05A55F008D18B6 /* MovementDataEngine.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = MovementDataEngine.m; sourceTree = "<group>"; };
+		0D4FC0871D05A587008D18B6 /* StatisticalDataEngine.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = StatisticalDataEngine.h; sourceTree = "<group>"; };
+		0D4FC0881D05A587008D18B6 /* StatisticalDataEngine.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = StatisticalDataEngine.m; sourceTree = "<group>"; };
+		0D4FC08A1D05A5A1008D18B6 /* TrainingDataEngine.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = TrainingDataEngine.h; sourceTree = "<group>"; };
+		0D4FC08B1D05A5A1008D18B6 /* TrainingDataEngine.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = TrainingDataEngine.m; sourceTree = "<group>"; };
+		0D4FC08D1D05A5BD008D18B6 /* VideoDataEngine.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = VideoDataEngine.h; sourceTree = "<group>"; };
+		0D4FC08E1D05A5BD008D18B6 /* VideoDataEngine.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = VideoDataEngine.m; sourceTree = "<group>"; };
+		0D4FC0901D05A5D3008D18B6 /* VideoReferenceDataEngine.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = VideoReferenceDataEngine.h; sourceTree = "<group>"; };
+		0D4FC0911D05A5D3008D18B6 /* VideoReferenceDataEngine.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = VideoReferenceDataEngine.m; sourceTree = "<group>"; };
+		0D4FC0931D05A5E3008D18B6 /* MovementReferenceDataEngine.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = MovementReferenceDataEngine.h; sourceTree = "<group>"; };
+		0D4FC0941D05A5E3008D18B6 /* MovementReferenceDataEngine.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = MovementReferenceDataEngine.m; sourceTree = "<group>"; };
+		0D4FC0961D0848CD008D18B6 /* TrophyDataEngine.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = TrophyDataEngine.h; sourceTree = "<group>"; };
+		0D4FC0971D0848CD008D18B6 /* TrophyDataEngine.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = TrophyDataEngine.m; sourceTree = "<group>"; };
+		0D4FC09C1D086277008D18B6 /* ExtractorVideoDataOutputProcessTest.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = ExtractorVideoDataOutputProcessTest.m; sourceTree = "<group>"; };
+		0D4FC09E1D086277008D18B6 /* TrackingServiceTest.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = TrackingServiceTest.m; sourceTree = "<group>"; };
 		0D95DFB91D0599DD0007F35E /* CheckDatabaseDAO.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = CheckDatabaseDAO.h; sourceTree = "<group>"; };
 		0D95DFBA1D0599DD0007F35E /* CheckDatabaseDAO.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = CheckDatabaseDAO.m; sourceTree = "<group>"; };
 		0D95DFBB1D0599DD0007F35E /* CoachDAO.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = CoachDAO.h; sourceTree = "<group>"; };
@@ -305,7 +359,6 @@
 		6EB1D0271CEA2D8B006B6940 /* UILaunchView.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = UILaunchView.h; sourceTree = "<group>"; };
 		6EB1D0281CEA2D8B006B6940 /* UILaunchView.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = UILaunchView.m; sourceTree = "<group>"; };
 		6EB1D02A1CEA2D8B006B6940 /* Layout.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = Layout.h; sourceTree = "<group>"; };
-		6EB1D04A1CEA2E44006B6940 /* TrackingServiceTest.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = TrackingServiceTest.m; sourceTree = "<group>"; };
 		6EB1D04C1CEA2E44006B6940 /* QueueTest.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = QueueTest.m; sourceTree = "<group>"; };
 		6EE37B6B1C872970006E0626 /* HistogramTest.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = HistogramTest.m; sourceTree = "<group>"; };
 		6EE37B881C8739E2006E0626 /* Histogram.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = Histogram.h; sourceTree = "<group>"; };
@@ -445,6 +498,39 @@
 /* End PBXFrameworksBuildPhase section */
 
 /* Begin PBXGroup section */
+		0D4FC0991D086277008D18B6 /* DataEngine */ = {
+			isa = PBXGroup;
+			children = (
+				0D09BAF81D1290D2009A5F09 /* DataEngineTest.m */,
+			);
+			path = DataEngine;
+			sourceTree = "<group>";
+		};
+		0D4FC09A1D086277008D18B6 /* Image */ = {
+			isa = PBXGroup;
+			children = (
+				0D4FC09B1D086277008D18B6 /* Extractor */,
+				0D4FC09D1D086277008D18B6 /* Tracking */,
+			);
+			path = Image;
+			sourceTree = "<group>";
+		};
+		0D4FC09B1D086277008D18B6 /* Extractor */ = {
+			isa = PBXGroup;
+			children = (
+				0D4FC09C1D086277008D18B6 /* ExtractorVideoDataOutputProcessTest.m */,
+			);
+			path = Extractor;
+			sourceTree = "<group>";
+		};
+		0D4FC09D1D086277008D18B6 /* Tracking */ = {
+			isa = PBXGroup;
+			children = (
+				0D4FC09E1D086277008D18B6 /* TrackingServiceTest.m */,
+			);
+			path = Tracking;
+			sourceTree = "<group>";
+		};
 		0D95DFE31D059A160007F35E /* Resources */ = {
 			isa = PBXGroup;
 			children = (
@@ -461,54 +547,29 @@
 			path = Database;
 			sourceTree = "<group>";
 		};
-		6E0EC2B01D1182AE00F9C818 /* ChartAPI */ = {
+		0DCE22FD1D05A3A800654B0E /* DataEngine */ = {
 			isa = PBXGroup;
 			children = (
-				6E0EC2B11D1182DF00F9C818 /* Model */,
-				6E0EC2B21D1182DF00F9C818 /* Tools */,
-				6E0EC2B31D1182DF00F9C818 /* UI */,
+				0D4FC07E1D05A52A008D18B6 /* CoachDataEngine.h */,
+				0D4FC07F1D05A52A008D18B6 /* CoachDataEngine.m */,
+				0D4FC0811D05A549008D18B6 /* PlayerDataEngine.h */,
+				0D4FC0821D05A549008D18B6 /* PlayerDataEngine.m */,
+				0D4FC0841D05A55F008D18B6 /* MovementDataEngine.h */,
+				0D4FC0851D05A55F008D18B6 /* MovementDataEngine.m */,
+				0D4FC0871D05A587008D18B6 /* StatisticalDataEngine.h */,
+				0D4FC0881D05A587008D18B6 /* StatisticalDataEngine.m */,
+				0D4FC08A1D05A5A1008D18B6 /* TrainingDataEngine.h */,
+				0D4FC08B1D05A5A1008D18B6 /* TrainingDataEngine.m */,
+				0D4FC08D1D05A5BD008D18B6 /* VideoDataEngine.h */,
+				0D4FC08E1D05A5BD008D18B6 /* VideoDataEngine.m */,
+				0D4FC0901D05A5D3008D18B6 /* VideoReferenceDataEngine.h */,
+				0D4FC0911D05A5D3008D18B6 /* VideoReferenceDataEngine.m */,
+				0D4FC0931D05A5E3008D18B6 /* MovementReferenceDataEngine.h */,
+				0D4FC0941D05A5E3008D18B6 /* MovementReferenceDataEngine.m */,
+				0D4FC0961D0848CD008D18B6 /* TrophyDataEngine.h */,
+				0D4FC0971D0848CD008D18B6 /* TrophyDataEngine.m */,
 			);
-			path = ChartAPI;
-			sourceTree = "<group>";
-		};
-		6E0EC2B11D1182DF00F9C818 /* Model */ = {
-			isa = PBXGroup;
-			children = (
-				6E0EC2BB1D11847A00F9C818 /* Axis.h */,
-				6E0EC2BC1D11847A00F9C818 /* Axis.m */,
-				6E0EC2BE1D1184B300F9C818 /* CoordinateSystem.h */,
-				6E0EC2BF1D1184B300F9C818 /* CoordinateSystem.m */,
-				6E0EC2C11D11853400F9C818 /* CoordinateSystem2D.h */,
-				6E0EC2C21D11853400F9C818 /* CoordinateSystem2D.m */,
-				6E0EC2C41D11864600F9C818 /* Curve.h */,
-				6E0EC2C51D11864600F9C818 /* Curve.m */,
-				6E0EC2BA1D11845C00F9C818 /* Element.h */,
-			);
-			path = Model;
-			sourceTree = "<group>";
-		};
-		6E0EC2B21D1182DF00F9C818 /* Tools */ = {
-			isa = PBXGroup;
-			children = (
-				6E0EC2B41D11832400F9C818 /* DateUtilities.h */,
-				6E0EC2B51D11832400F9C818 /* DateUtilities.m */,
-			);
-			path = Tools;
-			sourceTree = "<group>";
-		};
-		6E0EC2B31D1182DF00F9C818 /* UI */ = {
-			isa = PBXGroup;
-			children = (
-				6E0EC2C71D11874C00F9C818 /* UIAxis.h */,
-				6E0EC2C81D11874C00F9C818 /* UIAxis.m */,
-				6E0EC2CA1D11879000F9C818 /* UICoordinateSystem2D.h */,
-				6E0EC2CB1D11879000F9C818 /* UICoordinateSystem2D.m */,
-				6E0EC2CD1D1187F300F9C818 /* UICurve.h */,
-				6E0EC2CE1D1187F300F9C818 /* UICurve.m */,
-				6E0EC2D01D11885500F9C818 /* UICoordinateSystemFactory.h */,
-				6E0EC2D11D11885500F9C818 /* UICoordinateSystemFactory.m */,
-			);
-			path = UI;
+			path = DataEngine;
 			sourceTree = "<group>";
 		};
 		6EB1CFA91CEA2CB9006B6940 /* Base */ = {
@@ -806,27 +867,10 @@
 		6EB1D0471CEA2E44006B6940 /* Engine */ = {
 			isa = PBXGroup;
 			children = (
-				8ADBB4D81D0FCEA1005359F6 /* Process */,
-				6EB1D0481CEA2E44006B6940 /* Image */,
+				0D4FC0991D086277008D18B6 /* DataEngine */,
+				0D4FC09A1D086277008D18B6 /* Image */,
 			);
 			path = Engine;
-			sourceTree = "<group>";
-		};
-		6EB1D0481CEA2E44006B6940 /* Image */ = {
-			isa = PBXGroup;
-			children = (
-				8ADBB4E31D1024B5005359F6 /* Extractor */,
-				6EB1D0491CEA2E44006B6940 /* Tracking */,
-			);
-			path = Image;
-			sourceTree = "<group>";
-		};
-		6EB1D0491CEA2E44006B6940 /* Tracking */ = {
-			isa = PBXGroup;
-			children = (
-				6EB1D04A1CEA2E44006B6940 /* TrackingServiceTest.m */,
-			);
-			path = Tracking;
 			sourceTree = "<group>";
 		};
 		6EB1D04B1CEA2E44006B6940 /* Foundation */ = {
@@ -995,6 +1039,7 @@
 		6EE37B841C8739E2006E0626 /* Engine */ = {
 			isa = PBXGroup;
 			children = (
+				0DCE22FD1D05A3A800654B0E /* DataEngine */,
 				7AE75D671D05B4AB0094A93E /* DO */,
 				8ACF77791CECAADB00248372 /* Process */,
 				6EB1CFCF1CEA2D5E006B6940 /* LiveCapture */,
@@ -1358,7 +1403,7 @@
 			buildRules = (
 			);
 			dependencies = (
-				8A513D531C94812900A11C60 /* PBXTargetDependency */,
+				0D09BAD31D0EF5AE009A5F09 /* PBXTargetDependency */,
 			);
 			name = VirtualCoachTests;
 			productName = VirtualCoachTests;
@@ -1411,7 +1456,7 @@
 				TargetAttributes = {
 					8ABE3D881C78F77300AF659B = {
 						CreatedOnToolsVersion = 7.2.1;
-						DevelopmentTeam = QQ64R4PS8Q;
+						DevelopmentTeam = 4Q86E72BM9;
 					};
 					8ABE3DA11C78F77300AF659B = {
 						CreatedOnToolsVersion = 7.2.1;
@@ -1487,6 +1532,7 @@
 				8ACF77841CECAADB00248372 /* TrackingAnalysisProcess.m in Sources */,
 				0D95DFDD1D0599DD0007F35E /* TrophyDAO.m in Sources */,
 				7AE75D831D05B4AB0094A93E /* ReferenceMovementDO.m in Sources */,
+				0D4FC0981D0848CD008D18B6 /* TrophyDataEngine.m in Sources */,
 				7AE75D851D05B4AB0094A93E /* StatisticDO.m in Sources */,
 				0D95DFDB1D0599DD0007F35E /* StatisticalDAO.m in Sources */,
 				6EB1CFF51CEA2D5E006B6940 /* FramesCaptureSessionController.m in Sources */,
@@ -1504,9 +1550,12 @@
 				8A2512C91D0DAF9900DADFAD /* TrackingIrrelevantSequencesRemover.m in Sources */,
 				6E0EC2CC1D11879000F9C818 /* UICoordinateSystem2D.m in Sources */,
 				0D95DFD51D0599DD0007F35E /* CoachPlayerDAO.m in Sources */,
+				0D4FC0861D05A55F008D18B6 /* MovementDataEngine.m in Sources */,
+				0D4FC08F1D05A5BD008D18B6 /* VideoDataEngine.m in Sources */,
 				6EB1CFF81CEA2D5E006B6940 /* MovieCaptureSession.m in Sources */,
+				0D4FC0891D05A587008D18B6 /* StatisticalDataEngine.m in Sources */,
 				8ACF77781CECAAC600248372 /* ExtractorVideoDataOutputProcess.m in Sources */,
-				8A2512CA1D0DAF9900DADFAD /* TrackingRelevantSequencesBuilder.m in Sources */,
+				0D4FC0921D05A5D3008D18B6 /* VideoReferenceDataEngine.m in Sources */,
 				6EB1CFF91CEA2D5E006B6940 /* MovieCaptureSessionController.m in Sources */,
 				6EB1CFCE1CEA2D0C006B6940 /* Queue.m in Sources */,
 				8ACF778A1CECAAF800248372 /* ImageTools.m in Sources */,
@@ -1523,6 +1572,7 @@
 				7AE75D811D05B4AB0094A93E /* MovementDO.m in Sources */,
 				7AE75D7F1D05B4AB0094A93E /* InterfaceMovementDO.m in Sources */,
 				6EB1CFF01CEA2D5E006B6940 /* CaptureDevicePropertiesUtilities.m in Sources */,
+				0D4FC0801D05A52A008D18B6 /* CoachDataEngine.m in Sources */,
 				0D95DFD81D0599DD0007F35E /* PlayerDAO.m in Sources */,
 				6E0EC2CF1D1187F300F9C818 /* UICurve.m in Sources */,
 				6E0EC2C61D11864600F9C818 /* Curve.m in Sources */,
@@ -1538,7 +1588,9 @@
 				6EE37BB51C981B6D006E0626 /* DistanceUtilities.m in Sources */,
 				6EE37BB81C981C37006E0626 /* KmeanCalculation.m in Sources */,
 				6EB1D0391CEA2D8B006B6940 /* UIRecordingButton.m in Sources */,
+				0D4FC0831D05A549008D18B6 /* PlayerDataEngine.m in Sources */,
 				8ACF77831CECAADB00248372 /* DataAnalysisProcess.m in Sources */,
+				0D4FC0951D05A5E3008D18B6 /* MovementReferenceDataEngine.m in Sources */,
 				0D95DFD61D0599DD0007F35E /* MovementDAO.m in Sources */,
 				7AE75D881D05B4AB0094A93E /* VideoDO.m in Sources */,
 				6EB1D0361CEA2D8B006B6940 /* UICaptureSessionOverlayControlsView.m in Sources */,
@@ -1576,6 +1628,7 @@
 				6EB1CFEF1CEA2D5E006B6940 /* CaptureDevicePropertiesRetriever.m in Sources */,
 				8AB35AAF1D0C68F50026503B /* UIAccountCreationViewController.m in Sources */,
 				0D95DFD31D0599DD0007F35E /* CheckDatabaseDAO.m in Sources */,
+				0D4FC08C1D05A5A1008D18B6 /* TrainingDataEngine.m in Sources */,
 				6EE37B9D1C8973C7006E0626 /* KmeanEntryDataSet.m in Sources */,
 				6EB1D0311CEA2D8B006B6940 /* UIBaseButton.m in Sources */,
 				8AB35A9A1D0C68D70026503B /* UIBaseTextField.m in Sources */,
@@ -1588,11 +1641,47 @@
 			isa = PBXSourcesBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
-				6EB1D04D1CEA2E44006B6940 /* TrackingServiceTest.m in Sources */,
+				0D09BAF71D0EF6E2009A5F09 /* CoachDO.m in Sources */,
+				0D09BAF61D0EF6A1009A5F09 /* charact_ext.c in Sources */,
+				0D09BAF51D0EF699009A5F09 /* DistanceUtilities.m in Sources */,
+				0D09BAE61D0EF656009A5F09 /* ExtractorVideoDataOutputProcess.m in Sources */,
+				0D09BAE71D0EF656009A5F09 /* ExtractorProcess.m in Sources */,
+				0D09BAE81D0EF656009A5F09 /* CheckDatabaseDAO.m in Sources */,
+				0D09BAE91D0EF656009A5F09 /* CoachDAO.m in Sources */,
+				0D09BAEA1D0EF656009A5F09 /* CoachPlayerDAO.m in Sources */,
+				0D09BAEB1D0EF656009A5F09 /* MovementDAO.m in Sources */,
+				0D09BAEC1D0EF656009A5F09 /* MovementReferenceDAO.m in Sources */,
+				0D09BAED1D0EF656009A5F09 /* PlayerDAO.m in Sources */,
+				0D09BAEE1D0EF656009A5F09 /* PlayerTrainingVideoDAO.m in Sources */,
+				0D09BAEF1D0EF656009A5F09 /* PlayerTrophyDAO.m in Sources */,
+				0D09BAF01D0EF656009A5F09 /* StatisticalDAO.m in Sources */,
+				0D09BAF11D0EF656009A5F09 /* TrainingDAO.m in Sources */,
+				0D09BAF21D0EF656009A5F09 /* TrophyDAO.m in Sources */,
+				0D09BAF31D0EF656009A5F09 /* VideoDAO.m in Sources */,
+				0D09BAF41D0EF656009A5F09 /* VideoReferenceDAO.m in Sources */,
+				0D09BAE51D0EF63B009A5F09 /* DatabaseService.m in Sources */,
+				0D09BAD41D0EF62D009A5F09 /* Queue.m in Sources */,
+				0D09BAD51D0EF62D009A5F09 /* CoachDataEngine.m in Sources */,
+				0D09BAD61D0EF62D009A5F09 /* PlayerDataEngine.m in Sources */,
+				0D09BAD71D0EF62D009A5F09 /* MovementDataEngine.m in Sources */,
+				0D09BAD81D0EF62D009A5F09 /* StatisticalDataEngine.m in Sources */,
+				0D09BAD91D0EF62D009A5F09 /* TrainingDataEngine.m in Sources */,
+				0D09BADA1D0EF62D009A5F09 /* VideoDataEngine.m in Sources */,
+				0D09BADB1D0EF62D009A5F09 /* VideoReferenceDataEngine.m in Sources */,
+				0D09BADC1D0EF62D009A5F09 /* MovementReferenceDataEngine.m in Sources */,
+				0D09BADD1D0EF62D009A5F09 /* TrophyDataEngine.m in Sources */,
+				0D09BADE1D0EF62D009A5F09 /* MotionDeduction.m in Sources */,
+				0D09BADF1D0EF62D009A5F09 /* Cluster.m in Sources */,
+				0D09BAE01D0EF62D009A5F09 /* KmeanCalculation.m in Sources */,
+				0D09BAE11D0EF62D009A5F09 /* Histogram.m in Sources */,
+				0D09BAE21D0EF62D009A5F09 /* KmeanEntry.m in Sources */,
+				0D09BAE31D0EF62D009A5F09 /* KmeanEntryDataSet.m in Sources */,
+				0D09BAE41D0EF62D009A5F09 /* ImageTools.m in Sources */,
+				0D4FC0A01D086277008D18B6 /* TrackingServiceTest.m in Sources */,
 				6EB1D04E1CEA2E44006B6940 /* QueueTest.m in Sources */,
 				8ADBB4E51D1024B5005359F6 /* ExtractorVideoDataOutputProcessTest.m in Sources */,
 				6EE37BA21C8B76D6006E0626 /* KmeanEntryDataSetTest.m in Sources */,
-				8ADBB4DC1D0FCEBF005359F6 /* TrackingRelevantSequencesBuilderTest.m in Sources */,
+				0D09BAF91D1290D2009A5F09 /* DataEngineTest.m in Sources */,
 				0D95DFE81D059A2F0007F35E /* DatabaseTest.m in Sources */,
 				6EE37B9F1C8A0711006E0626 /* KmeanEntryTest.m in Sources */,
 				6EE37BAA1C902E0D006E0626 /* MotionDeductionTest.m in Sources */,
@@ -1635,10 +1724,10 @@
 /* End PBXSourcesBuildPhase section */
 
 /* Begin PBXTargetDependency section */
-		8A513D531C94812900A11C60 /* PBXTargetDependency */ = {
+		0D09BAD31D0EF5AE009A5F09 /* PBXTargetDependency */ = {
 			isa = PBXTargetDependency;
 			target = 8ABE3D881C78F77300AF659B /* VirtualCoach */;
-			targetProxy = 8A513D521C94812900A11C60 /* PBXContainerItemProxy */;
+			targetProxy = 0D09BAD21D0EF5AE009A5F09 /* PBXContainerItemProxy */;
 		};
 		8ABE3DAF1C78F77300AF659B /* PBXTargetDependency */ = {
 			isa = PBXTargetDependency;
@@ -1743,7 +1832,7 @@
 				LD_RUNPATH_SEARCH_PATHS = "$(inherited) @executable_path/Frameworks";
 				LIBRARY_SEARCH_PATHS = "$(PROJECT_DIR)/Libraries/libimagic";
 				OTHER_LDFLAGS = "-limagic_ios";
-				PRODUCT_BUNDLE_IDENTIFIER = eu.iseven.VirtualCoach;
+				PRODUCT_BUNDLE_IDENTIFIER = eu.lala.VirtualCoach;
 				PRODUCT_NAME = "$(TARGET_NAME)";
 				PROVISIONING_PROFILE = "";
 			};
@@ -1755,13 +1844,12 @@
 				ASSETCATALOG_COMPILER_APPICON_NAME = AppIcon;
 				CODE_SIGN_IDENTITY = "iPhone Developer";
 				"CODE_SIGN_IDENTITY[sdk=iphoneos*]" = "iPhone Developer";
-				GCC_SYMBOLS_PRIVATE_EXTERN = NO;
 				HEADER_SEARCH_PATHS = "$(SOURCE_ROOT)/Libraries/libimagic/include/**";
 				INFOPLIST_FILE = VirtualCoach/Info.plist;
 				LD_RUNPATH_SEARCH_PATHS = "$(inherited) @executable_path/Frameworks";
 				LIBRARY_SEARCH_PATHS = "$(PROJECT_DIR)/Libraries/libimagic";
 				OTHER_LDFLAGS = "-limagic_ios";
-				PRODUCT_BUNDLE_IDENTIFIER = eu.iseven.VirtualCoach;
+				PRODUCT_BUNDLE_IDENTIFIER = eu.lala.VirtualCoach;
 				PRODUCT_NAME = "$(TARGET_NAME)";
 				PROVISIONING_PROFILE = "";
 			};
@@ -1770,7 +1858,6 @@
 		8ABE3DBA1C78F77300AF659B /* Debug */ = {
 			isa = XCBuildConfiguration;
 			buildSettings = {
-				BUNDLE_LOADER = "$(TEST_HOST)";
 				HEADER_SEARCH_PATHS = "$(SOURCE_ROOT)/Libraries/libimagic/include";
 				INFOPLIST_FILE = VirtualCoachTests/Info.plist;
 				LD_RUNPATH_SEARCH_PATHS = "$(inherited) @executable_path/Frameworks @loader_path/Frameworks";
@@ -1785,7 +1872,6 @@
 		8ABE3DBB1C78F77300AF659B /* Release */ = {
 			isa = XCBuildConfiguration;
 			buildSettings = {
-				BUNDLE_LOADER = "$(TEST_HOST)";
 				HEADER_SEARCH_PATHS = "$(SOURCE_ROOT)/Libraries/libimagic/include";
 				INFOPLIST_FILE = VirtualCoachTests/Info.plist;
 				LD_RUNPATH_SEARCH_PATHS = "$(inherited) @executable_path/Frameworks @loader_path/Frameworks";
