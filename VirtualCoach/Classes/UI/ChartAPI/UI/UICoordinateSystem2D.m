@@ -15,6 +15,8 @@
 
 @interface UICoordinateSystem2D ()
 
+@property (nonatomic) NSMutableArray *layers;
+
 
 - (void)drawAxes;
 - (void)drawUnitSeparators;
@@ -25,6 +27,30 @@
 @end
 
 @implementation UICoordinateSystem2D
+
+- (instancetype)init
+{
+    return [self initWithFrame:CGRectZero];
+}
+
+- (instancetype)initWithFrame:(CGRect)frame
+{
+    self = [super initWithFrame:frame];
+    
+    if (self)
+    {
+        _wantsAbscissTitles = YES;
+        _wantsOrdinateTitles = YES;
+        
+        self.margin = 20.f;
+        self.backgroundColor = [UIColor clearColor];
+        _axisTitlesTextColor = [UIColor blackColor];
+        
+        _layers = [NSMutableArray array];
+    }
+    
+    return self;
+}
 
 - (instancetype)initWithFrame:(CGRect)frameRect coordinateSystem:(CoordinateSystem2D *)coordinateSystem
 {
@@ -38,13 +64,25 @@
         self.margin = 20.f;
         self.backgroundColor = [UIColor clearColor];
         
+        _axisTitlesTextColor = [UIColor blackColor];
+        
         self.coordinateSystem = coordinateSystem;
         
         self.abscissAxis = [[UIAxis alloc] initWithFrame:CGRectZero axis:[_coordinateSystem.axes objectForKey:@"absciss"]];
-        self.ordinateAxis = [[UIAxis alloc] initWithFrame:CGRectZero axis:[_coordinateSystem.axes objectForKey:@"ordinate"]];;
+        self.ordinateAxis = [[UIAxis alloc] initWithFrame:CGRectZero axis:[_coordinateSystem.axes objectForKey:@"ordinate"]];
+        
+        _layers = [NSMutableArray array];
     }
     
     return self;
+}
+
+- (void)setCoordinateSystem:(CoordinateSystem2D *)coordinateSystem
+{
+    _coordinateSystem = coordinateSystem;
+    
+    _abscissAxis = [[UIAxis alloc] initWithFrame:CGRectZero axis:[_coordinateSystem.axes objectForKey:@"absciss"]];
+    _ordinateAxis = [[UIAxis alloc] initWithFrame:CGRectZero axis:[_coordinateSystem.axes objectForKey:@"ordinate"]];
 }
 
 /*
@@ -63,6 +101,19 @@
     if (_wantsAxesName) [self drawAxesIdentifiers];
     
     [self drawTitlesLabel];
+}
+
+- (void)undraw
+{
+    for (CALayer *layer in _layers)
+    {
+        [layer removeFromSuperlayer];
+    }
+    
+    for (UIView *view in self.subviews)
+    {
+        [view removeFromSuperview];
+    }
 }
 
 - (void)drawAxes
@@ -85,6 +136,7 @@
     abscissShapeLayer.lineWidth = self.abscissAxis.lineWidth.floatValue;
     
     [self.layer addSublayer:abscissShapeLayer];
+    [_layers addObject:abscissShapeLayer];
     
     // Draw ordinate axis
     
@@ -98,6 +150,7 @@
     ordinateShapeLayer.lineWidth = self.ordinateAxis.lineWidth.floatValue;
     
     [self.layer addSublayer:ordinateShapeLayer];
+    [_layers addObject:ordinateShapeLayer];
 }
 
 - (void)drawUnitSeparators
@@ -109,7 +162,7 @@
     
     CGFloat currentXForSeparator = _margin + unitWidth;
     
-    for (NSUInteger i = 1; i < xAxis.values.count; i++)
+    for (NSUInteger i = 1; i <= _abscissAxis.titles.count; i++)
     {
         UIBezierPath *abscissUnitPath = [UIBezierPath bezierPath];
         [abscissUnitPath moveToPoint:CGPointMake(currentXForSeparator, self.frame.size.height - _margin - (self.abscissAxis.unitSeparatorLineLength.floatValue / 2))];
@@ -121,6 +174,7 @@
         abscissUnitShapeLayer.lineWidth = self.abscissAxis.lineWidth.floatValue;
         
         [self.layer addSublayer:abscissUnitShapeLayer];
+        [_layers addObject:abscissUnitShapeLayer];
         
         currentXForSeparator += unitWidth;
     }
@@ -131,11 +185,11 @@
     CGFloat unitHeight = (self.frame.size.height - (_margin * 2)) / unitIntervalY;
     CGFloat currentYForSeparator =  self.frame.size.height - 2*_margin ;
     
-    for (NSUInteger i = 1; i < yAxis.values.count; i++)
+    for (NSUInteger i = 1; i <= _ordinateAxis.titles.count; i++)
     {
         UIBezierPath *ordinateUnitPath = [UIBezierPath bezierPath];
-        [ordinateUnitPath moveToPoint:CGPointMake(_margin - (self.abscissAxis.unitSeparatorLineLength.floatValue / 2), currentYForSeparator)];
-        [ordinateUnitPath addLineToPoint:CGPointMake(_margin + (self.abscissAxis.unitSeparatorLineLength.floatValue / 2), currentYForSeparator)];
+        [ordinateUnitPath moveToPoint:CGPointMake(_margin - (self.ordinateAxis.unitSeparatorLineLength.floatValue / 2), currentYForSeparator)];
+        [ordinateUnitPath addLineToPoint:CGPointMake(_margin + (self.ordinateAxis.unitSeparatorLineLength.floatValue / 2), currentYForSeparator)];
         
         CAShapeLayer *ordinateUnitShapeLayer = [CAShapeLayer layer];
         ordinateUnitShapeLayer.path = [ordinateUnitPath CGPath];
@@ -143,6 +197,7 @@
         ordinateUnitShapeLayer.lineWidth = self.ordinateAxis.lineWidth.floatValue;
         
         [self.layer addSublayer:ordinateUnitShapeLayer];
+        [_layers addObject:ordinateUnitShapeLayer];
         
         currentYForSeparator -= unitHeight;
     }
@@ -168,6 +223,7 @@
         abscissUnitShapeLayer.lineWidth = 0.5;
         
         [self.layer addSublayer:abscissUnitShapeLayer];
+        [_layers addObject:abscissUnitShapeLayer];
         
         currentXForSeparator += unitWidth;
     }
@@ -190,6 +246,7 @@
         ordinateUnitShapeLayer.lineWidth = 0.5;
         
         [self.layer addSublayer:ordinateUnitShapeLayer];
+        [_layers addObject:ordinateUnitShapeLayer];
         
         currentYForSeparator += unitHeight;
     }
@@ -213,14 +270,19 @@
         
         for (NSUInteger i = 0; i < _abscissAxis.titles.count; i++)
         {
-            UILabel *label = [[UILabel alloc] init];
+            UIBaseLabel *label = [[UIBaseLabel alloc] init];
             [label setText:(NSString *)[_abscissAxis.titles objectAtIndex:i]];
-            [label setFont:[UIFont fontWithName:@"HelveticaNeue-Light" size:10.f]];
-            label.textColor = [UIColor blackColor];
+            [label setFont:[UIFont fontWithName:@"HelveticaNeue-Light" size:12.f]];
+            label.textColor = _axisTitlesTextColor;
             
-            [label setFrame:CGRectMake(currentXForSeparator -9, self.frame.size.height - _margin - (self.abscissAxis.unitSeparatorLineLength.floatValue / 2)+10, 21,21)];
+            [label resizeToFitText];
+            
+            currentXForSeparator -= (label.frame.size.width / 2);
+            
+            [label setFrame:CGRectMake(currentXForSeparator, self.frame.size.height - _margin + (self.abscissAxis.unitSeparatorLineLength.floatValue / 2), label.frame.size.width, label.frame.size.height)];
             [self addSubview:label];
             
+            currentXForSeparator += (label.frame.size.width / 2);
             currentXForSeparator += unitWidth;
         }
     }
@@ -231,29 +293,47 @@
         
         CGFloat unitIntervalY = yAxis.maxBound.floatValue / yAxis.unit.floatValue;
         CGFloat unitHeight = (self.frame.size.height - (_margin * 2)) / unitIntervalY;
-        CGFloat currentYForSeparator = self.frame.size.height - (2*_margin);
+        CGFloat currentYForSeparator = self.frame.size.height - (2 * _margin);
+        
         for (NSUInteger i = 0; i < _ordinateAxis.titles.count; i++)
         {
-            UILabel *label = [[UILabel alloc] init];
+            UIBaseLabel *label = [[UIBaseLabel alloc] init];
             [label setText:(NSString *)[_ordinateAxis.titles objectAtIndex:i]];
-            [label setFont:[UIFont fontWithName:@"HelveticaNeue-Light" size:10.f]];
-            label.textColor = [UIColor blackColor];
+            [label setFont:[UIFont fontWithName:@"HelveticaNeue-Light" size:12.f]];
+            label.textColor = _axisTitlesTextColor;
             
-            [label setFrame:CGRectMake(_margin - (self.abscissAxis.unitSeparatorLineLength.floatValue / 2)- 25, currentYForSeparator -12, 21, 21)];
+            [label resizeToFitText];
+            
+            currentYForSeparator -= (label.frame.size.height / 2);
+            
+            [label setFrame:CGRectMake(_margin - ((self.ordinateAxis.unitSeparatorLineLength.floatValue / 1.75) + label.frame.size.width), currentYForSeparator, label.frame.size.width, label.frame.size.height)];
             [self addSubview:label];
             
+            currentYForSeparator += (label.frame.size.height / 2);
             currentYForSeparator -= unitHeight;
         }
+    }
+    
+    if (_titleLabel.attributedText.length > 0)
+    {
+        [_titleLabel resizeToFitText];
+        
+        [_titleLabel setFrame:CGRectMake(self.frame.size.width - _titleLabel.frame.size.width, 0, _titleLabel.frame.size.width, _titleLabel.frame.size.height)];
+        [self addSubview:_titleLabel];
     }
 }
 
 - (void)drawCurve:(UICurve *)curve
 {
+    [curve setFrame:CGRectMake(0, 0, self.frame.size.width, self.frame.size.height)];
+    [curve setBackgroundColor:[UIColor clearColor]];
+    
+    
     Axis *xAxis = ((Axis *)[_coordinateSystem.axes objectForKey:@"absciss"]);
     Axis *yAxis = ((Axis *)[_coordinateSystem.axes objectForKey:@"ordinate"]);
     
-    CGFloat usefulWidth = self.frame.size.width - (_margin * 2);
-    CGFloat usefulHeight = self.frame.size.height - (_margin * 2);
+    CGFloat usefulWidth = curve.frame.size.width - (_margin * 2);
+    CGFloat usefulHeight = curve.frame.size.height - (_margin * 2);
     
     CGFloat unitIntervalX = xAxis.maxBound.floatValue / xAxis.unit.floatValue;
     CGFloat unitIntervalY = yAxis.maxBound.floatValue / yAxis.unit.floatValue;
@@ -271,7 +351,6 @@
     
     for (NSString *key in [curve.curve.values allKeys])
     {
-        
         if ([curve.curve.values objectForKey:key] != [NSNull null])
         {
             hasValues = YES;
@@ -306,9 +385,11 @@
                 
                 [curvePath closePath];
                 
-                [self.layer addSublayer:curveTemporaryShapeLayer];
-                
-                
+                if (curve.drawLine)
+                {
+                    [curve.layer addSublayer:curveTemporaryShapeLayer];
+                    [curve.objectLayers addObject:curveTemporaryShapeLayer];
+                }
                 
                 curvePath = [UIBezierPath bezierPath];
             }
@@ -316,7 +397,8 @@
             else
             {
                 x = (_margin + (index * unitWidth)) / xAxis.unit.floatValue;
-                y = (self.frame.size.height - (_margin)) - (((value.intValue/ yAxis.unit.floatValue) * unitHeight) );
+                y = (curve.frame.size.height - (_margin)) - (((value.intValue/ yAxis.unit.floatValue) * unitHeight) );
+                
                 if (counter == 0 || lastValueNull)
                 {
                     [curvePath moveToPoint:CGPointMake(x, y)];
@@ -334,19 +416,14 @@
             
             if (curve.drawPoints)
             {
-                UIBezierPath *pointCircle = [UIBezierPath bezierPathWithOvalInRect:CGRectMake(x - 2, y - 2, 4, 4)];
-                [pointCircle setLineWidth:2.0];
-                [pointCircle stroke];
-                
                 CAShapeLayer *circleShapeLayer = [CAShapeLayer layer];
-                circleShapeLayer.path = [pointCircle CGPath];
+                circleShapeLayer.path = [UIBezierPath bezierPathWithOvalInRect:CGRectMake(x - 2, y - 2, 4, 4)].CGPath;;
                 circleShapeLayer.strokeColor = [curve.lineColor CGColor];
                 circleShapeLayer.lineWidth = curve.lineWidth.floatValue;
                 circleShapeLayer.fillColor = [curve.lineColor CGColor];
                 
-                [pointCircle closePath];
-                
-                [self.layer addSublayer:circleShapeLayer];
+                [curve.layer addSublayer:circleShapeLayer];
+                [curve.objectLayers addObject:circleShapeLayer];
             }
             
             counter++;
@@ -355,6 +432,7 @@
         [curvePath moveToPoint:CGPointMake(lastX, lastY)];
         
         CAShapeLayer *curveShapeLayer = [CAShapeLayer layer];
+        curveShapeLayer.frame = curve.frame;
         curveShapeLayer.path = [curvePath CGPath];
         curveShapeLayer.strokeColor = [curve.lineColor CGColor];
         curveShapeLayer.lineWidth = curve.lineWidth.floatValue;
@@ -362,7 +440,31 @@
         
         [curvePath closePath];
         
-        [self.layer addSublayer:curveShapeLayer];
+        if (curve.drawLine)
+        {
+            [curve.layer addSublayer:curveShapeLayer];
+            [curve.objectLayers addObject:curveShapeLayer];
+        }
+    }
+    
+    [self addSubview:curve];
+}
+
+- (void)removeCurve:(UICurve *)curve
+{
+    for (UIView *subview in self.subviews)
+    {
+        if ([curve isEqual:subview])
+            [subview removeFromSuperview];
+    }
+}
+
+- (void)removeAllCurves
+{
+    for (UIView *subview in self.subviews)
+    {
+        if ([subview isMemberOfClass:[UICurve class]])
+            [subview removeFromSuperview];
     }
 }
 

@@ -102,18 +102,6 @@
     return result;
 }
 
--(NSArray *)searchByIdPlayer:(NSString *) idP
-{
-    NSString *query = @"select * from Statistical where idplayer='";
-    query = [query stringByAppendingString:idP];
-    query = [query stringByAppendingString:@"';"];
-    
-    NSArray * result =[[NSArray alloc]init];
-    result = [DatabaseService query:query mode:VCSelectIntegerIndexedResult];
-    
-    return result;
-}
-
 //UPDATE
 -(id)updateGlobalSuccessRate:(NSString *) gsr forDay:(NSString *) d Month:(NSString *) m andYear:(NSString *) y
 {
@@ -164,7 +152,6 @@
     
     return updateForehandGSR;
 }
-
 
 //DELETE
 -(id)deleteStatisticalById:(NSString *) idStat
