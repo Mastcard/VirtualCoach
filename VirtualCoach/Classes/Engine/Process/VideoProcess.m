@@ -88,15 +88,13 @@
     
     NSMutableArray *relevantSequencesInformations = [NSMutableArray array];
     
-    for (NSUInteger i = 1; i < finalObjectsMotion.count; i++)
+    for (NSUInteger i = 0; i < finalObjectsMotion.count; i++)
     {
         NSNumber *motionInfo = (NSNumber *)[finalObjectsMotion objectAtIndex:i];
         
         TrackingObjectPosition *objPos = (TrackingObjectPosition *)[objectsPosition objectAtIndex:i];
         
-        pt2d_t start = objPos.bounds.start, end = objPos.bounds.end;
-        
-        if (((start.x + start.y + end.x + end.y) > 0) && (motionInfo.intValue != -2))
+        if (motionInfo.intValue == 1 || motionInfo.intValue == 0)
         {
             NSArray *imageInformationKeys = [NSArray arrayWithObjects:@"imageId", @"start.x", @"start.y", @"end.x", @"end.y", @"moves", nil];
             
