@@ -95,18 +95,14 @@
         TrackingObjectPosition *objPos = (TrackingObjectPosition *)[objectsPosition objectAtIndex:i];
         
         pt2d_t start = objPos.bounds.start, end = objPos.bounds.end;
-        uint32_t tmp = start.x + start.y + end.x + end.y;
         
-        if (tmp != 0) // we only take the images when the object was tracked (where the bounds are real motherfucker)
-        {
-            NSArray *imageInformationKeys = [NSArray arrayWithObjects:@"imageId", @"start.x", @"start.y", @"end.x", @"end.y", @"moves", nil];
-            
-            NSArray *imageInformationObjects = [NSArray arrayWithObjects:[NSNumber numberWithUnsignedInt:(unsigned int)objPos.imageId], [NSNumber numberWithUnsignedInt:objPos.bounds.start.x], [NSNumber numberWithUnsignedInt:objPos.bounds.start.y], [NSNumber numberWithUnsignedInt:objPos.bounds.end.x], [NSNumber numberWithUnsignedInt:objPos.bounds.end.y], [NSNumber numberWithInt:motionInfo.intValue], nil];
-            
-            NSDictionary *imageInformation = [NSDictionary dictionaryWithObjects:imageInformationObjects forKeys:imageInformationKeys];
-            
-            [relevantSequencesInformations addObject:imageInformation];
-        }
+        NSArray *imageInformationKeys = [NSArray arrayWithObjects:@"imageId", @"start.x", @"start.y", @"end.x", @"end.y", @"moves", nil];
+        
+        NSArray *imageInformationObjects = [NSArray arrayWithObjects:[NSNumber numberWithUnsignedInt:(unsigned int)objPos.imageId], [NSNumber numberWithUnsignedInt:objPos.bounds.start.x], [NSNumber numberWithUnsignedInt:objPos.bounds.start.y], [NSNumber numberWithUnsignedInt:objPos.bounds.end.x], [NSNumber numberWithUnsignedInt:objPos.bounds.end.y], [NSNumber numberWithInt:motionInfo.intValue], nil];
+        
+        NSDictionary *imageInformation = [NSDictionary dictionaryWithObjects:imageInformationObjects forKeys:imageInformationKeys];
+        
+        [relevantSequencesInformations addObject:imageInformation];
     }
     
     // initializing data analysis process where optical flow and analysis will be called

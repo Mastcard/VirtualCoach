@@ -166,79 +166,74 @@
             
             charact_t *ch = characterize(NULL, src, nextLabels);
             
-            //            NSLog(@"export count : %lu", (unsigned long)_exportCount);
-            
-            //            float seconds_elapsed = (float)_exportCount / 60;
-            //            NSLog(@"seconds_elpased : %f", seconds_elapsed);
-            
-            int32_t bestRegId = overlappingreg(_previousReg, _previousLabels, nextLabels);
-            
-//            printf("bestRegId : %d\n", bestRegId);
-            
-            int isStatic = -1;
-            
-            
-            rect_t bds;
-            
-            
-            if ((bestRegId > 0) && (bestRegId <= ch->count))
+            if (ch != NULL)
             {
-                regchar_t *bestReg = ch->data[bestRegId-1];
+                int32_t bestRegId = overlappingreg(_previousReg, _previousLabels, nextLabels);
                 
-                bds.start.y = bestReg->bounds.start.y;
-                bds.start.x = bestReg->bounds.start.x;
-                bds.end.y = bestReg->bounds.end.y;
-                bds.end.x = bestReg->bounds.end.x;
+                int isStatic = -1;
                 
-                if ((_exportCount % _motionImageFactor) == 0)
+                rect_t bds;
+                
+                
+                if ((bestRegId > 0) && (bestRegId <= ch->count))
                 {
-                    int32_t comPixels = commonPixels(_previousMotionReg, _previousMotionLabels, bestReg, nextLabels);
+                    regchar_t *bestReg = ch->data[bestRegId-1];
                     
-                    float comPixelsPercentage = (float)comPixels / _previousMotionReg->size;
+                    bds.start.y = bestReg->bounds.start.y;
+                    bds.start.x = bestReg->bounds.start.x;
+                    bds.end.y = bestReg->bounds.end.y;
+                    bds.end.x = bestReg->bounds.end.x;
                     
-                    isStatic = comPixelsPercentage > _overlappingRate ? 1 : 0;
+                    if ((_exportCount % _motionImageFactor) == 0)
+                    {
+                        int32_t comPixels = commonPixels(_previousMotionReg, _previousMotionLabels, bestReg, nextLabels);
+                        
+                        float comPixelsPercentage = (float)comPixels / _previousMotionReg->size;
+                        
+                        isStatic = comPixelsPercentage > _overlappingRate ? 1 : 0;
+                        
+                        free(_previousMotionReg);
+                        _previousMotionReg = regcharcpy(bestReg);
+                        
+                        labfree(_previousMotionLabels);
+                        _previousMotionLabels = labcpy(nextLabels);
+                    }
                     
-                    free(_previousMotionReg);
-                    _previousMotionReg = regcharcpy(bestReg);
-                    
-                    labfree(_previousMotionLabels);
-                    _previousMotionLabels = labcpy(nextLabels);
+                    free(_previousReg);
+                    _previousReg = regcharcpy(bestReg);
+                    labfree(_previousLabels);
+                    _previousLabels = nextLabels;
                 }
                 
-                free(_previousReg);
-                _previousReg = regcharcpy(bestReg);
-                labfree(_previousLabels);
-                _previousLabels = nextLabels;
-            }
-            
-            else
-            {
-                labfree(nextLabels);
+                else
+                {
+                    labfree(nextLabels);
+                    
+                    bds.start.y = 0;
+                    bds.start.x = 0;
+                    bds.end.y = 0;
+                    bds.end.x = 0;
+                }
                 
-                bds.start.y = 0;
-                bds.start.x = 0;
-                bds.end.y = 0;
-                bds.end.x = 0;
-            }
-            
-            TrackingObjectPosition *objPos = [[TrackingObjectPosition alloc] init];
-            [objPos setBounds:bds];
-            [objPos setImageId:_count];
-            
-            [_objectsPositionArray addObject:objPos];
-            [_objectsMotionArray addObject:[NSNumber numberWithInt:isStatic]];
-            
-            gray8ifree(isubstract);
-            binifree(binary);
-            charactfree(ch);
-            
-            //
-            
-            NSUInteger rate = (NSUInteger)(_frameCount / 100);
-            
-            if (_count % rate == 0)
-            {
-                [_delegate didUpdateStatusWithProgress:0.0025 message:[NSString stringWithFormat:@"Tracking player.. (%lu / %lu)", (unsigned long)_count, (unsigned long)_frameCount]];
+                TrackingObjectPosition *objPos = [[TrackingObjectPosition alloc] init];
+                [objPos setBounds:bds];
+                [objPos setImageId:_count];
+                
+                [_objectsPositionArray addObject:objPos];
+                [_objectsMotionArray addObject:[NSNumber numberWithInt:isStatic]];
+                
+                gray8ifree(isubstract);
+                binifree(binary);
+                charactfree(ch);
+                
+                //
+                
+                NSUInteger rate = (NSUInteger)(_frameCount / 100);
+                
+                if (_count % rate == 0)
+                {
+                    [_delegate didUpdateStatusWithProgress:0.0025 message:[NSString stringWithFormat:@"Tracking player.. (%lu / %lu)", (unsigned long)_count, (unsigned long)_frameCount]];
+                }
             }
         }
         
