@@ -31,7 +31,7 @@
             u = speed->data[PXL_IDX(width, x, y)].x;
             v = speed->data[PXL_IDX(width, x, y)].y;
             norm = sqrt(u*u + v*v);
-            if (norm > 0.000005){
+            if (norm > THRESHOLD_HISTOGRAM){
                 angle = atan2(-v, u) * 180 / M_PI;
                 if ((int)angle < 0) {
                     angle += 360;

@@ -12,9 +12,5 @@
 
 + (NSUInteger)dayCountForMonth:(NSInteger)month;
 + (NSUInteger)dayCountForCurrentMonth;
-+ (NSArray *)dayTitlesForMonth:(NSInteger)month;
-+ (NSArray *)dayTitlesForCurrentMonth;
-+ (NSArray *)monthTitles;
-+ (NSArray *)dayTitles;
 
 @end
