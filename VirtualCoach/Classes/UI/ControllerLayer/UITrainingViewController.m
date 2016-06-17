@@ -8,6 +8,10 @@
 
 #import "UITrainingViewController.h"
 
+#define TRAININGS_TABLEVIEW_TAG 1
+#define PLAYERS_TABLEVIEW_TAG 2
+#define VIDEOS_TABLEVIEW_TAG 3
+
 @implementation UITrainingViewController
 
 - (instancetype)init
@@ -33,8 +37,6 @@
         [_trainingView.recordingViewButton addTarget:self action:@selector(recordingViewButtonAction) forControlEvents:UIControlEventTouchUpInside];
         
         self.view = _trainingView;
-        
-        self.navigationItem.title = @"Trainings";
     }
     
     return self;
