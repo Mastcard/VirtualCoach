@@ -22,6 +22,7 @@
 @property (nonatomic, strong) UIAuthenticationViewController *authenticationViewController;
 @property (nonatomic, strong) UIAccountCreationViewController *accountCreationViewController;
 @property (nonatomic, strong) UICaptureSessionViewController *captureSessionViewController;
+@property (nonatomic, strong) UIHomeViewController *homeViewController;
 @property (nonatomic, strong) UITrainingViewController *trainingViewController;
 @property (nonatomic, strong) UIMenuViewController *menuViewController;
 @property (nonatomic, strong) UIPlayerViewController *playerViewController;

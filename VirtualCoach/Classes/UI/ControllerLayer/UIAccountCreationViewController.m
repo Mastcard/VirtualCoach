@@ -26,8 +26,6 @@
         [_accountCreationView.credentialsView.leftOrRighHandedPickerView setDelegate:self];
         
         [_accountCreationView.credentialsView.createAccountButton addTarget:self action:@selector(createAccountButtonAction) forControlEvents:UIControlEventTouchUpInside];
-        
-        self.navigationItem.title = @"Account creation";
     }
     
     return self;
