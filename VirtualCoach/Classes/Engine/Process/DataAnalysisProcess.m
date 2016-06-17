@@ -38,11 +38,14 @@
 
 @property (nonatomic, assign) gray8i_t *firstFrame;
 @property (nonatomic, assign) gray8i_t *secondFrame;
-@property (nonatomic, assign) gray8i_t *thirdFrame;
+//@property (nonatomic, assign) gray8i_t *thirdFrame;
 
 @property (nonatomic, assign) rect_t firstFrameBounds;
 @property (nonatomic, assign) rect_t secondFrameBounds;
-@property (nonatomic, assign) rect_t thirdFrameBounds;
+//@property (nonatomic, assign) rect_t thirdFrameBounds;
+
+@property (nonatomic, assign) vect2darray_t *firstSpeedVectorArray;
+@property (nonatomic, assign) vect2darray_t *secondSpeedVectorArray;
 
 // miscalenneous
 
@@ -78,7 +81,7 @@
         
         _firstFrame = NULL;
         _secondFrame = NULL;
-        _thirdFrame = NULL;
+//        _thirdFrame = NULL;
         
         
         //tmp
@@ -170,91 +173,47 @@
                         playerBounds.start.y = startY.unsignedIntValue;
                         playerBounds.end.y = endY.unsignedIntValue;
                         
-                        if (_secondFrame == NULL)
+                        _secondFrame = src;
+                        _secondFrameBounds = playerBounds;
+                        
+                        vect2darray_t *speedVectors = opticalflow(_firstFrame, _secondFrame);
+                        
+                        double w = 0, z = 0;
+                        
+                        for (NSUInteger y = _secondFrameBounds.start.y; y < _secondFrameBounds.end.y; y++)
                         {
-                            _secondFrame = src;
-                            _secondFrameBounds = playerBounds;
+                            for (NSUInteger x = _secondFrameBounds.start.x; x < _secondFrameBounds.end.x; x++)
+                            {
+                                unsigned long idx = PXL_IDX(src->width, x, y);
+                                
+                                w = speedVectors->data[idx].x;
+                                z = speedVectors->data[idx].y;
+                                
+                                speedVectors->data[idx].x = (_secondFrame->data[idx] > _binaryThreshold) * w;
+                                speedVectors->data[idx].y = (_secondFrame->data[idx] > _binaryThreshold) * z;
+                            }
+                        }
+                        
+                        if (_firstSpeedVectorArray == NULL)
+                        {
+                            _firstSpeedVectorArray = speedVectors;
                         }
                         
                         else
                         {
-                            if (_thirdFrame == NULL)
-                            {
-                                _thirdFrame = src;
-                                _thirdFrameBounds = playerBounds;
-                            }
+                            _secondSpeedVectorArray = speedVectors;
                             
-                            // optical flow
+                            [_entryDataset addKmeanEntryToDataSetFromFirstSpeedVectorsTab:_firstSpeedVectorArray andSecondSpeedVectorsTab:_secondSpeedVectorArray betweenInterval:_secondFrameBounds andWithImageWidth:src->width];
                             
-                            vect2darray_t *speedVectors1 = opticalflow(_firstFrame, _secondFrame);
+                            [_histogram generateHistogramFromSpeedVector:_firstSpeedVectorArray betweenInterval:_firstFrameBounds andWithImageWidth:src->width];
                             
-                            double u = 0, v = 0;
-                            
-                            for (NSUInteger y = _secondFrameBounds.start.y; y < _secondFrameBounds.end.y; y++)
-                            {
-                                for (NSUInteger x = _secondFrameBounds.start.x; x < _secondFrameBounds.end.x; x++)
-                                {
-                                    unsigned long idx = PXL_IDX(src->width, x, y);
-                                    
-                                    u = speedVectors1->data[idx].x;
-                                    v = speedVectors1->data[idx].y;
-                                    
-                                    speedVectors1->data[idx].x = (_firstFrame->data[idx] > _binaryThreshold) * u;
-                                    speedVectors1->data[idx].y = (_firstFrame->data[idx] > _binaryThreshold) * v;
-                                }
-                            }
-                            
-                            // optical flow
-                            
-                            vect2darray_t *speedVectors2 = opticalflow(_secondFrame, _thirdFrame);
-                            
-                            double w = 0, z = 0;
-                            
-                            for (NSUInteger y = _thirdFrameBounds.start.y; y < _thirdFrameBounds.end.y; y++)
-                            {
-                                for (NSUInteger x = _thirdFrameBounds.start.x; x < _thirdFrameBounds.end.x; x++)
-                                {
-                                    unsigned long idx = PXL_IDX(src->width, x, y);
-                                    
-                                    w = speedVectors2->data[idx].x;
-                                    z = speedVectors2->data[idx].y;
-                                    
-                                    speedVectors2->data[idx].x = (_secondFrame->data[idx] > _binaryThreshold) * w;
-                                    speedVectors2->data[idx].y = (_secondFrame->data[idx] > _binaryThreshold) * z;
-                                }
-                            }
-                            
-                            [_histogram generateHistogramFromSpeedVector:speedVectors1 betweenInterval:playerBounds andWithImageWidth:src->width];
-                            [_histogram generateHistogramFromSpeedVector:speedVectors2 betweenInterval:playerBounds andWithImageWidth:src->width];
-                            
-                            [_entryDataset addKmeanEntryToDataSetFromFirstSpeedVectorsTab:speedVectors1 andSecondSpeedVectorsTab:speedVectors2 betweenInterval:playerBounds andWithImageWidth:src->width];
-                            
-                            gray8ifree(_firstFrame);
-                            _firstFrame = NULL;
-                            gray8ifree(_secondFrame);
-                            _secondFrame = NULL;
-                            
-                            _firstFrame = _thirdFrame;
-                            _thirdFrame = NULL;
-                            
-                            vect2darrfree(speedVectors1);
-                            vect2darrfree(speedVectors2);
-                            
-                            _firstFrameBounds.start.x = 0;
-                            _firstFrameBounds.start.y = 0;
-                            _firstFrameBounds.end.x = 0;
-                            _firstFrameBounds.end.y = 0;
-                            
-                            _secondFrameBounds.start.x = 0;
-                            _secondFrameBounds.start.y = 0;
-                            _secondFrameBounds.end.x = 0;
-                            _secondFrameBounds.end.y = 0;
-                            
-                            _thirdFrameBounds.start.x = 0;
-                            _thirdFrameBounds.start.y = 0;
-                            _thirdFrameBounds.end.x = 0;
-                            _thirdFrameBounds.end.y = 0;
+                            vect2darrfree(_firstSpeedVectorArray);
+                            _firstSpeedVectorArray = _secondSpeedVectorArray;
                         }
+                        
+                        gray8ifree(_firstFrame);
+                        _firstFrame = _secondFrame;
+                        _firstFrameBounds = _secondFrameBounds;
                     }
                     
                     else                        // sequence starts
