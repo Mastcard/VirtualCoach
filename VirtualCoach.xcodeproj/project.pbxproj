@@ -58,6 +58,8 @@
 		6EB1D02C1CEA2D8B006B6940 /* UICaptureSessionViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = 6EB1D0011CEA2D8B006B6940 /* UICaptureSessionViewController.m */; };
 		6EB1D02D1CEA2D8B006B6940 /* UIApplicationNavigationViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = 6EB1D0031CEA2D8B006B6940 /* UIApplicationNavigationViewController.m */; };
 		6EB1D02E1CEA2D8B006B6940 /* UIAuthenticationViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = 6EB1D0051CEA2D8B006B6940 /* UIAuthenticationViewController.m */; };
+		6EB1D02F1CEA2D8B006B6940 /* UIHomeViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = 6EB1D0071CEA2D8B006B6940 /* UIHomeViewController.m */; };
+		6EB1D0301CEA2D8B006B6940 /* UILaunchViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = 6EB1D0091CEA2D8B006B6940 /* UILaunchViewController.m */; };
 		6EB1D0311CEA2D8B006B6940 /* UIBaseButton.m in Sources */ = {isa = PBXBuildFile; fileRef = 6EB1D00D1CEA2D8B006B6940 /* UIBaseButton.m */; };
 		6EB1D0321CEA2D8B006B6940 /* UIBaseLabel.m in Sources */ = {isa = PBXBuildFile; fileRef = 6EB1D00F1CEA2D8B006B6940 /* UIBaseLabel.m */; };
 		6EB1D0331CEA2D8B006B6940 /* UIBaseView.m in Sources */ = {isa = PBXBuildFile; fileRef = 6EB1D0111CEA2D8B006B6940 /* UIBaseView.m */; };
@@ -70,6 +72,8 @@
 		6EB1D03A1CEA2D8B006B6940 /* UIRecordingDurationLabelView.m in Sources */ = {isa = PBXBuildFile; fileRef = 6EB1D0201CEA2D8B006B6940 /* UIRecordingDurationLabelView.m */; };
 		6EB1D03B1CEA2D8B006B6940 /* UIRecordingIconView.m in Sources */ = {isa = PBXBuildFile; fileRef = 6EB1D0221CEA2D8B006B6940 /* UIRecordingIconView.m */; };
 		6EB1D03C1CEA2D8B006B6940 /* UIAuthenticationView.m in Sources */ = {isa = PBXBuildFile; fileRef = 6EB1D0241CEA2D8B006B6940 /* UIAuthenticationView.m */; };
+		6EB1D03D1CEA2D8B006B6940 /* UIHomeView.m in Sources */ = {isa = PBXBuildFile; fileRef = 6EB1D0261CEA2D8B006B6940 /* UIHomeView.m */; };
+		6EB1D03E1CEA2D8B006B6940 /* UILaunchView.m in Sources */ = {isa = PBXBuildFile; fileRef = 6EB1D0281CEA2D8B006B6940 /* UILaunchView.m */; };
 		6EB1D04D1CEA2E44006B6940 /* TrackingServiceTest.m in Sources */ = {isa = PBXBuildFile; fileRef = 6EB1D04A1CEA2E44006B6940 /* TrackingServiceTest.m */; };
 		6EB1D04E1CEA2E44006B6940 /* QueueTest.m in Sources */ = {isa = PBXBuildFile; fileRef = 6EB1D04C1CEA2E44006B6940 /* QueueTest.m */; };
 		6EE37B6C1C872970006E0626 /* HistogramTest.m in Sources */ = {isa = PBXBuildFile; fileRef = 6EE37B6B1C872970006E0626 /* HistogramTest.m */; };
@@ -97,10 +101,6 @@
 		8A2512C91D0DAF9900DADFAD /* TrackingIrrelevantSequencesRemover.m in Sources */ = {isa = PBXBuildFile; fileRef = 8A2512C61D0DAF9900DADFAD /* TrackingIrrelevantSequencesRemover.m */; };
 		8A2512CA1D0DAF9900DADFAD /* TrackingRelevantSequencesBuilder.m in Sources */ = {isa = PBXBuildFile; fileRef = 8A2512C81D0DAF9900DADFAD /* TrackingRelevantSequencesBuilder.m */; };
 		8A2512CD1D0DB5D200DADFAD /* UIProcessProgressView.m in Sources */ = {isa = PBXBuildFile; fileRef = 8A2512CC1D0DB5D200DADFAD /* UIProcessProgressView.m */; };
-		8A7965911D11A5DB0096D746 /* UIMenuView.m in Sources */ = {isa = PBXBuildFile; fileRef = 8A79658E1D11A5DB0096D746 /* UIMenuView.m */; };
-		8A7965921D11A5DB0096D746 /* UIPlayerView.m in Sources */ = {isa = PBXBuildFile; fileRef = 8A7965901D11A5DB0096D746 /* UIPlayerView.m */; };
-		8A7965971D11A5E40096D746 /* UIMenuViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = 8A7965941D11A5E40096D746 /* UIMenuViewController.m */; };
-		8A7965981D11A5E40096D746 /* UIPlayerViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = 8A7965961D11A5E40096D746 /* UIPlayerViewController.m */; };
 		8AB35A9A1D0C68D70026503B /* UIBaseTextField.m in Sources */ = {isa = PBXBuildFile; fileRef = 8AB35A971D0C68D70026503B /* UIBaseTextField.m */; };
 		8AB35A9B1D0C68D70026503B /* UICheckbox.m in Sources */ = {isa = PBXBuildFile; fileRef = 8AB35A991D0C68D70026503B /* UICheckbox.m */; };
 		8AB35AA61D0C68E70026503B /* UIAccountCreationCredentialsView.m in Sources */ = {isa = PBXBuildFile; fileRef = 8AB35A9D1D0C68E70026503B /* UIAccountCreationCredentialsView.m */; };
@@ -272,6 +272,10 @@
 		6EB1D0031CEA2D8B006B6940 /* UIApplicationNavigationViewController.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = UIApplicationNavigationViewController.m; sourceTree = "<group>"; };
 		6EB1D0041CEA2D8B006B6940 /* UIAuthenticationViewController.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = UIAuthenticationViewController.h; sourceTree = "<group>"; };
 		6EB1D0051CEA2D8B006B6940 /* UIAuthenticationViewController.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = UIAuthenticationViewController.m; sourceTree = "<group>"; };
+		6EB1D0061CEA2D8B006B6940 /* UIHomeViewController.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = UIHomeViewController.h; sourceTree = "<group>"; };
+		6EB1D0071CEA2D8B006B6940 /* UIHomeViewController.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = UIHomeViewController.m; sourceTree = "<group>"; };
+		6EB1D0081CEA2D8B006B6940 /* UILaunchViewController.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = UILaunchViewController.h; sourceTree = "<group>"; };
+		6EB1D0091CEA2D8B006B6940 /* UILaunchViewController.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = UILaunchViewController.m; sourceTree = "<group>"; };
 		6EB1D00C1CEA2D8B006B6940 /* UIBaseButton.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = UIBaseButton.h; sourceTree = "<group>"; };
 		6EB1D00D1CEA2D8B006B6940 /* UIBaseButton.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = UIBaseButton.m; sourceTree = "<group>"; };
 		6EB1D00E1CEA2D8B006B6940 /* UIBaseLabel.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = UIBaseLabel.h; sourceTree = "<group>"; };
@@ -296,6 +300,10 @@
 		6EB1D0221CEA2D8B006B6940 /* UIRecordingIconView.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = UIRecordingIconView.m; sourceTree = "<group>"; };
 		6EB1D0231CEA2D8B006B6940 /* UIAuthenticationView.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = UIAuthenticationView.h; sourceTree = "<group>"; };
 		6EB1D0241CEA2D8B006B6940 /* UIAuthenticationView.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = UIAuthenticationView.m; sourceTree = "<group>"; };
+		6EB1D0251CEA2D8B006B6940 /* UIHomeView.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = UIHomeView.h; sourceTree = "<group>"; };
+		6EB1D0261CEA2D8B006B6940 /* UIHomeView.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = UIHomeView.m; sourceTree = "<group>"; };
+		6EB1D0271CEA2D8B006B6940 /* UILaunchView.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = UILaunchView.h; sourceTree = "<group>"; };
+		6EB1D0281CEA2D8B006B6940 /* UILaunchView.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = UILaunchView.m; sourceTree = "<group>"; };
 		6EB1D02A1CEA2D8B006B6940 /* Layout.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = Layout.h; sourceTree = "<group>"; };
 		6EB1D04A1CEA2E44006B6940 /* TrackingServiceTest.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = TrackingServiceTest.m; sourceTree = "<group>"; };
 		6EB1D04C1CEA2E44006B6940 /* QueueTest.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = QueueTest.m; sourceTree = "<group>"; };
@@ -347,14 +355,6 @@
 		8A2512CB1D0DB5D200DADFAD /* UIProcessProgressView.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = UIProcessProgressView.h; sourceTree = "<group>"; };
 		8A2512CC1D0DB5D200DADFAD /* UIProcessProgressView.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = UIProcessProgressView.m; sourceTree = "<group>"; };
 		8A2512CE1D0DB92700DADFAD /* SimpleProcessStatusDelegate.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = SimpleProcessStatusDelegate.h; sourceTree = "<group>"; };
-		8A79658D1D11A5DB0096D746 /* UIMenuView.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = UIMenuView.h; sourceTree = "<group>"; };
-		8A79658E1D11A5DB0096D746 /* UIMenuView.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = UIMenuView.m; sourceTree = "<group>"; };
-		8A79658F1D11A5DB0096D746 /* UIPlayerView.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = UIPlayerView.h; sourceTree = "<group>"; };
-		8A7965901D11A5DB0096D746 /* UIPlayerView.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = UIPlayerView.m; sourceTree = "<group>"; };
-		8A7965931D11A5E40096D746 /* UIMenuViewController.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = UIMenuViewController.h; sourceTree = "<group>"; };
-		8A7965941D11A5E40096D746 /* UIMenuViewController.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = UIMenuViewController.m; sourceTree = "<group>"; };
-		8A7965951D11A5E40096D746 /* UIPlayerViewController.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = UIPlayerViewController.h; sourceTree = "<group>"; };
-		8A7965961D11A5E40096D746 /* UIPlayerViewController.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = UIPlayerViewController.m; sourceTree = "<group>"; };
 		8AB35A961D0C68D70026503B /* UIBaseTextField.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = UIBaseTextField.h; sourceTree = "<group>"; };
 		8AB35A971D0C68D70026503B /* UIBaseTextField.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = UIBaseTextField.m; sourceTree = "<group>"; };
 		8AB35A981D0C68D70026503B /* UICheckbox.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = UICheckbox.h; sourceTree = "<group>"; };
@@ -690,10 +690,6 @@
 		6EB1CFFB1CEA2D8B006B6940 /* ControllerLayer */ = {
 			isa = PBXGroup;
 			children = (
-				8A7965931D11A5E40096D746 /* UIMenuViewController.h */,
-				8A7965941D11A5E40096D746 /* UIMenuViewController.m */,
-				8A7965951D11A5E40096D746 /* UIPlayerViewController.h */,
-				8A7965961D11A5E40096D746 /* UIPlayerViewController.m */,
 				8AB35AAB1D0C68F50026503B /* UIAccountCreationViewController.h */,
 				8AB35AAC1D0C68F50026503B /* UIAccountCreationViewController.m */,
 				8AB35AAD1D0C68F50026503B /* UITrainingViewController.h */,
@@ -704,6 +700,10 @@
 				6EB1D0031CEA2D8B006B6940 /* UIApplicationNavigationViewController.m */,
 				6EB1D0041CEA2D8B006B6940 /* UIAuthenticationViewController.h */,
 				6EB1D0051CEA2D8B006B6940 /* UIAuthenticationViewController.m */,
+				6EB1D0061CEA2D8B006B6940 /* UIHomeViewController.h */,
+				6EB1D0071CEA2D8B006B6940 /* UIHomeViewController.m */,
+				6EB1D0081CEA2D8B006B6940 /* UILaunchViewController.h */,
+				6EB1D0091CEA2D8B006B6940 /* UILaunchViewController.m */,
 			);
 			path = ControllerLayer;
 			sourceTree = "<group>";
@@ -731,10 +731,6 @@
 		6EB1D00A1CEA2D8B006B6940 /* PresentationLayer */ = {
 			isa = PBXGroup;
 			children = (
-				8A79658D1D11A5DB0096D746 /* UIMenuView.h */,
-				8A79658E1D11A5DB0096D746 /* UIMenuView.m */,
-				8A79658F1D11A5DB0096D746 /* UIPlayerView.h */,
-				8A7965901D11A5DB0096D746 /* UIPlayerView.m */,
 				8AB35A9C1D0C68E70026503B /* UIAccountCreationCredentialsView.h */,
 				8AB35A9D1D0C68E70026503B /* UIAccountCreationCredentialsView.m */,
 				8AB35A9E1D0C68E70026503B /* UIAccountCreationPresentationView.h */,
@@ -749,6 +745,10 @@
 				6EB1D0121CEA2D8B006B6940 /* LiveCapture */,
 				6EB1D0231CEA2D8B006B6940 /* UIAuthenticationView.h */,
 				6EB1D0241CEA2D8B006B6940 /* UIAuthenticationView.m */,
+				6EB1D0251CEA2D8B006B6940 /* UIHomeView.h */,
+				6EB1D0261CEA2D8B006B6940 /* UIHomeView.m */,
+				6EB1D0271CEA2D8B006B6940 /* UILaunchView.h */,
+				6EB1D0281CEA2D8B006B6940 /* UILaunchView.m */,
 				8A2512CB1D0DB5D200DADFAD /* UIProcessProgressView.h */,
 				8A2512CC1D0DB5D200DADFAD /* UIProcessProgressView.m */,
 			);
@@ -1484,7 +1484,6 @@
 				8ACF778E1CECABDC00248372 /* TrackingProcess.m in Sources */,
 				6EB1D02C1CEA2D8B006B6940 /* UICaptureSessionViewController.m in Sources */,
 				8ACF778D1CECAB2300248372 /* UICaptureSessionOverlayViewController.m in Sources */,
-				8A7965911D11A5DB0096D746 /* UIMenuView.m in Sources */,
 				8ACF77841CECAADB00248372 /* TrackingAnalysisProcess.m in Sources */,
 				0D95DFDD1D0599DD0007F35E /* TrophyDAO.m in Sources */,
 				7AE75D831D05B4AB0094A93E /* ReferenceMovementDO.m in Sources */,
@@ -1500,6 +1499,7 @@
 				8AB35AA81D0C68E70026503B /* UIAccountCreationView.m in Sources */,
 				0D95DFD41D0599DD0007F35E /* CoachDAO.m in Sources */,
 				6EB1D03C1CEA2D8B006B6940 /* UIAuthenticationView.m in Sources */,
+				6EB1D0301CEA2D8B006B6940 /* UILaunchViewController.m in Sources */,
 				0D95DFDA1D0599DD0007F35E /* PlayerTrophyDAO.m in Sources */,
 				8A2512C91D0DAF9900DADFAD /* TrackingIrrelevantSequencesRemover.m in Sources */,
 				6E0EC2CC1D11879000F9C818 /* UICoordinateSystem2D.m in Sources */,
@@ -1512,6 +1512,8 @@
 				8ACF778A1CECAAF800248372 /* ImageTools.m in Sources */,
 				6E0EC2BD1D11847A00F9C818 /* Axis.m in Sources */,
 				6E0EC2C01D1184B300F9C818 /* CoordinateSystem.m in Sources */,
+				6EB1D03E1CEA2D8B006B6940 /* UILaunchView.m in Sources */,
+				6EB1D02F1CEA2D8B006B6940 /* UIHomeViewController.m in Sources */,
 				6EB1CFF71CEA2D5E006B6940 /* HybridCaptureSessionController.m in Sources */,
 				6EB1CFF61CEA2D5E006B6940 /* HybridCaptureSession.m in Sources */,
 				6E0EC2B61D11832400F9C818 /* DateUtilities.m in Sources */,
@@ -1520,7 +1522,6 @@
 				8AB35AB01D0C68F50026503B /* UITrainingViewController.m in Sources */,
 				7AE75D811D05B4AB0094A93E /* MovementDO.m in Sources */,
 				7AE75D7F1D05B4AB0094A93E /* InterfaceMovementDO.m in Sources */,
-				8A7965971D11A5E40096D746 /* UIMenuViewController.m in Sources */,
 				6EB1CFF01CEA2D5E006B6940 /* CaptureDevicePropertiesUtilities.m in Sources */,
 				0D95DFD81D0599DD0007F35E /* PlayerDAO.m in Sources */,
 				6E0EC2CF1D1187F300F9C818 /* UICurve.m in Sources */,
@@ -1548,6 +1549,7 @@
 				7AE75D7E1D05B4AB0094A93E /* CoachDO.m in Sources */,
 				6EB1D0371CEA2D8B006B6940 /* UICaptureSessionOverlayView.m in Sources */,
 				8AB35AA71D0C68E70026503B /* UIAccountCreationPresentationView.m in Sources */,
+				6EB1D03D1CEA2D8B006B6940 /* UIHomeView.m in Sources */,
 				8AB35A9B1D0C68D70026503B /* UICheckbox.m in Sources */,
 				8ACF77851CECAADB00248372 /* VideoProcess.m in Sources */,
 				6EE37B9A1C88D07C006E0626 /* KmeanEntry.m in Sources */,
@@ -1559,7 +1561,6 @@
 				8AB35AA61D0C68E70026503B /* UIAccountCreationCredentialsView.m in Sources */,
 				0D95DFDF1D0599DD0007F35E /* VideoReferenceDAO.m in Sources */,
 				6EB1CFC11CEA2CB9006B6940 /* ReferenceFrameProcess.m in Sources */,
-				8A7965921D11A5DB0096D746 /* UIPlayerView.m in Sources */,
 				8ABE3D911C78F77300AF659B /* AppDelegate.m in Sources */,
 				6EE37BA81C9020A2006E0626 /* MotionDeduction.m in Sources */,
 				7AE75D821D05B4AB0094A93E /* PlayerDO.m in Sources */,
@@ -1574,7 +1575,6 @@
 				6EE37BB11C98037A006E0626 /* Cluster.m in Sources */,
 				6EB1CFEF1CEA2D5E006B6940 /* CaptureDevicePropertiesRetriever.m in Sources */,
 				8AB35AAF1D0C68F50026503B /* UIAccountCreationViewController.m in Sources */,
-				8A7965981D11A5E40096D746 /* UIPlayerViewController.m in Sources */,
 				0D95DFD31D0599DD0007F35E /* CheckDatabaseDAO.m in Sources */,
 				6EE37B9D1C8973C7006E0626 /* KmeanEntryDataSet.m in Sources */,
 				6EB1D0311CEA2D8B006B6940 /* UIBaseButton.m in Sources */,

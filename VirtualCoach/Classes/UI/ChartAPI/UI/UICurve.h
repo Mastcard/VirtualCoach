@@ -21,9 +21,6 @@
 
 @property (nonatomic) UIColor *lineColor;
 
-@property (nonatomic) NSMutableArray *objectLayers;
-
 - (instancetype)initWithFrame:(CGRect)frameRect curve:(Curve *)curve;
-- (void)undraw;
 
 @end
