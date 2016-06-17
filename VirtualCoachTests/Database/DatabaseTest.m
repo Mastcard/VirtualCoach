@@ -47,11 +47,11 @@
 
 - (void)setUp {
     [super setUp];
-   _databasePath  = [[[NSBundle bundleForClass:[self class]] resourcePath] stringByAppendingString:@"/Database/DatabaseTest.db"];
+    _databasePath  = [[[NSBundle bundleForClass:[self class]] resourcePath] stringByAppendingString:@"/Database/DatabaseTest.db"];
     NSLog(@"\n\n\n\n\n");
     NSLog(@"databasePath: %@", _databasePath);
     NSLog(@"\n\n\n\n\n");
-   [DatabaseService initWithFile:_databasePath];
+    [DatabaseService initWithFile:_databasePath];
     
     _sqlPath = [[[NSBundle bundleForClass:[self class]] resourcePath] stringByAppendingString:@"/Database/CreationTablesTest.sql"];
     NSLog(@"\n\n\n\n\n");
@@ -75,7 +75,7 @@
 
 - (void)tearDown {
     // Put teardown code here. This method is called after the invocation of each test method in the class.
-     [DatabaseService close];
+    [DatabaseService close];
     [super tearDown];
 }
 
@@ -90,7 +90,7 @@
     int check = [_checkDB CheckingDatabase: _databasePath andScriptCreationPath: _sqlPath];
     
     NSLog(@"CHECK: %d", check);
-   // XCTAssertEqual(check,2);
+    // XCTAssertEqual(check,2);
     
     /*********************************************TEST COACH*********************************************************/
     //insert coach
@@ -109,11 +109,11 @@
     
     XCTAssertEqualObjects(@"RAK", coaches[1][0]);
     XCTAssertEqualObjects(@"Lala", coaches[2][0]);
-  
+    
     //search coach's id
     int idCoach = [_coach searchIdByLogin:@"lrak" password:@"lrakotom"];
     NSString *idC = [NSString stringWithFormat:@"%d",idCoach];
-     NSLog(@"IDCOACH: %@", idC);
+    NSLog(@"IDCOACH: %@", idC);
     XCTAssertEqual(1, idCoach);
     
     int idCoach1 = [_coach searchIdByLogin:@"drom" password:@"dromain"];
@@ -168,8 +168,15 @@
     NSLog(@"IDPLAYER1: %@", idP3);
     XCTAssertEqual(4, idPlayer3);
     
+    //search player by id
+    NSArray *player = [_player searchPlayerById:idP];
+    
+    NSLog(@"%@", player);
+    
+    XCTAssertEqualObjects(@"LESUR", player[1][0]);
+    
     /*********************************************TEST CoachPlayer*********************************************************/
-
+    
     //insert coachplayer
     NSNumber *insertCoachPlayer = (NSNumber *) [_coachPlayer insertIntoCoach_Player:idC id_player:idP];
     
@@ -192,7 +199,14 @@
     NSString *idCP = [NSString stringWithFormat:@"%d",idCoachPlayer];
     
     XCTAssertEqual(1, idCoachPlayer);
-
+    
+    //search idPlayer
+    NSArray *idPlayers = [_coachPlayer searchIdPlayersByCoach:idC];
+    
+    NSLog(@"IDPLAYERS: %@", idPlayers);
+    
+    
+    XCTAssertEqual(1, [idPlayers[0][0] integerValue]);
     
     /*********************************************TEST VideoReference*******************************************************/
     //insert videoref
@@ -219,6 +233,12 @@
     NSLog(@"%@", VideoRef2);
     
     XCTAssertEqualObjects(@"/path/ppath/test1", VideoRef2[1][0]);
+    
+    NSArray *onevideo = [_videoRef searchVideoRefByIdCoach:idC];
+    
+    NSLog(@"ONEVIDEO: %@", onevideo);
+    
+    XCTAssertEqualObjects(@"/path/ppath/test1", onevideo[1][0]);
     
     //search viedeoRef's id
     int idVideoRef1 = [_videoRef searchIdVideoRefByName:@"/path/ppath/test1" Removed:@"1"];
@@ -274,7 +294,7 @@
     
     //show all video
     NSArray *videos = [_video allVideo];
-
+    
     NSLog(@"%@", videos);
     
     XCTAssertEqualObjects(@"/A/B/v1", videos[1][0]);
@@ -323,7 +343,7 @@
     NSArray *movements = [_mvt allMovement];
     
     NSLog(@"%@", movements);
-     NSString *idmvt = [[[movements objectAtIndex:0] objectAtIndex:0] stringValue];;
+    NSString *idmvt = [[[movements objectAtIndex:0] objectAtIndex:0] stringValue];;
     
     XCTAssertEqualObjects(@"forehand", movements[1][0]);
     
@@ -435,6 +455,12 @@
     
     XCTAssertEqualObjects(@"4",[[[stat3 objectAtIndex:3] objectAtIndex:0] stringValue]);
     
+    NSArray *statis = [_stat searchByIdPlayer:idP];
+    
+    NSLog(@"STAT:%@", statis);
+    
+    XCTAssertEqualObjects(@"1",[[[statis objectAtIndex:12] objectAtIndex:0] stringValue]);
+    
     //update
     NSNumber *updateServiceGSR = (NSNumber *)[_stat updateServiceGlobalSuccessRate:@"70%" forDay:@"29" Month:@"05" andYear:@"2016"];
     
@@ -466,7 +492,7 @@
     
     XCTAssertEqual([deleteCP2 boolValue],YES );
     
-     //delete trainingvideoplayer
+    //delete trainingvideoplayer
     NSNumber *deletePTV = (NSNumber *) [_ptv deletePlayerTrainingVideoByIdVideo:idV2];
     
     XCTAssertEqual([deletePTV boolValue],YES );
@@ -483,7 +509,7 @@
     
     XCTAssertEqual([deletePTV3 boolValue],YES );
     
-     //delete movementref
+    //delete movementref
     NSNumber *deletemvtref = (NSNumber *) [_mvtRef deleteMovementRefById:idmvtRef];
     
     XCTAssertEqual([deletemvtref boolValue],YES );
