@@ -13,6 +13,10 @@
 #import "SimpleProcessStatusDelegate.h"
 #import <AVKit/AVKit.h>
 
+#define TRAININGS_TABLEVIEW_TAG 1
+#define PLAYERS_TABLEVIEW_TAG 2
+#define VIDEOS_TABLEVIEW_TAG 3
+
 @class UITrainingView;
 
 @interface UITrainingViewController : UIBaseViewController <UITableViewDelegate, UITableViewDataSource, SimpleProcessStatusDelegate>
