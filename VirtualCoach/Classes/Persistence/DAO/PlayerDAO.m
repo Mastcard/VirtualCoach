@@ -57,6 +57,18 @@
     return desc;
 }
 
+-(NSArray *) searchPlayerById:(NSString *)idP
+{
+    NSString *query = @"select * from Player where idPlayer='";
+    query = [query stringByAppendingString:idP];
+    query = [query stringByAppendingString:@"';"];
+    
+    NSArray * result =[[NSArray alloc]init];
+    result = [DatabaseService query:query mode:VCSelectIntegerIndexedResult];
+    
+    return result;
+}
+
 //DELETE
 -(id)deletePlayerById:(NSString *) idPlayer
 {

@@ -19,6 +19,7 @@
 -(int)searchIdVideoRefByName:(NSString*) name Removed:(NSString *) rm;
 -(NSArray *)searchVideoRefByDay:(NSString*) d Month:(NSString *) m andYear:(NSString *) y;
 -(NSArray *)searchVideoRefByMonth:(NSString *) m andYear:(NSString *) y;
+-(NSArray *)searchVideoRefByIdCoach:(NSString *) idC;
 //DELETE
 -(id)deleteVideoRefById:(NSString *) idVideo;
 
