@@ -174,7 +174,6 @@
                 
                 rect_t bds;
                 
-                
                 if ((bestRegId > 0) && (bestRegId <= ch->count))
                 {
                     regchar_t *bestReg = ch->data[bestRegId-1];
@@ -213,6 +212,8 @@
                     bds.start.x = 0;
                     bds.end.y = 0;
                     bds.end.x = 0;
+                    
+                    isStatic = -2;
                 }
                 
                 TrackingObjectPosition *objPos = [[TrackingObjectPosition alloc] init];
