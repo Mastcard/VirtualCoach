@@ -17,7 +17,7 @@
 //INSERT
 -(id)insertIntoStatistical:(NSString *) cntForehand backhanh:(NSString *) cntBackhand service:(NSString *) cntService winningRun:(NSString *) win losingRun:(NSString *) lose globalSuccessRateForehand:(NSString *) forhandeRate globalSuccessRateBackhand:(NSString *) backhandRate globalSuccessRateService:(NSString *) ServiceRate day:(NSString *) d month:(NSString *) m year:(NSString *) y idPlayer:(NSString *)id
 {
-     NSString *query = @"insert into Statistical values (null,'";
+    NSString *query = @"insert into Statistical values (null,'";
     query = [query stringByAppendingString:cntForehand];
     query = [query stringByAppendingString:@"','"];
     query = [query stringByAppendingString:cntBackhand];
@@ -63,7 +63,7 @@
 -(NSArray *)searchByDay:(NSString*) day Month:(NSString *) month Andyear:(NSString *) year
 {
     NSString *query = @"select * from Statistical where day=";
-     query = [query stringByAppendingString:day];
+    query = [query stringByAppendingString:day];
     query = [query stringByAppendingString:@" and month="];
     query = [query stringByAppendingString:month];
     query = [query stringByAppendingString:@" and year="];
@@ -94,6 +94,18 @@
 {
     NSString *query = @"select * from Statistical where year='";
     query = [query stringByAppendingString:year];
+    query = [query stringByAppendingString:@"';"];
+    
+    NSArray * result =[[NSArray alloc]init];
+    result = [DatabaseService query:query mode:VCSelectIntegerIndexedResult];
+    
+    return result;
+}
+
+-(NSArray *)searchByIdPlayer:(NSString *) idP
+{
+    NSString *query = @"select * from Statistical where idplayer='";
+    query = [query stringByAppendingString:idP];
     query = [query stringByAppendingString:@"';"];
     
     NSArray * result =[[NSArray alloc]init];
@@ -152,6 +164,7 @@
     
     return updateForehandGSR;
 }
+
 
 //DELETE
 -(id)deleteStatisticalById:(NSString *) idStat
