@@ -12,7 +12,6 @@
 @interface UICoordinateSystemFactory : NSObject
 
 + (UICoordinateSystem2D *)createDefaultCoordinateSystem2DViewWithFrame:(CGRect)frame;
-+ (UICoordinateSystem2D *)createWhiteDefaultCoordinateSystem2DViewWithFrame:(CGRect)frame;
 
 
 @end

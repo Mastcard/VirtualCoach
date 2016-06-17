@@ -168,6 +168,13 @@
     NSLog(@"IDPLAYER1: %@", idP3);
     XCTAssertEqual(4, idPlayer3);
     
+    //search player by id
+    NSArray *player = [_player searchPlayerById:idP];
+    
+    NSLog(@"%@", player);
+    
+    XCTAssertEqualObjects(@"LESUR", player[1][0]);
+    
     /*********************************************TEST CoachPlayer*********************************************************/
 
     //insert coachplayer
@@ -192,7 +199,14 @@
     NSString *idCP = [NSString stringWithFormat:@"%d",idCoachPlayer];
     
     XCTAssertEqual(1, idCoachPlayer);
-
+    
+    //search idPlayer
+    NSArray *idPlayers = [_coachPlayer searchIdPlayersByCoach:idC];
+    
+    NSLog(@"IDPLAYERS: %@", idPlayers);
+    
+    
+    XCTAssertEqual(1, [idPlayers[0][0] integerValue]);
     
     /*********************************************TEST VideoReference*******************************************************/
     //insert videoref
@@ -219,6 +233,12 @@
     NSLog(@"%@", VideoRef2);
     
     XCTAssertEqualObjects(@"/path/ppath/test1", VideoRef2[1][0]);
+    
+    NSArray *onevideo = [_videoRef searchVideoRefByIdCoach:idC];
+    
+    NSLog(@"ONEVIDEO: %@", onevideo);
+    
+    XCTAssertEqualObjects(@"/path/ppath/test1", onevideo[1][0]);
     
     //search viedeoRef's id
     int idVideoRef1 = [_videoRef searchIdVideoRefByName:@"/path/ppath/test1" Removed:@"1"];
@@ -434,6 +454,12 @@
     NSLog(@"%@", stat3);
     
     XCTAssertEqualObjects(@"4",[[[stat3 objectAtIndex:3] objectAtIndex:0] stringValue]);
+    
+    NSArray *statis = [_stat searchByIdPlayer:idP];
+    
+     NSLog(@"STAT:%@", statis);
+    
+    XCTAssertEqualObjects(@"1",[[[statis objectAtIndex:12] objectAtIndex:0] stringValue]);
     
     //update
     NSNumber *updateServiceGSR = (NSNumber *)[_stat updateServiceGlobalSuccessRate:@"70%" forDay:@"29" Month:@"05" andYear:@"2016"];

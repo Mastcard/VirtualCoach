@@ -110,6 +110,18 @@
     return result;
 }
 
+-(NSArray *)searchVideoRefByIdCoach:(NSString *) idC
+{
+    NSString *query = @"select * from VideoReference where idcoach='";
+    query = [query stringByAppendingString:idC];
+    query = [query stringByAppendingString:@"';"];
+    
+    NSArray * result =[[NSArray alloc]init];
+    result = [DatabaseService query:query mode:VCSelectIntegerIndexedResult];
+    
+    return result;
+}
+
 //DELETE
 -(id)deleteVideoRefById:(NSString *) idVideo
 {

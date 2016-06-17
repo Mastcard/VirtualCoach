@@ -11,7 +11,6 @@
 #include <core.h>
 #import "Histogram.h"
 
-
 @interface KmeanEntry : NSObject <NSCoding>
 
 @property (nonatomic) int time;
