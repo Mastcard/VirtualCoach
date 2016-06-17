@@ -10,7 +10,6 @@
 
 #import "UIApplicationNavigationViewController.h"
 #import "UICaptureSessionViewController.h"
-#import "UIHomeViewController.h"
 #import "UIAuthenticationViewController.h"
 #import "UIAccountCreationViewController.h"
 
