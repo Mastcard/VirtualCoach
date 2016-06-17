@@ -10,6 +10,7 @@
 #import "CoordinateSystem2D.h"
 #import "UIAxis.h"
 #import "UICurve.h"
+#import "UIBaseLabel.h"
 
 @interface UICoordinateSystem2D : UIView
 
@@ -33,9 +34,16 @@
 
 @property (nonatomic) BOOL wantsOrdinateTitles;
 
+@property (nonatomic) UIColor *axisTitlesTextColor;
+
+@property (nonatomic) UIBaseLabel *titleLabel;
+
 - (instancetype)initWithFrame:(CGRect)frameRect coordinateSystem:(CoordinateSystem2D *)coordinateSystem;
 
 - (void)draw;
+- (void)undraw;
 - (void)drawCurve:(UICurve *)curve;
+- (void)removeCurve:(UICurve *)curve;
+- (void)removeAllCurves;
 
 @end

@@ -8,7 +8,6 @@
 
 #import "UIApplicationNavigationViewController.h"
 
-#import "UIHomeViewController.h"
 #import "UICaptureSessionViewController.h"
 
 @implementation UIApplicationNavigationViewController
@@ -20,9 +19,6 @@
     if (self)
     {
         _authenticationViewController = (UIAuthenticationViewController *)rootViewController;
-        //_homeViewController = (UIHomeViewController *)rootViewController;
-        //_accounCreationViewController = (UIAccountCreationViewController *)rootViewController;
-        _homeViewController = [[UIHomeViewController alloc] init];
         _accountCreationViewController = [[UIAccountCreationViewController alloc] init];
         _trainingViewController = [[UITrainingViewController alloc] init];
         _menuViewController = [[UIMenuViewController alloc] init];
@@ -30,7 +26,6 @@
         
         [_authenticationViewController prepareForUse];
         [_accountCreationViewController prepareForUse];
-        [_homeViewController prepareForUse];
         [_trainingViewController prepareForUse];
         [_menuViewController prepareForUse];
         [_playerViewController prepareForUse];
@@ -39,6 +34,12 @@
         _captureSessionViewController = [[UICaptureSessionViewController alloc] initWithSessionController:[captureProcessManager captureSessionController]];
         
         [_captureSessionViewController prepareForUse];
+        
+        [self.navigationBar setBackgroundImage:[UIImage new]
+                                 forBarMetrics:UIBarMetricsDefault];
+        self.navigationBar.shadowImage = [UIImage new];
+        self.navigationBar.translucent = YES;
+        [self.navigationBar setTitleTextAttributes:@{NSForegroundColorAttributeName : [UIColor whiteColor]}];
         
         [self popToRootViewControllerAnimated:NO];
     }

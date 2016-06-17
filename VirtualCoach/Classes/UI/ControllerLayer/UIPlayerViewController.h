@@ -8,6 +8,10 @@
 
 #import "UIBaseViewController.h"
 #import "UIPlayerView.h"
+#import "CoordinateSystem2D.h"
+#import "Axis.h"
+#import "UICoordinateSystemFactory.h"
+#import "DateUtilities.h"
 
 #define CURVE_DATA_PICKERVIEW_TAG 1
 #define CURVE_PERIOD_PICKERVIEW_TAG 2
@@ -20,5 +24,12 @@
 @property (nonatomic, strong) NSMutableArray *curveDataPickerViewData;
 @property (nonatomic, strong) NSMutableArray *curvePeriodPickerViewData;
 @property (nonatomic, strong) NSMutableArray *curveStylePickerViewData;
+
+@property (nonatomic, strong) NSMutableArray *trainingsTableViewData;
+@property (nonatomic, strong) NSMutableArray *playersTableViewData;
+
+@property (nonatomic, strong) UIPinchGestureRecognizer *curvesViewPinchGestureRecognizer;
+
+- (void)twoFingerPinchOnCurveView:(UIPinchGestureRecognizer *)pinchGestureRecognizer;
 
 @end

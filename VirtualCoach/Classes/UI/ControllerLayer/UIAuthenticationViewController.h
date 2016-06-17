@@ -10,7 +10,6 @@
 
 #import "UIAuthenticationView.h"
 #import "UIApplicationNavigationViewController.h"
-#import "UIHomeViewController.h"
 
 @interface UIAuthenticationViewController : UIBaseViewController
 
