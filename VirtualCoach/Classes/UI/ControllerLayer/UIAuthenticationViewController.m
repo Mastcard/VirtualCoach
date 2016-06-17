@@ -18,8 +18,6 @@
     {
         _authenticationView = [[UIAuthenticationView alloc] initWithFrame:[UIScreen mainScreen].bounds];
         
-        [[self navigationController] setNavigationBarHidden:YES animated:NO];
-        self.navigationController.hidesBarsOnTap = YES;
         self.view = _authenticationView;
         
         [_authenticationView.credentialsView.loginButton addTarget:self action:@selector(loginButtonAction) forControlEvents:UIControlEventTouchUpInside];
@@ -34,13 +32,6 @@
     [_authenticationView layout];
 }
 
-- (void)viewWillAppear:(BOOL)animated
-{
-    [self.navigationController.navigationBar setBackgroundImage:[UIImage new] forBarMetrics:UIBarMetricsDefault];
-    self.navigationController.navigationBar.shadowImage = [UIImage new];
-    self.navigationController.navigationBar.translucent = YES;
-}
-
 - (void)loginButtonAction
 {
     // set loginSuccess depending on authtication result
@@ -50,6 +41,13 @@
     if (loginSuccess)
     {
         UIApplicationNavigationViewController *nav = (UIApplicationNavigationViewController *)self.navigationController;
+        
+        UIBarButtonItem *newBackButton =
+        [[UIBarButtonItem alloc] initWithTitle:@"Disconnect"
+                                         style:UIBarButtonItemStylePlain
+                                        target:nil
+                                        action:nil];
+        [[self navigationItem] setBackBarButtonItem:newBackButton];
         
         [nav pushViewController:nav.menuViewController animated:YES];
     }
@@ -78,6 +76,13 @@
 - (void)createAccountButtonAction
 {
     UIApplicationNavigationViewController *nav = (UIApplicationNavigationViewController *)self.navigationController;
+    
+    UIBarButtonItem *newBackButton =
+    [[UIBarButtonItem alloc] initWithTitle:@"Back"
+                                     style:UIBarButtonItemStylePlain
+                                    target:nil
+                                    action:nil];
+    [[self navigationItem] setBackBarButtonItem:newBackButton];
     
     [nav pushViewController:nav.accountCreationViewController animated:YES];
 }

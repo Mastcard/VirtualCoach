@@ -7,6 +7,7 @@
 //
 
 #import "UIPlayerViewController.h"
+#import "UITrainingViewController.h"
 
 @implementation UIPlayerViewController
 
@@ -20,9 +21,9 @@
         
         _curveDataPickerViewData = [[NSMutableArray alloc] initWithObjects:@"Forehands", @"Backhands", @"Services", @"Forehands (progress)", @"Backhands (progress)", @"Services (progress)", nil];
         
-        _curvePeriodPickerViewData = [[NSMutableArray alloc] initWithObjects:@"Daily", @"Weekly", @"Monthly", @"Yearly", nil];
+        _curvePeriodPickerViewData = [[NSMutableArray alloc] initWithObjects:@"Weekly", @"Monthly", @"Yearly", nil];
         
-        _curveStylePickerViewData = [[NSMutableArray alloc] initWithObjects:@"Only plots", @"Curves", nil];
+        _curveStylePickerViewData = [[NSMutableArray alloc] initWithObjects:@"Plots", @"Curves", @"Both", nil];
         
         [_playerView.dataPickerView setDelegate:self];
         [_playerView.dataPickerView setDataSource:self];
@@ -33,7 +34,15 @@
         [_playerView.stylePickerView setDelegate:self];
         [_playerView.stylePickerView setDataSource:self];
         
+        [_playerView.playersTableView setDelegate:self];
+        [_playerView.playersTableView setDataSource:self];
+        
+        [_playerView.trainingsTableView setDelegate:self];
+        [_playerView.trainingsTableView setDataSource:self];
+        
         self.view = _playerView;
+        
+        self.navigationItem.title = @"Players";
     }
     
     return self;
@@ -41,7 +50,75 @@
 
 - (void)prepareForUse
 {
+    Axis *weeklyAxis = [Axis weeklyAxis];
+    
+    Axis *motionCountAxis = [Axis defaultAxis];
+    motionCountAxis.maxBound = [NSNumber numberWithInt:1000];
+    motionCountAxis.unit = [NSNumber numberWithInt:100];
+    
+    Axis *progressAxis = [Axis defaultAxis];
+    progressAxis.maxBound = [NSNumber numberWithFloat:100.f];
+    progressAxis.unit = [NSNumber numberWithInt:10];
+    
+    CoordinateSystem2D *weeklyCoordinateSystem = [[CoordinateSystem2D alloc] init];
+    
+    [weeklyCoordinateSystem.axes setObject:weeklyAxis forKey:@"absciss"];
+    [weeklyCoordinateSystem.axes setObject:motionCountAxis forKey:@"ordinate"];
+    
+    [weeklyCoordinateSystem prepare];
+    
+    [_playerView.coordinateSystemView setCoordinateSystem:weeklyCoordinateSystem];
+    
     [_playerView layout];
+    
+    _playerView.coordinateSystemView.margin = 25.f;
+    _playerView.coordinateSystemView.wantsAbscissTitles = YES;
+    _playerView.coordinateSystemView.wantsOrdinateTitles = YES;
+    _playerView.coordinateSystemView.axisTitlesTextColor = [UIColor whiteColor];
+    
+    _playerView.coordinateSystemView.abscissAxis.titleUnit = [NSNumber numberWithInt:1];
+    _playerView.coordinateSystemView.abscissAxis.lineColor = [UIColor whiteColor];
+    _playerView.coordinateSystemView.abscissAxis.titles = [DateUtilities dayTitles];
+    _playerView.coordinateSystemView.abscissAxis.lineWidth = [NSNumber numberWithInt:2];
+    _playerView.coordinateSystemView.abscissAxis.unitSeparatorLineLength = [NSNumber numberWithInt:8];
+    _playerView.coordinateSystemView.abscissAxis.titleInterval = [NSNumber numberWithInt:1];
+    
+    _playerView.coordinateSystemView.ordinateAxis.titleUnit = [NSNumber numberWithInt:100];
+    _playerView.coordinateSystemView.ordinateAxis.lineColor = [UIColor whiteColor];
+    _playerView.coordinateSystemView.ordinateAxis.titles = [NSArray arrayWithObjects:@"100", @"200", @"300", @"400", @"500", @"600", @"700", @"800", @"900", @"1000", nil];
+    _playerView.coordinateSystemView.ordinateAxis.lineWidth = [NSNumber numberWithInt:2];
+    _playerView.coordinateSystemView.ordinateAxis.unitSeparatorLineLength = [NSNumber numberWithInt:8];
+    _playerView.coordinateSystemView.ordinateAxis.titleInterval = [NSNumber numberWithInt:1];
+    
+    
+    [_playerView.coordinateSystemView draw];
+    
+    Curve *curve = [[Curve alloc] init];
+    
+        curve.values = [NSOrderedDictionary dictionaryWithObjects:
+                        [NSArray arrayWithObjects:[NSNumber numberWithInt:516], [NSNumber numberWithInt:327], [NSNull null], [NSNull null], [NSNumber numberWithInt:628], [NSNumber numberWithInt:804], [NSNumber numberWithInt:173], nil]
+                                                          forKeys:
+                        _playerView.coordinateSystemView.abscissAxis.titles];
+    
+    
+        UICurve *uicurve = [[UICurve alloc] initWithFrame:CGRectZero curve:curve];
+        uicurve.lineColor = [UIColor whiteColor];
+        uicurve.drawPoints = NO;
+        uicurve.lineWidth = [NSNumber numberWithFloat:0.3];
+    
+    [_playerView.coordinateSystemView drawCurve:uicurve];
+}
+
+- (void)viewWillAppear:(BOOL)animated
+{
+    // set table view controller datas
+    
+    _trainingsTableViewData = [NSMutableArray arrayWithObjects:@"Training1", @"Training2", @"Training3", @"Training4", @"Training5", @"Training6", @"Training7", @"Training8", @"Training9", @"Training10", @"Training11", @"Training12", nil];
+    _playersTableViewData = [NSMutableArray arrayWithObjects:@"Joe", @"David", @"Luke", @"Steve P", @"Jeffrey", nil];
+    
+    _curvesViewPinchGestureRecognizer = [[UIPinchGestureRecognizer alloc] initWithTarget:self action:@selector(twoFingerPinchOnCurveView:)];
+    _curvesViewPinchGestureRecognizer.scale = 1;
+    [_playerView.coordinateSystemView addGestureRecognizer:_curvesViewPinchGestureRecognizer];
 }
 
 -(NSInteger)numberOfComponentsInPickerView:(UIPickerView *)pickerView
@@ -68,13 +145,166 @@
 -(void)pickerView:(UIPickerView *)pickerView didSelectRow:(NSInteger)row inComponent:(NSInteger)component
 {
     if (pickerView.tag == CURVE_DATA_PICKERVIEW_TAG)
+    {
         NSLog(@"You selected this: %@", [_curveDataPickerViewData objectAtIndex:row]);
+        
+        if ([[_curveDataPickerViewData objectAtIndex:row] isEqualToString:@"Forehands"])
+        {
+            
+        }
+        
+        else if ([[_curveDataPickerViewData objectAtIndex:row] isEqualToString:@"Backhands"])
+        {
+            
+        }
+        
+        else if ([[_curveDataPickerViewData objectAtIndex:row] isEqualToString:@"Services"])
+        {
+            
+        }
+    }
     
     else if (pickerView.tag == CURVE_PERIOD_PICKERVIEW_TAG)
-        NSLog(@"You selected this: %@", [_curvePeriodPickerViewData objectAtIndex:row]);
+    {
+        if ([[_curvePeriodPickerViewData objectAtIndex:row] isEqualToString:@"Weekly"])
+        {
+            Axis *weeklyAxis = [Axis weeklyAxis];
+            Axis *motionCountAxis = [Axis defaultAxis];
+            motionCountAxis.maxBound = [NSNumber numberWithInt:1000];
+            motionCountAxis.unit = [NSNumber numberWithInt:100];
+            
+            CoordinateSystem2D *weeklyCoordinateSystem = [[CoordinateSystem2D alloc] init];
+            [weeklyCoordinateSystem.axes setObject:weeklyAxis forKey:@"absciss"];
+            [weeklyCoordinateSystem.axes setObject:motionCountAxis forKey:@"ordinate"];
+            [weeklyCoordinateSystem prepare];
+            
+            [_playerView.coordinateSystemView setCoordinateSystem:weeklyCoordinateSystem];
+            
+            _playerView.coordinateSystemView.abscissAxis.titleUnit = [NSNumber numberWithInt:1];
+            _playerView.coordinateSystemView.abscissAxis.lineColor = [UIColor whiteColor];
+            _playerView.coordinateSystemView.abscissAxis.titles = [DateUtilities dayTitles];
+            _playerView.coordinateSystemView.abscissAxis.lineWidth = [NSNumber numberWithInt:2];
+            _playerView.coordinateSystemView.abscissAxis.unitSeparatorLineLength = [NSNumber numberWithInt:8];
+            _playerView.coordinateSystemView.abscissAxis.titleInterval = [NSNumber numberWithInt:1];
+            
+            _playerView.coordinateSystemView.ordinateAxis.titleUnit = [NSNumber numberWithInt:100];
+            _playerView.coordinateSystemView.ordinateAxis.lineColor = [UIColor whiteColor];
+            _playerView.coordinateSystemView.ordinateAxis.titles = [NSArray arrayWithObjects:@"100", @"200", @"300", @"400", @"500", @"600", @"700", @"800", @"900", @"1000", nil];
+            _playerView.coordinateSystemView.ordinateAxis.lineWidth = [NSNumber numberWithInt:2];
+            _playerView.coordinateSystemView.ordinateAxis.unitSeparatorLineLength = [NSNumber numberWithInt:8];
+            _playerView.coordinateSystemView.ordinateAxis.titleInterval = [NSNumber numberWithInt:1];
+            
+            [_playerView.coordinateSystemView undraw];
+            [_playerView.coordinateSystemView draw];
+        }
+        
+        else if ([[_curvePeriodPickerViewData objectAtIndex:row] isEqualToString:@"Monthly"])
+        {
+            Axis *monthlyAxis = [Axis monthlyAxisForCurrentMonth];
+            Axis *motionCountAxis = [Axis defaultAxis];
+            motionCountAxis.maxBound = [NSNumber numberWithInt:1000];
+            motionCountAxis.unit = [NSNumber numberWithInt:100];
+            
+            CoordinateSystem2D *monthlyCoordinateSystem = [[CoordinateSystem2D alloc] init];
+            [monthlyCoordinateSystem.axes setObject:monthlyAxis forKey:@"absciss"];
+            [monthlyCoordinateSystem.axes setObject:motionCountAxis forKey:@"ordinate"];
+            [monthlyCoordinateSystem prepare];
+            
+            [_playerView.coordinateSystemView setCoordinateSystem:monthlyCoordinateSystem];
+            
+            _playerView.coordinateSystemView.abscissAxis.titleUnit = [NSNumber numberWithInt:1];
+            _playerView.coordinateSystemView.abscissAxis.lineColor = [UIColor whiteColor];
+            _playerView.coordinateSystemView.abscissAxis.titles = [DateUtilities dayTitlesForCurrentMonth];
+            _playerView.coordinateSystemView.abscissAxis.lineWidth = [NSNumber numberWithInt:2];
+            _playerView.coordinateSystemView.abscissAxis.unitSeparatorLineLength = [NSNumber numberWithInt:8];
+            _playerView.coordinateSystemView.abscissAxis.titleInterval = [NSNumber numberWithInt:1];
+            
+            _playerView.coordinateSystemView.ordinateAxis.titleUnit = [NSNumber numberWithInt:100];
+            _playerView.coordinateSystemView.ordinateAxis.lineColor = [UIColor whiteColor];
+            _playerView.coordinateSystemView.ordinateAxis.titles = [NSArray arrayWithObjects:@"100", @"200", @"300", @"400", @"500", @"600", @"700", @"800", @"900", @"1000", nil];
+            _playerView.coordinateSystemView.ordinateAxis.lineWidth = [NSNumber numberWithInt:2];
+            _playerView.coordinateSystemView.ordinateAxis.unitSeparatorLineLength = [NSNumber numberWithInt:8];
+            _playerView.coordinateSystemView.ordinateAxis.titleInterval = [NSNumber numberWithInt:1];
+            
+            [_playerView.coordinateSystemView undraw];
+            [_playerView.coordinateSystemView draw];
+        }
+        
+        else if ([[_curvePeriodPickerViewData objectAtIndex:row] isEqualToString:@"Yearly"])
+        {
+            Axis *yearlyAxis = [Axis yearlyAxis];
+            Axis *motionCountAxis = [Axis defaultAxis];
+            motionCountAxis.maxBound = [NSNumber numberWithInt:1000];
+            motionCountAxis.unit = [NSNumber numberWithInt:100];
+            
+            CoordinateSystem2D *yearlyCoordinateSystem = [[CoordinateSystem2D alloc] init];
+            [yearlyCoordinateSystem.axes setObject:yearlyAxis forKey:@"absciss"];
+            [yearlyCoordinateSystem.axes setObject:motionCountAxis forKey:@"ordinate"];
+            [yearlyCoordinateSystem prepare];
+            
+            [_playerView.coordinateSystemView setCoordinateSystem:yearlyCoordinateSystem];
+            
+            _playerView.coordinateSystemView.abscissAxis.titleUnit = [NSNumber numberWithInt:1];
+            _playerView.coordinateSystemView.abscissAxis.lineColor = [UIColor whiteColor];
+            _playerView.coordinateSystemView.abscissAxis.titles = [DateUtilities monthTitles];
+            _playerView.coordinateSystemView.abscissAxis.lineWidth = [NSNumber numberWithInt:2];
+            _playerView.coordinateSystemView.abscissAxis.unitSeparatorLineLength = [NSNumber numberWithInt:8];
+            _playerView.coordinateSystemView.abscissAxis.titleInterval = [NSNumber numberWithInt:1];
+            
+            _playerView.coordinateSystemView.ordinateAxis.titleUnit = [NSNumber numberWithInt:100];
+            _playerView.coordinateSystemView.ordinateAxis.lineColor = [UIColor whiteColor];
+            _playerView.coordinateSystemView.ordinateAxis.titles = [NSArray arrayWithObjects:@"100", @"200", @"300", @"400", @"500", @"600", @"700", @"800", @"900", @"1000", nil];
+            _playerView.coordinateSystemView.ordinateAxis.lineWidth = [NSNumber numberWithInt:2];
+            _playerView.coordinateSystemView.ordinateAxis.unitSeparatorLineLength = [NSNumber numberWithInt:8];
+            _playerView.coordinateSystemView.ordinateAxis.titleInterval = [NSNumber numberWithInt:1];
+            
+            [_playerView.coordinateSystemView undraw];
+            [_playerView.coordinateSystemView draw];
+        }
+    }
+    
     
     else if (pickerView.tag == CURVE_STYLE_PICKERVIEW_TAG)
-        NSLog(@"You selected this: %@", [_curveStylePickerViewData objectAtIndex:row]);
+    {
+        NSMutableArray *drawnCurvesArray = [NSMutableArray array];
+        
+        BOOL drawPoints = NO;
+        BOOL drawLine = NO;
+        
+        for (UIView *subview in _playerView.coordinateSystemView.subviews)
+        {
+            if ([subview isMemberOfClass:[UICurve class]])
+                [drawnCurvesArray addObject:subview];
+        }
+        
+        if ([[_curveStylePickerViewData objectAtIndex:row] isEqualToString:@"Plots"])
+        {
+            drawPoints = YES;
+            drawLine = NO;
+        }
+        
+        
+        else if ([[_curveStylePickerViewData objectAtIndex:row] isEqualToString:@"Curves"])
+        {
+            drawPoints = NO;
+            drawLine = YES;
+        }
+        
+        else if ([[_curveStylePickerViewData objectAtIndex:row] isEqualToString:@"Both"])
+        {
+            drawPoints = YES;
+            drawLine = YES;
+        }
+        
+        for (UICurve *curve in drawnCurvesArray)
+        {
+            [_playerView.coordinateSystemView removeCurve:curve];
+            [curve undraw];
+            curve.drawLine = drawLine;
+            curve.drawPoints = drawPoints;
+            [_playerView.coordinateSystemView drawCurve:curve];
+        }
+    }
 }
 
 -(UIView *)pickerView:(UIPickerView *)pickerView viewForRow:(NSInteger)row forComponent:(NSInteger)component reusingView:(UIView *)view
@@ -104,6 +334,10 @@
 
 -(void)tableView:(UITableView *)tableView didSelectRowAtIndexPath:(NSIndexPath *)indexPath
 {
+    UITableViewCell *cell = [tableView cellForRowAtIndexPath:indexPath];
+    NSString *cellText = cell.textLabel.text;
+    
+    
     if (tableView.tag == TRAININGS_TABLEVIEW_TAG)
     {
         /** Example code to reload data according to a selection
@@ -121,12 +355,8 @@
     
     else if (tableView.tag == PLAYERS_TABLEVIEW_TAG)
     {
-        NSLog(@"Cell from PLAYERS TABLE CELL VIEW WAS SELECTED");
-    }
-    
-    else if (tableView.tag == VIDEOS_TABLEVIEW_TAG)
-    {
-        NSLog(@"Cell from VIDEOS TABLE CELL VIEW WAS SELECTED");
+        NSDictionary *attributes = [(NSAttributedString *)_playerView.playerNameLabel.attributedText attributesAtIndex:0 effectiveRange:NULL];
+        _playerView.playerNameLabel.attributedText = [[NSAttributedString alloc] initWithString:cellText attributes:attributes];
     }
 }
 
@@ -144,9 +374,6 @@
     
     else if (tableView.tag == PLAYERS_TABLEVIEW_TAG)
         numberOfRows = _playersTableViewData.count;
-    
-    else if (tableView.tag == VIDEOS_TABLEVIEW_TAG)
-        numberOfRows = _videosTableViewData.count;
     
     return numberOfRows;
 }
@@ -173,45 +400,12 @@
     if (tableView.tag == TRAININGS_TABLEVIEW_TAG)
     {
         [cell.textLabel setText:[_trainingsTableViewData objectAtIndex:indexPath.row]];
-        [cell.detailTextLabel setText:@"Date: 00/00/9999\nLocation: Cergy-Pontoise\nPlayer count: 6"];
+        [cell.detailTextLabel setText:@"Date: 00/00/9999\nLocation: Cergy-Pontoise"];
     }
     
     else if (tableView.tag == PLAYERS_TABLEVIEW_TAG)
     {
         [cell.textLabel setText:[_playersTableViewData objectAtIndex:indexPath.row]];
-        [cell.detailTextLabel setText:@"Name: Toto\nPro"];
-        
-        UIImage *profileIcon = [UIImage imageNamed:@"playerIcon.png"];
-        [cell.imageView setImage:profileIcon];
-        //        UIImageView *profileIconImageView = [[UIImageView alloc] initWithImage:profileIcon];
-        //        [profileIconImageView setFrame:CGRectMake(-profileIconImageView.frame.size.width, -profileIconImageView.frame.size.height, profileIconImageView.frame.size.width, profileIconImageView.frame.size.height)];
-        //        [cell addSubview:profileIconImageView];
-    }
-    
-    else if (tableView.tag == VIDEOS_TABLEVIEW_TAG)
-    {
-        [cell.textLabel setText:[_videosTableViewData objectAtIndex:indexPath.row]];
-        [cell.detailTextLabel setText:@"Length: 1:13\n------------"];
-        
-        CGSize playButtonSize = CGSizeMake(40, 40);
-        
-        UIBaseButton *playButton = [UIBaseButton buttonWithType:UIButtonTypeCustom];
-        [playButton setFrame:CGRectMake((cell.frame.size.width / 2) + 80, cell.frame.size.height / 2 + 5, playButtonSize.width, playButtonSize.height)];
-        [playButton setImage:[UIImage imageNamed:@"playIcon.png"] forState:UIControlStateNormal];
-        [playButton addTarget:self action:@selector(playVideoButtonAction:) forControlEvents:UIControlEventTouchUpInside];
-        [cell addSubview:playButton];
-        
-        UIBaseButton *processButton = [UIBaseButton buttonWithType:UIButtonTypeCustom];
-        [processButton setFrame:CGRectMake(playButton.frame.origin.x + playButton.frame.size.width + 10, playButton.frame.origin.y, playButtonSize.width, playButtonSize.height)];
-        [processButton setImage:[UIImage imageNamed:@"deleteVideoIcon.png"] forState:UIControlStateNormal];
-        [processButton addTarget:self action:@selector(removeVideoButtonAction:) forControlEvents:UIControlEventTouchUpInside];
-        [cell addSubview:processButton];
-        
-        UIBaseButton *removeButton = [UIBaseButton buttonWithType:UIButtonTypeCustom];
-        [removeButton setFrame:CGRectMake(processButton.frame.origin.x + processButton.frame.size.width + 10, processButton.frame.origin.y, playButtonSize.width, playButtonSize.height)];
-        [removeButton setImage:[UIImage imageNamed:@"processIcon.png"] forState:UIControlStateNormal];
-        [removeButton addTarget:self action:@selector(processVideoButtonAction:) forControlEvents:UIControlEventTouchUpInside];
-        [cell addSubview:removeButton];
     }
     
     
@@ -224,7 +418,7 @@
     
     if (tableView.tag == TRAININGS_TABLEVIEW_TAG)
     {
-        height += 50;
+        height += 40;
     }
     
     else if (tableView.tag == PLAYERS_TABLEVIEW_TAG)
@@ -232,12 +426,174 @@
         height += 30;
     }
     
-    else if (tableView.tag == VIDEOS_TABLEVIEW_TAG)
+    return height;
+}
+
+- (void)twoFingerPinchOnCurveView:(UIPinchGestureRecognizer *)pinchGestureRecognizer
+{
+    NSLog(@"Pinch scale: %f", pinchGestureRecognizer.scale);
+    
+    CGPoint point = [pinchGestureRecognizer locationInView:_playerView.coordinateSystemView];
+    NSLog(@"pinch center : %f %f", point.x, point.y);
+    // find closest title
+    
+    BOOL isYearlyCoordinateSystem = _playerView.coordinateSystemView.abscissAxis.titles.count == 12 ? YES : NO;
+    BOOL isWeeklyCoordinateSystem = _playerView.coordinateSystemView.abscissAxis.titles.count == 7 ? YES : NO;
+    BOOL isMonthlyCoordinateSystem = _playerView.coordinateSystemView.abscissAxis.titles.count != 12 && _playerView.coordinateSystemView.abscissAxis.titles.count != 7 ? YES : NO;
+    
+    if (pinchGestureRecognizer.state == UIGestureRecognizerStateEnded)
     {
-        height += 30;
+        if (pinchGestureRecognizer.scale > 1)   // pinch out
+        {
+            if (isYearlyCoordinateSystem) // if yearly coordinate system is displayed (yearly => monthly)
+            {
+                // do some stuff with curves, the following just changes the coordinate system
+                
+                Axis *monthlyAxis = [Axis monthlyAxisForCurrentMonth];
+                Axis *motionCountAxis = [Axis defaultAxis];
+                motionCountAxis.maxBound = [NSNumber numberWithInt:1000];
+                motionCountAxis.unit = [NSNumber numberWithInt:100];
+                
+                CoordinateSystem2D *monthlyCoordinateSystem = [[CoordinateSystem2D alloc] init];
+                [monthlyCoordinateSystem.axes setObject:monthlyAxis forKey:@"absciss"];
+                [monthlyCoordinateSystem.axes setObject:motionCountAxis forKey:@"ordinate"];
+                [monthlyCoordinateSystem prepare];
+                
+                [_playerView.coordinateSystemView setCoordinateSystem:monthlyCoordinateSystem];
+                
+                _playerView.coordinateSystemView.abscissAxis.titleUnit = [NSNumber numberWithInt:1];
+                _playerView.coordinateSystemView.abscissAxis.lineColor = [UIColor whiteColor];
+                _playerView.coordinateSystemView.abscissAxis.titles = [DateUtilities dayTitlesForCurrentMonth];
+                _playerView.coordinateSystemView.abscissAxis.lineWidth = [NSNumber numberWithInt:2];
+                _playerView.coordinateSystemView.abscissAxis.unitSeparatorLineLength = [NSNumber numberWithInt:8];
+                _playerView.coordinateSystemView.abscissAxis.titleInterval = [NSNumber numberWithInt:1];
+                
+                _playerView.coordinateSystemView.ordinateAxis.titleUnit = [NSNumber numberWithInt:100];
+                _playerView.coordinateSystemView.ordinateAxis.lineColor = [UIColor whiteColor];
+                _playerView.coordinateSystemView.ordinateAxis.titles = [NSArray arrayWithObjects:@"100", @"200", @"300", @"400", @"500", @"600", @"700", @"800", @"900", @"1000", nil];
+                _playerView.coordinateSystemView.ordinateAxis.lineWidth = [NSNumber numberWithInt:2];
+                _playerView.coordinateSystemView.ordinateAxis.unitSeparatorLineLength = [NSNumber numberWithInt:8];
+                _playerView.coordinateSystemView.ordinateAxis.titleInterval = [NSNumber numberWithInt:1];
+                
+                [_playerView.coordinateSystemView undraw];
+                [_playerView.coordinateSystemView draw];
+                
+                [_playerView.periodPickerView selectRow:1 inComponent:0 animated:YES];
+            }
+            
+            else if (isMonthlyCoordinateSystem) // if monthly coordinate system is displayed (monthly => weekly)
+            {
+                // do some stuff with curves, the following just changes the coordinate system
+                
+                Axis *weeklyAxis = [Axis weeklyAxis];
+                Axis *motionCountAxis = [Axis defaultAxis];
+                motionCountAxis.maxBound = [NSNumber numberWithInt:1000];
+                motionCountAxis.unit = [NSNumber numberWithInt:100];
+                
+                CoordinateSystem2D *weeklyCoordinateSystem = [[CoordinateSystem2D alloc] init];
+                [weeklyCoordinateSystem.axes setObject:weeklyAxis forKey:@"absciss"];
+                [weeklyCoordinateSystem.axes setObject:motionCountAxis forKey:@"ordinate"];
+                [weeklyCoordinateSystem prepare];
+                
+                [_playerView.coordinateSystemView setCoordinateSystem:weeklyCoordinateSystem];
+                
+                _playerView.coordinateSystemView.abscissAxis.titleUnit = [NSNumber numberWithInt:1];
+                _playerView.coordinateSystemView.abscissAxis.lineColor = [UIColor whiteColor];
+                _playerView.coordinateSystemView.abscissAxis.titles = [DateUtilities dayTitles];
+                _playerView.coordinateSystemView.abscissAxis.lineWidth = [NSNumber numberWithInt:2];
+                _playerView.coordinateSystemView.abscissAxis.unitSeparatorLineLength = [NSNumber numberWithInt:8];
+                _playerView.coordinateSystemView.abscissAxis.titleInterval = [NSNumber numberWithInt:1];
+                
+                _playerView.coordinateSystemView.ordinateAxis.titleUnit = [NSNumber numberWithInt:100];
+                _playerView.coordinateSystemView.ordinateAxis.lineColor = [UIColor whiteColor];
+                _playerView.coordinateSystemView.ordinateAxis.titles = [NSArray arrayWithObjects:@"100", @"200", @"300", @"400", @"500", @"600", @"700", @"800", @"900", @"1000", nil];
+                _playerView.coordinateSystemView.ordinateAxis.lineWidth = [NSNumber numberWithInt:2];
+                _playerView.coordinateSystemView.ordinateAxis.unitSeparatorLineLength = [NSNumber numberWithInt:8];
+                _playerView.coordinateSystemView.ordinateAxis.titleInterval = [NSNumber numberWithInt:1];
+                
+                [_playerView.coordinateSystemView undraw];
+                [_playerView.coordinateSystemView draw];
+                
+                [_playerView.periodPickerView selectRow:0 inComponent:0 animated:YES];
+            }
+        }
+        
+        else    // pinch in
+        {
+            if (isWeeklyCoordinateSystem) // if weekly coordinate system is displayed (weekly => monthly)
+            {
+                // do some stuff with curves, the following just changes the coordinate system
+                
+                Axis *monthlyAxis = [Axis monthlyAxisForCurrentMonth];
+                Axis *motionCountAxis = [Axis defaultAxis];
+                motionCountAxis.maxBound = [NSNumber numberWithInt:1000];
+                motionCountAxis.unit = [NSNumber numberWithInt:100];
+                
+                CoordinateSystem2D *monthlyCoordinateSystem = [[CoordinateSystem2D alloc] init];
+                [monthlyCoordinateSystem.axes setObject:monthlyAxis forKey:@"absciss"];
+                [monthlyCoordinateSystem.axes setObject:motionCountAxis forKey:@"ordinate"];
+                [monthlyCoordinateSystem prepare];
+                
+                [_playerView.coordinateSystemView setCoordinateSystem:monthlyCoordinateSystem];
+                
+                _playerView.coordinateSystemView.abscissAxis.titleUnit = [NSNumber numberWithInt:1];
+                _playerView.coordinateSystemView.abscissAxis.lineColor = [UIColor whiteColor];
+                _playerView.coordinateSystemView.abscissAxis.titles = [DateUtilities dayTitlesForCurrentMonth];
+                _playerView.coordinateSystemView.abscissAxis.lineWidth = [NSNumber numberWithInt:2];
+                _playerView.coordinateSystemView.abscissAxis.unitSeparatorLineLength = [NSNumber numberWithInt:8];
+                _playerView.coordinateSystemView.abscissAxis.titleInterval = [NSNumber numberWithInt:1];
+                
+                _playerView.coordinateSystemView.ordinateAxis.titleUnit = [NSNumber numberWithInt:100];
+                _playerView.coordinateSystemView.ordinateAxis.lineColor = [UIColor whiteColor];
+                _playerView.coordinateSystemView.ordinateAxis.titles = [NSArray arrayWithObjects:@"100", @"200", @"300", @"400", @"500", @"600", @"700", @"800", @"900", @"1000", nil];
+                _playerView.coordinateSystemView.ordinateAxis.lineWidth = [NSNumber numberWithInt:2];
+                _playerView.coordinateSystemView.ordinateAxis.unitSeparatorLineLength = [NSNumber numberWithInt:8];
+                _playerView.coordinateSystemView.ordinateAxis.titleInterval = [NSNumber numberWithInt:1];
+                
+                [_playerView.coordinateSystemView undraw];
+                [_playerView.coordinateSystemView draw];
+                
+                [_playerView.periodPickerView selectRow:1 inComponent:0 animated:YES];
+            }
+            
+            else if (isMonthlyCoordinateSystem) // if monthly coordinate system is displayed (monthly => yearly)
+            {
+                // do some stuff with curves, the following just changes the coordinate system
+                
+                Axis *yearlyAxis = [Axis yearlyAxis];
+                Axis *motionCountAxis = [Axis defaultAxis];
+                motionCountAxis.maxBound = [NSNumber numberWithInt:1000];
+                motionCountAxis.unit = [NSNumber numberWithInt:100];
+                
+                CoordinateSystem2D *yearlyCoordinateSystem = [[CoordinateSystem2D alloc] init];
+                [yearlyCoordinateSystem.axes setObject:yearlyAxis forKey:@"absciss"];
+                [yearlyCoordinateSystem.axes setObject:motionCountAxis forKey:@"ordinate"];
+                [yearlyCoordinateSystem prepare];
+                
+                [_playerView.coordinateSystemView setCoordinateSystem:yearlyCoordinateSystem];
+                
+                _playerView.coordinateSystemView.abscissAxis.titleUnit = [NSNumber numberWithInt:1];
+                _playerView.coordinateSystemView.abscissAxis.lineColor = [UIColor whiteColor];
+                _playerView.coordinateSystemView.abscissAxis.titles = [DateUtilities monthTitles];
+                _playerView.coordinateSystemView.abscissAxis.lineWidth = [NSNumber numberWithInt:2];
+                _playerView.coordinateSystemView.abscissAxis.unitSeparatorLineLength = [NSNumber numberWithInt:8];
+                _playerView.coordinateSystemView.abscissAxis.titleInterval = [NSNumber numberWithInt:1];
+                
+                _playerView.coordinateSystemView.ordinateAxis.titleUnit = [NSNumber numberWithInt:100];
+                _playerView.coordinateSystemView.ordinateAxis.lineColor = [UIColor whiteColor];
+                _playerView.coordinateSystemView.ordinateAxis.titles = [NSArray arrayWithObjects:@"100", @"200", @"300", @"400", @"500", @"600", @"700", @"800", @"900", @"1000", nil];
+                _playerView.coordinateSystemView.ordinateAxis.lineWidth = [NSNumber numberWithInt:2];
+                _playerView.coordinateSystemView.ordinateAxis.unitSeparatorLineLength = [NSNumber numberWithInt:8];
+                _playerView.coordinateSystemView.ordinateAxis.titleInterval = [NSNumber numberWithInt:1];
+                
+                [_playerView.coordinateSystemView undraw];
+                [_playerView.coordinateSystemView draw];
+                
+                [_playerView.periodPickerView selectRow:2 inComponent:0 animated:YES];
+            }
+        }
     }
     
-    return height;
 }
 
 @end

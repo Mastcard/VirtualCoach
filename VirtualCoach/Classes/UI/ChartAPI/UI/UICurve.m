@@ -21,6 +21,7 @@
         _drawPoints = NO;
         _lineWidth = [NSNumber numberWithInt:3];
         _lineColor = [UIColor blackColor];
+        _objectLayers = [NSMutableArray array];
     }
     
     return self;
@@ -29,6 +30,16 @@
 - (void)drawRect:(CGRect)dirtyRect
 {
     [super drawRect:dirtyRect];
+}
+
+- (void)undraw
+{
+    for (CALayer *layer in _objectLayers)
+    {
+        [layer removeFromSuperlayer];
+    }
+    
+    [_objectLayers removeAllObjects];
 }
 
 @end
