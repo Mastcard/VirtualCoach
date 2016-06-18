@@ -18,8 +18,11 @@
 @property (nonatomic) bool processed;
 @property (nonatomic) bool removed;
 @property (nonatomic) NSMutableArray<InterfaceMovementDO*>* movements;
+@property (nonatomic) int day;
+@property (nonatomic) int month;
+@property (nonatomic) int year;
 
--(instancetype)initWithId:(int)referenceVideoId andName:(NSString*)name andProcessed:(bool)processed andRemoved:(bool)removed;
+-(instancetype)initWithId:(int)referenceVideoId andName:(NSString*)name andProcessed:(bool)processed andRemoved:(bool)removed andDay:(int)day andMonth:(int)month andYear:(int)year;
 
 @end
 
