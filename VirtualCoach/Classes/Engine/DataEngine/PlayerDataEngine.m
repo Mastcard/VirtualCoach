@@ -33,8 +33,8 @@
     NSMutableArray<PlayerDO*> *arrayPlayerDO;
     PlayerDO *playerDO;
     PlayerDAO *playerDAO;
-    NSMutableArray<StatisticalDO*> *arrayStatDO;
-    StatisticalDO *statDO;
+    NSMutableArray<StatisticDO*> *arrayStatDO;
+    StatisticDO *statDO;
     StatisticalDAO *statDAO;
     NSMutableArray<TrophyDO*> *arrayTrophyDO;
     TrophyDO *trophyDO;
