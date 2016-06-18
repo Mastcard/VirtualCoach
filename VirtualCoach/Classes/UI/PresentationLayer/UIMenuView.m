@@ -30,8 +30,6 @@
 
 - (void)prepareView
 {
-    CGFloat defaultMargin = 40.f;
-    
     CGSize captureViewButtonSize = CGSizeMake(80, 80);
     CGPoint captureViewButtonOrigin = CGPointMake(((3 * self.frame.size.width) / 4) - (captureViewButtonSize.width / 2), (self.frame.size.height / 4) - (captureViewButtonSize.height / 2));
     
