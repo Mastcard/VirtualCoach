@@ -38,11 +38,14 @@
 
 @property (nonatomic, assign) gray8i_t *firstFrame;
 @property (nonatomic, assign) gray8i_t *secondFrame;
-@property (nonatomic, assign) gray8i_t *thirdFrame;
+//@property (nonatomic, assign) gray8i_t *thirdFrame;
 
 @property (nonatomic, assign) rect_t firstFrameBounds;
 @property (nonatomic, assign) rect_t secondFrameBounds;
-@property (nonatomic, assign) rect_t thirdFrameBounds;
+//@property (nonatomic, assign) rect_t thirdFrameBounds;
+
+@property (nonatomic, assign) vect2darray_t *firstSpeedVectorArray;
+@property (nonatomic, assign) vect2darray_t *secondSpeedVectorArray;
 
 // miscalenneous
 
@@ -68,6 +71,7 @@
     {
         _videoInfo = videoInfo;
         _videoTrakingAnalysisInformations = relevantSequences;
+        
         _count = 0;
         _videoTrakingAnalysisInformationsIndex = 0;
         _frameCount = 0;
@@ -78,7 +82,7 @@
         
         _firstFrame = NULL;
         _secondFrame = NULL;
-        _thirdFrame = NULL;
+//        _thirdFrame = NULL;
         
         
         //tmp
@@ -130,185 +134,139 @@
         //temp
         _count++;
         
-        if (_count >= _skippedFrameCount)
+        NSDictionary *imageDict = [_videoTrakingAnalysisInformations objectAtIndex:_videoTrakingAnalysisInformationsIndex];
+        
+        NSNumber *imageId = [imageDict objectForKey:@"imageId"];
+        
+        if (_count == imageId.unsignedIntValue)
         {
-            NSDictionary *imageDict = [_videoTrakingAnalysisInformations objectAtIndex:_videoTrakingAnalysisInformationsIndex];
+            NSNumber *moves = [imageDict objectForKey:@"moves"];
             
-            NSNumber *imageId = [imageDict objectForKey:@"imageId"];
-            
-            if (_count == imageId.unsignedIntValue)
+            if (moves.intValue == 1)
             {
-                _videoTrakingAnalysisInformationsIndex++;
+                CGImageRef rgbImage = [ImageTools cgImageFromSampleBuffer:sampleBuffer];
+                CGImageRef rgbImageScaled = [ImageTools scaleCgimage:rgbImage scale:_scale];
                 
-                NSNumber *moves = [imageDict objectForKey:@"moves"];
+                gray8i_t *src = [ImageTools cgImageToGrayImage:rgbImageScaled];
                 
-                if (moves.intValue == 1)
+                CGImageRelease(rgbImage);
+                CGImageRelease(rgbImageScaled);
+                
+                rect_t playerBounds;
+                
+                if (_sequenceStarted)       // sequence continues
                 {
-                    CGImageRef rgbImage = [ImageTools cgImageFromSampleBuffer:sampleBuffer];
-                    CGImageRef rgbImageScaled = [ImageTools scaleCgimage:rgbImage scale:_scale];
+                    // get rect coordinates
                     
-                    gray8i_t *src = [ImageTools cgImageToGrayImage:rgbImageScaled];
+                    NSNumber *startX = [imageDict objectForKey:@"start.x"];
+                    NSNumber *startY = [imageDict objectForKey:@"start.y"];
+                    NSNumber *endX = [imageDict objectForKey:@"end.x"];
+                    NSNumber *endY = [imageDict objectForKey:@"end.y"];
                     
-                    CGImageRelease(rgbImage);
-                    CGImageRelease(rgbImageScaled);
+                    // initializing rect_t with rect coordinates
                     
-                    rect_t playerBounds;
+                    playerBounds.start.x = startX.unsignedIntValue;
+                    playerBounds.end.x = endX.unsignedIntValue;
+                    playerBounds.start.y = startY.unsignedIntValue;
+                    playerBounds.end.y = endY.unsignedIntValue;
                     
-                    if (_sequenceStarted)       // sequence continues
+                    _secondFrame = src;
+                    _secondFrameBounds = playerBounds;
+                    
+                    vect2darray_t *speedVectors = opticalflow(_firstFrame, _secondFrame);
+                    
+                    double w = 0, z = 0;
+                    
+                    for (NSUInteger y = _secondFrameBounds.start.y; y < _secondFrameBounds.end.y; y++)
                     {
-                        // get rect coordinates
-                        
-                        NSNumber *startX = [imageDict objectForKey:@"start.x"];
-                        NSNumber *startY = [imageDict objectForKey:@"start.y"];
-                        NSNumber *endX = [imageDict objectForKey:@"end.x"];
-                        NSNumber *endY = [imageDict objectForKey:@"end.y"];
-                        
-                        // initializing rect_t with rect coordinates
-                        
-                        playerBounds.start.x = startX.unsignedIntValue;
-                        playerBounds.end.x = endX.unsignedIntValue;
-                        playerBounds.start.y = startY.unsignedIntValue;
-                        playerBounds.end.y = endY.unsignedIntValue;
-                        
-                        if (_secondFrame == NULL)
+                        for (NSUInteger x = _secondFrameBounds.start.x; x < _secondFrameBounds.end.x; x++)
                         {
-                            _secondFrame = src;
-                            _secondFrameBounds = playerBounds;
-                        }
-                        
-                        else
-                        {
-                            if (_thirdFrame == NULL)
-                            {
-                                _thirdFrame = src;
-                                _thirdFrameBounds = playerBounds;
-                            }
+                            unsigned long idx = PXL_IDX(src->width, x, y);
                             
-                            // optical flow
+                            w = speedVectors->data[idx].x;
+                            z = speedVectors->data[idx].y;
                             
-                            vect2darray_t *speedVectors1 = opticalflow(_firstFrame, _secondFrame);
-                            
-                            double u = 0, v = 0;
-                            
-                            for (NSUInteger y = _secondFrameBounds.start.y; y < _secondFrameBounds.end.y; y++)
-                            {
-                                for (NSUInteger x = _secondFrameBounds.start.x; x < _secondFrameBounds.end.x; x++)
-                                {
-                                    unsigned long idx = PXL_IDX(src->width, x, y);
-                                    
-                                    u = speedVectors1->data[idx].x;
-                                    v = speedVectors1->data[idx].y;
-                                    
-                                    speedVectors1->data[idx].x = (_firstFrame->data[idx] > _binaryThreshold) * u;
-                                    speedVectors1->data[idx].y = (_firstFrame->data[idx] > _binaryThreshold) * v;
-                                }
-                            }
-                            
-                            // optical flow
-                            
-                            vect2darray_t *speedVectors2 = opticalflow(_secondFrame, _thirdFrame);
-                            
-                            double w = 0, z = 0;
-                            
-                            for (NSUInteger y = _thirdFrameBounds.start.y; y < _thirdFrameBounds.end.y; y++)
-                            {
-                                for (NSUInteger x = _thirdFrameBounds.start.x; x < _thirdFrameBounds.end.x; x++)
-                                {
-                                    unsigned long idx = PXL_IDX(src->width, x, y);
-                                    
-                                    w = speedVectors2->data[idx].x;
-                                    z = speedVectors2->data[idx].y;
-                                    
-                                    speedVectors2->data[idx].x = (_secondFrame->data[idx] > _binaryThreshold) * w;
-                                    speedVectors2->data[idx].y = (_secondFrame->data[idx] > _binaryThreshold) * z;
-                                }
-                            }
-                            
-                            [_histogram generateHistogramFromSpeedVector:speedVectors1 betweenInterval:playerBounds andWithImageWidth:src->width];
-                            [_histogram generateHistogramFromSpeedVector:speedVectors2 betweenInterval:playerBounds andWithImageWidth:src->width];
-                            
-                            [_entryDataset addKmeanEntryToDataSetFromFirstSpeedVectorsTab:speedVectors1 andSecondSpeedVectorsTab:speedVectors2 betweenInterval:playerBounds andWithImageWidth:src->width];
-                            
-                            gray8ifree(_firstFrame);
-                            _firstFrame = NULL;
-                            gray8ifree(_secondFrame);
-                            _secondFrame = NULL;
-                            
-                            _firstFrame = _thirdFrame;
-                            _thirdFrame = NULL;
-                            
-                            vect2darrfree(speedVectors1);
-                            vect2darrfree(speedVectors2);
-                            
-                            _firstFrameBounds.start.x = 0;
-                            _firstFrameBounds.start.y = 0;
-                            _firstFrameBounds.end.x = 0;
-                            _firstFrameBounds.end.y = 0;
-                            
-                            _secondFrameBounds.start.x = 0;
-                            _secondFrameBounds.start.y = 0;
-                            _secondFrameBounds.end.x = 0;
-                            _secondFrameBounds.end.y = 0;
-                            
-                            _thirdFrameBounds.start.x = 0;
-                            _thirdFrameBounds.start.y = 0;
-                            _thirdFrameBounds.end.x = 0;
-                            _thirdFrameBounds.end.y = 0;
+                            speedVectors->data[idx].x = (_secondFrame->data[idx] > _binaryThreshold) * w;
+                            speedVectors->data[idx].y = (_secondFrame->data[idx] > _binaryThreshold) * z;
                         }
                     }
                     
-                    else                        // sequence starts
+                    if (_firstSpeedVectorArray == NULL)
                     {
-                        _sequenceStarted = YES;
-                        
-                        NSLog(@"Sequence starts at %f", (float)(_count / 60));
-                        
-                        //test
-                        _firstFrame = src;
-                        _firstFrameBounds = playerBounds;
-                        //tmp
-                        _sequenceImageStart = (int)(_count);
+                        _firstSpeedVectorArray = speedVectors;
                     }
+                    
+                    else
+                    {
+                        _secondSpeedVectorArray = speedVectors;
+                        
+                        [_entryDataset addKmeanEntryToDataSetFromFirstSpeedVectorsTab:_firstSpeedVectorArray andSecondSpeedVectorsTab:_secondSpeedVectorArray betweenInterval:_secondFrameBounds andWithImageWidth:src->width];
+                        
+                        [_histogram generateHistogramFromSpeedVector:_firstSpeedVectorArray betweenInterval:_firstFrameBounds andWithImageWidth:src->width];
+                        
+                        vect2darrfree(_firstSpeedVectorArray);
+                        _firstSpeedVectorArray = _secondSpeedVectorArray;
+                    }
+                    
+                    gray8ifree(_firstFrame);
+                    _firstFrame = _secondFrame;
+                    _firstFrameBounds = _secondFrameBounds;
                 }
                 
-                else
+                else                        // sequence starts
                 {
-                    if (_sequenceStarted)       // sequence ends
-                    {
-                        _sequenceStarted = NO;
-                        
-                        //test
-                        _sequenceImageEnd = (int)(_count);
-                        
-                        // do
-                        
-                        NSString *foundMotion = [MotionDeduction recognizeTennisMotionWithHistogram:_histogram andLeftHanded:false];
-                        
-                        NSLog(@"Found motion : %@", foundMotion);
-                        
-                        if ([foundMotion isEqualToString:@"service"])
-                            _serviceCount++;
-                        
-                        if ([foundMotion isEqualToString:@"forehand"])
-                            _forehandCount++;
-                        
-                        if ([foundMotion isEqualToString:@"backhand"])
-                            _backhandCount++;
-                        
-                        NSDictionary *dictEntryDataset = [NSDictionary dictionaryWithObjects:[NSArray arrayWithObjects:_entryDataset, [NSNumber numberWithInt:_sequenceImageStart], [NSNumber numberWithInt:_sequenceImageEnd], nil] forKeys:[NSArray arrayWithObjects:@"entryDataset", @"startSequenceImage", @"endSequenceImage", nil]];
-                        
-                        [_entryDatasetsArray addObject:dictEntryDataset];
-                        
-                        _histogram = nil;
-                        _histogram = [[Histogram alloc] init];
-                        
-                        _entryDataset = nil;
-                        _entryDataset = [[KmeanEntryDataSet alloc] init];
-                        
-                        NSLog(@"Sequence ends at %f", (float)(_count / 60));
-                    }
+                    _sequenceStarted = YES;
+                    
+                    NSLog(@"Sequence starts at %f", (float)(_count / 60));
+                    
+                    //test
+                    _firstFrame = src;
+                    _firstFrameBounds = playerBounds;
+                    //tmp
+                    _sequenceImageStart = (int)(_count);
                 }
             }
+            
+            else
+            {
+                if (_sequenceStarted)       // sequence ends
+                {
+                    _sequenceStarted = NO;
+                    
+                    //test
+                    _sequenceImageEnd = (int)(_count);
+                    
+                    // do
+                    
+                    NSString *foundMotion = [MotionDeduction recognizeTennisMotionWithHistogram:_histogram andLeftHanded:false];
+                    
+                    NSLog(@"Found motion : %@", foundMotion);
+                    
+                    if ([foundMotion isEqualToString:@"service"])
+                        _serviceCount++;
+                    
+                    if ([foundMotion isEqualToString:@"forehand"])
+                        _forehandCount++;
+                    
+                    if ([foundMotion isEqualToString:@"backhand"])
+                        _backhandCount++;
+                    
+                    NSDictionary *dictEntryDataset = [NSDictionary dictionaryWithObjects:[NSArray arrayWithObjects:_entryDataset, [NSNumber numberWithInt:_sequenceImageStart], [NSNumber numberWithInt:_sequenceImageEnd], nil] forKeys:[NSArray arrayWithObjects:@"entryDataset", @"startSequenceImage", @"endSequenceImage", nil]];
+                    
+                    [_entryDatasetsArray addObject:dictEntryDataset];
+                    
+                    _histogram = nil;
+                    _histogram = [[Histogram alloc] init];
+                    
+                    _entryDataset = nil;
+                    _entryDataset = [[KmeanEntryDataSet alloc] init];
+                    
+                    NSLog(@"Sequence ends at %f", (float)(_count / 60));
+                }
+            }
+            
+            if (_videoTrakingAnalysisInformationsIndex  < _videoTrakingAnalysisInformations.count-1)
+                _videoTrakingAnalysisInformationsIndex++;
         }
         
         NSUInteger rate = (NSUInteger)(_frameCount / 100);
@@ -316,6 +274,7 @@
         if (_count % rate == 0)
         {
             [_delegate didUpdateStatusWithProgress:0.0025 message:[NSString stringWithFormat:@"Analyzing motions.. (%lu / %lu)", (unsigned long)_count, (unsigned long)_frameCount]];
+            NSLog(@"%@", [NSString stringWithFormat:@"Analyzing motions.. (%lu / %lu)", (unsigned long)_count, (unsigned long)_frameCount]);
         }
     }
 }
@@ -327,7 +286,7 @@
         //temp
         _count++;
         
-        NSString *imagePathExport = [@"/Users/iSeven/Desktop/adrien_video/export2/" stringByAppendingPathComponent:[NSString stringWithFormat:@"%lu.pgm", (unsigned long)_count]];
+        NSString *imagePathExport = [@"/Users/iSeven/Desktop/adrien_video/export3/" stringByAppendingPathComponent:[NSString stringWithFormat:@"%lu.pgm", (unsigned long)_count]];
         
         NSDictionary *imageDict = [_videoTrakingAnalysisInformations objectAtIndex:_videoTrakingAnalysisInformationsIndex];
         NSNumber *imageId = [imageDict objectForKey:@"imageId"];
@@ -337,7 +296,7 @@
         
         gray8i_t *src = [ImageTools cgImageToGrayImage:rgbImageScaled];
         
-        CGImageRelease(rgbImage);
+        CGImageRelease(rgbImage);  
         CGImageRelease(rgbImageScaled);
         
         if (_count == imageId.unsignedIntValue)

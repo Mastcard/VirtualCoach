@@ -65,8 +65,6 @@
 {
     NSString *referenceFramePath = [_videoInfo objectForKey:@"referenceFramePath"];
     
-    NSLog(@"referenceFramePath : %@", referenceFramePath);
-    
     gray8i_t *originalReferenceFrame = pgmopen([referenceFramePath cStringUsingEncoding:NSASCIIStringEncoding]);
     
     CGImageRef originalReferenceFrameCg = [ImageTools gray8iToCgImage:originalReferenceFrame];
@@ -150,8 +148,13 @@
             _previousMotionReg = regcharcpy(_previousReg);
             
             // lazy way to add the first image
-            [_objectsPositionArray addObject:[NSNull null]];
-            [_objectsMotionArray addObject:[NSNumber numberWithInt:1]];
+            
+            TrackingObjectPosition *objPos = [[TrackingObjectPosition alloc] init];
+            [objPos setBounds:newPLayerBounds];
+            [objPos setImageId:_count];
+            
+            [_objectsPositionArray addObject:objPos];
+            [_objectsMotionArray addObject:[NSNumber numberWithInt:0]];
         }
         
         else if (_count > _skippedFrameCount)
@@ -161,6 +164,10 @@
             gray8i_t *isubstract = subgray8i(src, _referenceFrame);
             
             bini_t *binary = binarise(isubstract, _binaryThreshold);
+            
+//            gray8i_t *unbinary = unbinarise(binary);
+//            pgmwrite(unbinary, [[@"/Users/iSeven/Desktop/adrien_video/export3/" stringByAppendingPathComponent:[NSString stringWithFormat:@"%lu.pgm", (unsigned long)_count]] cStringUsingEncoding:NSASCIIStringEncoding], PGM_BINARY);
+//            gray8ifree(unbinary);
             
             labels_t *nextLabels = label(binary);
             
@@ -174,6 +181,7 @@
                 
                 rect_t bds;
                 
+//                NSLog(@"bestRegId : %d, image %d", bestRegId, (int)_count);
                 
                 if ((bestRegId > 0) && (bestRegId <= ch->count))
                 {
@@ -199,6 +207,8 @@
                         _previousMotionLabels = labcpy(nextLabels);
                     }
                     
+//                    drawrctgray8i(unbinary, bds, 255);
+                    
                     free(_previousReg);
                     _previousReg = regcharcpy(bestReg);
                     labfree(_previousLabels);
@@ -213,7 +223,12 @@
                     bds.start.x = 0;
                     bds.end.y = 0;
                     bds.end.x = 0;
+                    
+                    isStatic = -2;
                 }
+                
+//                pgmwrite(unbinary, [[@"/Users/iSeven/Desktop/adrien_video/export3/" stringByAppendingPathComponent:[NSString stringWithFormat:@"%lu.pgm", (unsigned long)_exportCount]] cStringUsingEncoding:NSASCIIStringEncoding], PGM_BINARY);
+//                gray8ifree(unbinary);
                 
                 TrackingObjectPosition *objPos = [[TrackingObjectPosition alloc] init];
                 [objPos setBounds:bds];
@@ -233,6 +248,7 @@
                 if (_count % rate == 0)
                 {
                     [_delegate didUpdateStatusWithProgress:0.0025 message:[NSString stringWithFormat:@"Tracking player.. (%lu / %lu)", (unsigned long)_count, (unsigned long)_frameCount]];
+                    NSLog(@"%@", [NSString stringWithFormat:@"Tracking player.. (%lu / %lu)", (unsigned long)_count, (unsigned long)_frameCount]);
                 }
             }
         }
