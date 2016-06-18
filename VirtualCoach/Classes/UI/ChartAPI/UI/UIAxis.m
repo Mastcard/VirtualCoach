@@ -10,6 +10,11 @@
 
 @implementation UIAxis
 
+- (instancetype)initWithFrame:(CGRect)frame
+{
+    return [self initWithFrame:frame axis:nil];
+}
+
 - (instancetype)initWithFrame:(CGRect)frameRect axis:(Axis *)axis
 {
     self = [super initWithFrame:frameRect];

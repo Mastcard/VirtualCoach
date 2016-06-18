@@ -55,6 +55,23 @@
     CGPoint curvesViewOrigin = CGPointMake(self.frame.size.width - (defaultMargin + curvesViewSize.width), self.frame.size.height - (defaultMargin + curvesViewSize.height));
     [_coordinateSystemView setFrame:CGRectMake(curvesViewOrigin.x, curvesViewOrigin.y, curvesViewSize.width, curvesViewSize.height)];
     
+    _coordinateSystemView.margin = 25.f;
+    _coordinateSystemView.wantsAbscissTitles = YES;
+    _coordinateSystemView.wantsOrdinateTitles = YES;
+    _coordinateSystemView.axisTitlesTextColor = [UIColor whiteColor];
+    
+    _coordinateSystemView.abscissAxis.titleUnit = [NSNumber numberWithInt:1];
+    _coordinateSystemView.abscissAxis.lineColor = [UIColor whiteColor];
+    _coordinateSystemView.abscissAxis.lineWidth = [NSNumber numberWithInt:2];
+    _coordinateSystemView.abscissAxis.unitSeparatorLineLength = [NSNumber numberWithInt:8];
+    _coordinateSystemView.abscissAxis.titleInterval = [NSNumber numberWithInt:1];
+    
+    _coordinateSystemView.ordinateAxis.titleUnit = [NSNumber numberWithInt:100];
+    _coordinateSystemView.ordinateAxis.lineColor = [UIColor whiteColor];
+    _coordinateSystemView.ordinateAxis.lineWidth = [NSNumber numberWithInt:2];
+    _coordinateSystemView.ordinateAxis.unitSeparatorLineLength = [NSNumber numberWithInt:8];
+    _coordinateSystemView.ordinateAxis.titleInterval = [NSNumber numberWithInt:1];
+    
     CGPoint playersTableViewOrigin = CGPointMake(defaultMargin, defaultMargin + 75);
     CGSize playersTableViewSize = CGSizeMake(200, 200);
     
@@ -92,8 +109,8 @@
     
     NSMutableAttributedString *playerFirstNameLabelText = [[NSMutableAttributedString alloc] initWithString:@"First name:"];
     [playerFirstNameLabelText addAttribute:NSFontAttributeName
-                                value:[UIFont systemFontOfSize:17.0]
-                                range:NSMakeRange(0, [playerFirstNameLabelText length])];
+                                     value:[UIFont systemFontOfSize:17.0]
+                                     range:NSMakeRange(0, [playerFirstNameLabelText length])];
     [playerFirstNameLabelText addAttribute:NSForegroundColorAttributeName value:[UIColor whiteColor] range:NSMakeRange(0, [playerFirstNameLabelText length])];
     
     [_playerFirstNameLabel setAttributedText:playerFirstNameLabelText];
@@ -105,8 +122,8 @@
     
     NSMutableAttributedString *playerLevelLabelText = [[NSMutableAttributedString alloc] initWithString:@"Level:"];
     [playerLevelLabelText addAttribute:NSFontAttributeName
-                                     value:[UIFont systemFontOfSize:17.0]
-                                     range:NSMakeRange(0, [playerLevelLabelText length])];
+                                 value:[UIFont systemFontOfSize:17.0]
+                                 range:NSMakeRange(0, [playerLevelLabelText length])];
     [playerLevelLabelText addAttribute:NSForegroundColorAttributeName value:[UIColor whiteColor] range:NSMakeRange(0, [playerLevelLabelText length])];
     
     [_playerLevelLabel setAttributedText:playerLevelLabelText];
@@ -169,8 +186,8 @@
     
     NSMutableAttributedString *dataPaneLabelText = [[NSMutableAttributedString alloc] initWithString:@"Curve data source"];
     [dataPaneLabelText addAttribute:NSFontAttributeName
-                                value:[UIFont systemFontOfSize:20.0]
-                                range:NSMakeRange(0, [dataPaneLabelText length])];
+                              value:[UIFont systemFontOfSize:20.0]
+                              range:NSMakeRange(0, [dataPaneLabelText length])];
     [dataPaneLabelText addAttribute:NSForegroundColorAttributeName value:[UIColor whiteColor] range:NSMakeRange(0, [dataPaneLabelText length])];
     
     [_dataSelectionLabel setAttributedText:dataPaneLabelText];
@@ -194,8 +211,8 @@
     
     NSMutableAttributedString *periodPaneLabelText = [[NSMutableAttributedString alloc] initWithString:@"Curve period"];
     [periodPaneLabelText addAttribute:NSFontAttributeName
-                              value:[UIFont systemFontOfSize:20.0]
-                              range:NSMakeRange(0, [periodPaneLabelText length])];
+                                value:[UIFont systemFontOfSize:20.0]
+                                range:NSMakeRange(0, [periodPaneLabelText length])];
     [periodPaneLabelText addAttribute:NSForegroundColorAttributeName value:[UIColor whiteColor] range:NSMakeRange(0, [periodPaneLabelText length])];
     
     [_periodSelectionLabel setAttributedText:periodPaneLabelText];
@@ -217,8 +234,8 @@
     
     NSMutableAttributedString *stylePaneLabelText = [[NSMutableAttributedString alloc] initWithString:@"Curve style"];
     [stylePaneLabelText addAttribute:NSFontAttributeName
-                                value:[UIFont systemFontOfSize:20.0]
-                                range:NSMakeRange(0, [stylePaneLabelText length])];
+                               value:[UIFont systemFontOfSize:20.0]
+                               range:NSMakeRange(0, [stylePaneLabelText length])];
     [stylePaneLabelText addAttribute:NSForegroundColorAttributeName value:[UIColor whiteColor] range:NSMakeRange(0, [stylePaneLabelText length])];
     
     [_styleSelectionLabel setAttributedText:stylePaneLabelText];
@@ -264,7 +281,7 @@
     
     [self addSubview:_periodSelectionLabel];
     [self addSubview:_periodPickerView];
-
+    
     [self addSubview:_styleSelectionLabel];
     [self addSubview:_stylePickerView];
     

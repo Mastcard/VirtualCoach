@@ -30,5 +30,6 @@
 @property (nonatomic) NSArray *titles;
 
 - (instancetype)initWithFrame:(CGRect)frameRect axis:(Axis *)axis;
+- (void)undraw;
 
 @end

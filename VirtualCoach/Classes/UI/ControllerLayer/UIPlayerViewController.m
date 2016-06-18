@@ -9,6 +9,16 @@
 #import "UIPlayerViewController.h"
 #import "UITrainingViewController.h"
 
+@interface UIPlayerViewController ()
+
+@property (nonatomic) NSInteger currentDay;
+@property (nonatomic) NSInteger currentMonth;
+@property (nonatomic) NSInteger currentYear;
+
+@property (nonatomic, strong) NSArray *currentOrdinateAxisTitles;
+
+@end
+
 @implementation UIPlayerViewController
 
 - (instancetype)init
@@ -52,13 +62,14 @@
 {
     Axis *weeklyAxis = [Axis weeklyAxis];
     
-    Axis *motionCountAxis = [Axis defaultAxis];
-    motionCountAxis.maxBound = [NSNumber numberWithInt:1000];
-    motionCountAxis.unit = [NSNumber numberWithInt:100];
+    Axis *motionCountAxis = [Axis motionCountAxis];
+    //    Axis *motionCountAxis = [Axis defaultAxis];
+    //    motionCountAxis.maxBound = [NSNumber numberWithInt:1000];
+    //    motionCountAxis.unit = [NSNumber numberWithInt:100];
     
-    Axis *progressAxis = [Axis defaultAxis];
-    progressAxis.maxBound = [NSNumber numberWithFloat:100.f];
-    progressAxis.unit = [NSNumber numberWithInt:10];
+    //    Axis *progressAxis = [Axis defaultAxis];
+    //    progressAxis.maxBound = [NSNumber numberWithFloat:100.f];
+    //    progressAxis.unit = [NSNumber numberWithInt:10];
     
     CoordinateSystem2D *weeklyCoordinateSystem = [[CoordinateSystem2D alloc] init];
     
@@ -71,42 +82,42 @@
     
     [_playerView layout];
     
-    _playerView.coordinateSystemView.margin = 25.f;
-    _playerView.coordinateSystemView.wantsAbscissTitles = YES;
-    _playerView.coordinateSystemView.wantsOrdinateTitles = YES;
-    _playerView.coordinateSystemView.axisTitlesTextColor = [UIColor whiteColor];
-    
-    _playerView.coordinateSystemView.abscissAxis.titleUnit = [NSNumber numberWithInt:1];
-    _playerView.coordinateSystemView.abscissAxis.lineColor = [UIColor whiteColor];
     _playerView.coordinateSystemView.abscissAxis.titles = [DateUtilities dayTitles];
-    _playerView.coordinateSystemView.abscissAxis.lineWidth = [NSNumber numberWithInt:2];
-    _playerView.coordinateSystemView.abscissAxis.unitSeparatorLineLength = [NSNumber numberWithInt:8];
-    _playerView.coordinateSystemView.abscissAxis.titleInterval = [NSNumber numberWithInt:1];
+    _currentOrdinateAxisTitles = [NSArray arrayWithObjects:@"100", @"200", @"300", @"400", @"500", @"600", @"700", @"800", @"900", @"1000", nil];
+    _playerView.coordinateSystemView.ordinateAxis.titles = _currentOrdinateAxisTitles;
     
-    _playerView.coordinateSystemView.ordinateAxis.titleUnit = [NSNumber numberWithInt:100];
-    _playerView.coordinateSystemView.ordinateAxis.lineColor = [UIColor whiteColor];
-    _playerView.coordinateSystemView.ordinateAxis.titles = [NSArray arrayWithObjects:@"100", @"200", @"300", @"400", @"500", @"600", @"700", @"800", @"900", @"1000", nil];
-    _playerView.coordinateSystemView.ordinateAxis.lineWidth = [NSNumber numberWithInt:2];
-    _playerView.coordinateSystemView.ordinateAxis.unitSeparatorLineLength = [NSNumber numberWithInt:8];
-    _playerView.coordinateSystemView.ordinateAxis.titleInterval = [NSNumber numberWithInt:1];
+    NSInteger day = [DateUtilities currentDay];
+    NSInteger month = [DateUtilities currentMonth];
+    NSInteger year = [DateUtilities currentYear];
     
+    _currentDay = day;
+    _currentMonth = month;
+    _currentYear = year;
+    
+    NSDate *selectedDate = [DateUtilities dateWithYear:year month:month day:day];
+    NSDictionary *weekStartAndEndDates = [DateUtilities startAndEndDateOfWeekForDate:selectedDate];
+    
+    NSDate *startDate = [weekStartAndEndDates objectForKey:@"startDate"];
+    NSDate *endDate = [weekStartAndEndDates objectForKey:@"endDate"];
+    
+    [_playerView.coordinateSystemView setCoordinateSystemTitle:[NSString stringWithFormat:@"%@ - %@", [DateUtilities stringWithDate:startDate], [DateUtilities stringWithDate:endDate]]];
     
     [_playerView.coordinateSystemView draw];
     
-    Curve *curve = [[Curve alloc] init];
-    
-        curve.values = [NSOrderedDictionary dictionaryWithObjects:
-                        [NSArray arrayWithObjects:[NSNumber numberWithInt:516], [NSNumber numberWithInt:327], [NSNull null], [NSNull null], [NSNumber numberWithInt:628], [NSNumber numberWithInt:804], [NSNumber numberWithInt:173], nil]
-                                                          forKeys:
-                        _playerView.coordinateSystemView.abscissAxis.titles];
-    
-    
-        UICurve *uicurve = [[UICurve alloc] initWithFrame:CGRectZero curve:curve];
-        uicurve.lineColor = [UIColor whiteColor];
-        uicurve.drawPoints = NO;
-        uicurve.lineWidth = [NSNumber numberWithFloat:0.3];
-    
-    [_playerView.coordinateSystemView drawCurve:uicurve];
+    //    Curve *curve = [[Curve alloc] init];
+    //
+    //        curve.values = [NSOrderedDictionary dictionaryWithObjects:
+    //                        [NSArray arrayWithObjects:[NSNumber numberWithInt:516], [NSNumber numberWithInt:327], [NSNull null], [NSNull null], [NSNumber numberWithInt:628], [NSNumber numberWithInt:804], [NSNumber numberWithInt:173], nil]
+    //                                                          forKeys:
+    //                        _playerView.coordinateSystemView.abscissAxis.titles];
+    //
+    //
+    //        UICurve *uicurve = [[UICurve alloc] initWithFrame:CGRectZero curve:curve];
+    //        uicurve.lineColor = [UIColor whiteColor];
+    //        uicurve.drawPoints = NO;
+    //        uicurve.lineWidth = [NSNumber numberWithFloat:0.3];
+    //
+    //    [_playerView.coordinateSystemView drawCurve:uicurve];
 }
 
 - (void)viewWillAppear:(BOOL)animated
@@ -118,7 +129,19 @@
     
     _curvesViewPinchGestureRecognizer = [[UIPinchGestureRecognizer alloc] initWithTarget:self action:@selector(twoFingerPinchOnCurveView:)];
     _curvesViewPinchGestureRecognizer.scale = 1;
+    
+    _curvesViewLeftSwipeGestureRecognizer = [[UISwipeGestureRecognizer alloc] initWithTarget:self action:@selector(swipeGestureRecognizerOnCurveView:)];
+    _curvesViewLeftSwipeGestureRecognizer.direction = UISwipeGestureRecognizerDirectionLeft;
+    _curvesViewLeftSwipeGestureRecognizer.numberOfTouchesRequired = 1;
+    
+    _curvesViewRightSwipeGestureRecognizer = [[UISwipeGestureRecognizer alloc] initWithTarget:self action:@selector(swipeGestureRecognizerOnCurveView:)];
+    _curvesViewRightSwipeGestureRecognizer.direction = UISwipeGestureRecognizerDirectionRight;
+    _curvesViewRightSwipeGestureRecognizer.numberOfTouchesRequired = 1;
+    
+    
     [_playerView.coordinateSystemView addGestureRecognizer:_curvesViewPinchGestureRecognizer];
+    [_playerView.coordinateSystemView addGestureRecognizer:_curvesViewLeftSwipeGestureRecognizer];
+    [_playerView.coordinateSystemView addGestureRecognizer:_curvesViewRightSwipeGestureRecognizer];
 }
 
 -(NSInteger)numberOfComponentsInPickerView:(UIPickerView *)pickerView
@@ -148,20 +171,62 @@
     {
         NSLog(@"You selected this: %@", [_curveDataPickerViewData objectAtIndex:row]);
         
-        if ([[_curveDataPickerViewData objectAtIndex:row] isEqualToString:@"Forehands"])
+        NSString *selectedValue = [_curveDataPickerViewData objectAtIndex:row];
+        
+        Axis *ordinateAxis = nil;
+        
+        if ([selectedValue rangeOfString:@"progress"].location == NSNotFound)
         {
+            ordinateAxis = [Axis motionCountAxis];
             
+            _currentOrdinateAxisTitles = [NSArray arrayWithObjects:@"100", @"200", @"300", @"400", @"500", @"600", @"700", @"800", @"900", @"1000", nil];
+            
+            if ([selectedValue isEqualToString:@"Forehands"])
+            {
+                
+            }
+            
+            else if ([selectedValue isEqualToString:@"Backhands"])
+            {
+                
+            }
+            
+            else if ([selectedValue isEqualToString:@"Services"])
+            {
+                
+            }
         }
         
-        else if ([[_curveDataPickerViewData objectAtIndex:row] isEqualToString:@"Backhands"])
+        else
         {
+            ordinateAxis = [Axis progressAxis];
             
+            _currentOrdinateAxisTitles = [NSArray arrayWithObjects:@"10%", @"20%", @"30%", @"40%", @"50%", @"60%", @"70%", @"80%", @"90%", @"100%", nil];
+            
+            if ([selectedValue isEqualToString:@"Forehands (progress)"])
+            {
+                
+            }
+            
+            else if ([selectedValue isEqualToString:@"Backhands (progress)"])
+            {
+                
+            }
+            
+            else if ([selectedValue isEqualToString:@"Services (progress)"])
+            {
+                
+            }
         }
         
-        else if ([[_curveDataPickerViewData objectAtIndex:row] isEqualToString:@"Services"])
-        {
-            
-        }
+        [_playerView.coordinateSystemView.coordinateSystem.axes setObject:ordinateAxis forKey:@"ordinate"];
+        
+        _playerView.coordinateSystemView.ordinateAxis.titles = _currentOrdinateAxisTitles;
+        
+        [_playerView.coordinateSystemView refreshCoordinateSystem];
+        
+        [_playerView.coordinateSystemView undraw];
+        [_playerView.coordinateSystemView draw];
     }
     
     else if (pickerView.tag == CURVE_PERIOD_PICKERVIEW_TAG)
@@ -169,96 +234,60 @@
         if ([[_curvePeriodPickerViewData objectAtIndex:row] isEqualToString:@"Weekly"])
         {
             Axis *weeklyAxis = [Axis weeklyAxis];
-            Axis *motionCountAxis = [Axis defaultAxis];
-            motionCountAxis.maxBound = [NSNumber numberWithInt:1000];
-            motionCountAxis.unit = [NSNumber numberWithInt:100];
             
-            CoordinateSystem2D *weeklyCoordinateSystem = [[CoordinateSystem2D alloc] init];
-            [weeklyCoordinateSystem.axes setObject:weeklyAxis forKey:@"absciss"];
-            [weeklyCoordinateSystem.axes setObject:motionCountAxis forKey:@"ordinate"];
-            [weeklyCoordinateSystem prepare];
+            [_playerView.coordinateSystemView.coordinateSystem.axes setObject:weeklyAxis forKey:@"absciss"];
             
-            [_playerView.coordinateSystemView setCoordinateSystem:weeklyCoordinateSystem];
+            [_playerView.coordinateSystemView refreshCoordinateSystem];
             
-            _playerView.coordinateSystemView.abscissAxis.titleUnit = [NSNumber numberWithInt:1];
-            _playerView.coordinateSystemView.abscissAxis.lineColor = [UIColor whiteColor];
             _playerView.coordinateSystemView.abscissAxis.titles = [DateUtilities dayTitles];
-            _playerView.coordinateSystemView.abscissAxis.lineWidth = [NSNumber numberWithInt:2];
-            _playerView.coordinateSystemView.abscissAxis.unitSeparatorLineLength = [NSNumber numberWithInt:8];
-            _playerView.coordinateSystemView.abscissAxis.titleInterval = [NSNumber numberWithInt:1];
-            
-            _playerView.coordinateSystemView.ordinateAxis.titleUnit = [NSNumber numberWithInt:100];
-            _playerView.coordinateSystemView.ordinateAxis.lineColor = [UIColor whiteColor];
-            _playerView.coordinateSystemView.ordinateAxis.titles = [NSArray arrayWithObjects:@"100", @"200", @"300", @"400", @"500", @"600", @"700", @"800", @"900", @"1000", nil];
-            _playerView.coordinateSystemView.ordinateAxis.lineWidth = [NSNumber numberWithInt:2];
-            _playerView.coordinateSystemView.ordinateAxis.unitSeparatorLineLength = [NSNumber numberWithInt:8];
-            _playerView.coordinateSystemView.ordinateAxis.titleInterval = [NSNumber numberWithInt:1];
+            //_playerView.coordinateSystemView.ordinateAxis.titles = _currentOrdinateAxisTitles;
             
             [_playerView.coordinateSystemView undraw];
+            
+            NSDate *selectedDate = [DateUtilities dateWithYear:_currentYear month:_currentMonth day:_currentDay];
+            NSDictionary *weekStartAndEndDates = [DateUtilities startAndEndDateOfWeekForDate:selectedDate];
+            
+            NSDate *startDate = [weekStartAndEndDates objectForKey:@"startDate"];
+            NSDate *endDate = [weekStartAndEndDates objectForKey:@"endDate"];
+            
+            [_playerView.coordinateSystemView setCoordinateSystemTitle:[NSString stringWithFormat:@"%@ - %@", [DateUtilities stringWithDate:startDate], [DateUtilities stringWithDate:endDate]]];
+            
             [_playerView.coordinateSystemView draw];
         }
         
         else if ([[_curvePeriodPickerViewData objectAtIndex:row] isEqualToString:@"Monthly"])
         {
-            Axis *monthlyAxis = [Axis monthlyAxisForCurrentMonth];
-            Axis *motionCountAxis = [Axis defaultAxis];
-            motionCountAxis.maxBound = [NSNumber numberWithInt:1000];
-            motionCountAxis.unit = [NSNumber numberWithInt:100];
+            Axis *monthlyAxis = [Axis monthlyAxisForMonth:_currentMonth];
             
-            CoordinateSystem2D *monthlyCoordinateSystem = [[CoordinateSystem2D alloc] init];
-            [monthlyCoordinateSystem.axes setObject:monthlyAxis forKey:@"absciss"];
-            [monthlyCoordinateSystem.axes setObject:motionCountAxis forKey:@"ordinate"];
-            [monthlyCoordinateSystem prepare];
+            [_playerView.coordinateSystemView.coordinateSystem.axes setObject:monthlyAxis forKey:@"absciss"];
             
-            [_playerView.coordinateSystemView setCoordinateSystem:monthlyCoordinateSystem];
+            [_playerView.coordinateSystemView refreshCoordinateSystem];
             
-            _playerView.coordinateSystemView.abscissAxis.titleUnit = [NSNumber numberWithInt:1];
-            _playerView.coordinateSystemView.abscissAxis.lineColor = [UIColor whiteColor];
-            _playerView.coordinateSystemView.abscissAxis.titles = [DateUtilities dayTitlesForCurrentMonth];
-            _playerView.coordinateSystemView.abscissAxis.lineWidth = [NSNumber numberWithInt:2];
-            _playerView.coordinateSystemView.abscissAxis.unitSeparatorLineLength = [NSNumber numberWithInt:8];
-            _playerView.coordinateSystemView.abscissAxis.titleInterval = [NSNumber numberWithInt:1];
-            
-            _playerView.coordinateSystemView.ordinateAxis.titleUnit = [NSNumber numberWithInt:100];
-            _playerView.coordinateSystemView.ordinateAxis.lineColor = [UIColor whiteColor];
-            _playerView.coordinateSystemView.ordinateAxis.titles = [NSArray arrayWithObjects:@"100", @"200", @"300", @"400", @"500", @"600", @"700", @"800", @"900", @"1000", nil];
-            _playerView.coordinateSystemView.ordinateAxis.lineWidth = [NSNumber numberWithInt:2];
-            _playerView.coordinateSystemView.ordinateAxis.unitSeparatorLineLength = [NSNumber numberWithInt:8];
-            _playerView.coordinateSystemView.ordinateAxis.titleInterval = [NSNumber numberWithInt:1];
+            _playerView.coordinateSystemView.abscissAxis.titles = [DateUtilities dayTitlesForMonth:_currentMonth];
+            //_playerView.coordinateSystemView.ordinateAxis.titles = _currentOrdinateAxisTitles;
             
             [_playerView.coordinateSystemView undraw];
+            
+            [_playerView.coordinateSystemView setCoordinateSystemTitle:[DateUtilities monthFullTitle:_currentMonth forYear:_currentYear]];
+            
             [_playerView.coordinateSystemView draw];
         }
         
         else if ([[_curvePeriodPickerViewData objectAtIndex:row] isEqualToString:@"Yearly"])
         {
             Axis *yearlyAxis = [Axis yearlyAxis];
-            Axis *motionCountAxis = [Axis defaultAxis];
-            motionCountAxis.maxBound = [NSNumber numberWithInt:1000];
-            motionCountAxis.unit = [NSNumber numberWithInt:100];
             
-            CoordinateSystem2D *yearlyCoordinateSystem = [[CoordinateSystem2D alloc] init];
-            [yearlyCoordinateSystem.axes setObject:yearlyAxis forKey:@"absciss"];
-            [yearlyCoordinateSystem.axes setObject:motionCountAxis forKey:@"ordinate"];
-            [yearlyCoordinateSystem prepare];
+            [_playerView.coordinateSystemView.coordinateSystem.axes setObject:yearlyAxis forKey:@"absciss"];
             
-            [_playerView.coordinateSystemView setCoordinateSystem:yearlyCoordinateSystem];
+            [_playerView.coordinateSystemView refreshCoordinateSystem];
             
-            _playerView.coordinateSystemView.abscissAxis.titleUnit = [NSNumber numberWithInt:1];
-            _playerView.coordinateSystemView.abscissAxis.lineColor = [UIColor whiteColor];
             _playerView.coordinateSystemView.abscissAxis.titles = [DateUtilities monthTitles];
-            _playerView.coordinateSystemView.abscissAxis.lineWidth = [NSNumber numberWithInt:2];
-            _playerView.coordinateSystemView.abscissAxis.unitSeparatorLineLength = [NSNumber numberWithInt:8];
-            _playerView.coordinateSystemView.abscissAxis.titleInterval = [NSNumber numberWithInt:1];
-            
-            _playerView.coordinateSystemView.ordinateAxis.titleUnit = [NSNumber numberWithInt:100];
-            _playerView.coordinateSystemView.ordinateAxis.lineColor = [UIColor whiteColor];
-            _playerView.coordinateSystemView.ordinateAxis.titles = [NSArray arrayWithObjects:@"100", @"200", @"300", @"400", @"500", @"600", @"700", @"800", @"900", @"1000", nil];
-            _playerView.coordinateSystemView.ordinateAxis.lineWidth = [NSNumber numberWithInt:2];
-            _playerView.coordinateSystemView.ordinateAxis.unitSeparatorLineLength = [NSNumber numberWithInt:8];
-            _playerView.coordinateSystemView.ordinateAxis.titleInterval = [NSNumber numberWithInt:1];
+            //_playerView.coordinateSystemView.ordinateAxis.titles = _currentOrdinateAxisTitles;
             
             [_playerView.coordinateSystemView undraw];
+            
+            [_playerView.coordinateSystemView setCoordinateSystemTitle:[DateUtilities yearFullTitle:_currentYear]];
+            
             [_playerView.coordinateSystemView draw];
         }
     }
@@ -431,11 +460,7 @@
 
 - (void)twoFingerPinchOnCurveView:(UIPinchGestureRecognizer *)pinchGestureRecognizer
 {
-    NSLog(@"Pinch scale: %f", pinchGestureRecognizer.scale);
-    
     CGPoint point = [pinchGestureRecognizer locationInView:_playerView.coordinateSystemView];
-    NSLog(@"pinch center : %f %f", point.x, point.y);
-    // find closest title
     
     BOOL isYearlyCoordinateSystem = _playerView.coordinateSystemView.abscissAxis.titles.count == 12 ? YES : NO;
     BOOL isWeeklyCoordinateSystem = _playerView.coordinateSystemView.abscissAxis.titles.count == 7 ? YES : NO;
@@ -445,37 +470,26 @@
     {
         if (pinchGestureRecognizer.scale > 1)   // pinch out
         {
+            NSString *winningTitle = [UICoordinateSystem2DUtilities titleForTouchLocation:point inCoordinateSystem:_playerView.coordinateSystemView];
+            
             if (isYearlyCoordinateSystem) // if yearly coordinate system is displayed (yearly => monthly)
             {
                 // do some stuff with curves, the following just changes the coordinate system
                 
-                Axis *monthlyAxis = [Axis monthlyAxisForCurrentMonth];
-                Axis *motionCountAxis = [Axis defaultAxis];
-                motionCountAxis.maxBound = [NSNumber numberWithInt:1000];
-                motionCountAxis.unit = [NSNumber numberWithInt:100];
+                _currentMonth = [DateUtilities monthForTitle:winningTitle];
                 
-                CoordinateSystem2D *monthlyCoordinateSystem = [[CoordinateSystem2D alloc] init];
-                [monthlyCoordinateSystem.axes setObject:monthlyAxis forKey:@"absciss"];
-                [monthlyCoordinateSystem.axes setObject:motionCountAxis forKey:@"ordinate"];
-                [monthlyCoordinateSystem prepare];
+                Axis *monthlyAxis = [Axis monthlyAxisForMonth:_currentMonth];
                 
-                [_playerView.coordinateSystemView setCoordinateSystem:monthlyCoordinateSystem];
+                [_playerView.coordinateSystemView.coordinateSystem.axes setObject:monthlyAxis forKey:@"absciss"];
                 
-                _playerView.coordinateSystemView.abscissAxis.titleUnit = [NSNumber numberWithInt:1];
-                _playerView.coordinateSystemView.abscissAxis.lineColor = [UIColor whiteColor];
-                _playerView.coordinateSystemView.abscissAxis.titles = [DateUtilities dayTitlesForCurrentMonth];
-                _playerView.coordinateSystemView.abscissAxis.lineWidth = [NSNumber numberWithInt:2];
-                _playerView.coordinateSystemView.abscissAxis.unitSeparatorLineLength = [NSNumber numberWithInt:8];
-                _playerView.coordinateSystemView.abscissAxis.titleInterval = [NSNumber numberWithInt:1];
+                [_playerView.coordinateSystemView refreshCoordinateSystem];
                 
-                _playerView.coordinateSystemView.ordinateAxis.titleUnit = [NSNumber numberWithInt:100];
-                _playerView.coordinateSystemView.ordinateAxis.lineColor = [UIColor whiteColor];
-                _playerView.coordinateSystemView.ordinateAxis.titles = [NSArray arrayWithObjects:@"100", @"200", @"300", @"400", @"500", @"600", @"700", @"800", @"900", @"1000", nil];
-                _playerView.coordinateSystemView.ordinateAxis.lineWidth = [NSNumber numberWithInt:2];
-                _playerView.coordinateSystemView.ordinateAxis.unitSeparatorLineLength = [NSNumber numberWithInt:8];
-                _playerView.coordinateSystemView.ordinateAxis.titleInterval = [NSNumber numberWithInt:1];
+                _playerView.coordinateSystemView.abscissAxis.titles = [DateUtilities dayTitlesForMonth:_currentMonth];
                 
                 [_playerView.coordinateSystemView undraw];
+                
+                [_playerView.coordinateSystemView setCoordinateSystemTitle:[DateUtilities monthFullTitle:_currentMonth forYear:_currentYear]];
+                
                 [_playerView.coordinateSystemView draw];
                 
                 [_playerView.periodPickerView selectRow:1 inComponent:0 animated:YES];
@@ -486,32 +500,31 @@
                 // do some stuff with curves, the following just changes the coordinate system
                 
                 Axis *weeklyAxis = [Axis weeklyAxis];
-                Axis *motionCountAxis = [Axis defaultAxis];
-                motionCountAxis.maxBound = [NSNumber numberWithInt:1000];
-                motionCountAxis.unit = [NSNumber numberWithInt:100];
                 
-                CoordinateSystem2D *weeklyCoordinateSystem = [[CoordinateSystem2D alloc] init];
-                [weeklyCoordinateSystem.axes setObject:weeklyAxis forKey:@"absciss"];
-                [weeklyCoordinateSystem.axes setObject:motionCountAxis forKey:@"ordinate"];
-                [weeklyCoordinateSystem prepare];
+                [_playerView.coordinateSystemView.coordinateSystem.axes setObject:weeklyAxis forKey:@"absciss"];
                 
-                [_playerView.coordinateSystemView setCoordinateSystem:weeklyCoordinateSystem];
+                [_playerView.coordinateSystemView refreshCoordinateSystem];
                 
-                _playerView.coordinateSystemView.abscissAxis.titleUnit = [NSNumber numberWithInt:1];
-                _playerView.coordinateSystemView.abscissAxis.lineColor = [UIColor whiteColor];
                 _playerView.coordinateSystemView.abscissAxis.titles = [DateUtilities dayTitles];
-                _playerView.coordinateSystemView.abscissAxis.lineWidth = [NSNumber numberWithInt:2];
-                _playerView.coordinateSystemView.abscissAxis.unitSeparatorLineLength = [NSNumber numberWithInt:8];
-                _playerView.coordinateSystemView.abscissAxis.titleInterval = [NSNumber numberWithInt:1];
-                
-                _playerView.coordinateSystemView.ordinateAxis.titleUnit = [NSNumber numberWithInt:100];
-                _playerView.coordinateSystemView.ordinateAxis.lineColor = [UIColor whiteColor];
-                _playerView.coordinateSystemView.ordinateAxis.titles = [NSArray arrayWithObjects:@"100", @"200", @"300", @"400", @"500", @"600", @"700", @"800", @"900", @"1000", nil];
-                _playerView.coordinateSystemView.ordinateAxis.lineWidth = [NSNumber numberWithInt:2];
-                _playerView.coordinateSystemView.ordinateAxis.unitSeparatorLineLength = [NSNumber numberWithInt:8];
-                _playerView.coordinateSystemView.ordinateAxis.titleInterval = [NSNumber numberWithInt:1];
                 
                 [_playerView.coordinateSystemView undraw];
+                
+                // find week start and end date
+                
+                _currentDay = [winningTitle intValue];
+                
+                //                NSString *currentCoordinateSystemTitle = _playerView.coordinateSystemView.titleLabel.attributedText.string;
+                //                NSString *monthName = [[currentCoordinateSystemTitle stringByReplacingOccurrencesOfString:[NSString stringWithFormat:@"%ld", (long)_currentYear] withString:@""] stringByTrimmingCharactersInSet:[NSCharacterSet whitespaceCharacterSet]];
+                //
+                //                _currentMonth = [DateUtilities monthForTitle:monthName];
+                NSDate *selectedDate = [DateUtilities dateWithYear:_currentYear month:_currentMonth day:_currentDay];
+                NSDictionary *weekStartAndEndDates = [DateUtilities startAndEndDateOfWeekForDate:selectedDate];
+                
+                NSDate *startDate = [weekStartAndEndDates objectForKey:@"startDate"];
+                NSDate *endDate = [weekStartAndEndDates objectForKey:@"endDate"];
+                
+                [_playerView.coordinateSystemView setCoordinateSystemTitle:[NSString stringWithFormat:@"%@ - %@", [DateUtilities stringWithDate:startDate], [DateUtilities stringWithDate:endDate]]];
+                
                 [_playerView.coordinateSystemView draw];
                 
                 [_playerView.periodPickerView selectRow:0 inComponent:0 animated:YES];
@@ -524,33 +537,18 @@
             {
                 // do some stuff with curves, the following just changes the coordinate system
                 
-                Axis *monthlyAxis = [Axis monthlyAxisForCurrentMonth];
-                Axis *motionCountAxis = [Axis defaultAxis];
-                motionCountAxis.maxBound = [NSNumber numberWithInt:1000];
-                motionCountAxis.unit = [NSNumber numberWithInt:100];
+                Axis *monthlyAxis = [Axis monthlyAxisForMonth:_currentMonth];
                 
-                CoordinateSystem2D *monthlyCoordinateSystem = [[CoordinateSystem2D alloc] init];
-                [monthlyCoordinateSystem.axes setObject:monthlyAxis forKey:@"absciss"];
-                [monthlyCoordinateSystem.axes setObject:motionCountAxis forKey:@"ordinate"];
-                [monthlyCoordinateSystem prepare];
+                [_playerView.coordinateSystemView.coordinateSystem.axes setObject:monthlyAxis forKey:@"absciss"];
                 
-                [_playerView.coordinateSystemView setCoordinateSystem:monthlyCoordinateSystem];
+                [_playerView.coordinateSystemView refreshCoordinateSystem];
                 
-                _playerView.coordinateSystemView.abscissAxis.titleUnit = [NSNumber numberWithInt:1];
-                _playerView.coordinateSystemView.abscissAxis.lineColor = [UIColor whiteColor];
-                _playerView.coordinateSystemView.abscissAxis.titles = [DateUtilities dayTitlesForCurrentMonth];
-                _playerView.coordinateSystemView.abscissAxis.lineWidth = [NSNumber numberWithInt:2];
-                _playerView.coordinateSystemView.abscissAxis.unitSeparatorLineLength = [NSNumber numberWithInt:8];
-                _playerView.coordinateSystemView.abscissAxis.titleInterval = [NSNumber numberWithInt:1];
-                
-                _playerView.coordinateSystemView.ordinateAxis.titleUnit = [NSNumber numberWithInt:100];
-                _playerView.coordinateSystemView.ordinateAxis.lineColor = [UIColor whiteColor];
-                _playerView.coordinateSystemView.ordinateAxis.titles = [NSArray arrayWithObjects:@"100", @"200", @"300", @"400", @"500", @"600", @"700", @"800", @"900", @"1000", nil];
-                _playerView.coordinateSystemView.ordinateAxis.lineWidth = [NSNumber numberWithInt:2];
-                _playerView.coordinateSystemView.ordinateAxis.unitSeparatorLineLength = [NSNumber numberWithInt:8];
-                _playerView.coordinateSystemView.ordinateAxis.titleInterval = [NSNumber numberWithInt:1];
+                _playerView.coordinateSystemView.abscissAxis.titles = [DateUtilities dayTitlesForMonth:_currentMonth];
                 
                 [_playerView.coordinateSystemView undraw];
+                
+                [_playerView.coordinateSystemView setCoordinateSystemTitle:[DateUtilities monthFullTitle:_currentMonth forYear:_currentYear]];
+                
                 [_playerView.coordinateSystemView draw];
                 
                 [_playerView.periodPickerView selectRow:1 inComponent:0 animated:YES];
@@ -561,39 +559,131 @@
                 // do some stuff with curves, the following just changes the coordinate system
                 
                 Axis *yearlyAxis = [Axis yearlyAxis];
-                Axis *motionCountAxis = [Axis defaultAxis];
-                motionCountAxis.maxBound = [NSNumber numberWithInt:1000];
-                motionCountAxis.unit = [NSNumber numberWithInt:100];
                 
-                CoordinateSystem2D *yearlyCoordinateSystem = [[CoordinateSystem2D alloc] init];
-                [yearlyCoordinateSystem.axes setObject:yearlyAxis forKey:@"absciss"];
-                [yearlyCoordinateSystem.axes setObject:motionCountAxis forKey:@"ordinate"];
-                [yearlyCoordinateSystem prepare];
+                [_playerView.coordinateSystemView.coordinateSystem.axes setObject:yearlyAxis forKey:@"absciss"];
                 
-                [_playerView.coordinateSystemView setCoordinateSystem:yearlyCoordinateSystem];
+                [_playerView.coordinateSystemView refreshCoordinateSystem];
                 
-                _playerView.coordinateSystemView.abscissAxis.titleUnit = [NSNumber numberWithInt:1];
-                _playerView.coordinateSystemView.abscissAxis.lineColor = [UIColor whiteColor];
                 _playerView.coordinateSystemView.abscissAxis.titles = [DateUtilities monthTitles];
-                _playerView.coordinateSystemView.abscissAxis.lineWidth = [NSNumber numberWithInt:2];
-                _playerView.coordinateSystemView.abscissAxis.unitSeparatorLineLength = [NSNumber numberWithInt:8];
-                _playerView.coordinateSystemView.abscissAxis.titleInterval = [NSNumber numberWithInt:1];
-                
-                _playerView.coordinateSystemView.ordinateAxis.titleUnit = [NSNumber numberWithInt:100];
-                _playerView.coordinateSystemView.ordinateAxis.lineColor = [UIColor whiteColor];
-                _playerView.coordinateSystemView.ordinateAxis.titles = [NSArray arrayWithObjects:@"100", @"200", @"300", @"400", @"500", @"600", @"700", @"800", @"900", @"1000", nil];
-                _playerView.coordinateSystemView.ordinateAxis.lineWidth = [NSNumber numberWithInt:2];
-                _playerView.coordinateSystemView.ordinateAxis.unitSeparatorLineLength = [NSNumber numberWithInt:8];
-                _playerView.coordinateSystemView.ordinateAxis.titleInterval = [NSNumber numberWithInt:1];
                 
                 [_playerView.coordinateSystemView undraw];
+                
+                [_playerView.coordinateSystemView setCoordinateSystemTitle:[DateUtilities yearFullTitle:_currentYear]];
+                
                 [_playerView.coordinateSystemView draw];
                 
                 [_playerView.periodPickerView selectRow:2 inComponent:0 animated:YES];
             }
         }
     }
+}
+
+- (void)swipeGestureRecognizerOnCurveView:(UISwipeGestureRecognizer *)swipeGestureRecognizer;
+{
+    BOOL isYearlyCoordinateSystem = _playerView.coordinateSystemView.abscissAxis.titles.count == 12 ? YES : NO;
+    BOOL isWeeklyCoordinateSystem = _playerView.coordinateSystemView.abscissAxis.titles.count == 7 ? YES : NO;
+    BOOL isMonthlyCoordinateSystem = _playerView.coordinateSystemView.abscissAxis.titles.count != 12 && _playerView.coordinateSystemView.abscissAxis.titles.count != 7 ? YES : NO;
     
+    if (swipeGestureRecognizer.state == UIGestureRecognizerStateEnded)
+    {
+        if (swipeGestureRecognizer == _curvesViewLeftSwipeGestureRecognizer) // left swipe (we go in the future)
+        {
+            NSLog(@"Left swipe");
+            
+            if (isWeeklyCoordinateSystem)
+            {
+                
+            }
+            
+            else if (isMonthlyCoordinateSystem)
+            {
+                if (_currentMonth < 12)
+                {
+                    _currentMonth++;
+                }
+                
+                else
+                {
+                    _currentMonth = 1;
+                    _currentYear++;
+                }
+                
+                Axis *monthlyAxis = [Axis monthlyAxisForMonth:_currentMonth];
+                
+                [_playerView.coordinateSystemView.coordinateSystem.axes setObject:monthlyAxis forKey:@"absciss"];
+                
+                [_playerView.coordinateSystemView refreshCoordinateSystem];
+                
+                _playerView.coordinateSystemView.abscissAxis.titles = [DateUtilities dayTitlesForMonth:_currentMonth];
+                
+                [_playerView.coordinateSystemView undraw];
+                
+                [_playerView.coordinateSystemView setCoordinateSystemTitle:[DateUtilities monthFullTitle:_currentMonth forYear:_currentYear]];
+                
+                [_playerView.coordinateSystemView draw];
+            }
+            
+            else if (isYearlyCoordinateSystem)
+            {
+                _currentYear++;
+                
+                [_playerView.coordinateSystemView undraw];
+                
+                [_playerView.coordinateSystemView setCoordinateSystemTitle:[DateUtilities yearFullTitle:_currentYear]];
+                
+                [_playerView.coordinateSystemView draw];
+            }
+        }
+        
+        else if (swipeGestureRecognizer == _curvesViewRightSwipeGestureRecognizer) // right swipe (we go in the past)
+        {
+            NSLog(@"Right swipe");
+            
+            if (isWeeklyCoordinateSystem)
+            {
+                
+            }
+            
+            else if (isMonthlyCoordinateSystem)
+            {
+                if (_currentMonth > 1)
+                {
+                    _currentMonth--;
+                }
+                
+                else
+                {
+                    _currentMonth = 12;
+                    _currentYear--;
+                }
+                
+                Axis *monthlyAxis = [Axis monthlyAxisForMonth:_currentMonth];
+                
+                [_playerView.coordinateSystemView.coordinateSystem.axes setObject:monthlyAxis forKey:@"absciss"];
+                
+                [_playerView.coordinateSystemView refreshCoordinateSystem];
+                
+                _playerView.coordinateSystemView.abscissAxis.titles = [DateUtilities dayTitlesForMonth:_currentMonth];
+                
+                [_playerView.coordinateSystemView undraw];
+                
+                [_playerView.coordinateSystemView setCoordinateSystemTitle:[DateUtilities monthFullTitle:_currentMonth forYear:_currentYear]];
+                
+                [_playerView.coordinateSystemView draw];
+            }
+            
+            else if (isYearlyCoordinateSystem)
+            {
+                _currentYear--;
+                
+                [_playerView.coordinateSystemView undraw];
+                
+                [_playerView.coordinateSystemView setCoordinateSystemTitle:[DateUtilities yearFullTitle:_currentYear]];
+                
+                [_playerView.coordinateSystemView draw];
+            }
+        }
+    }
 }
 
 @end
