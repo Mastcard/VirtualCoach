@@ -7,7 +7,18 @@
 //
 
 #import <Foundation/Foundation.h>
+#import "StatisticalDAO.h"
+#import "StatisticalDO.h"
 
 @interface StatisticalDataEngine : NSObject
+
+@property (nonatomic) StatisticalDAO* statisticalDAO;
+
+// INSERT
+-(void)insertStatistical:(StatisticalDO*)statisticalDO;
+
+// SELECT
+-(NSMutableArray<StatisticalDO*>*)searchAllStatistics;
+-(NSArray*)searchByDay:(NSString*)day andMonth:(NSString*)month andYear:(NSString*)year;
 
 @end

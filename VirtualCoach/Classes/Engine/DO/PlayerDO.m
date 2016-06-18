@@ -10,7 +10,7 @@
 
 @implementation PlayerDO
 
--(instancetype)initWithId:(int)playerId andName:(NSString*)name andFirstName:(NSString*)firstName andLeftHanded:(bool)leftHanded andStatistics:(NSMutableArray<StatisticDO*>*)statistics andTrophies:(NSMutableArray<TrophyDO*>*)trophies {
+-(instancetype)initWithId:(int)playerId andName:(NSString*)name andFirstName:(NSString*)firstName andLeftHanded:(bool)leftHanded andStatistics:(NSMutableArray<StatisticalDO*>*)statistics andTrophies:(NSMutableArray<TrophyDO*>*)trophies {
     
     self = [super init];
     
