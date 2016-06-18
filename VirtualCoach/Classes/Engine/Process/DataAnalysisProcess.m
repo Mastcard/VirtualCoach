@@ -296,7 +296,7 @@
         
         gray8i_t *src = [ImageTools cgImageToGrayImage:rgbImageScaled];
         
-        CGImageRelease(rgbImage);
+        CGImageRelease(rgbImage);  
         CGImageRelease(rgbImageScaled);
         
         if (_count == imageId.unsignedIntValue)
