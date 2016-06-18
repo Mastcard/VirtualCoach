@@ -10,7 +10,7 @@
 #define PlayerDO_h
 
 #import <Foundation/Foundation.h>
-#import "StatisticDO.h"
+#import "StatisticalDO.h"
 #import "TrophyDO.h"
 
 @interface PlayerDO : NSObject
@@ -19,10 +19,10 @@
 @property (nonatomic) NSString* name;
 @property (nonatomic) NSString* firstName;
 @property (nonatomic) bool leftHanded;
-@property (nonatomic) NSMutableArray<StatisticDO*>* statistics;
+@property (nonatomic) NSMutableArray<StatisticalDO*>* statistics;
 @property (nonatomic) NSMutableArray<TrophyDO*>* trophies;
 
--(instancetype)initWithId:(int)playerId andName:(NSString*)name andFirstName:(NSString*)firstName andLeftHanded:(bool)leftHanded andStatistics:(NSMutableArray<StatisticDO*>*)statistics andTrophies:(NSMutableArray<TrophyDO*>*)trophies;
+-(instancetype)initWithId:(int)playerId andName:(NSString*)name andFirstName:(NSString*)firstName andLeftHanded:(bool)leftHanded andStatistics:(NSMutableArray<StatisticalDO*>*)statistics andTrophies:(NSMutableArray<TrophyDO*>*)trophies;
 
 @end
 

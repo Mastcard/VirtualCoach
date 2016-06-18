@@ -89,8 +89,15 @@
                         removed= NO;
                     }
                     
+                    // @Lala
+                    // Replace the following variables with real day, month and year
+                    int day = 0;
+                    int month = 0;
+                    int year = 0;
+                    
                     int idVideoRef = [videosRef[0][kk] intValue];
-                    videoRefDO = [[ReferenceVideoDO alloc] initWithId:idVideoRef andName:videosRef[1][kk] andProcessed:processed andRemoved:removed andReferenceMovements:nil];
+                    videoRefDO = [[ReferenceVideoDO alloc] initWithId:idVideoRef andName:videosRef[1][kk] andProcessed:processed andRemoved:removed andDay:day andMonth:month
+                                                              andYear:year andReferenceMovements:nil];
                     [arrayVideoReferenceDO addObject:videoRefDO];
                 }
             }
