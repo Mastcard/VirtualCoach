@@ -15,7 +15,7 @@
 
 @interface UIMenuViewController : UIBaseViewController
 
-@property (nonatomic, strong) UIMenuView *menuView; 
+@property (nonatomic, strong) UIMenuView *menuView;
 
 - (void)captureViewButtonAction;
 - (void)trainingViewButtonAction;

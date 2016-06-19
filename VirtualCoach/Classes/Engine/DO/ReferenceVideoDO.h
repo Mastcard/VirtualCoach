@@ -14,7 +14,7 @@
 
 @interface ReferenceVideoDO : InterfaceVideoDO
 
--(instancetype)initWithId:(int)referenceVideoId andName:(NSString *)name andProcessed:(bool)processed andRemoved:(bool)removed andReferenceMovements:(NSMutableArray<ReferenceMovementDO*>*)referenceMovements;
+-(instancetype)initWithId:(int)referenceVideoId andName:(NSString *)name andProcessed:(bool)processed andRemoved:(bool)removed andDay:(int)day andMonth:(int)month andYear:(int)year andReferenceMovements:(NSMutableArray<ReferenceMovementDO*>*)referenceMovements;
 
 @end
 

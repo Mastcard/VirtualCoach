@@ -32,6 +32,9 @@
 
 - (void)prepare
 {
+    if (_values.count > 0)
+        [_values removeAllObjects];
+    
     for (float i = [_minBound floatValue]; i <= [_maxBound floatValue]; i += [_unit floatValue])
         [_values addObject:[NSNumber numberWithFloat:i]];
 }
@@ -92,6 +95,26 @@
     [axis setUnit:[NSNumber numberWithInt:1]];
     [axis setMinBound:[NSNumber numberWithInt:1]];
     [axis setMaxBound:[NSNumber numberWithInt:12]];
+    
+    return axis;
+}
+
++ (instancetype)progressAxis
+{
+    Axis *axis = [[Axis alloc] initWithIdentifier:@"ordinate"];
+    [axis setUnit:[NSNumber numberWithInt:10]];
+    [axis setMinBound:[NSNumber numberWithInt:0]];
+    [axis setMaxBound:[NSNumber numberWithInt:100]];
+    
+    return axis;
+}
+
++ (instancetype)motionCountAxis
+{
+    Axis *axis = [[Axis alloc] initWithIdentifier:@"ordinate"];
+    [axis setUnit:[NSNumber numberWithInt:100]];
+    [axis setMinBound:[NSNumber numberWithInt:0]];
+    [axis setMaxBound:[NSNumber numberWithInt:1000]];
     
     return axis;
 }

@@ -15,11 +15,7 @@
 
 @interface VideoDO : InterfaceVideoDO
 
-@property (nonatomic) int day;
-@property (nonatomic) int month;
-@property (nonatomic) int year;
-
--(instancetype)initWithId:(int)videoId andName:(NSString *)name andProcessed:(bool)processed andRemoved:(bool)removed andMovements:(NSMutableArray<MovementDO*>*)movements andDay:(int)day andMonth:(int)month andYear:(int)year;
+-(instancetype)initWithId:(int)videoId andName:(NSString *)name andProcessed:(bool)processed andRemoved:(bool)removed andDay:(int)day andMonth:(int)month andYear:(int)year andMovements:(NSMutableArray<MovementDO*>*)movements;
 
 @end
 

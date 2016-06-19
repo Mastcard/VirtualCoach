@@ -11,7 +11,7 @@
 
 @implementation InterfaceVideoDO
 
--(instancetype)initWithId:(int)referenceVideoId andName:(NSString*)name andProcessed:(bool)processed andRemoved:(bool)removed {
+-(instancetype)initWithId:(int)referenceVideoId andName:(NSString*)name andProcessed:(bool)processed andRemoved:(bool)removed andDay:(int)day andMonth:(int)month andYear:(int)year {
     
     self = [super init];
     
@@ -20,6 +20,9 @@
         self.name = name;
         self.processed = processed;
         self.removed = removed;
+        self.day = day;
+        self.month = month;
+        self.year = year;
     }
     
     return self;
