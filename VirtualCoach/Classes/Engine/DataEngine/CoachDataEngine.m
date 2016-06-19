@@ -115,9 +115,9 @@
 }
 
 //DELETE
-/*-(id)deleteCoachById:(CoachDO*)coachDO
+-(id)deleteCoachById:(int)idCoach
 {
-    return [_coachDAO deleteCoachById:[NSString stringWithFormat:@"%i", coachDO.coachId]];
-}*/
+    return [_coachDAO deleteCoachById:[NSString stringWithFormat:@"%i", idCoach]];
+}
 
 @end
