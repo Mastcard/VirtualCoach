@@ -45,5 +45,7 @@
 - (void)drawCurve:(UICurve *)curve;
 - (void)removeCurve:(UICurve *)curve;
 - (void)removeAllCurves;
+- (void)refreshCoordinateSystem;
+- (void)setCoordinateSystemTitle:(NSString *)title;
 
 @end

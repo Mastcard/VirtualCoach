@@ -107,6 +107,7 @@
 		8A2512C91D0DAF9900DADFAD /* TrackingIrrelevantSequencesRemover.m in Sources */ = {isa = PBXBuildFile; fileRef = 8A2512C61D0DAF9900DADFAD /* TrackingIrrelevantSequencesRemover.m */; };
 		8A2512CA1D0DAF9900DADFAD /* TrackingRelevantSequencesBuilder.m in Sources */ = {isa = PBXBuildFile; fileRef = 8A2512C81D0DAF9900DADFAD /* TrackingRelevantSequencesBuilder.m */; };
 		8A2512CD1D0DB5D200DADFAD /* UIProcessProgressView.m in Sources */ = {isa = PBXBuildFile; fileRef = 8A2512CC1D0DB5D200DADFAD /* UIProcessProgressView.m */; };
+		8A78E17A1D15F74A006D18EB /* UICoordinateSystem2DUtilities.m in Sources */ = {isa = PBXBuildFile; fileRef = 8A78E1791D15F74A006D18EB /* UICoordinateSystem2DUtilities.m */; };
 		8A7965911D11A5DB0096D746 /* UIMenuView.m in Sources */ = {isa = PBXBuildFile; fileRef = 8A79658E1D11A5DB0096D746 /* UIMenuView.m */; };
 		8A7965921D11A5DB0096D746 /* UIPlayerView.m in Sources */ = {isa = PBXBuildFile; fileRef = 8A7965901D11A5DB0096D746 /* UIPlayerView.m */; };
 		8A7965971D11A5E40096D746 /* UIMenuViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = 8A7965941D11A5E40096D746 /* UIMenuViewController.m */; };
@@ -376,6 +377,8 @@
 		8A2512CB1D0DB5D200DADFAD /* UIProcessProgressView.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = UIProcessProgressView.h; sourceTree = "<group>"; };
 		8A2512CC1D0DB5D200DADFAD /* UIProcessProgressView.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = UIProcessProgressView.m; sourceTree = "<group>"; };
 		8A2512CE1D0DB92700DADFAD /* SimpleProcessStatusDelegate.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = SimpleProcessStatusDelegate.h; sourceTree = "<group>"; };
+		8A78E1781D15F74A006D18EB /* UICoordinateSystem2DUtilities.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = UICoordinateSystem2DUtilities.h; sourceTree = "<group>"; };
+		8A78E1791D15F74A006D18EB /* UICoordinateSystem2DUtilities.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = UICoordinateSystem2DUtilities.m; sourceTree = "<group>"; };
 		8A79658D1D11A5DB0096D746 /* UIMenuView.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = UIMenuView.h; sourceTree = "<group>"; };
 		8A79658E1D11A5DB0096D746 /* UIMenuView.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = UIMenuView.m; sourceTree = "<group>"; };
 		8A79658F1D11A5DB0096D746 /* UIPlayerView.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = UIPlayerView.h; sourceTree = "<group>"; };
@@ -552,6 +555,8 @@
 		6E0EC2B21D1182DF00F9C818 /* Tools */ = {
 			isa = PBXGroup;
 			children = (
+				8A78E1781D15F74A006D18EB /* UICoordinateSystem2DUtilities.h */,
+				8A78E1791D15F74A006D18EB /* UICoordinateSystem2DUtilities.m */,
 				6E0EC2B41D11832400F9C818 /* DateUtilities.h */,
 				6E0EC2B51D11832400F9C818 /* DateUtilities.m */,
 			);
@@ -1616,6 +1621,7 @@
 				0D35B01B1D144B2100411ED3 /* VideoDataEngine.m in Sources */,
 				6EB1D0331CEA2D8B006B6940 /* UIBaseView.m in Sources */,
 				6E0EC2C91D11874C00F9C818 /* UIAxis.m in Sources */,
+				8A78E17A1D15F74A006D18EB /* UICoordinateSystem2DUtilities.m in Sources */,
 				7AE75D7E1D05B4AB0094A93E /* CoachDO.m in Sources */,
 				6EB1D0371CEA2D8B006B6940 /* UICaptureSessionOverlayView.m in Sources */,
 				8AB35AA71D0C68E70026503B /* UIAccountCreationPresentationView.m in Sources */,

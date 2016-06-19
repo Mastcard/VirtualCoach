@@ -46,7 +46,12 @@
         self.backgroundColor = [UIColor clearColor];
         _axisTitlesTextColor = [UIColor blackColor];
         
+        _titleLabel = [[UIBaseLabel alloc] init];
+        
         _layers = [NSMutableArray array];
+        
+        self.abscissAxis = [[UIAxis alloc] initWithFrame:CGRectZero];
+        self.ordinateAxis = [[UIAxis alloc] initWithFrame:CGRectZero];
     }
     
     return self;
@@ -68,8 +73,10 @@
         
         self.coordinateSystem = coordinateSystem;
         
-        self.abscissAxis = [[UIAxis alloc] initWithFrame:CGRectZero axis:[_coordinateSystem.axes objectForKey:@"absciss"]];
-        self.ordinateAxis = [[UIAxis alloc] initWithFrame:CGRectZero axis:[_coordinateSystem.axes objectForKey:@"ordinate"]];
+        _titleLabel = [[UIBaseLabel alloc] init];
+        
+        self.abscissAxis = [[UIAxis alloc] initWithFrame:CGRectZero axis:[coordinateSystem.axes objectForKey:@"absciss"]];
+        self.ordinateAxis = [[UIAxis alloc] initWithFrame:CGRectZero axis:[coordinateSystem.axes objectForKey:@"ordinate"]];
         
         _layers = [NSMutableArray array];
     }
@@ -81,8 +88,19 @@
 {
     _coordinateSystem = coordinateSystem;
     
-    _abscissAxis = [[UIAxis alloc] initWithFrame:CGRectZero axis:[_coordinateSystem.axes objectForKey:@"absciss"]];
-    _ordinateAxis = [[UIAxis alloc] initWithFrame:CGRectZero axis:[_coordinateSystem.axes objectForKey:@"ordinate"]];
+    [_abscissAxis setAxis:[_coordinateSystem.axes objectForKey:@"absciss"]];
+    [_ordinateAxis setAxis:[_coordinateSystem.axes objectForKey:@"ordinate"]];
+    
+    //    _abscissAxis = [[UIAxis alloc] initWithFrame:CGRectZero axis:[_coordinateSystem.axes objectForKey:@"absciss"]];
+    //    _ordinateAxis = [[UIAxis alloc] initWithFrame:CGRectZero axis:[_coordinateSystem.axes objectForKey:@"ordinate"]];
+}
+
+- (void)refreshCoordinateSystem
+{
+    [_coordinateSystem prepare];
+    
+    [_abscissAxis setAxis:[_coordinateSystem.axes objectForKey:@"absciss"]];
+    [_ordinateAxis setAxis:[_coordinateSystem.axes objectForKey:@"ordinate"]];
 }
 
 /*
@@ -316,11 +334,25 @@
     
     if (_titleLabel.attributedText.length > 0)
     {
-        [_titleLabel resizeToFitText];
+        [_titleLabel sizeToFit];
         
-        [_titleLabel setFrame:CGRectMake(self.frame.size.width - _titleLabel.frame.size.width, 0, _titleLabel.frame.size.width, _titleLabel.frame.size.height)];
+        [_titleLabel setFrame:CGRectMake(self.frame.size.width - _titleLabel.frame.size.width - _margin, _margin, _titleLabel.frame.size.width, _titleLabel.frame.size.height)];
         [self addSubview:_titleLabel];
     }
+}
+
+- (void)setCoordinateSystemTitle:(NSString *)title
+{
+    NSMutableAttributedString *coordinateSystemTitleText = [[NSMutableAttributedString alloc] initWithString:title];
+    [coordinateSystemTitleText addAttribute:NSFontAttributeName
+                                      value:[UIFont systemFontOfSize:15.0]
+                                      range:NSMakeRange(0, [coordinateSystemTitleText length])];
+    [coordinateSystemTitleText addAttribute:NSForegroundColorAttributeName value:[UIColor whiteColor] range:NSMakeRange(0, [coordinateSystemTitleText length])];
+    
+    [_titleLabel setAttributedText:coordinateSystemTitleText];
+    
+    [_titleLabel sizeToFit];
+    [_titleLabel setFrame:CGRectMake(self.frame.size.width - _titleLabel.frame.size.width - _margin, _margin, _titleLabel.frame.size.width, _titleLabel.frame.size.height)];
 }
 
 - (void)drawCurve:(UICurve *)curve

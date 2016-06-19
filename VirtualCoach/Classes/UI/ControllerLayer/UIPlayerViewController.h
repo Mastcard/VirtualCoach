@@ -11,6 +11,7 @@
 #import "CoordinateSystem2D.h"
 #import "Axis.h"
 #import "UICoordinateSystemFactory.h"
+#import "UICoordinateSystem2DUtilities.h"
 #import "DateUtilities.h"
 
 #define CURVE_DATA_PICKERVIEW_TAG 1
@@ -29,7 +30,10 @@
 @property (nonatomic, strong) NSMutableArray *playersTableViewData;
 
 @property (nonatomic, strong) UIPinchGestureRecognizer *curvesViewPinchGestureRecognizer;
+@property (nonatomic, strong) UISwipeGestureRecognizer *curvesViewLeftSwipeGestureRecognizer;
+@property (nonatomic, strong) UISwipeGestureRecognizer *curvesViewRightSwipeGestureRecognizer;
 
 - (void)twoFingerPinchOnCurveView:(UIPinchGestureRecognizer *)pinchGestureRecognizer;
+- (void)swipeGestureRecognizerOnCurveView:(UISwipeGestureRecognizer *)swipeGestureRecognizer;
 
 @end
