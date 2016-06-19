@@ -431,27 +431,27 @@
     //show all stats
     NSArray *stats = [_stat allStatistical];
     
-    NSLog(@"%@", stats);
+    NSLog(@"stats:%@", stats);
     NSString *idstat = [[[stats objectAtIndex:0] objectAtIndex:0] stringValue];
     
     XCTAssertEqualObjects(@"20%", stats[6][0] );
     
     //search
-    NSArray *stat1 = [_stat searchByMonth:@"05" Andyear:@"2016"];
+    NSArray *stat1 = [_stat searchByMonth:@"05" Andyear:@"2016" andIdPlayer:idP];
     
-    NSLog(@"%@", stat1);
+    NSLog(@"stat1:%@", stat1);
     
     XCTAssertEqualObjects(@"5", [[[stat1 objectAtIndex:1] objectAtIndex:0] stringValue]);
     
-    NSArray *stat2 = [_stat searchByYear:@"2016"];
+    NSArray *stat2 = [_stat searchByYear:@"2016" andIdPlayer:idP];
     
-    NSLog(@"%@", stat2);
+    NSLog(@"stat2:%@", stat2);
     
     XCTAssertEqualObjects(@"7", [[[stat2 objectAtIndex:2] objectAtIndex:0] stringValue]);
     
-    NSArray *stat3 = [_stat searchByDay:@"29" Month:@"05" Andyear:@"2016"];
+    NSArray *stat3 = [_stat searchByDay:@"29" Month:@"05" Andyear:@"2016" andIdPlayer:idP];
     
-    NSLog(@"%@", stat3);
+    NSLog(@"stat3:%@", stat3);
     
     XCTAssertEqualObjects(@"4",[[[stat3 objectAtIndex:3] objectAtIndex:0] stringValue]);
     
@@ -462,15 +462,15 @@
     XCTAssertEqualObjects(@"1",[[[statis objectAtIndex:12] objectAtIndex:0] stringValue]);
     
     //update
-    NSNumber *updateServiceGSR = (NSNumber *)[_stat updateServiceGlobalSuccessRate:@"70%" forDay:@"29" Month:@"05" andYear:@"2016"];
+    NSNumber *updateServiceGSR = (NSNumber *)[_stat updateServiceGlobalSuccessRate:@"70%" forDay:@"29" Month:@"05" andYear:@"2016" andIdPlayer:idP];
     
     XCTAssertEqual([updateServiceGSR boolValue],YES );
     
-    NSNumber *updateBackhandGSR = (NSNumber *)[_stat updateBackhandGlobalSuccessRate:@"40%" forDay:@"29" Month:@"05" andYear:@"2016"];
+    NSNumber *updateBackhandGSR = (NSNumber *)[_stat updateBackhandGlobalSuccessRate:@"40%" forDay:@"29" Month:@"05" andYear:@"2016" andIdPlayer:idP];
     
     XCTAssertEqual([updateBackhandGSR boolValue],YES );
     
-    NSNumber *updateForehandGSR = (NSNumber *)[_stat updateForeHandGlobalSuccessRate:@"65%" forDay:@"29" Month:@"05" andYear:@"2016"];
+    NSNumber *updateForehandGSR = (NSNumber *)[_stat updateForeHandGlobalSuccessRate:@"65%" forDay:@"29" Month:@"05" andYear:@"2016" andIdPlayer:idP];
     
     XCTAssertEqual([updateForehandGSR boolValue],YES );
     

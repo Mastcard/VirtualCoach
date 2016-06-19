@@ -63,7 +63,7 @@
     NSLog(@"CHECK: %d", check);
     
     /********************************************INSERT*************************************************************/
-    _coachDO = [_coachDO initWithCoachId:nil andName:@"Adrien" andFirstName:@"LESUR" andLogin:@"lesura" andPassword:@"adidi" andLeftHanded:YES andPlayers:nil andReferenceVideos:nil];
+    _coachDO = [[CoachDO alloc] initWithCoachId:nil andName:@"Adrien" andFirstName:@"LESUR" andLogin:@"lesura" andPassword:@"adidi" andLeftHanded:YES andPlayers:NULL andReferenceVideos:NULL];
     
     NSNumber *insertCoachDE = (NSNumber *)[_coachDE insertCoach:_coachDO];
     
@@ -76,9 +76,9 @@
     /********************************************SELECT*************************************************************/
     NSMutableArray *selectCoachDE = [_coachDE selectAllCoaches];
      NSLog(@"testDE select\n\n\n\n\n");
-    int countDE= [selectCoachDE count];
+    //int countDE= [selectCoachDE count];
     
-     NSLog(@"NB ELMT DANS NSMUTARR: %i",countDE);
+    // NSLog(@"NB ELMT DANS NSMUTARR: %i",countDE);
     int i;
     
     for (i = 0 ; i < [selectCoachDE count] ; i++) {
@@ -92,17 +92,10 @@
     NSLog(@"\n\n\n\n\n");
     XCTAssertEqualObjects(@"Adrien", coach.name);
     
-    /********************************************DELETE************************************************************
-    NSNumber *delete = (NSNumber *) [_coachDE deleteCoachById:[NSString stringWithFormat:@"%i", _coachDO.coachId]];
+    /********************************************DELETE*************************************************************/
+    NSNumber *delete = (NSNumber *) [_coachDE deleteCoachById:coach.coachId];
     
-    XCTAssertEqual([delete boolValue],YES );*/
-}
-
-- (void)testPerformanceExample {
-    // This is an example of a performance test case.
-    [self measureBlock:^{
-        // Put the code you want to measure the time of here.
-    }];
+    XCTAssertEqual([delete boolValue],YES );
 }
 
 @end
