@@ -9,7 +9,7 @@
 #import "StatisticalDAO.h"
 
 @interface DatabaseService ()
--(id)updateGlobalSuccessRate:(NSString *) gsr forDay:(NSString *) d Month:(NSString *) m andYear:(NSString *) y;
+-(id)updateGlobalSuccessRate:(NSString *) gsr forDay:(NSString *) d Month:(NSString *) m andYear:(NSString *) y andIdPlayer:(NSString *) idPlayer;
 @end
 
 @implementation StatisticalDAO
@@ -60,28 +60,16 @@
     return result;
 }
 
--(NSArray *)searchByDay:(NSString*) day Month:(NSString *) month Andyear:(NSString *) year
+-(NSArray *)searchByDay:(NSString*) day Month:(NSString *) month Andyear:(NSString *) year andIdPlayer:(NSString *) idPlayer
 {
-    NSString *query = @"select * from Statistical where day=";
+    NSString *query = @"select * from Statistical where day='";
     query = [query stringByAppendingString:day];
-    query = [query stringByAppendingString:@" and month="];
-    query = [query stringByAppendingString:month];
-    query = [query stringByAppendingString:@" and year="];
-    query = [query stringByAppendingString:year];
-    query = [query stringByAppendingString:@";"];
-    
-    NSArray * result =[[NSArray alloc]init];
-    result = [DatabaseService query:query mode:VCSelectIntegerIndexedResult];
-    
-    return result;
-}
-
--(NSArray *)searchByMonth:(NSString *) month Andyear:(NSString *) year
-{
-    NSString *query = @"select * from Statistical where month='";
+    query = [query stringByAppendingString:@"' and month='"];
     query = [query stringByAppendingString:month];
     query = [query stringByAppendingString:@"' and year='"];
     query = [query stringByAppendingString:year];
+    query = [query stringByAppendingString:@"' and idplayer='"];
+    query = [query stringByAppendingString:idPlayer];
     query = [query stringByAppendingString:@"';"];
     
     NSArray * result =[[NSArray alloc]init];
@@ -90,10 +78,28 @@
     return result;
 }
 
--(NSArray *)searchByYear:(NSString *) year
+-(NSArray *)searchByMonth:(NSString *) month Andyear:(NSString *) year andIdPlayer:(NSString *) idPlayer
+{
+    NSString *query = @"select * from Statistical where month='";
+    query = [query stringByAppendingString:month];
+    query = [query stringByAppendingString:@"' and year='"];
+    query = [query stringByAppendingString:year];
+    query = [query stringByAppendingString:@"' and idplayer='"];
+    query = [query stringByAppendingString:idPlayer];
+    query = [query stringByAppendingString:@"';"];
+    
+    NSArray * result =[[NSArray alloc]init];
+    result = [DatabaseService query:query mode:VCSelectIntegerIndexedResult];
+    
+    return result;
+}
+
+-(NSArray *)searchByYear:(NSString *) year andIdPlayer:(NSString *) idPlayer
 {
     NSString *query = @"select * from Statistical where year='";
     query = [query stringByAppendingString:year];
+    query = [query stringByAppendingString:@"' and idplayer='"];
+    query = [query stringByAppendingString:idPlayer];
     query = [query stringByAppendingString:@"';"];
     
     NSArray * result =[[NSArray alloc]init];
@@ -115,7 +121,7 @@
 }
 
 //UPDATE
--(id)updateGlobalSuccessRate:(NSString *) gsr forDay:(NSString *) d Month:(NSString *) m andYear:(NSString *) y
+-(id)updateGlobalSuccessRate:(NSString *) gsr forDay:(NSString *) d Month:(NSString *) m andYear:(NSString *) y andIdPlayer:(NSString *) idPlayer
 {
     NSString *query=@"update Statistical set ";
     query = [query stringByAppendingString:gsr];
@@ -125,6 +131,8 @@
     query = [query stringByAppendingString:m];
     query = [query stringByAppendingString:@"' and year='"];
     query = [query stringByAppendingString:y];
+    query = [query stringByAppendingString:@"' and idplayer='"];
+    query = [query stringByAppendingString:idPlayer];
     query = [query stringByAppendingString:@"';"];
     
     NSNumber *update = [DatabaseService query:query mode:VCQueryNoMode];
@@ -132,35 +140,41 @@
     return update;
 }
 
--(id)updateServiceGlobalSuccessRate:(NSString *) gsr forDay:(NSString *) d Month:(NSString *) m andYear:(NSString *) y
+-(id)updateServiceGlobalSuccessRate:(NSString *) gsr forDay:(NSString *) d Month:(NSString *) m andYear:(NSString *) y andIdPlayer:(NSString *) idPlayer
 {
     NSString *service = @"globalsuccessrateservice = '";
     service =  [service stringByAppendingString:gsr];
+    service = [service stringByAppendingString:@"' and idplayer='"];
+    service = [service stringByAppendingString:idPlayer];
     service = [service stringByAppendingString:@"'"];
     
-    NSNumber *updateServiceGSR = [self updateGlobalSuccessRate:service forDay:d Month:m andYear:y];
+    NSNumber *updateServiceGSR = [self updateGlobalSuccessRate:service forDay:d Month:m andYear:y andIdPlayer:idPlayer];
     
     return updateServiceGSR;
 }
 
--(id)updateBackhandGlobalSuccessRate:(NSString *) gsr forDay:(NSString *) d Month:(NSString *) m andYear:(NSString *) y
+-(id)updateBackhandGlobalSuccessRate:(NSString *) gsr forDay:(NSString *) d Month:(NSString *) m andYear:(NSString *) y andIdPlayer:(NSString *) idPlayer
 {
     NSString *backhand = @"globalsuccessratebackhand = '";
     backhand =  [backhand stringByAppendingString:gsr];
+    backhand = [backhand stringByAppendingString:@"' and idplayer='"];
+    backhand = [backhand stringByAppendingString:idPlayer];
     backhand = [backhand stringByAppendingString:@"'"];
     
-    NSNumber *updateBackhandGSR = [self updateGlobalSuccessRate:backhand forDay:d Month:m andYear:y];
+    NSNumber *updateBackhandGSR = [self updateGlobalSuccessRate:backhand forDay:d Month:m andYear:y andIdPlayer:idPlayer];
     
     return updateBackhandGSR;
 }
 
--(id)updateForeHandGlobalSuccessRate:(NSString *) gsr forDay:(NSString *) d Month:(NSString *) m andYear:(NSString *) y
+-(id)updateForeHandGlobalSuccessRate:(NSString *) gsr forDay:(NSString *) d Month:(NSString *) m andYear:(NSString *) y andIdPlayer:(NSString *) idPlayer
 {
     NSString *forehand = @"globalsuccessrateforehand = '";
     forehand =  [forehand stringByAppendingString:gsr];
+    forehand = [forehand stringByAppendingString:@"' and idplayer='"];
+    forehand = [forehand stringByAppendingString:idPlayer];
     forehand = [forehand stringByAppendingString:@"'"];
     
-    NSNumber *updateForehandGSR = [self updateGlobalSuccessRate:forehand forDay:d Month:m andYear:y];
+    NSNumber *updateForehandGSR = [self updateGlobalSuccessRate:forehand forDay:d Month:m andYear:y andIdPlayer:idPlayer];
     
     return updateForehandGSR;
 }
