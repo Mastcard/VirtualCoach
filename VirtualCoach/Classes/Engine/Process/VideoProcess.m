@@ -88,21 +88,22 @@
     
     NSMutableArray *relevantSequencesInformations = [NSMutableArray array];
     
-    for (NSUInteger i = 1; i < finalObjectsMotion.count; i++)
+    for (NSUInteger i = 0; i < finalObjectsMotion.count; i++)
     {
         NSNumber *motionInfo = (NSNumber *)[finalObjectsMotion objectAtIndex:i];
         
         TrackingObjectPosition *objPos = (TrackingObjectPosition *)[objectsPosition objectAtIndex:i];
         
-        pt2d_t start = objPos.bounds.start, end = objPos.bounds.end;
-        
-        NSArray *imageInformationKeys = [NSArray arrayWithObjects:@"imageId", @"start.x", @"start.y", @"end.x", @"end.y", @"moves", nil];
-        
-        NSArray *imageInformationObjects = [NSArray arrayWithObjects:[NSNumber numberWithUnsignedInt:(unsigned int)objPos.imageId], [NSNumber numberWithUnsignedInt:objPos.bounds.start.x], [NSNumber numberWithUnsignedInt:objPos.bounds.start.y], [NSNumber numberWithUnsignedInt:objPos.bounds.end.x], [NSNumber numberWithUnsignedInt:objPos.bounds.end.y], [NSNumber numberWithInt:motionInfo.intValue], nil];
-        
-        NSDictionary *imageInformation = [NSDictionary dictionaryWithObjects:imageInformationObjects forKeys:imageInformationKeys];
-        
-        [relevantSequencesInformations addObject:imageInformation];
+        if (motionInfo.intValue == 1 || motionInfo.intValue == 0)
+        {
+            NSArray *imageInformationKeys = [NSArray arrayWithObjects:@"imageId", @"start.x", @"start.y", @"end.x", @"end.y", @"moves", nil];
+            
+            NSArray *imageInformationObjects = [NSArray arrayWithObjects:[NSNumber numberWithUnsignedInt:(unsigned int)objPos.imageId], [NSNumber numberWithUnsignedInt:objPos.bounds.start.x], [NSNumber numberWithUnsignedInt:objPos.bounds.start.y], [NSNumber numberWithUnsignedInt:objPos.bounds.end.x], [NSNumber numberWithUnsignedInt:objPos.bounds.end.y], [NSNumber numberWithInt:motionInfo.intValue], nil];
+            
+            NSDictionary *imageInformation = [NSDictionary dictionaryWithObjects:imageInformationObjects forKeys:imageInformationKeys];
+            
+            [relevantSequencesInformations addObject:imageInformation];
+        }
     }
     
     // initializing data analysis process where optical flow and analysis will be called

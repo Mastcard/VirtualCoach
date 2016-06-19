@@ -11,9 +11,9 @@
 
 @implementation ReferenceVideoDO
 
--(instancetype)initWithId:(int)referenceVideoId andName:(NSString *)name andProcessed:(bool)processed andRemoved:(bool)removed andReferenceMovements:(NSMutableArray<ReferenceMovementDO*>*)referenceMovements {
+-(instancetype)initWithId:(int)referenceVideoId andName:(NSString *)name andProcessed:(bool)processed andRemoved:(bool)removed andDay:(int)day andMonth:(int)month andYear:(int)year andReferenceMovements:(NSMutableArray<ReferenceMovementDO*>*)referenceMovements {
     
-    self = [super initWithId:referenceVideoId andName:name andProcessed:processed andRemoved:removed];
+    self = [super initWithId:referenceVideoId andName:name andProcessed:processed andRemoved:removed andDay:day andMonth:month andYear:year];
     
     if (self) {
         self.movements = referenceMovements;

@@ -32,6 +32,8 @@
 + (instancetype)monthlyAxisForCurrentMonth;
 + (instancetype)monthlyAxisForMonth:(NSInteger)month;
 + (instancetype)yearlyAxis;
++ (instancetype)progressAxis;
++ (instancetype)motionCountAxis;
 
 
 @end

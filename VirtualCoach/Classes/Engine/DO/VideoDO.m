@@ -11,15 +11,12 @@
 
 @implementation VideoDO
 
--(instancetype)initWithId:(int)videoId andName:(NSString *)name andProcessed:(bool)processed andRemoved:(bool)removed andMovements:(NSMutableArray<MovementDO*>*)movements andDay:(int)day andMonth:(int)month andYear:(int)year {
+-(instancetype)initWithId:(int)videoId andName:(NSString *)name andProcessed:(bool)processed andRemoved:(bool)removed andDay:(int)day andMonth:(int)month andYear:(int)year andMovements:(NSMutableArray<MovementDO*>*)movements {
     
-    self = [super initWithId:videoId andName:name andProcessed:processed andRemoved:removed];
+    self = [super initWithId:videoId andName:name andProcessed:processed andRemoved:removed andDay:day andMonth:month andYear:year];
     
     if (self) {
         self.movements = movements;
-        _day = day;
-        _month = month;
-        _year = year;
     }
     
     return self;
