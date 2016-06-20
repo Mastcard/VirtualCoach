@@ -17,6 +17,7 @@
 @property (nonatomic) int time;
 @property (nonatomic) int maxAngle;
 @property (nonatomic) double meanAcceleration;
+@property (nonatomic) double meanSpeed;
 
 /*!
  @method generateDataEntryForKmeanFromFirstSpeedVectorsTab:speed1 andSecondSpeedVectorsTab:speed2 betweenInterval:interval andWithImageWidth:width
