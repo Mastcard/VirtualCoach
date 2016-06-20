@@ -19,5 +19,5 @@
 //SELECT
 -(NSMutableArray<CoachDO*>*)selectAllCoaches;
 //DELETE
--(id)deleteCoachById:(CoachDO*)coachDO;
+-(id)deleteCoachById:(int)idCoach;
 @end

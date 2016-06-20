@@ -37,9 +37,9 @@
     return result;
 }
 
--(int)searchIdByDate:(NSString*) date Name:(NSString *) name Andplace:(NSString *) place
+-(NSArray *)searchByDate:(NSString*) date Name:(NSString *) name Andplace:(NSString *) place
 {
-    NSString *query = @"select idTraining from Training where date ='";
+    NSString *query = @"select * from Training where date ='";
     query = [query stringByAppendingString:date];
     query = [query stringByAppendingString:@"' and name='"];
     query = [query stringByAppendingString:name];
@@ -50,23 +50,19 @@
     NSArray * result =[[NSArray alloc]init];
     result = [DatabaseService query:query mode:VCSelectIntegerIndexedResult];
     
-    int desc = (int) [result[0][0] longValue];
-    
-    return desc;;
+    return result;;
 }
 
--(int)searchIdByDate:(NSString*) date
+-(NSArray *)searchByDate:(NSString*) date
 {
-    NSString *query = @"select idTraining from Training where date ='";
+    NSString *query = @"select * from Training where date ='";
     query = [query stringByAppendingString:date];
     query = [query stringByAppendingString:@"';"];
     
     NSArray * result =[[NSArray alloc]init];
     result = [DatabaseService query:query mode:VCSelectIntegerIndexedResult];
     
-    int desc = (int) [result[0][0] longValue];
-    
-    return desc;
+    return result;
 }
 
 //DELETE
