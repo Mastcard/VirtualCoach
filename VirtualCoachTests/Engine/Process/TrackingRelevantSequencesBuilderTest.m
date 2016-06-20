@@ -79,11 +79,6 @@
     _builder = [[TrackingRelevantSequencesBuilder alloc] initWithPartialMotionArray:motions motionImageFactor:10];
     [_builder buildRelevantSequences];
     
-    for (NSUInteger i = 0; i < motions.count; i++)
-    {
-        NSLog(@"%d %d", ((NSNumber *)[motions objectAtIndex:i]).intValue, ((NSNumber *)[motionsExpectedResults objectAtIndex:i]).intValue);
-    }
-    
     NSArray *motionResults = [_builder retreiveRelevantSequences];
     
     XCTAssertEqual([motionResults isEqualToArray:motionsExpectedResults], YES);
