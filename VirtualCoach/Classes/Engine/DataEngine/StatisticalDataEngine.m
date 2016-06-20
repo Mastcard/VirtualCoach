@@ -10,7 +10,7 @@
 
 @interface StatisticalDataEngine()
 
--(NSMutableArray<StatisticalDO*>*)fromResultSetToStatisticalDOArray:(NSArray*)result;
+-(NSMutableArray<StatisticalDO*>*)fromResultSetToStatisticalDOList:(NSArray*)result;
 -(void)updateGlobalSuccessRate:(float)globalSuccessRate forDay:(int)day andMonth:(int)month andYear:(int)year andPlayerId:(int)playerId forMovementType:(int)movementType;
 
 @end
@@ -75,7 +75,7 @@
 -(NSMutableArray<StatisticalDO*>*)searchAllStatisticals {
     NSArray* searchResult = [_statisticalDAO allStatistical];
     
-    return [self fromResultSetToStatisticalDOArray:searchResult];
+    return [self fromResultSetToStatisticalDOList:searchResult];
 }
 
 -(NSMutableArray<StatisticalDO*>*)searchByDay:(int)day andMonth:(int)month andYear:(int)year andPlayerId:(int)playerId {
@@ -86,7 +86,7 @@
     
     NSArray* searchResult = [_statisticalDAO searchByDay:stringDay Month:stringMonth Andyear:stringYear andIdPlayer:stringPlayerId];
     
-    return [self fromResultSetToStatisticalDOArray:searchResult];
+    return [self fromResultSetToStatisticalDOList:searchResult];
 }
 
 -(NSMutableArray<StatisticalDO*>*)searchByMonth:(int)month andYear:(int)year andPlayerId:(int)playerId {
@@ -96,7 +96,7 @@
     
     NSArray* searchResult = [_statisticalDAO searchByMonth:stringMonth Andyear:stringYear andIdPlayer:stringPlayerId];
     
-    return [self fromResultSetToStatisticalDOArray:searchResult];
+    return [self fromResultSetToStatisticalDOList:searchResult];
 }
 
 -(NSMutableArray<StatisticalDO*>*)searchByYear:(int)year andPlayerId:(int)playerId {
@@ -105,7 +105,7 @@
     
     NSArray* searchResult = [_statisticalDAO searchByYear:stringYear andIdPlayer:stringPlayerId];
     
-    return [self fromResultSetToStatisticalDOArray:searchResult];
+    return [self fromResultSetToStatisticalDOList:searchResult];
 }
 
 -(NSMutableArray<StatisticalDO*>*)searchByPlayerId:(int)playerId {
@@ -113,7 +113,7 @@
     
     NSArray* searchResult = [_statisticalDAO searchByIdPlayer:stringPlayerId];
     
-    return [self fromResultSetToStatisticalDOArray:searchResult];
+    return [self fromResultSetToStatisticalDOList:searchResult];
 }
 
 //
@@ -147,9 +147,9 @@
 // ************ UTIL *************
 //
 
--(NSMutableArray<StatisticalDO*>*)fromResultSetToStatisticalDOArray:(NSArray*)result {
+-(NSMutableArray<StatisticalDO*>*)fromResultSetToStatisticalDOList:(NSArray*)result {
     
-    NSMutableArray<StatisticalDO*>* statisticalDOArray = [[NSMutableArray<StatisticalDO*> alloc] initWithCapacity:[result[0] count]];
+    NSMutableArray<StatisticalDO*>* statisticalDOList = [[NSMutableArray<StatisticalDO*> alloc] initWithCapacity:[result[0] count]];
     
     for (int i = 0; i < [result[0] count]; i++) {
         
@@ -179,10 +179,10 @@
         statisticalDO.month = month;
         statisticalDO.year = year;
         
-        [statisticalDOArray addObject:statisticalDO];
+        [statisticalDOList addObject:statisticalDO];
     }
     
-    return statisticalDOArray;
+    return statisticalDOList;
 }
 
 -(void)updateGlobalSuccessRate:(float)globalSuccessRate forDay:(int)day andMonth:(int)month andYear:(int)year andPlayerId:(int)playerId forMovementType:(int)movementType {
