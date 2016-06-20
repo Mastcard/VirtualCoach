@@ -15,10 +15,27 @@
 @property (nonatomic) StatisticalDAO* statisticalDAO;
 
 // INSERT
--(void)insertStatistical:(StatisticalDO*)statisticalDO;
+/*!
+ * Inserts a statistical for a given player id.
+ *
+ * WARNING : if a statistical has already been inserted for the given day, month and year trio, then you should use UPDATE methods.
+ *
+ */
+-(void)insertStatistical:(StatisticalDO*)statisticalDO forPlayerId:(int)playerId;
 
 // SELECT
--(NSMutableArray<StatisticalDO*>*)searchAllStatistics;
--(NSArray*)searchByDay:(NSString*)day andMonth:(NSString*)month andYear:(NSString*)year;
+-(NSMutableArray<StatisticalDO*>*)searchAllStatisticals;
+-(NSMutableArray<StatisticalDO*>*)searchByDay:(NSString*)day andMonth:(NSString*)month andYear:(NSString*)year;
+-(NSMutableArray<StatisticalDO*>*)searchByMonth:(NSString*)month andYear:(NSString*)year;
+-(NSMutableArray<StatisticalDO*>*)searchByYear:(NSString*)year;
+-(NSMutableArray<StatisticalDO*>*)searchByPlayerId:(NSString*)playerId;
+
+// UPDATE
+-(void)updateServiceGlobalSuccessRate:(NSString*)serviceGlobalSuccessRate forDay:(NSString*)day andMonth:(NSString*)month andYear:(NSString*)year;
+-(void)updateForehandGlobalSuccessRate:(NSString*)forehandGlobalSuccessRate forDay:(NSString*)day andMonth:(NSString*)month andYear:(NSString*)year;
+-(void)updateBackhandGlobalSuccessRate:(NSString*)backhandGlobalSuccessRate forDay:(NSString*)day andMonth:(NSString*)month andYear:(NSString*)year;
+
+// DELETE
+-(void)deleteStatisticalById:(NSString*)statisticalId;
 
 @end
