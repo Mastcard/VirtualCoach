@@ -25,17 +25,17 @@
 
 // SELECT
 -(NSMutableArray<StatisticalDO*>*)searchAllStatisticals;
--(NSMutableArray<StatisticalDO*>*)searchByDay:(NSString*)day andMonth:(NSString*)month andYear:(NSString*)year;
--(NSMutableArray<StatisticalDO*>*)searchByMonth:(NSString*)month andYear:(NSString*)year;
--(NSMutableArray<StatisticalDO*>*)searchByYear:(NSString*)year;
--(NSMutableArray<StatisticalDO*>*)searchByPlayerId:(NSString*)playerId;
+-(NSMutableArray<StatisticalDO*>*)searchByDay:(int)day andMonth:(int)month andYear:(int)year andPlayerId:(int)playerId;
+-(NSMutableArray<StatisticalDO*>*)searchByMonth:(int)month andYear:(int)year andPlayerId:(int)playerId;
+-(NSMutableArray<StatisticalDO*>*)searchByYear:(int)year andPlayerId:(int)playerId;
+-(NSMutableArray<StatisticalDO*>*)searchByPlayerId:(int)playerId;
 
 // UPDATE
--(void)updateServiceGlobalSuccessRate:(NSString*)serviceGlobalSuccessRate forDay:(NSString*)day andMonth:(NSString*)month andYear:(NSString*)year;
--(void)updateForehandGlobalSuccessRate:(NSString*)forehandGlobalSuccessRate forDay:(NSString*)day andMonth:(NSString*)month andYear:(NSString*)year;
--(void)updateBackhandGlobalSuccessRate:(NSString*)backhandGlobalSuccessRate forDay:(NSString*)day andMonth:(NSString*)month andYear:(NSString*)year;
+-(void)updateServiceGlobalSuccessRate:(float)serviceGlobalSuccessRate forDay:(int)day andMonth:(int)month andYear:(int)year andPlayerId:(int)playerId;
+-(void)updateForehandGlobalSuccessRate:(float)forehandGlobalSuccessRate forDay:(int)day andMonth:(int)month andYear:(int)year andPlayerId:(int)playerId;
+-(void)updateBackhandGlobalSuccessRate:(float)backhandGlobalSuccessRate forDay:(int)day andMonth:(int)month andYear:(int)year andPlayerId:(int)playerId;
 
 // DELETE
--(void)deleteStatisticalById:(NSString*)statisticalId;
+-(void)deleteStatisticalById:(int)statisticalId;
 
 @end
