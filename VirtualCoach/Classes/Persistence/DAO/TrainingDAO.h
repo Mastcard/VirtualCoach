@@ -15,8 +15,8 @@
 -(id)insertIntoTraining:(NSString *) date name:(NSString *) n place:(NSString *) p;
 //SELECT
 -(NSArray *) allTraining;
--(int)searchIdByDate:(NSString*) date Name:(NSString *) name Andplace:(NSString *) place;
--(int)searchIdByDate:(NSString*) date;
+-(NSArray *)searchByDate:(NSString*) date Name:(NSString *) name Andplace:(NSString *) place;
+-(NSArray *)searchByDate:(NSString*) date;
 //DELETE
 -(id)deleteTrainingById:(NSString *) idTrain;
 

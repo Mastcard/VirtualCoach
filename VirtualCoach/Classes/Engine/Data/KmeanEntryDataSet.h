@@ -56,4 +56,10 @@
 
 - (void)writeKmeanDatasetForTestAtPath:(NSString *)path;
 
+- (void)writeKmeanDataset3dForTestAtPath:(NSString *)path;
+
+- (void)writeKmeanDataset4dForTestAtPath:(NSString *)path;
+
+- (void)writeKmeanDataset2dSpeedTimeForTestAtPath:(NSString *)path;
+
 @end

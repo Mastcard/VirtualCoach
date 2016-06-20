@@ -382,42 +382,50 @@
     XCTAssertEqualObjects(@"29/05/2016", trainings[1][0]);
     
     //search training's id
-    int idTrain1 = [_train searchIdByDate:@"29/05/2016"] ;
-    //NSString *idT1 = [NSString stringWithFormat:@"%d",idTrain1];
+    NSArray *Train1 = [_train searchByDate:@"29/05/2016"] ;
     
-    XCTAssertEqual(1, idTrain1);
+    int idT1 = [Train1[0][0] intValue];
+    NSString *idST1 = [NSString stringWithFormat:@"%d",idT1];
     
-    int idTrain2 = [_train searchIdByDate:@"29/05/2016" Name:@"train forehand" Andplace:@"gymnase1"];
-    NSString *idT2 = [NSString stringWithFormat:@"%d",idTrain2];
+    XCTAssertEqual(1, idT1);
     
-    XCTAssertEqual(1, idTrain2);
+    NSArray *Train2 = [_train searchByDate:@"29/05/2016" Name:@"train forehand" Andplace:@"gymnase1"];
     
-    int idTrain3 = [_train searchIdByDate:@"31/05/2016" Name:@"train2" Andplace:@"gymnase1"];
-    NSString *idT3 = [NSString stringWithFormat:@"%d",idTrain3];
+    int idT2 = [Train2[0][0] intValue];
+    NSString *idST2 = [NSString stringWithFormat:@"%d",idT2];
     
-    XCTAssertEqual(2, idTrain3);
+    XCTAssertEqual(1,idT2 );
     
-    int idTrain4 = [_train searchIdByDate:@"31/05/2016" Name:@"train3" Andplace:@"gymnase1"];
-    NSString *idT4 = [NSString stringWithFormat:@"%d",idTrain4];
+    NSArray *Train3 = [_train searchByDate:@"31/05/2016" Name:@"train2" Andplace:@"gymnase1"];
     
-    XCTAssertEqual(3, idTrain4);
+    int idT3 = [Train3[0][0] intValue];
+    NSString *idST3 = [NSString stringWithFormat:@"%d",idT3];
+    
+    XCTAssertEqual(2, idT3);
+    
+    NSArray *Train4 = [_train searchByDate:@"31/05/2016" Name:@"train3" Andplace:@"gymnase1"];
+    
+    int idT4 = [Train4[0][0] intValue];
+    NSString *idST4 = [NSString stringWithFormat:@"%d",idT4];
+    
+    XCTAssertEqual(3, idT4);
     
     /*********************************************TEST PlayerTrainingVideo****************************************************/
     //insert PTV
-    NSNumber *insertPTV = (NSNumber *) [_ptv insertIntoPlayer_Training_Video:idP id_training:idT2 id_video:idV2];
+    NSNumber *insertPTV = (NSNumber *) [_ptv insertIntoPlayer_Training_Video:idP id_training:idST2 id_video:idV2];
     
     XCTAssertEqual([insertPTV boolValue],YES );
     
-    NSNumber *insertPTV1 = (NSNumber *) [_ptv insertIntoPlayer_Training_Video:idP1 id_training:idT3 id_video:idV3];
+    NSNumber *insertPTV1 = (NSNumber *) [_ptv insertIntoPlayer_Training_Video:idP1 id_training:idST3 id_video:idV3];
     
     XCTAssertEqual([insertPTV1 boolValue],YES );
     
-    NSNumber *insertPTV2 = (NSNumber *) [_ptv insertIntoPlayer_Training_Video:idP2 id_training:idT4 id_video:idV4];
+    NSNumber *insertPTV2 = (NSNumber *) [_ptv insertIntoPlayer_Training_Video:idP2 id_training:idST4 id_video:idV4];
     
     XCTAssertEqual([insertPTV2 boolValue],YES );
     
     //search PTV's id
-    int idPTV = [_ptv searchIdByPlayer:idP andTraining:idT2 andVideo:idV2] ;
+    int idPTV = [_ptv searchIdByPlayer:idP andTraining:idST2 andVideo:idV2] ;
     NSString *idPTV1 = [NSString stringWithFormat:@"%d",idPTV];
     
     XCTAssertEqual(1, idPTV);
@@ -431,27 +439,27 @@
     //show all stats
     NSArray *stats = [_stat allStatistical];
     
-    NSLog(@"%@", stats);
+    NSLog(@"stats:%@", stats);
     NSString *idstat = [[[stats objectAtIndex:0] objectAtIndex:0] stringValue];
     
     XCTAssertEqualObjects(@"20%", stats[6][0] );
     
     //search
-    NSArray *stat1 = [_stat searchByMonth:@"05" Andyear:@"2016"];
+    NSArray *stat1 = [_stat searchByMonth:@"05" Andyear:@"2016" andIdPlayer:idP];
     
-    NSLog(@"%@", stat1);
+    NSLog(@"stat1:%@", stat1);
     
     XCTAssertEqualObjects(@"5", [[[stat1 objectAtIndex:1] objectAtIndex:0] stringValue]);
     
-    NSArray *stat2 = [_stat searchByYear:@"2016"];
+    NSArray *stat2 = [_stat searchByYear:@"2016" andIdPlayer:idP];
     
-    NSLog(@"%@", stat2);
+    NSLog(@"stat2:%@", stat2);
     
     XCTAssertEqualObjects(@"7", [[[stat2 objectAtIndex:2] objectAtIndex:0] stringValue]);
     
-    NSArray *stat3 = [_stat searchByDay:@"29" Month:@"05" Andyear:@"2016"];
+    NSArray *stat3 = [_stat searchByDay:@"29" Month:@"05" Andyear:@"2016" andIdPlayer:idP];
     
-    NSLog(@"%@", stat3);
+    NSLog(@"stat3:%@", stat3);
     
     XCTAssertEqualObjects(@"4",[[[stat3 objectAtIndex:3] objectAtIndex:0] stringValue]);
     
@@ -462,15 +470,15 @@
     XCTAssertEqualObjects(@"1",[[[statis objectAtIndex:12] objectAtIndex:0] stringValue]);
     
     //update
-    NSNumber *updateServiceGSR = (NSNumber *)[_stat updateServiceGlobalSuccessRate:@"70%" forDay:@"29" Month:@"05" andYear:@"2016"];
+    NSNumber *updateServiceGSR = (NSNumber *)[_stat updateServiceGlobalSuccessRate:@"70%" forDay:@"29" Month:@"05" andYear:@"2016" andIdPlayer:idP];
     
     XCTAssertEqual([updateServiceGSR boolValue],YES );
     
-    NSNumber *updateBackhandGSR = (NSNumber *)[_stat updateBackhandGlobalSuccessRate:@"40%" forDay:@"29" Month:@"05" andYear:@"2016"];
+    NSNumber *updateBackhandGSR = (NSNumber *)[_stat updateBackhandGlobalSuccessRate:@"40%" forDay:@"29" Month:@"05" andYear:@"2016" andIdPlayer:idP];
     
     XCTAssertEqual([updateBackhandGSR boolValue],YES );
     
-    NSNumber *updateForehandGSR = (NSNumber *)[_stat updateForeHandGlobalSuccessRate:@"65%" forDay:@"29" Month:@"05" andYear:@"2016"];
+    NSNumber *updateForehandGSR = (NSNumber *)[_stat updateForeHandGlobalSuccessRate:@"65%" forDay:@"29" Month:@"05" andYear:@"2016" andIdPlayer:idP];
     
     XCTAssertEqual([updateForehandGSR boolValue],YES );
     
@@ -501,7 +509,7 @@
     
     XCTAssertEqual([deletePTV1 boolValue],YES );
     
-    NSNumber *deletePTV2 = (NSNumber *) [_ptv deletePlayerTrainingVideoByIdTraining:idT4];
+    NSNumber *deletePTV2 = (NSNumber *) [_ptv deletePlayerTrainingVideoByIdTraining:idST4];
     
     XCTAssertEqual([deletePTV2 boolValue],YES );
     
@@ -530,7 +538,7 @@
     XCTAssertEqual([deletevideo boolValue],YES );
     
     //delete training
-    NSNumber *deletetraining = (NSNumber *) [_train deleteTrainingById:idT4];
+    NSNumber *deletetraining = (NSNumber *) [_train deleteTrainingById:idST4];
     
     XCTAssertEqual([deletetraining boolValue],YES );
     
