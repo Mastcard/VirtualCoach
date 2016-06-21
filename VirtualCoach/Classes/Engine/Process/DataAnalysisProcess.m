@@ -201,7 +201,15 @@
                         _secondSpeedVectorArray = speedVectors;
                         
                         //[_entryDataset addKmeanEntryToDataSetFromFirstSpeedVectorsTab:_firstSpeedVectorArray andSecondSpeedVectorsTab:_secondSpeedVectorArray betweenInterval:_secondFrameBounds andWithImageWidth:src->width];
+                        NSLog(@"in dataAnalysis process for kmean _firstFrameBounds starty: %d _firstFrameBounds endy: %d", _firstFrameBounds.start.y,_firstFrameBounds.end.y);
+                        NSLog(@"in dataAnalysis process for kmean _firstFrameBounds startx: %d _firstFrameBounds endx: %d", _firstFrameBounds.start.x,_firstFrameBounds.end.x);
+                        NSLog(@"in dataAnalysis process for kmean _secondFrameBounds starty: %d _secondFrameBounds endy: %d", _secondFrameBounds.start.y,_secondFrameBounds.end.y);
+                        NSLog(@"in dataAnalysis process for kmean _secondFrameBounds startx: %d _secondFrameBounds endx: %d", _secondFrameBounds.start.x,_secondFrameBounds.end.x);
+                        
                         [_entryDataset addKmeanEntryToDataSetFromFirstSpeedVectorsTab:_firstSpeedVectorArray betweenFirstInterval:_firstFrameBounds andSecondSpeedVectorsTab:_secondSpeedVectorArray betweenSecondInterval:_secondFrameBounds andWithImageWidth:src->width];
+                        
+                        NSLog(@"in dataAnalysis process for histogram _firstFrameBounds starty: %d _firstFrameBounds endy: %d", _firstFrameBounds.start.y,_firstFrameBounds.end.y);
+                        NSLog(@"in dataAnalysis process for histogram _firstFrameBounds startx: %d _firstFrameBounds endx: %d", _firstFrameBounds.start.x,_firstFrameBounds.end.x);
                         [_histogram generateHistogramFromSpeedVector:_firstSpeedVectorArray betweenInterval:_firstFrameBounds andWithImageWidth:src->width];
                         
                         vect2darrfree(_firstSpeedVectorArray);

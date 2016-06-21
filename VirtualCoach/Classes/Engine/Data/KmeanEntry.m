@@ -78,7 +78,6 @@
     }
     [tmpHistogram removeAllObjects];
     
-    
 }
 
 - (void)generateDataEntryForKmeanFromFirstSpeedVectorsTab:(vect2darray_t *)speed1 betweenFirstInterval:(rect_t)firstInterval andSecondSpeedVectorsTab:(vect2darray_t *)speed2 betweenSecondInterval:(rect_t)secondInterval andWithImageWidth:(uint16_t)width{
@@ -94,8 +93,8 @@
     double norm1 = 0, norm2 =0;
     double meanSpeed1=0, meanSpeed2=0;
     int countSpeed1=0, countSpeed2=0;
-    NSLog(@"firstInterval starty: %d firstInterval endy: %d", firstInterval.start.y,firstInterval.end.y);
-    NSLog(@"firstInterval startx: %d firstInterval endx: %d", firstInterval.start.x,firstInterval.end.x);
+    NSLog(@"in kmeanEntry firstInterval starty: %d firstInterval endy: %d", firstInterval.start.y,firstInterval.end.y);
+    NSLog(@"in kmeanEntry firstInterval startx: %d firstInterval endx: %d", firstInterval.start.x,firstInterval.end.x);
     for (NSInteger y=firstInterval.start.y; y<firstInterval.end.y; y++) {
         for (NSInteger x=firstInterval.start.x; x<firstInterval.end.x; x++){
             u1= speed1->data[PXL_IDX(width, x, y)].x;
@@ -109,8 +108,8 @@
         }
     }
     
-    NSLog(@"secondInterval starty: %d secondInterval endy: %d", secondInterval.start.y,secondInterval.end.y);
-    NSLog(@"secondInterval startx: %d secondInterval endx: %d", secondInterval.start.x,secondInterval.end.x);
+    NSLog(@"in kmeanEntry secondInterval starty: %d secondInterval endy: %d", secondInterval.start.y,secondInterval.end.y);
+    NSLog(@"in kmeanEntry secondInterval startx: %d secondInterval endx: %d", secondInterval.start.x,secondInterval.end.x);
     for (NSInteger y=secondInterval.start.y; y<secondInterval.end.y; y++) {
         for (NSInteger x=secondInterval.start.x; x<secondInterval.end.x; x++){
             u2= speed2->data[PXL_IDX(width, x, y)].x;

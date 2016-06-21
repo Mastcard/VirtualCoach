@@ -8,13 +8,22 @@
 
 #import "KmeanEntryDataSet.h"
 
+@interface KmeanEntryDataSet ()
+
+@property (nonatomic) int time;
+
+@end
+
 @implementation KmeanEntryDataSet
+
+
 
 -(instancetype)init{
     self = [super init];
     if (self){
         _data=[[NSMutableArray alloc]init];
         _datacount = 0;
+        _time =2;
     }
     return  self;
 }
@@ -25,7 +34,8 @@
     [entry generateDataEntryForKmeanFromFirstSpeedVectorsTab:speed1 andSecondSpeedVectorsTab:speed2 betweenInterval:interval andWithImageWidth:width];
     [_data insertObject:entry atIndex:_datacount];
     _datacount ++;
-    entry.time = _datacount;
+    _time++;
+    entry.time = _time;
     NSLog(@"time: %d", entry.time);
     
 }
@@ -36,7 +46,8 @@
     [entry generateDataEntryForKmeanFromFirstSpeedVectorsTab:speed1 betweenFirstInterval:firstInterval andSecondSpeedVectorsTab:speed2 betweenSecondInterval:secondInterval andWithImageWidth:width];
     [_data insertObject:entry atIndex:_datacount];
     _datacount ++;
-    entry.time = _datacount;
+    _time++;
+    entry.time = _time;
     NSLog(@"time: %d", entry.time);
 }
 
