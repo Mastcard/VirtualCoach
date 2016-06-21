@@ -1908,7 +1908,7 @@
 				CODE_SIGN_IDENTITY = "-";
 				GCC_SYMBOLS_PRIVATE_EXTERN = YES;
 				HEADER_SEARCH_PATHS = "$(SOURCE_ROOT)/Libraries/libimagic/include/**";
-				LIBRARY_SEARCH_PATHS = /Users/iSeven/Desktop;
+				LIBRARY_SEARCH_PATHS = /Users/bizoro/Desktop;
 				MACOSX_DEPLOYMENT_TARGET = 10.11;
 				OTHER_LDFLAGS = "-limagic_std";
 				PRODUCT_NAME = "$(TARGET_NAME)";
@@ -1923,7 +1923,7 @@
 				CODE_SIGN_IDENTITY = "-";
 				GCC_SYMBOLS_PRIVATE_EXTERN = YES;
 				HEADER_SEARCH_PATHS = "$(SOURCE_ROOT)/Libraries/libimagic/include/**";
-				LIBRARY_SEARCH_PATHS = /Users/iSeven/Desktop;
+				LIBRARY_SEARCH_PATHS = /Users/bizoro/Desktop;
 				MACOSX_DEPLOYMENT_TARGET = 10.11;
 				OTHER_LDFLAGS = "-limagic_std";
 				PRODUCT_NAME = "$(TARGET_NAME)";
