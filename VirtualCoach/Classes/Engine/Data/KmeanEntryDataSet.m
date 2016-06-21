@@ -26,7 +26,18 @@
     [_data insertObject:entry atIndex:_datacount];
     _datacount ++;
     entry.time = _datacount;
+    NSLog(@"time: %d", entry.time);
     
+}
+
+- (void)addKmeanEntryToDataSetFromFirstSpeedVectorsTab:(vect2darray_t *)speed1 betweenFirstInterval:(rect_t)firstInterval andSecondSpeedVectorsTab:(vect2darray_t *)speed2 betweenSecondInterval:(rect_t)secondInterval andWithImageWidth:(uint16_t)width{
+    
+    KmeanEntry * entry = [[KmeanEntry alloc] init];
+    [entry generateDataEntryForKmeanFromFirstSpeedVectorsTab:speed1 betweenFirstInterval:firstInterval andSecondSpeedVectorsTab:speed2 betweenSecondInterval:secondInterval andWithImageWidth:width];
+    [_data insertObject:entry atIndex:_datacount];
+    _datacount ++;
+    entry.time = _datacount;
+    NSLog(@"time: %d", entry.time);
 }
 
 -(void)encodeWithCoder:(NSCoder *)aCoder
