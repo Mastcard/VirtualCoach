@@ -216,7 +216,7 @@
                 {
                     _sequenceStarted = YES;
                     
-                    NSLog(@"Sequence starts at %f", (float)(_count / 60));
+                    NSLog(@"Sequence starts at %f", (float)((float)_count / 60));
                     
                     //test
                     _firstFrame = src;
@@ -261,7 +261,7 @@
                     _entryDataset = nil;
                     _entryDataset = [[KmeanEntryDataSet alloc] init];
                     
-                    NSLog(@"Sequence ends at %f", (float)(_count / 60));
+                    NSLog(@"Sequence ends at %f", (float)((float)_count / 60));
                 }
             }
             
