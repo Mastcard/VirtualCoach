@@ -154,27 +154,27 @@
                 
                 rect_t playerBounds;
                 
+                NSNumber *startX = [imageDict objectForKey:@"start.x"];
+                NSNumber *startY = [imageDict objectForKey:@"start.y"];
+                NSNumber *endX = [imageDict objectForKey:@"end.x"];
+                NSNumber *endY = [imageDict objectForKey:@"end.y"];
+                
+                // initializing rect_t with rect coordinates
+                
+                playerBounds.start.x = startX.unsignedIntValue;
+                playerBounds.end.x = endX.unsignedIntValue;
+                playerBounds.start.y = startY.unsignedIntValue;
+                playerBounds.end.y = endY.unsignedIntValue;
+                
                 if (_sequenceStarted)       // sequence continues
                 {
                     // get rect coordinates
-                    
-                    NSNumber *startX = [imageDict objectForKey:@"start.x"];
-                    NSNumber *startY = [imageDict objectForKey:@"start.y"];
-                    NSNumber *endX = [imageDict objectForKey:@"end.x"];
-                    NSNumber *endY = [imageDict objectForKey:@"end.y"];
-                    
-                    // initializing rect_t with rect coordinates
-                    
-                    playerBounds.start.x = startX.unsignedIntValue;
-                    playerBounds.end.x = endX.unsignedIntValue;
-                    playerBounds.start.y = startY.unsignedIntValue;
-                    playerBounds.end.y = endY.unsignedIntValue;
                     
                     _secondFrame = src;
                     _secondFrameBounds = playerBounds;
                     
                     vect2darray_t *speedVectors = opticalflow(_firstFrame, _secondFrame);
-                    /*
+                    
                     double w = 0, z = 0;
                     
                     for (NSUInteger y = _secondFrameBounds.start.y; y < _secondFrameBounds.end.y; y++)
@@ -190,7 +190,7 @@
                             speedVectors->data[idx].y = (_secondFrame->data[idx] > _binaryThreshold) * z;
                         }
                     }
-                    */
+                     
                     if (_firstSpeedVectorArray == NULL)
                     {
                         _firstSpeedVectorArray = speedVectors;
@@ -230,6 +230,7 @@
                     //test
                     _firstFrame = src;
                     _firstFrameBounds = playerBounds;
+                    
                     //tmp
                     _sequenceImageStart = (int)(_count);
                 }
