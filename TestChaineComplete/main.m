@@ -17,7 +17,7 @@ int main(int argc, const char * argv[]) {
         // insert code here...
         NSLog(@"Hello, World!");
         
-        NSDictionary *dictInfo = [NSDictionary dictionaryWithContentsOfFile:@"/Volumes/ZORO 1/VideoTest/2016-06-06_19.33.09-data.plist"];
+        NSDictionary *dictInfo = [NSDictionary dictionaryWithContentsOfFile:@"/Volumes/ZORO 1/VideoTest/2016-06-06_19.19.40-data.plist"];
         
         VideoProcess *vidProc = [[VideoProcess alloc] initWithDictionary:dictInfo];
         
