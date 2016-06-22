@@ -15,6 +15,7 @@
 #import "DateUtilities.h"
 #import "StatisticalDataEngine.h"
 #import "NSOrderedDictionary.h"
+#import "StatisticalDataEngineTools.h"
 
 #define CURVE_DATA_PICKERVIEW_TAG 1
 #define CURVE_PERIOD_PICKERVIEW_TAG 2

@@ -24,14 +24,14 @@
     
     self.window = [[UIWindow alloc] initWithFrame:[[UIScreen mainScreen] bounds]];
     
+    [ApplicationInitialization start];
+    [Variables init];
+    
     UIAuthenticationViewController *authenticationViewController = [[UIAuthenticationViewController alloc] init];
     
     UIApplicationNavigationViewController *appNavController = [[UIApplicationNavigationViewController alloc] initWithRootViewController:authenticationViewController];
     self.window.rootViewController = appNavController;
     [self.window makeKeyAndVisible];
-    
-    [ApplicationInitialization start];
-    [Variables init];
     
     NSString *documentsDirectory = [NSSearchPathForDirectoriesInDomains(NSDocumentDirectory, NSUserDomainMask, YES) objectAtIndex:0];
     appNavController.captureSessionViewController.videoDirectory = [NSURL fileURLWithPath:documentsDirectory];

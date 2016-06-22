@@ -99,14 +99,44 @@
     
     NSDateComponents *components = [[NSCalendar currentCalendar] components:NSCalendarUnitDay | NSCalendarUnitMonth | NSCalendarUnitYear fromDate:startDate];
     _currentWeekStartDay = [components day];
+    NSInteger currentWeekStartMonth = [components month];
+    NSInteger currentWeekStartYear = [components year];
     components = [[NSCalendar currentCalendar] components:NSCalendarUnitDay | NSCalendarUnitMonth | NSCalendarUnitYear fromDate:endDate];
     _currentWeekEndDay = [components day];
+    NSInteger currentWeekEndMonth = [components month];
+    NSInteger currentWeekEndYear = [components year];
     
     NSLog(@"_currentWeekStartDay : %ld, _currentWeekEndDay : %ld", _currentWeekStartDay, _currentWeekEndDay);
+    
+    // get the player id here
+    int playerId = 1;
+    
+    StatisticalDataEngine *statsDataEngine = [[StatisticalDataEngine alloc] init];
+    
+    NSMutableArray<StatisticalDO*> *datasource = [statsDataEngine searchFromDay:(int)_currentWeekStartDay andMonth:(int)currentWeekStartMonth andYear:(int)currentWeekStartYear toDay:(int)_currentWeekEndDay andMonth:(int)currentWeekEndMonth andYear:(int)currentWeekEndYear forPlayerId:playerId];
+    
+    NSMutableArray *finalDatasource = [StatisticalDataEngineTools selectForehandCountsFromResult:datasource];
+    
+    Curve *curve = [[Curve alloc] init];
+    
+    curve.values = [NSOrderedDictionary dictionaryWithObjects:finalDatasource forKeys:
+                    _playerView.coordinateSystemView.abscissAxis.titles];
+    
+    
+    UICurve *uicurve = [[UICurve alloc] initWithFrame:CGRectZero curve:curve];
+    uicurve.lineColor = [UIColor whiteColor];
+    uicurve.drawPoints = NO;
+    uicurve.lineWidth = [NSNumber numberWithFloat:0.5];
+    
+    _drawnCurve = uicurve;
+    
+    
     
     [_playerView.coordinateSystemView setCoordinateSystemTitle:[NSString stringWithFormat:@"%@ - %@", [DateUtilities stringWithDate:startDate], [DateUtilities stringWithDate:endDate]]];
     
     [_playerView.coordinateSystemView draw];
+    
+    [_playerView.coordinateSystemView drawCurve:uicurve];
 }
 
 - (void)viewWillAppear:(BOOL)animated
@@ -131,29 +161,6 @@
     [_playerView.coordinateSystemView addGestureRecognizer:_curvesViewPinchGestureRecognizer];
     [_playerView.coordinateSystemView addGestureRecognizer:_curvesViewLeftSwipeGestureRecognizer];
     [_playerView.coordinateSystemView addGestureRecognizer:_curvesViewRightSwipeGestureRecognizer];
-    
-    StatisticalDataEngine *statsDataEngine = [[StatisticalDataEngine alloc] init];
-    
-//    NSArray *datasource = [statsDataEngine searchFromDay:1 andMonth:1 andYear:1 toDay:1 andMonth:1 andYear:1 forPlayerId:1];
-    
-    NSArray *datasource = nil;
-    
-    datasource = [NSArray arrayWithObjects:[NSNumber numberWithInt:23], [NSNumber numberWithInt:102], [NSNumber numberWithInt:364], [NSNumber numberWithInt:899], [NSNumber numberWithInt:860], [NSNumber numberWithInt:657], [NSNumber numberWithInt:345], nil];
-    
-    Curve *curve = [[Curve alloc] init];
-
-    curve.values = [NSOrderedDictionary dictionaryWithObjects:datasource forKeys:
-                    _playerView.coordinateSystemView.abscissAxis.titles];
-
-
-    UICurve *uicurve = [[UICurve alloc] initWithFrame:CGRectZero curve:curve];
-    uicurve.lineColor = [UIColor whiteColor];
-    uicurve.drawPoints = NO;
-    uicurve.lineWidth = [NSNumber numberWithFloat:0.5];
-    
-    _drawnCurve = uicurve;
-
-    [_playerView.coordinateSystemView drawCurve:uicurve];
 }
 
 -(NSInteger)numberOfComponentsInPickerView:(UIPickerView *)pickerView

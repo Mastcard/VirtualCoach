@@ -114,6 +114,7 @@
 		8A9FD54B1D16B0B0004A8615 /* UIMultipleProcessProgressView.m in Sources */ = {isa = PBXBuildFile; fileRef = 8A9FD54A1D16B0B0004A8615 /* UIMultipleProcessProgressView.m */; };
 		8A9FD54E1D16DD00004A8615 /* UIProfileView.m in Sources */ = {isa = PBXBuildFile; fileRef = 8A9FD54D1D16DD00004A8615 /* UIProfileView.m */; };
 		8A9FD5511D16DD66004A8615 /* UIProfileViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = 8A9FD5501D16DD66004A8615 /* UIProfileViewController.m */; };
+		8AA25DCB1D1A832900B85C63 /* StatisticalDataEngineTools.m in Sources */ = {isa = PBXBuildFile; fileRef = 8AA25DCA1D1A832900B85C63 /* StatisticalDataEngineTools.m */; };
 		8AB35A9A1D0C68D70026503B /* UIBaseTextField.m in Sources */ = {isa = PBXBuildFile; fileRef = 8AB35A971D0C68D70026503B /* UIBaseTextField.m */; };
 		8AB35A9B1D0C68D70026503B /* UICheckbox.m in Sources */ = {isa = PBXBuildFile; fileRef = 8AB35A991D0C68D70026503B /* UICheckbox.m */; };
 		8AB35AA61D0C68E70026503B /* UIAccountCreationCredentialsView.m in Sources */ = {isa = PBXBuildFile; fileRef = 8AB35A9D1D0C68E70026503B /* UIAccountCreationCredentialsView.m */; };
@@ -398,6 +399,8 @@
 		8A9FD54D1D16DD00004A8615 /* UIProfileView.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = UIProfileView.m; sourceTree = "<group>"; };
 		8A9FD54F1D16DD66004A8615 /* UIProfileViewController.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = UIProfileViewController.h; sourceTree = "<group>"; };
 		8A9FD5501D16DD66004A8615 /* UIProfileViewController.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = UIProfileViewController.m; sourceTree = "<group>"; };
+		8AA25DC91D1A832900B85C63 /* StatisticalDataEngineTools.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = StatisticalDataEngineTools.h; sourceTree = "<group>"; };
+		8AA25DCA1D1A832900B85C63 /* StatisticalDataEngineTools.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = StatisticalDataEngineTools.m; sourceTree = "<group>"; };
 		8AB35A961D0C68D70026503B /* UIBaseTextField.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = UIBaseTextField.h; sourceTree = "<group>"; };
 		8AB35A971D0C68D70026503B /* UIBaseTextField.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = UIBaseTextField.m; sourceTree = "<group>"; };
 		8AB35A981D0C68D70026503B /* UICheckbox.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = UICheckbox.h; sourceTree = "<group>"; };
@@ -1220,6 +1223,8 @@
 				7AE75D891D05B4C50094A93E /* MovementEnum.h */,
 				6EE37BB31C981B6D006E0626 /* DistanceUtilities.h */,
 				6EE37BB41C981B6D006E0626 /* DistanceUtilities.m */,
+				8AA25DC91D1A832900B85C63 /* StatisticalDataEngineTools.h */,
+				8AA25DCA1D1A832900B85C63 /* StatisticalDataEngineTools.m */,
 			);
 			path = Tools;
 			sourceTree = "<group>";
@@ -1616,6 +1621,7 @@
 				6EB1D03B1CEA2D8B006B6940 /* UIRecordingIconView.m in Sources */,
 				6EB1D02E1CEA2D8B006B6940 /* UIAuthenticationViewController.m in Sources */,
 				6EB1D0321CEA2D8B006B6940 /* UIBaseLabel.m in Sources */,
+				8AA25DCB1D1A832900B85C63 /* StatisticalDataEngineTools.m in Sources */,
 				8A9FD54B1D16B0B0004A8615 /* UIMultipleProcessProgressView.m in Sources */,
 				8AB35AAA1D0C68E70026503B /* UITrainingView.m in Sources */,
 				6EB1CFF31CEA2D5E006B6940 /* CaptureSessionControllerFactory.m in Sources */,
