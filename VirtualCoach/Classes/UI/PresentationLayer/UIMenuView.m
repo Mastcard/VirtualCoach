@@ -24,6 +24,8 @@
         _captureViewInformationsLabel = [[UIBaseLabel alloc] init];
         _trainingsViewInformationsLabel = [[UIBaseLabel alloc] init];
         _playersViewInformationsLabel = [[UIBaseLabel alloc] init];
+        
+        _welcomeLabel = [[UIBaseLabel alloc] init];
     }
     
     return self;
@@ -111,6 +113,19 @@
     [playerViewInformationsLabelText addAttribute:NSForegroundColorAttributeName value:[UIColor whiteColor] range:NSMakeRange(0, [playerViewInformationsLabelText length])];
     
     [_playersViewInformationsLabel setAttributedText:playerViewInformationsLabelText];
+    
+    
+    CGSize welcomeLabelSize = CGSizeMake(self.frame.size.width / 2 - (defaultMargin * 4), 30);
+    CGPoint welcomeLabelOrigin = CGPointMake((self.frame.size.width / 4) - (welcomeLabelSize.width / 2), 75);
+    [_welcomeLabel setFrame:CGRectMake(welcomeLabelOrigin.x, welcomeLabelOrigin.y, welcomeLabelSize.width, welcomeLabelSize.height)];
+    
+    NSMutableAttributedString *welcomeLabelText = [[NSMutableAttributedString alloc] initWithString:@" "];
+    [welcomeLabelText addAttribute:NSFontAttributeName
+                                            value:[UIFont systemFontOfSize:20.0]
+                                            range:NSMakeRange(0, [welcomeLabelText length])];
+    [welcomeLabelText addAttribute:NSForegroundColorAttributeName value:[UIColor whiteColor] range:NSMakeRange(0, [welcomeLabelText length])];
+    
+    [_welcomeLabel setAttributedText:welcomeLabelText];
 }
 
 - (void)layout
@@ -126,6 +141,8 @@
     [self addSubview:_captureViewInformationsLabel];
     [self addSubview:_trainingsViewInformationsLabel];
     [self addSubview:_playersViewInformationsLabel];
+    
+    [self addSubview:_welcomeLabel];
 }
 
 - (void)prepareForUse

@@ -12,6 +12,7 @@
 #import "UICaptureSessionViewController.h"
 #import "UITrainingViewController.h"
 #import "UIProfileViewController.h"
+#import "Variables.h"
 
 @interface UIMenuViewController : UIBaseViewController
 

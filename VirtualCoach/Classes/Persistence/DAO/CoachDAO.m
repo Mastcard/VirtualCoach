@@ -51,10 +51,12 @@
     query = [query stringByAppendingString:pass];
     query = [query stringByAppendingString:@"';"];
     
-    NSArray * result =[[NSArray alloc]init];
-    result = [DatabaseService query:query mode:VCSelectIntegerIndexedResult];
+    NSArray *result = [DatabaseService query:query mode:VCSelectIntegerIndexedResult];
     
-    int desc = (int) [result[0][0] longValue];
+    int desc = -1;
+    
+    if (result.count > 0)
+        desc = (int) [result[0][0] longValue];
     
     return desc;
 }
@@ -72,5 +74,23 @@
     
 }
 
+- (NSString *)coachFirstNameWithId:(int)coachId
+{
+    NSString *query = @"select firstname from Coach where idCoach=";
+    query = [query stringByAppendingString:[NSString stringWithFormat:@"%d", coachId]];
+    query = [query stringByAppendingString:@";"];
+    
+    NSDictionary *result = [DatabaseService query:query mode:VCSelectColumnIndexedResult];
+    
+    NSLog(@"result : %@", [[result objectForKey:@"firstname"] objectAtIndex:0]);
+    
+    NSString *firstname = nil;
+    
+    if (result.count > 0) {
+        firstname = (NSString *)[[result objectForKey:@"firstname"] objectAtIndex:0];
+    }
+    
+    return firstname;
+}
 
 @end

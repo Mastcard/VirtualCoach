@@ -20,4 +20,6 @@
 -(NSMutableArray<CoachDO*>*)selectAllCoaches;
 //DELETE
 -(id)deleteCoachById:(int)idCoach;
+-(int)selectCoachByLogin:(NSString *)login password:(NSString *)password;
+- (NSString *)coachFirstNameWithId:(int)coachId;
 @end

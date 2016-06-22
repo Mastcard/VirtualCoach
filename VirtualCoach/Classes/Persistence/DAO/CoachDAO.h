@@ -21,4 +21,6 @@
 //UPDATE
 
 
+- (NSString *)coachFirstNameWithId:(int)coachId;
+
 @end
