@@ -53,8 +53,7 @@
 //        NSString *coachFirstName = [coachDataEngine coachFirstNameWithId:coachId];
 //        
 //        [[Variables dictionary] setObject:[NSNumber numberWithBool:YES] forKey:kConnected];
-//        [[Variables dictionary] setObject:[NSNumber numberWithInt:coachId] forKey:kConnectedUserId];
-//        [[Variables dictionary] setObject:coachFirstName forKey:kConnectedUserName];
+//        [[Variables dictionary] setObject:[NSNumber numberWithInt:coachId] forKey:kConnectedUser];
 //    }
     
     if (loginSuccess)

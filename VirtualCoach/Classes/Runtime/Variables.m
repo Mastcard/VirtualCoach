@@ -17,8 +17,7 @@ static NSMutableDictionary *dictionary;
     dictionary = [[NSMutableDictionary alloc] init];
     
     [dictionary setObject:[NSNumber numberWithBool:NO] forKey:kConnected];
-    [dictionary setObject:[NSNumber numberWithInt:-1] forKey:kConnectedUserId];
-    [dictionary setObject:@"" forKey:kConnectedUserName];
+    [dictionary setObject:[NSNull null] forKey:kConnectedUser];
 }
 
 + (NSMutableDictionary *)dictionary

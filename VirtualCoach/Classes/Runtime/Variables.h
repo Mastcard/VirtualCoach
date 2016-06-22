@@ -9,8 +9,7 @@
 #import <Foundation/Foundation.h>
 
 #define kConnected @"CONNECTED"
-#define kConnectedUserId @"CONNECTED_USER_ID"
-#define kConnectedUserName @"CONNECTED_USER_NAME"
+#define kConnectedUser @"CONNECTED_USER"
 
 @interface Variables : NSObject
 
