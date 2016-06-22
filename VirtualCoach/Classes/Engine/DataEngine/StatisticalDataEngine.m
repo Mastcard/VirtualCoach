@@ -141,14 +141,14 @@
             
             for (int j = month+1; j < statisticalMonth; j++) {
                 finalMonthDO = [[StatisticalDO alloc] init];
-                finalMonthDO.forehandCount = 0;
-                finalMonthDO.backhandCount = 0;
-                finalMonthDO.serviceCount = 0;
-                finalMonthDO.forehandGlobalSuccessRate = 0.0;
-                finalMonthDO.backhandGlobalSuccessRate = 0.0;
-                finalMonthDO.serviceGlobalSuccessRate = 0.0;
-                finalMonthDO.winningRun = 0;
-                finalMonthDO.loosingRun = 0;
+                finalMonthDO.forehandCount = -1;
+                finalMonthDO.backhandCount = -1;
+                finalMonthDO.serviceCount = -1;
+                finalMonthDO.forehandGlobalSuccessRate = -1.f;
+                finalMonthDO.backhandGlobalSuccessRate = -1.f;
+                finalMonthDO.serviceGlobalSuccessRate = -1.f;
+                finalMonthDO.winningRun = -1;
+                finalMonthDO.loosingRun = -1;
                 finalMonthDO.month = j;
                 [resultWithAverageByMonth addObject:finalMonthDO];
             }
@@ -237,6 +237,10 @@
 //
 
 -(NSMutableArray<StatisticalDO*>*)fromResultSetToStatisticalDOList:(NSArray*)result {
+    
+    if ([result count] <= 0) {
+        return [[NSMutableArray<StatisticalDO*> alloc] init];
+    }
     
     NSMutableArray<StatisticalDO*>* statisticalDOList = [[NSMutableArray<StatisticalDO*> alloc] initWithCapacity:[result[0] count]];
     
