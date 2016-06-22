@@ -12,6 +12,8 @@
 #import "UICaptureSessionViewController.h"
 #import "UIAuthenticationViewController.h"
 #import "UIAccountCreationViewController.h"
+#import "ApplicationInitialization.h"
+#import "Variables.h"
 
 #import "CaptureProcessManager.h"
 
@@ -28,8 +30,8 @@
     self.window.rootViewController = appNavController;
     [self.window makeKeyAndVisible];
     
-    
-    //appNavController.navigationBarHidden = YES;
+    [ApplicationInitialization start];
+    [Variables init];
     
     NSString *documentsDirectory = [NSSearchPathForDirectoriesInDomains(NSDocumentDirectory, NSUserDomainMask, YES) objectAtIndex:0];
     appNavController.captureSessionViewController.videoDirectory = [NSURL fileURLWithPath:documentsDirectory];
