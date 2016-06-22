@@ -100,7 +100,7 @@
     query = [query stringByAppendingString:year];
     query = [query stringByAppendingString:@"' and idplayer='"];
     query = [query stringByAppendingString:idPlayer];
-    query = [query stringByAppendingString:@"';"];
+    query = [query stringByAppendingString:@"' order by month;"];
     
     NSArray * result =[[NSArray alloc]init];
     result = [DatabaseService query:query mode:VCSelectIntegerIndexedResult];
