@@ -13,6 +13,8 @@
 #import "UICoordinateSystemFactory.h"
 #import "UICoordinateSystem2DUtilities.h"
 #import "DateUtilities.h"
+#import "StatisticalDataEngine.h"
+#import "NSOrderedDictionary.h"
 
 #define CURVE_DATA_PICKERVIEW_TAG 1
 #define CURVE_PERIOD_PICKERVIEW_TAG 2

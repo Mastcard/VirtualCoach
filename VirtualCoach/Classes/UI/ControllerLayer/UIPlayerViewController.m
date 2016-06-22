@@ -19,6 +19,8 @@
 
 @property (nonatomic, strong) NSArray *currentOrdinateAxisTitles;
 
+@property (nonatomic, strong) UICurve *drawnCurve;
+
 @end
 
 @implementation UIPlayerViewController
@@ -105,21 +107,6 @@
     [_playerView.coordinateSystemView setCoordinateSystemTitle:[NSString stringWithFormat:@"%@ - %@", [DateUtilities stringWithDate:startDate], [DateUtilities stringWithDate:endDate]]];
     
     [_playerView.coordinateSystemView draw];
-    
-    //    Curve *curve = [[Curve alloc] init];
-    //
-    //        curve.values = [NSOrderedDictionary dictionaryWithObjects:
-    //                        [NSArray arrayWithObjects:[NSNumber numberWithInt:516], [NSNumber numberWithInt:327], [NSNull null], [NSNull null], [NSNumber numberWithInt:628], [NSNumber numberWithInt:804], [NSNumber numberWithInt:173], nil]
-    //                                                          forKeys:
-    //                        _playerView.coordinateSystemView.abscissAxis.titles];
-    //
-    //
-    //        UICurve *uicurve = [[UICurve alloc] initWithFrame:CGRectZero curve:curve];
-    //        uicurve.lineColor = [UIColor whiteColor];
-    //        uicurve.drawPoints = NO;
-    //        uicurve.lineWidth = [NSNumber numberWithFloat:0.3];
-    //
-    //    [_playerView.coordinateSystemView drawCurve:uicurve];
 }
 
 - (void)viewWillAppear:(BOOL)animated
@@ -144,6 +131,29 @@
     [_playerView.coordinateSystemView addGestureRecognizer:_curvesViewPinchGestureRecognizer];
     [_playerView.coordinateSystemView addGestureRecognizer:_curvesViewLeftSwipeGestureRecognizer];
     [_playerView.coordinateSystemView addGestureRecognizer:_curvesViewRightSwipeGestureRecognizer];
+    
+    StatisticalDataEngine *statsDataEngine = [[StatisticalDataEngine alloc] init];
+    
+//    NSArray *datasource = [statsDataEngine searchFromDay:1 andMonth:1 andYear:1 toDay:1 andMonth:1 andYear:1 forPlayerId:1];
+    
+    NSArray *datasource = nil;
+    
+    datasource = [NSArray arrayWithObjects:[NSNumber numberWithInt:23], [NSNumber numberWithInt:102], [NSNumber numberWithInt:364], [NSNumber numberWithInt:899], [NSNumber numberWithInt:860], [NSNumber numberWithInt:657], [NSNumber numberWithInt:345], nil];
+    
+    Curve *curve = [[Curve alloc] init];
+
+    curve.values = [NSOrderedDictionary dictionaryWithObjects:datasource forKeys:
+                    _playerView.coordinateSystemView.abscissAxis.titles];
+
+
+    UICurve *uicurve = [[UICurve alloc] initWithFrame:CGRectZero curve:curve];
+    uicurve.lineColor = [UIColor whiteColor];
+    uicurve.drawPoints = NO;
+    uicurve.lineWidth = [NSNumber numberWithFloat:0.5];
+    
+    _drawnCurve = uicurve;
+
+    [_playerView.coordinateSystemView drawCurve:uicurve];
 }
 
 -(NSInteger)numberOfComponentsInPickerView:(UIPickerView *)pickerView
@@ -177,6 +187,15 @@
         
         Axis *ordinateAxis = nil;
         
+        NSArray *data = nil;
+        NSArray *titles = _playerView.coordinateSystemView.abscissAxis.titles;
+        
+        BOOL isYearlyCoordinateSystem = _playerView.coordinateSystemView.abscissAxis.titles.count == 12 ? YES : NO;
+        BOOL isWeeklyCoordinateSystem = _playerView.coordinateSystemView.abscissAxis.titles.count == 7 ? YES : NO;
+        BOOL isMonthlyCoordinateSystem = _playerView.coordinateSystemView.abscissAxis.titles.count != 12 && _playerView.coordinateSystemView.abscissAxis.titles.count != 7 ? YES : NO;
+        
+        
+        
         if ([selectedValue rangeOfString:@"progress"].location == NSNotFound)
         {
             ordinateAxis = [Axis motionCountAxis];
@@ -185,7 +204,20 @@
             
             if ([selectedValue isEqualToString:@"Forehands"])
             {
+                if (isYearlyCoordinateSystem)
+                {
+                    
+                }
                 
+                else if (isMonthlyCoordinateSystem)
+                {
+                    
+                }
+                
+                else
+                {
+                    
+                }
             }
             
             else if ([selectedValue isEqualToString:@"Backhands"])
