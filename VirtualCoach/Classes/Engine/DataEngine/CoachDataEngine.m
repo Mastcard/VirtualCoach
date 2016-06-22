@@ -114,6 +114,29 @@
     
 }
 
+-(CoachDO*)searchByLogin:(NSString*)login password:(NSString*)pass {
+    NSArray* searchResult = [_coachDAO searchByLogin:login password:pass];
+    CoachDO* coach = [[CoachDO alloc] init];
+    
+    if ([searchResult count] > 0) {
+        int coachId = [[[searchResult objectAtIndex:0] objectAtIndex:0] intValue];
+        NSString* coachName = [[[searchResult objectAtIndex:1] objectAtIndex:0] stringValue];
+        NSString* coachFirstName = [[[searchResult objectAtIndex:2] objectAtIndex:0] stringValue];
+        NSString* coachLogin = [[[searchResult objectAtIndex:3] objectAtIndex:0] stringValue];
+        NSString* coachPassword = [[[searchResult objectAtIndex:4] objectAtIndex:0] stringValue];
+        bool leftHanded = [[[searchResult objectAtIndex:5] objectAtIndex:0] boolValue];
+        
+        coach.coachId = coachId;
+        coach.name = coachName;
+        coach.firstName = coachFirstName;
+        coach.login = coachLogin;
+        coach.password = coachPassword;
+        coach.leftHanded = leftHanded;
+    }
+    
+    return coach;
+}
+
 //DELETE
 -(id)deleteCoachById:(int)idCoach
 {

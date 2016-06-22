@@ -43,10 +43,9 @@
 
 }
 
--(int)searchIdByLogin:(NSString *) log password:(NSString *) pass
-{
-    NSString *query = @"select idCoach from Coach where login='";
-    query = [query stringByAppendingString:log];
+-(NSArray *)searchByLogin:(NSString *) login password:(NSString *) pass {
+    NSString *query = @"select * from Coach where login='";
+    query = [query stringByAppendingString:login];
     query = [query stringByAppendingString:@"' and password='"];
     query = [query stringByAppendingString:pass];
     query = [query stringByAppendingString:@"';"];
