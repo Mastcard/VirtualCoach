@@ -143,11 +143,6 @@
     return [_coachDAO deleteCoachById:[NSString stringWithFormat:@"%i", idCoach]];
 }
 
--(int)selectCoachByLogin:(NSString *)login password:(NSString *)password
-{
-    return [_coachDAO searchIdByLogin:login password:password];
-}
-
 - (NSString *)coachFirstNameWithId:(int)coachId
 {
     return [_coachDAO coachFirstNameWithId:coachId];

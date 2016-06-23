@@ -711,6 +711,8 @@
                 NSDate *nextStartDate = [startAndEndOfWeekDates objectForKey:@"startDate"];
                 NSDate *nextEndDate = [startAndEndOfWeekDates objectForKey:@"endDate"];
                 
+                NSLog(@"nextStartDate : %@, nextEndDate : %@", nextStartDate, nextEndDate);
+                
                 NSDateComponents *components = [[NSCalendar currentCalendar] components:NSCalendarUnitDay | NSCalendarUnitMonth | NSCalendarUnitYear fromDate:nextStartDate];
                 _currentYear = [components year];
                 _currentMonth = [components month];
@@ -723,6 +725,8 @@
                 NSInteger currentWeekEndYear = [components year];
                 
                 coordinateSystemTitle = [NSString stringWithFormat:@"%@ - %@", [DateUtilities stringWithDate:nextStartDate], [DateUtilities stringWithDate:nextEndDate]];
+                
+                NSLog(@"nextStartDate : %@, nextEndDate : %@", nextStartDate, nextEndDate);
                 
                 _statistics = [statsDataEngine searchFromDay:(int)_currentWeekStartDay andMonth:(int)currentWeekStartMonth andYear:(int)currentWeekStartYear toDay:(int)_currentWeekEndDay andMonth:(int)currentWeekEndMonth andYear:(int)currentWeekEndYear forPlayerId:1];
             }
@@ -861,9 +865,10 @@
         
         [_playerView.coordinateSystemView undraw];
         
-        [_playerView.coordinateSystemView setCoordinateSystemTitle:coordinateSystemTitle];
+        
         
         [_drawnCurve undraw];
+        [_playerView.coordinateSystemView setCoordinateSystemTitle:coordinateSystemTitle];
         [_drawnCurve setCurve:curve];
         [_playerView.coordinateSystemView drawCurve:_drawnCurve];
         
