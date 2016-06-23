@@ -489,6 +489,10 @@
     
     XCTAssertEqual(3, [result[0] count]);
     
+    result = [_stat searchFromDay:@"12" andMonth:@"1" andYear:@"2017" toDay:@"25" andMonth:@"12" andYear:@"2016" forPlayerId:idP];
+    
+    XCTAssertEqual(3, [result[0] count]);
+    
     //update
     NSNumber *updateServiceGSR = (NSNumber *)[_stat updateServiceGlobalSuccessRate:@"70%" forDay:@"29" Month:@"05" andYear:@"2016" andIdPlayer:idP];
     

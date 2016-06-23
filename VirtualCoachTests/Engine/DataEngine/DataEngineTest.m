@@ -11,6 +11,9 @@
 #import "CoachDataEngine.h"
 #import "CoachDO.h"
 #import "CheckDatabaseDAO.h"
+#import "StatisticalDO.h"
+#import "StatisticalDataEngine.h"
+
 
 @interface DataEngineTest : XCTestCase
 
@@ -19,6 +22,10 @@
 @property (nonatomic) CoachDO *coachDO;
 @property (nonatomic) CheckDatabaseDAO *checkDB;
 @property (nonatomic) NSString * sqlPath;
+
+// Statistical
+@property (nonatomic) StatisticalDO* statisticalDO;
+@property (nonatomic) StatisticalDataEngine* statisticalEngine;
 
 @end
 
@@ -43,6 +50,9 @@
     _coachDE = [[CoachDataEngine alloc] init];
     _coachDO = [[CoachDO alloc]init];
     _checkDB = [[CheckDatabaseDAO alloc]init];
+    
+    _statisticalDO = [[StatisticalDO alloc] init];
+    _statisticalEngine = [[StatisticalDataEngine alloc] init];
 }
 
 - (void)tearDown {
@@ -98,4 +108,22 @@
     XCTAssertEqual([delete boolValue],YES );
 }
 
+-(void)testStatisticalDataEngine {
+    // Drop tables
+    int rep = [DatabaseService sqlFile:[[[NSBundle bundleForClass:[self class]] resourcePath] stringByAppendingString:@"/Database/DropTables.sql"]];
+    
+    XCTAssertEqual(0, rep);
+    
+    // Check
+    int check = [_checkDB CheckingDatabase: _databasePath andScriptCreationPath: _sqlPath];
+    
+    // Adds general data
+    rep = [DatabaseService sqlFile:[[[NSBundle bundleForClass:[self class]] resourcePath] stringByAppendingString:@"/Database/JeuDeDonnees.sql"]];
+    
+    // Adds statistics data
+    rep = [DatabaseService sqlFile:[[[NSBundle bundleForClass:[self class]] resourcePath] stringByAppendingString:@"/Database/statistics.sql"]];
+    
+    NSMutableArray<StatisticalDO*>* result = [_statisticalEngine searchByYear:2016 andPlayerId:1];
+    XCTAssertEqual(12, [result count]);
+}
 @end
