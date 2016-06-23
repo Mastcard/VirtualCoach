@@ -91,19 +91,19 @@
     
     XCTAssertEqual((int)_datasetEntry.datacount, 4);
     
-    XCTAssertEqual((int)[[_datasetEntry.data objectAtIndex:0] time], 1);
+    XCTAssertEqual((int)[[_datasetEntry.data objectAtIndex:0] time], 3);
     XCTAssertEqual((int)[[_datasetEntry.data objectAtIndex:0] maxAngle], 180);
     XCTAssertEqual((double)[[_datasetEntry.data objectAtIndex:0] meanAcceleration], 150);
     
-    XCTAssertEqual((int)[[_datasetEntry.data objectAtIndex:1] time], 2);
+    XCTAssertEqual((int)[[_datasetEntry.data objectAtIndex:1] time], 4);
     XCTAssertEqual((int)[[_datasetEntry.data objectAtIndex:1] maxAngle], 180);
     XCTAssertEqual((double)[[_datasetEntry.data objectAtIndex:1] meanAcceleration], 350);
     
-    XCTAssertEqual((int)[[_datasetEntry.data objectAtIndex:2] time], 3);
+    XCTAssertEqual((int)[[_datasetEntry.data objectAtIndex:2] time], 5);
     XCTAssertEqual((int)[[_datasetEntry.data objectAtIndex:2] maxAngle], 180);
     XCTAssertEqual((double)[[_datasetEntry.data objectAtIndex:2] meanAcceleration], 450);
     
-    XCTAssertEqual((int)[[_datasetEntry.data objectAtIndex:3] time], 4);
+    XCTAssertEqual((int)[[_datasetEntry.data objectAtIndex:3] time], 6);
     XCTAssertEqual((int)[[_datasetEntry.data objectAtIndex:3] maxAngle], 0);
     XCTAssertEqual((double)[[_datasetEntry.data objectAtIndex:3] meanAcceleration], 400);
     
@@ -181,19 +181,19 @@
     
     XCTAssertEqual((int)result.datacount, 4);
     
-    XCTAssertEqual((int)[[result.data objectAtIndex:0] time], 1);
+    XCTAssertEqual((int)[[result.data objectAtIndex:0] time], 3);
     XCTAssertEqual((int)[[result.data objectAtIndex:0] maxAngle], 180);
     XCTAssertEqual((double)[[result.data objectAtIndex:0] meanAcceleration], 150);
     
-    XCTAssertEqual((int)[[result.data objectAtIndex:1] time], 2);
+    XCTAssertEqual((int)[[result.data objectAtIndex:1] time], 4);
     XCTAssertEqual((int)[[result.data objectAtIndex:1] maxAngle], 180);
     XCTAssertEqual((double)[[result.data objectAtIndex:1] meanAcceleration], 350);
     
-    XCTAssertEqual((int)[[result.data objectAtIndex:2] time], 3);
+    XCTAssertEqual((int)[[result.data objectAtIndex:2] time], 5);
     XCTAssertEqual((int)[[result.data objectAtIndex:2] maxAngle], 180);
     XCTAssertEqual((double)[[result.data objectAtIndex:2] meanAcceleration], 450);
     
-    XCTAssertEqual((int)[[result.data objectAtIndex:3] time], 4);
+    XCTAssertEqual((int)[[result.data objectAtIndex:3] time], 6);
     XCTAssertEqual((int)[[result.data objectAtIndex:3] maxAngle], 0);
     XCTAssertEqual((double)[[result.data objectAtIndex:3] meanAcceleration], 400);
     
