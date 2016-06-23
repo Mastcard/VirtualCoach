@@ -268,7 +268,7 @@
             if (_videoTrakingAnalysisInformationsIndex  < _videoTrakingAnalysisInformations.count-1)
                 _videoTrakingAnalysisInformationsIndex++;
         }
-        /*
+        
          NSUInteger rate = (NSUInteger)(_frameCount / 100);
          
          if (_count % rate == 0)
@@ -276,7 +276,6 @@
          [_delegate didUpdateStatusWithProgress:0.0025 message:[NSString stringWithFormat:@"Analyzing motions.. (%lu / %lu)", (unsigned long)_count, (unsigned long)_frameCount]];
          NSLog(@"%@", [NSString stringWithFormat:@"Analyzing motions.. (%lu / %lu)", (unsigned long)_count, (unsigned long)_frameCount]);
          }
-         */
     }
 }
 

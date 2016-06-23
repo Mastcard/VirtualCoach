@@ -251,8 +251,8 @@
     
     else if (pickerView.tag == CURVE_PERIOD_PICKERVIEW_TAG)
     {
-        Axis *axis = nil;
-        NSArray *titles = nil;
+        Axis *axis = [_playerView.coordinateSystemView.coordinateSystem.axes objectForKey:@"absciss"];
+        NSArray *titles = _playerView.coordinateSystemView.abscissAxis.titles;
         NSString *coordinateSystemTitle = nil;
         
         StatisticalDataEngine *statsDataEngine = [[StatisticalDataEngine alloc] init];
@@ -297,7 +297,6 @@
             coordinateSystemTitle = [DateUtilities yearFullTitle:_currentYear];
             
             _statistics = [statsDataEngine searchByYear:(int)_currentYear andPlayerId:1];
-            NSLog(@"_statistics count : %lu", _statistics.count);
         }
         
         NSArray *data = nil;
@@ -328,9 +327,6 @@
             else if ([selectedDataSource isEqualToString:@"Services (progress)"])
                 data = [StatisticalDataEngineTools selectServiceProgressFromResult:_statistics];
         }
-        
-        NSLog(@"data count : %lu", data.count);
-        NSLog(@"period change data : %@", data);
         
         Curve *curve = [[Curve alloc] init];
         curve.values = [NSOrderedDictionary dictionaryWithObjects:data forKeys:titles];
@@ -430,17 +426,7 @@
     
     if (tableView.tag == TRAININGS_TABLEVIEW_TAG)
     {
-        /** Example code to reload data according to a selection
-         
-         NSLog(@"Cell from TRAININGS TABLE CELL VIEW WAS SELECTED");
-         
-         _playersTableViewData = @[@"Training1Player1", @"Training1Player2", @"Training1Player3", @"Training1Player4"];
-         _videosTableViewData = @[@"2016-05-25_11.00.47", @"2016-05-25_11.27.59", @"2016-06-05_10.10.07", @"2016-06-05_10.24.25"];
-         
-         [_trainingView.playersTableView reloadData];
-         [_trainingView.videosTableView reloadData];
-         
-         **/
+        
     }
     
     else if (tableView.tag == PLAYERS_TABLEVIEW_TAG)
@@ -551,6 +537,15 @@
     
     if (pinchGestureRecognizer.state == UIGestureRecognizerStateEnded)
     {
+        Axis *axis = [_playerView.coordinateSystemView.coordinateSystem.axes objectForKey:@"absciss"];
+        NSArray *titles = _playerView.coordinateSystemView.abscissAxis.titles;
+        NSString *coordinateSystemTitle = nil;
+        NSInteger futureSelectedRow = -1;
+        
+        NSArray *data = nil;
+        
+        StatisticalDataEngine *statsDataEngine = [[StatisticalDataEngine alloc] init];
+        
         if (pinchGestureRecognizer.scale > 1)   // pinch out
         {
             NSString *winningTitle = [UICoordinateSystem2DUtilities titleForTouchLocation:point inCoordinateSystem:_playerView.coordinateSystemView];
@@ -561,36 +556,18 @@
                 
                 _currentMonth = [DateUtilities monthForTitle:winningTitle];
                 
-                Axis *monthlyAxis = [Axis monthlyAxisForMonth:_currentMonth];
+                axis = [Axis monthlyAxisForMonth:_currentMonth];
+                titles = [DateUtilities dayTitlesForMonth:_currentMonth];
+                coordinateSystemTitle = [DateUtilities monthFullTitle:_currentMonth forYear:_currentYear];
                 
-                [_playerView.coordinateSystemView.coordinateSystem.axes setObject:monthlyAxis forKey:@"absciss"];
+                futureSelectedRow = 1;
                 
-                [_playerView.coordinateSystemView refreshCoordinateSystem];
-                
-                _playerView.coordinateSystemView.abscissAxis.titles = [DateUtilities dayTitlesForMonth:_currentMonth];
-                
-                [_playerView.coordinateSystemView undraw];
-                
-                [_playerView.coordinateSystemView setCoordinateSystemTitle:[DateUtilities monthFullTitle:_currentMonth forYear:_currentYear]];
-                
-                [_playerView.coordinateSystemView draw];
-                
-                [_playerView.periodPickerView selectRow:1 inComponent:0 animated:YES];
+                _statistics = [statsDataEngine searchByMonth:(int)_currentMonth andYear:(int)_currentYear andPlayerId:1];
             }
             
             else if (isMonthlyCoordinateSystem) // if monthly coordinate system is displayed (monthly => weekly)
             {
                 // do some stuff with curves, the following just changes the coordinate system
-                
-                Axis *weeklyAxis = [Axis weeklyAxis];
-                
-                [_playerView.coordinateSystemView.coordinateSystem.axes setObject:weeklyAxis forKey:@"absciss"];
-                
-                [_playerView.coordinateSystemView refreshCoordinateSystem];
-                
-                _playerView.coordinateSystemView.abscissAxis.titles = [DateUtilities dayTitles];
-                
-                [_playerView.coordinateSystemView undraw];
                 
                 // find week start and end date
                 
@@ -604,14 +581,20 @@
                 
                 NSDateComponents *components = [[NSCalendar currentCalendar] components:NSCalendarUnitDay | NSCalendarUnitMonth | NSCalendarUnitYear fromDate:startDate];
                 _currentWeekStartDay = [components day];
+                NSInteger currentWeekStartMonth = [components month];
+                NSInteger currentWeekStartYear = [components year];
                 components = [[NSCalendar currentCalendar] components:NSCalendarUnitDay | NSCalendarUnitMonth | NSCalendarUnitYear fromDate:endDate];
                 _currentWeekEndDay = [components day];
+                NSInteger currentWeekEndMonth = [components month];
+                NSInteger currentWeekEndYear = [components year];
                 
-                [_playerView.coordinateSystemView setCoordinateSystemTitle:[NSString stringWithFormat:@"%@ - %@", [DateUtilities stringWithDate:startDate], [DateUtilities stringWithDate:endDate]]];
+                axis = [Axis weeklyAxis];
+                titles = [DateUtilities dayTitles];
+                coordinateSystemTitle = [NSString stringWithFormat:@"%@ - %@", [DateUtilities stringWithDate:startDate], [DateUtilities stringWithDate:endDate]];
                 
-                [_playerView.coordinateSystemView draw];
+                futureSelectedRow = 0;
                 
-                [_playerView.periodPickerView selectRow:0 inComponent:0 animated:YES];
+                _statistics = [statsDataEngine searchFromDay:(int)_currentWeekStartDay andMonth:(int)currentWeekStartMonth andYear:(int)currentWeekStartYear toDay:(int)_currentWeekEndDay andMonth:(int)currentWeekEndMonth andYear:(int)currentWeekEndYear forPlayerId:1];
             }
         }
         
@@ -621,44 +604,75 @@
             {
                 // do some stuff with curves, the following just changes the coordinate system
                 
-                Axis *monthlyAxis = [Axis monthlyAxisForMonth:_currentMonth];
+                axis = [Axis monthlyAxisForMonth:_currentMonth];
+                titles = [DateUtilities dayTitlesForMonth:_currentMonth];
+                coordinateSystemTitle = [DateUtilities monthFullTitle:_currentMonth forYear:_currentYear];
                 
-                [_playerView.coordinateSystemView.coordinateSystem.axes setObject:monthlyAxis forKey:@"absciss"];
+                futureSelectedRow = 1;
                 
-                [_playerView.coordinateSystemView refreshCoordinateSystem];
-                
-                _playerView.coordinateSystemView.abscissAxis.titles = [DateUtilities dayTitlesForMonth:_currentMonth];
-                
-                [_playerView.coordinateSystemView undraw];
-                
-                [_playerView.coordinateSystemView setCoordinateSystemTitle:[DateUtilities monthFullTitle:_currentMonth forYear:_currentYear]];
-                
-                [_playerView.coordinateSystemView draw];
-                
-                [_playerView.periodPickerView selectRow:1 inComponent:0 animated:YES];
+                _statistics = [statsDataEngine searchByMonth:(int)_currentMonth andYear:(int)_currentYear andPlayerId:1];
             }
             
             else if (isMonthlyCoordinateSystem) // if monthly coordinate system is displayed (monthly => yearly)
             {
                 // do some stuff with curves, the following just changes the coordinate system
                 
-                Axis *yearlyAxis = [Axis yearlyAxis];
+                axis = [Axis yearlyAxis];
+                titles = [DateUtilities monthTitles];
+                coordinateSystemTitle = [DateUtilities yearFullTitle:_currentYear];
                 
-                [_playerView.coordinateSystemView.coordinateSystem.axes setObject:yearlyAxis forKey:@"absciss"];
+                futureSelectedRow = 2;
                 
-                [_playerView.coordinateSystemView refreshCoordinateSystem];
-                
-                _playerView.coordinateSystemView.abscissAxis.titles = [DateUtilities monthTitles];
-                
-                [_playerView.coordinateSystemView undraw];
-                
-                [_playerView.coordinateSystemView setCoordinateSystemTitle:[DateUtilities yearFullTitle:_currentYear]];
-                
-                [_playerView.coordinateSystemView draw];
-                
-                [_playerView.periodPickerView selectRow:2 inComponent:0 animated:YES];
+                _statistics = [statsDataEngine searchByYear:(int)_currentYear andPlayerId:1];
             }
         }
+        
+        NSInteger row = [_playerView.dataPickerView selectedRowInComponent:0];
+        NSString *selectedDataSource = [_curveDataPickerViewData objectAtIndex:row];
+        
+        if ([selectedDataSource rangeOfString:@"progress"].location == NSNotFound)
+        {
+            if ([selectedDataSource isEqualToString:@"Forehands"])
+                data = [StatisticalDataEngineTools selectForehandCountsFromResult:_statistics];
+            
+            else if ([selectedDataSource isEqualToString:@"Backhands"])
+                data = [StatisticalDataEngineTools selectBackhandCountsFromResult:_statistics];
+            
+            else if ([selectedDataSource isEqualToString:@"Services"])
+                data = [StatisticalDataEngineTools selectServiceCountsFromResult:_statistics];
+        }
+        
+        else
+        {
+            if ([selectedDataSource isEqualToString:@"Forehands (progress)"])
+                data = [StatisticalDataEngineTools selectForehandProgressFromResult:_statistics];
+            
+            else if ([selectedDataSource isEqualToString:@"Backhands (progress)"])
+                data = [StatisticalDataEngineTools selectBackhandProgressFromResult:_statistics];
+            
+            else if ([selectedDataSource isEqualToString:@"Services (progress)"])
+                data = [StatisticalDataEngineTools selectServiceProgressFromResult:_statistics];
+        }
+        
+        Curve *curve = [[Curve alloc] init];
+        curve.values = [NSOrderedDictionary dictionaryWithObjects:data forKeys:titles];
+        
+        
+        [_playerView.coordinateSystemView.coordinateSystem.axes setObject:axis forKey:@"absciss"];
+        
+        [_playerView.coordinateSystemView refreshCoordinateSystem];
+        
+        _playerView.coordinateSystemView.abscissAxis.titles = titles;
+        
+        [_playerView.coordinateSystemView undraw];
+        
+        [_playerView.coordinateSystemView setCoordinateSystemTitle:coordinateSystemTitle];
+        
+        [_drawnCurve undraw];
+        [_drawnCurve setCurve:curve];
+        [_playerView.coordinateSystemView drawCurve:_drawnCurve];
+        
+        [_playerView.coordinateSystemView draw];
     }
 }
 
@@ -670,6 +684,14 @@
     
     if (swipeGestureRecognizer.state == UIGestureRecognizerStateEnded)
     {
+        Axis *axis = [_playerView.coordinateSystemView.coordinateSystem.axes objectForKey:@"absciss"];
+        NSArray *titles = _playerView.coordinateSystemView.abscissAxis.titles;
+        NSString *coordinateSystemTitle = nil;
+        
+        StatisticalDataEngine *statsDataEngine = [[StatisticalDataEngine alloc] init];
+        
+        NSArray *data = nil;
+        
         if (swipeGestureRecognizer == _curvesViewLeftSwipeGestureRecognizer) // left swipe (we go in the future)
         {
             NSLog(@"Left swipe");
@@ -693,14 +715,16 @@
                 _currentYear = [components year];
                 _currentMonth = [components month];
                 _currentWeekStartDay = [components day];
+                NSInteger currentWeekStartMonth = [components month];
+                NSInteger currentWeekStartYear = [components year];
                 components = [[NSCalendar currentCalendar] components:NSCalendarUnitDay | NSCalendarUnitMonth | NSCalendarUnitYear fromDate:nextEndDate];
                 _currentWeekEndDay = [components day];
+                NSInteger currentWeekEndMonth = [components month];
+                NSInteger currentWeekEndYear = [components year];
                 
-                [_playerView.coordinateSystemView undraw];
+                coordinateSystemTitle = [NSString stringWithFormat:@"%@ - %@", [DateUtilities stringWithDate:nextStartDate], [DateUtilities stringWithDate:nextEndDate]];
                 
-                [_playerView.coordinateSystemView setCoordinateSystemTitle:[NSString stringWithFormat:@"%@ - %@", [DateUtilities stringWithDate:nextStartDate], [DateUtilities stringWithDate:nextEndDate]]];
-                
-                [_playerView.coordinateSystemView draw];
+                _statistics = [statsDataEngine searchFromDay:(int)_currentWeekStartDay andMonth:(int)currentWeekStartMonth andYear:(int)currentWeekStartYear toDay:(int)_currentWeekEndDay andMonth:(int)currentWeekEndMonth andYear:(int)currentWeekEndYear forPlayerId:1];
             }
             
             else if (isMonthlyCoordinateSystem)
@@ -716,30 +740,20 @@
                     _currentYear++;
                 }
                 
-                Axis *monthlyAxis = [Axis monthlyAxisForMonth:_currentMonth];
+                axis = [Axis monthlyAxisForMonth:_currentMonth];
+                titles = [DateUtilities dayTitlesForMonth:_currentMonth];
+                coordinateSystemTitle = [DateUtilities monthFullTitle:_currentMonth forYear:_currentYear];
                 
-                [_playerView.coordinateSystemView.coordinateSystem.axes setObject:monthlyAxis forKey:@"absciss"];
-                
-                [_playerView.coordinateSystemView refreshCoordinateSystem];
-                
-                _playerView.coordinateSystemView.abscissAxis.titles = [DateUtilities dayTitlesForMonth:_currentMonth];
-                
-                [_playerView.coordinateSystemView undraw];
-                
-                [_playerView.coordinateSystemView setCoordinateSystemTitle:[DateUtilities monthFullTitle:_currentMonth forYear:_currentYear]];
-                
-                [_playerView.coordinateSystemView draw];
+                _statistics = [statsDataEngine searchByMonth:(int)_currentMonth andYear:(int)_currentYear andPlayerId:1];
             }
             
             else if (isYearlyCoordinateSystem)
             {
                 _currentYear++;
                 
-                [_playerView.coordinateSystemView undraw];
+                coordinateSystemTitle = [DateUtilities yearFullTitle:_currentYear];
                 
-                [_playerView.coordinateSystemView setCoordinateSystemTitle:[DateUtilities yearFullTitle:_currentYear]];
-                
-                [_playerView.coordinateSystemView draw];
+                _statistics = [statsDataEngine searchByYear:(int)_currentYear andPlayerId:1];
             }
         }
         
@@ -762,21 +776,20 @@
                 NSDate *beforeStartDate = [startAndEndOfWeekDates objectForKey:@"startDate"];
                 NSDate *beforeEndDate = [startAndEndOfWeekDates objectForKey:@"endDate"];
                 
-                NSLog(@"beforeStartDate : %@", beforeStartDate);
-                NSLog(@"beforeEndDate : %@", beforeEndDate);
-                
                 NSDateComponents *components = [[NSCalendar currentCalendar] components:NSCalendarUnitDay | NSCalendarUnitMonth | NSCalendarUnitYear fromDate:beforeEndDate];
                 _currentYear = [components year];
                 _currentMonth = [components month];
                 _currentWeekEndDay = [components day];
+                NSInteger currentWeekStartMonth = [components month];
+                NSInteger currentWeekStartYear = [components year];
                 components = [[NSCalendar currentCalendar] components:NSCalendarUnitDay | NSCalendarUnitMonth | NSCalendarUnitYear fromDate:beforeStartDate];
                 _currentWeekStartDay = [components day];
+                NSInteger currentWeekEndMonth = [components month];
+                NSInteger currentWeekEndYear = [components year];
                 
-                [_playerView.coordinateSystemView undraw];
+                coordinateSystemTitle = [NSString stringWithFormat:@"%@ - %@", [DateUtilities stringWithDate:beforeStartDate], [DateUtilities stringWithDate:beforeEndDate]];
                 
-                [_playerView.coordinateSystemView setCoordinateSystemTitle:[NSString stringWithFormat:@"%@ - %@", [DateUtilities stringWithDate:beforeStartDate], [DateUtilities stringWithDate:beforeEndDate]]];
-                
-                [_playerView.coordinateSystemView draw];
+                _statistics = [statsDataEngine searchFromDay:(int)_currentWeekStartDay andMonth:(int)currentWeekStartMonth andYear:(int)currentWeekStartYear toDay:(int)_currentWeekEndDay andMonth:(int)currentWeekEndMonth andYear:(int)currentWeekEndYear forPlayerId:1];
             }
             
             else if (isMonthlyCoordinateSystem)
@@ -792,32 +805,69 @@
                     _currentYear--;
                 }
                 
-                Axis *monthlyAxis = [Axis monthlyAxisForMonth:_currentMonth];
+                axis = [Axis monthlyAxisForMonth:_currentMonth];
+                titles = [DateUtilities dayTitlesForMonth:_currentMonth];
+                coordinateSystemTitle = [DateUtilities monthFullTitle:_currentMonth forYear:_currentYear];
                 
-                [_playerView.coordinateSystemView.coordinateSystem.axes setObject:monthlyAxis forKey:@"absciss"];
-                
-                [_playerView.coordinateSystemView refreshCoordinateSystem];
-                
-                _playerView.coordinateSystemView.abscissAxis.titles = [DateUtilities dayTitlesForMonth:_currentMonth];
-                
-                [_playerView.coordinateSystemView undraw];
-                
-                [_playerView.coordinateSystemView setCoordinateSystemTitle:[DateUtilities monthFullTitle:_currentMonth forYear:_currentYear]];
-                
-                [_playerView.coordinateSystemView draw];
+                _statistics = [statsDataEngine searchByMonth:(int)_currentMonth andYear:(int)_currentYear andPlayerId:1];
             }
             
             else if (isYearlyCoordinateSystem)
             {
                 _currentYear--;
                 
-                [_playerView.coordinateSystemView undraw];
+                coordinateSystemTitle = [DateUtilities yearFullTitle:_currentYear];
                 
-                [_playerView.coordinateSystemView setCoordinateSystemTitle:[DateUtilities yearFullTitle:_currentYear]];
-                
-                [_playerView.coordinateSystemView draw];
+                _statistics = [statsDataEngine searchByYear:(int)_currentYear andPlayerId:1];
             }
         }
+        
+        NSInteger row = [_playerView.dataPickerView selectedRowInComponent:0];
+        NSString *selectedDataSource = [_curveDataPickerViewData objectAtIndex:row];
+        
+        if ([selectedDataSource rangeOfString:@"progress"].location == NSNotFound)
+        {
+            if ([selectedDataSource isEqualToString:@"Forehands"])
+                data = [StatisticalDataEngineTools selectForehandCountsFromResult:_statistics];
+            
+            else if ([selectedDataSource isEqualToString:@"Backhands"])
+                data = [StatisticalDataEngineTools selectBackhandCountsFromResult:_statistics];
+            
+            else if ([selectedDataSource isEqualToString:@"Services"])
+                data = [StatisticalDataEngineTools selectServiceCountsFromResult:_statistics];
+        }
+        
+        else
+        {
+            if ([selectedDataSource isEqualToString:@"Forehands (progress)"])
+                data = [StatisticalDataEngineTools selectForehandProgressFromResult:_statistics];
+            
+            else if ([selectedDataSource isEqualToString:@"Backhands (progress)"])
+                data = [StatisticalDataEngineTools selectBackhandProgressFromResult:_statistics];
+            
+            else if ([selectedDataSource isEqualToString:@"Services (progress)"])
+                data = [StatisticalDataEngineTools selectServiceProgressFromResult:_statistics];
+        }
+        
+        Curve *curve = [[Curve alloc] init];
+        curve.values = [NSOrderedDictionary dictionaryWithObjects:data forKeys:titles];
+        
+        
+        [_playerView.coordinateSystemView.coordinateSystem.axes setObject:axis forKey:@"absciss"];
+        
+        [_playerView.coordinateSystemView refreshCoordinateSystem];
+        
+        _playerView.coordinateSystemView.abscissAxis.titles = titles;
+        
+        [_playerView.coordinateSystemView undraw];
+        
+        [_playerView.coordinateSystemView setCoordinateSystemTitle:coordinateSystemTitle];
+        
+        [_drawnCurve undraw];
+        [_drawnCurve setCurve:curve];
+        [_playerView.coordinateSystemView drawCurve:_drawnCurve];
+        
+        [_playerView.coordinateSystemView draw];
     }
 }
 

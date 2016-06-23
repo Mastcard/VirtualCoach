@@ -78,6 +78,7 @@
     _playersTableViewData = [NSMutableArray arrayWithObjects:@"Joe", @"David", @"Luke", @"Steve P", @"Jeffrey", nil];
     
     _videosTableViewData = [NSMutableArray array];
+    _videosDurationTableViewData = [NSMutableArray array];
     
     // temporary : load all videos in Documents directory
     
@@ -87,9 +88,24 @@
     {
         if ([[[directoryContent objectAtIndex:i] pathExtension] isEqualToString:@"mov"])
         {
+            NSString *videoPath = [[NSSearchPathForDirectoriesInDomains(NSDocumentDirectory, NSUserDomainMask, YES) objectAtIndex:0] stringByAppendingPathComponent:[directoryContent objectAtIndex:i]];
+            
+            AVAsset *videoAsset = (AVAsset *)[AVAsset assetWithURL:[NSURL fileURLWithPath:videoPath]];
+            AVAssetTrack *videoAssetTrack = [[videoAsset tracksWithMediaType:AVMediaTypeVideo] objectAtIndex:0];
+            
+            Float64 seconds = CMTimeGetSeconds(videoAssetTrack.timeRange.duration);
+            
+            int minutes = (int)(seconds / 60);
+            
+            int remainingSeconds = (int)((int)seconds % 60);
+            
+            [_videosDurationTableViewData addObject:[NSDictionary dictionaryWithObjectsAndKeys:[NSNumber numberWithInt:minutes], @"minutes", [NSNumber numberWithInt:remainingSeconds], @"seconds", nil]];
+            
             [_videosTableViewData addObject:[[directoryContent objectAtIndex:i] stringByDeletingPathExtension]];
         }
     }
+    
+    [_trainingView.videosTableView reloadData];
     
     //temporary end
 }
@@ -141,7 +157,13 @@
                                        dispatch_sync(dispatch_get_main_queue(), ^{
                                            [_trainingView addSubview:_trainingView.processVideoProgressView alignment:UIViewCentered];
                                            
-                                           [parentCell.detailTextLabel setText:[NSString stringWithFormat:@"Length: 1:13\nForehand : %lu, backhand : %lu, service : %lu", (unsigned long)forehandCount, (unsigned long)backhandCount, (unsigned long)serviceCount]];
+                                           NSIndexPath *indexPath = [_trainingView.videosTableView indexPathForCell:parentCell];
+                                           
+                                           NSNumber *seconds = (NSNumber *)[[_videosDurationTableViewData objectAtIndex:indexPath.row] objectForKey:@"seconds"];
+                                           
+                                           NSNumber *minutes = (NSNumber *)[[_videosDurationTableViewData objectAtIndex:indexPath.row] objectForKey:@"minutes"];
+                                           
+                                           [parentCell.detailTextLabel setText:[NSString stringWithFormat:@"Length: %02d:%02d\nForehand : %lu, backhand : %lu, service : %lu", minutes.intValue, seconds.intValue, (unsigned long)forehandCount, (unsigned long)backhandCount, (unsigned long)serviceCount]];
                                        });
                                        
                                        vidProc = [[VideoProcess alloc] initWithDictionary:videoInfo];
@@ -168,7 +190,13 @@
                                        dispatch_sync(dispatch_get_main_queue(), ^{
                                            [_trainingView.processVideoProgressView removeFromSuperview];
                                            
-                                           [parentCell.detailTextLabel setText:[NSString stringWithFormat:@"Length: 1:13\nForehand : %lu, backhand : %lu, service : %lu", (unsigned long)forehandCount, (unsigned long)backhandCount, (unsigned long)serviceCount]];
+                                           NSIndexPath *indexPath = [_trainingView.videosTableView indexPathForCell:parentCell];
+                                           
+                                           NSNumber *seconds = (NSNumber *)[[_videosDurationTableViewData objectAtIndex:indexPath.row] objectForKey:@"seconds"];
+                                           
+                                           NSNumber *minutes = (NSNumber *)[[_videosDurationTableViewData objectAtIndex:indexPath.row] objectForKey:@"minutes"];
+                                           
+                                           [parentCell.detailTextLabel setText:[NSString stringWithFormat:@"Length: %02d:%02d\nForehand : %lu, backhand : %lu, service : %lu", minutes.intValue, seconds.intValue, (unsigned long)forehandCount, (unsigned long)backhandCount, (unsigned long)serviceCount]];
                                            
                                            [sender setEnabled:NO];
                                        });
@@ -249,7 +277,7 @@
                                                [_trainingView.multipleProcessVideoProgressView.progressView setProgress:0.f animated:YES];
                                                
                                                NSDictionary *attributes = [(NSAttributedString *)_trainingView.multipleProcessVideoProgressView.globalProgressLabel.attributedText attributesAtIndex:0 effectiveRange:NULL];
-                                               _trainingView.multipleProcessVideoProgressView.globalProgressLabel.attributedText = [[NSAttributedString alloc] initWithString:[NSString stringWithFormat:@"Processing video... (%u / %lu)", i+1, (unsigned long)allVideos.count] attributes:attributes];
+                                               _trainingView.multipleProcessVideoProgressView.globalProgressLabel.attributedText = [[NSAttributedString alloc] initWithString:[NSString stringWithFormat:@"Processing video... (%lu / %lu)", (unsigned long)(i+1), (unsigned long)allVideos.count] attributes:attributes];
                                            });
                                            
                                            // we extract video informations to prepare the process (always in a synchronous way)
@@ -339,7 +367,11 @@
                                                        NSNumber *forehandCount = (NSNumber *)[videoResult objectForKey:@"forehandCount"];
                                                        NSNumber *backhandCount = (NSNumber *)[videoResult objectForKey:@"backhandCount"];
                                                        
-                                                       [cell.detailTextLabel setText:[NSString stringWithFormat:@"Length: 1:13\nForehand : %d, backhand : %d, service : %d", forehandCount.intValue, backhandCount.intValue, serviceCount.intValue]];
+                                                       NSNumber *seconds = (NSNumber *)[[_videosDurationTableViewData objectAtIndex:j] objectForKey:@"seconds"];
+                                                       
+                                                       NSNumber *minutes = (NSNumber *)[[_videosDurationTableViewData objectAtIndex:j] objectForKey:@"minutes"];
+                                                       
+                                                       [cell.detailTextLabel setText:[NSString stringWithFormat:@"Length: %02d:%02d\nForehand : %d, backhand : %d, service : %d", minutes.intValue, seconds.intValue, forehandCount.intValue, backhandCount.intValue, serviceCount.intValue]];
                                                        
                                                        // we should disable the process button for each cell of a processed video
                                                        
@@ -531,7 +563,12 @@
     else if (tableView.tag == VIDEOS_TABLEVIEW_TAG)
     {
         [cell.textLabel setText:[_videosTableViewData objectAtIndex:indexPath.row]];
-        [cell.detailTextLabel setText:@"Length: 1:13\n------------"];
+        
+        NSNumber *seconds = (NSNumber *)[[_videosDurationTableViewData objectAtIndex:indexPath.row] objectForKey:@"seconds"];
+        
+        NSNumber *minutes = (NSNumber *)[[_videosDurationTableViewData objectAtIndex:indexPath.row] objectForKey:@"minutes"];
+        
+        [cell.detailTextLabel setText:[NSString stringWithFormat:@"Length: %02d:%02d\n------------", minutes.intValue, seconds.intValue]];
         
         CGSize playButtonSize = CGSizeMake(40, 40);
         
