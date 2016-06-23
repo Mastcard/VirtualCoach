@@ -32,20 +32,50 @@
 
 - (void)prepareView
 {
-    CGFloat defaultMargin = 30.f;
+    [self setBackgroundColor:[UIColor colorWithRed:0.f green:0.f blue:0.f alpha:1.f]];
     
-    CGSize wizardTitleLabelSize = CGSizeMake(self.frame.size.width - (defaultMargin * 2), 40);
-    CGPoint wizardTitleLabelPosition = CGPointMake(0, defaultMargin);
+    self.layer.cornerRadius = 5;
+    self.layer.masksToBounds = YES;
+    self.layer.borderWidth = 1.f;
+    self.layer.borderColor = [UIColor whiteColor].CGColor;
+    
+    CGFloat defaultMargin = 15.f;
+    
+    CGSize wizardTitleLabelSize = CGSizeMake(self.frame.size.width - (defaultMargin * 2), 30);
+    CGPoint wizardTitleLabelPosition = CGPointMake((self.frame.size.width - wizardTitleLabelSize.width) / 2, defaultMargin);
     
     [_wizardTitleLabel setFrame:CGRectMake(wizardTitleLabelPosition.x, wizardTitleLabelPosition.y, wizardTitleLabelSize.width, wizardTitleLabelSize.height)];
     
-    CGSize elementLabelSize = CGSizeMake((self.frame.size.width / 2) - (defaultMargin * 3), 40);
+    NSMutableAttributedString *wizardTitleLabelText = [[NSMutableAttributedString alloc] initWithString:@"   "];
+    [wizardTitleLabelText addAttribute:NSForegroundColorAttributeName
+                              value:[UIColor whiteColor]
+                              range:NSMakeRange(0, wizardTitleLabelText.length)];
+    [wizardTitleLabelText addAttribute:NSFontAttributeName value:[UIFont systemFontOfSize:18.f] range:NSMakeRange(0, wizardTitleLabelText.length)];
+    [_wizardTitleLabel setAttributedText:wizardTitleLabelText];
+    
+    CGSize elementLabelSize = CGSizeMake((self.frame.size.width / 2) - (defaultMargin * 3), 30);
     CGPoint elementLabelPosition = CGPointMake(defaultMargin, wizardTitleLabelPosition.y + wizardTitleLabelSize.height + defaultMargin);
     
     [_elementNameLabel setFrame:CGRectMake(elementLabelPosition.x, elementLabelPosition.y, elementLabelSize.width, elementLabelSize.height)];
     
+    NSMutableAttributedString *elementLabelText = [[NSMutableAttributedString alloc] initWithString:@"   "];
+    [elementLabelText addAttribute:NSForegroundColorAttributeName
+                                 value:[UIColor whiteColor]
+                                 range:NSMakeRange(0, elementLabelText.length)];
+    [elementLabelText addAttribute:NSFontAttributeName value:[UIFont systemFontOfSize:18.f] range:NSMakeRange(0, elementLabelText.length)];
+    [_elementNameLabel setAttributedText:elementLabelText];
+    
     CGPoint okAccountButtonOrigin = CGPointMake(0, elementLabelPosition.y + elementLabelSize.height + defaultMargin);
-    CGSize okAccountButtonSize = CGSizeMake(150, 50);
+    CGSize okAccountButtonSize = CGSizeMake(120, 40);
+    
+    CGSize elementTextFieldSize = CGSizeMake((self.frame.size.width / 2) - (defaultMargin * 3), 40);
+    CGPoint elementTextFieldPosition = CGPointMake(elementLabelPosition.x + elementLabelSize.height + defaultMargin, elementLabelPosition.y);
+    
+    [_elementNameTextField setFrame:CGRectMake(elementLabelPosition.x + elementLabelSize.width + defaultMargin, elementTextFieldPosition.y, elementTextFieldSize.width, elementTextFieldSize.height)];
+    _elementNameTextField.backgroundColor = [UIColor colorWithRed:(133 / 255.f) green:(123 / 255.f) blue:(129 / 255.f) alpha:1.f];
+    [_elementNameTextField setTextColor:[UIColor whiteColor]];
+    _elementNameTextField.layer.cornerRadius = 8.0f;
+    _elementNameTextField.layer.masksToBounds = YES;
     
     [_okButton setFrame:CGRectMake(okAccountButtonOrigin.x, okAccountButtonOrigin.y, okAccountButtonSize.width, okAccountButtonSize.height)];
     _okButton.backgroundColor = [UIColor colorWithRed:(0 / 255.f) green:(122 / 255.f) blue:(255 / 255.f) alpha:1.f];

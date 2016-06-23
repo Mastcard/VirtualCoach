@@ -273,8 +273,7 @@
     CGPoint addPlayerWizardViewOrigin = CGPointMake(0, 0);
     
     [_addPlayerWizardView setFrame:CGRectMake(addPlayerWizardViewOrigin.x, addPlayerWizardViewOrigin.y, addPlayerWizardViewSize.width, addPlayerWizardViewSize.height)];
-    [_addPlayerWizardView.wizardTitleLabel setText:@"New Player"];
-    [_addPlayerWizardView.elementNameLabel setText:@"Player name:"];
+    
     
 }
 
@@ -282,9 +281,12 @@
 {
     [super layout];
     
+    [self prepareForUse];
+    
     [_addPlayerWizardView layout];
     
-    [self prepareForUse];
+    [_addPlayerWizardView.wizardTitleLabel setText:@"New Player"];
+    [_addPlayerWizardView.elementNameLabel setText:@"Player name:"];
     
     [self addSubview:_playersPaneLabel];
     [self addSubview:_playersTableView];
