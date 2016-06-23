@@ -55,7 +55,6 @@
 @property (nonatomic, assign) NSUInteger forehandCount;
 @property (nonatomic, assign) NSUInteger backhandCount;
 
-
 @property (nonatomic, assign) int sequenceImageStart;
 @property (nonatomic, assign) int sequenceImageEnd;
 
@@ -133,7 +132,6 @@
     {
         //temp
         _count++;
-        
         NSDictionary *imageDict = [_videoTrakingAnalysisInformations objectAtIndex:_videoTrakingAnalysisInformationsIndex];
         
         NSNumber *imageId = [imageDict objectForKey:@"imageId"];
@@ -190,7 +188,7 @@
                             speedVectors->data[idx].y = (_secondFrame->data[idx] > _binaryThreshold) * z;
                         }
                     }
-                     
+                    
                     if (_firstSpeedVectorArray == NULL)
                     {
                         _firstSpeedVectorArray = speedVectors;
@@ -201,6 +199,7 @@
                         _secondSpeedVectorArray = speedVectors;
                         
                         [_entryDataset addKmeanEntryToDataSetFromFirstSpeedVectorsTab:_firstSpeedVectorArray betweenFirstInterval:_firstFrameBounds andSecondSpeedVectorsTab:_secondSpeedVectorArray betweenSecondInterval:_secondFrameBounds andWithImageWidth:src->width];
+
                         [_histogram generateHistogramFromSpeedVector:_firstSpeedVectorArray betweenInterval:_firstFrameBounds andWithImageWidth:src->width];
                         
                         vect2darrfree(_firstSpeedVectorArray);

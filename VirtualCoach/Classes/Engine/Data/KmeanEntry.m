@@ -78,11 +78,13 @@
     }
     [tmpHistogram removeAllObjects];
     
-    
 }
 
 - (void)generateDataEntryForKmeanFromFirstSpeedVectorsTab:(vect2darray_t *)speed1 betweenFirstInterval:(rect_t)firstInterval andSecondSpeedVectorsTab:(vect2darray_t *)speed2 betweenSecondInterval:(rect_t)secondInterval andWithImageWidth:(uint16_t)width{
-    
+    /*
+    int surfaceBounds1 = (firstInterval.end.y - firstInterval.start.y) * (firstInterval.end.x - firstInterval.start.x);
+    int surfaceBounds2 = (secondInterval.end.y - secondInterval.start.y) * (secondInterval.end.x - secondInterval.start.x);
+    */
     NSMutableArray * tmpHistogram = [[NSMutableArray alloc] initWithCapacity:360];
     for (NSInteger i=0; i<360; i++) {
         [tmpHistogram insertObject:@0 atIndex:i];
@@ -94,23 +96,143 @@
     double norm1 = 0, norm2 =0;
     double meanSpeed1=0, meanSpeed2=0;
     int countSpeed1=0, countSpeed2=0;
-    NSLog(@"firstInterval starty: %d firstInterval endy: %d", firstInterval.start.y,firstInterval.end.y);
-    NSLog(@"firstInterval startx: %d firstInterval endx: %d", firstInterval.start.x,firstInterval.end.x);
+    NSMutableArray * speedNorm1 = [[NSMutableArray alloc] init];
+    NSMutableArray * speedNorm2 = [[NSMutableArray alloc] init];
+    /*
+    if (surfaceBounds1 < surfaceBounds2 ) {
+        
+        for (NSInteger y=firstInterval.start.y; y<firstInterval.end.y; y++) {
+            for (NSInteger x=firstInterval.start.x; x<firstInterval.end.x; x++){
+                u1= speed1->data[PXL_IDX(width, x, y)].x;
+                v1= speed1->data[PXL_IDX(width, x, y)].y;
+                
+                float tmpNorm1 = sqrt(u1*u1 + v1*v1);
+                
+                if(tmpNorm1 > THRESHOLD_NORM_SPEED_VECTORS){
+                    //norm1 += tmpNorm1;
+                    //countSpeed1 ++;
+                    NSNumber * nsNumberTmpNorm1 = [[NSNumber alloc] initWithFloat:tmpNorm1];
+                    [speedNorm1 addObject:nsNumberTmpNorm1];
+                }
+            
+                u2= speed2->data[PXL_IDX(width, x, y)].x;
+                v2= speed2->data[PXL_IDX(width, x, y)].y;
+                
+                float tmpNorm2 = sqrt(u2*u2 + v2*v2);
+                if(tmpNorm2 > THRESHOLD_NORM_SPEED_VECTORS){
+                    //norm2 += tmpNorm2;
+                    //countSpeed2++;
+                    NSNumber * nsNumberTmpNorm2 = [[NSNumber alloc] initWithFloat:tmpNorm2];
+                    [speedNorm2 addObject:nsNumberTmpNorm2];
+                }
+                
+                if (tmpNorm2 > THRESHOLD_HISTOGRAM){
+                    angle = atan2(-v2, u2) * 180 / M_PI;
+                    if ((int)angle < 0) {
+                        angle += 360;
+                    }
+                    tmpHistogram[(int) angle] = @([[tmpHistogram objectAtIndex:(int) angle] intValue] + 1);
+                }
+            
+            }
+        }
+        
+    } else {
+        
+        for (NSInteger y=secondInterval.start.y; y<secondInterval.end.y; y++) {
+            for (NSInteger x=secondInterval.start.x; x<secondInterval.end.x; x++){
+                u1= speed1->data[PXL_IDX(width, x, y)].x;
+                v1= speed1->data[PXL_IDX(width, x, y)].y;
+                
+                float tmpNorm1 = sqrt(u1*u1 + v1*v1);
+                
+                if(tmpNorm1 > THRESHOLD_NORM_SPEED_VECTORS){
+                    //norm1 += tmpNorm1;
+                    //countSpeed1 ++;
+                    NSNumber * nsNumberTmpNorm1 = [[NSNumber alloc] initWithFloat:tmpNorm1];
+                    [speedNorm1 addObject:nsNumberTmpNorm1];
+                }
+                
+                u2= speed2->data[PXL_IDX(width, x, y)].x;
+                v2= speed2->data[PXL_IDX(width, x, y)].y;
+                
+                float tmpNorm2 = sqrt(u2*u2 + v2*v2);
+                if(tmpNorm2 > THRESHOLD_NORM_SPEED_VECTORS){
+                    //norm2 += tmpNorm2;
+                    //countSpeed2++;
+                    NSNumber * nsNumberTmpNorm2 = [[NSNumber alloc] initWithFloat:tmpNorm2];
+                    [speedNorm2 addObject:nsNumberTmpNorm2];
+                }
+                
+                if (tmpNorm2 > THRESHOLD_HISTOGRAM){
+                    angle = atan2(-v2, u2) * 180 / M_PI;
+                    if ((int)angle < 0) {
+                        angle += 360;
+                    }
+                    tmpHistogram[(int) angle] = @([[tmpHistogram objectAtIndex:(int) angle] intValue] + 1);
+                }
+                
+            }
+        }
+        
+    }
+    
+    NSSortDescriptor *highestToLowestSpeed1 = [NSSortDescriptor sortDescriptorWithKey:@"self" ascending:NO];
+    [speedNorm1 sortUsingDescriptors:[NSArray arrayWithObject:highestToLowestSpeed1]];
+    
+    for (int i=0; i<20; i++) {
+        if([[speedNorm1 objectAtIndex:i] floatValue] > THRESHOLD_NORM_SPEED_VECTORS){
+            norm1+= [[speedNorm1 objectAtIndex:i] floatValue];
+            countSpeed1++;
+        }
+    }
+    
+    NSSortDescriptor *highestToLowestSpeed2 = [NSSortDescriptor sortDescriptorWithKey:@"self" ascending:NO];
+    [speedNorm2 sortUsingDescriptors:[NSArray arrayWithObject:highestToLowestSpeed2]];
+    
+    for (int i=0; i<20; i++) {
+        if([[speedNorm2 objectAtIndex:i] floatValue] > THRESHOLD_NORM_SPEED_VECTORS){
+            norm2+= [[speedNorm2 objectAtIndex:i] floatValue];
+            countSpeed2++;
+        }
+    }
+    */
+    
+    //NSLog(@"firstInterval starty: %d firstInterval endy: %d", firstInterval.start.y,firstInterval.end.y);
+    //NSLog(@"firstInterval startx: %d firstInterval endx: %d", firstInterval.start.x,firstInterval.end.x);
     for (NSInteger y=firstInterval.start.y; y<firstInterval.end.y; y++) {
         for (NSInteger x=firstInterval.start.x; x<firstInterval.end.x; x++){
             u1= speed1->data[PXL_IDX(width, x, y)].x;
             v1= speed1->data[PXL_IDX(width, x, y)].y;
             
             float tmpNorm1 = sqrt(u1*u1 + v1*v1);
+            
             if(tmpNorm1 > THRESHOLD_NORM_SPEED_VECTORS){
-                norm1 += tmpNorm1;
-                countSpeed1 ++;
+                //norm1 += tmpNorm1;
+                //countSpeed1 ++;
+                NSNumber * nsNumberTmpNorm1 = [[NSNumber alloc] initWithFloat:tmpNorm1];
+                [speedNorm1 addObject:nsNumberTmpNorm1];
             }
         }
     }
+
+    NSSortDescriptor *highestToLowestSpeed1 = [NSSortDescriptor sortDescriptorWithKey:@"self" ascending:NO];
+    [speedNorm1 sortUsingDescriptors:[NSArray arrayWithObject:highestToLowestSpeed1]];
     
-    NSLog(@"secondInterval starty: %d secondInterval endy: %d", secondInterval.start.y,secondInterval.end.y);
-    NSLog(@"secondInterval startx: %d secondInterval endx: %d", secondInterval.start.x,secondInterval.end.x);
+    //for (int i=0; i<20; i++) {
+    //    NSLog(@"ordered: %.7lf", [[speedNorm1 objectAtIndex:i] floatValue]);
+    //}
+    
+    for (int i=0; i<speedNorm1.count; i++) {
+        if([[speedNorm1 objectAtIndex:i] floatValue] > THRESHOLD_NORM_SPEED_VECTORS){
+            norm1+= [[speedNorm1 objectAtIndex:i] floatValue];
+            countSpeed1++;
+        }
+    }
+    
+    
+    //NSLog(@"secondInterval starty: %d secondInterval endy: %d", secondInterval.start.y,secondInterval.end.y);
+    //NSLog(@"secondInterval startx: %d secondInterval endx: %d", secondInterval.start.x,secondInterval.end.x);
     for (NSInteger y=secondInterval.start.y; y<secondInterval.end.y; y++) {
         for (NSInteger x=secondInterval.start.x; x<secondInterval.end.x; x++){
             u2= speed2->data[PXL_IDX(width, x, y)].x;
@@ -118,8 +240,10 @@
             
             float tmpNorm2 = sqrt(u2*u2 + v2*v2);
             if(tmpNorm2 > THRESHOLD_NORM_SPEED_VECTORS){
-                norm2 += tmpNorm2;
-                countSpeed2++;
+                //norm2 += tmpNorm2;
+                //countSpeed2++;
+                NSNumber * nsNumberTmpNorm2 = [[NSNumber alloc] initWithFloat:tmpNorm2];
+                [speedNorm2 addObject:nsNumberTmpNorm2];
             }
             
             if (tmpNorm2 > THRESHOLD_HISTOGRAM){
@@ -133,6 +257,20 @@
         }
     }
     
+    NSSortDescriptor *highestToLowestSpeed2 = [NSSortDescriptor sortDescriptorWithKey:@"self" ascending:NO];
+    [speedNorm2 sortUsingDescriptors:[NSArray arrayWithObject:highestToLowestSpeed2]];
+    
+     //for (int i=0; i<speedNorm2.count; i++) {
+     //NSLog(@"ordered: %.7lf", [[speedNorm2 objectAtIndex:i] floatValue]);
+     //}
+    
+    for (int i=0; i<speedNorm2.count; i++) {
+        if([[speedNorm2 objectAtIndex:i] floatValue] > THRESHOLD_NORM_SPEED_VECTORS){
+            norm2+= [[speedNorm2 objectAtIndex:i] floatValue];
+            countSpeed2++;
+        }
+    }
+    
     if(countSpeed1 == 0){
         countSpeed1 =1;
     }
@@ -141,7 +279,7 @@
     }
     meanSpeed1 = norm1/countSpeed1;
     meanSpeed2 = norm2/countSpeed2;
-    NSLog(@"meanSpeed2: %lf - meanSpeed1: %lf = %lf", meanSpeed2, meanSpeed1, meanSpeed2-meanSpeed1);
+    //NSLog(@"meanSpeed2: %lf - meanSpeed1: %lf = %lf", meanSpeed2, meanSpeed1, meanSpeed2-meanSpeed1);
     _meanSpeed = meanSpeed2;
     _meanAcceleration = meanSpeed2 - meanSpeed1;
     for (NSInteger i=0; i<360; i++) {

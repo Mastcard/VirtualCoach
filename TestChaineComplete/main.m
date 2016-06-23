@@ -58,12 +58,14 @@ int main(int argc, const char * argv[]) {
             NSNumber *endSequenceImage = (NSNumber *)[[dataEntrysets objectAtIndex:i] objectForKey:@"endSequenceImage"];
             
             NSString *path = [videoDirectory stringByAppendingPathComponent:[NSString stringWithFormat:@"%@-%d-(%d,%d)dataEntrySet4d.txt", videoName, (int)i, startSequenceImage.intValue, endSequenceImage.intValue]];
+            NSString *path2 = [videoDirectory stringByAppendingPathComponent:[NSString stringWithFormat:@"%@-%d-(%d,%d)dataEntrySetSpeedTime.txt", videoName, (int)i, startSequenceImage.intValue, endSequenceImage.intValue]];
             //NSString *pathForKmean = [videoDirectory stringByAppendingPathComponent:[NSString stringWithFormat:@"%@-%d-(%d,%d)kmeanCalculation.txt", videoName, (int)i, startSequenceImage.intValue, endSequenceImage.intValue]];
             
             
             //[entryDataSet writeKmeanDatasetForTestAtPath:path];
             //[kmeanCalculation writeKmeanCalculationForTestAtPath:pathForKmean];
             [dataSetEntry writeKmeanDataset4dForTestAtPath:path];
+            [dataSetEntry writeKmeanDataset2dSpeedTimeForTestAtPath:path2];
         }
         
         NSLog(@"Done!");
