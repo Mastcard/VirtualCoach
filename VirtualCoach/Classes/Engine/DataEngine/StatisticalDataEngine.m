@@ -109,74 +109,64 @@
     NSMutableArray<StatisticalDO*>* searchResultMutableArray = [self fromResultSetToStatisticalDOList:searchResult];
     NSMutableArray<StatisticalDO*>* resultWithAverageByMonth = [[NSMutableArray<StatisticalDO*> alloc] initWithCapacity:12];
     
-    int month = 1;
-    int monthTotalDO = 0;
-    StatisticalDO* finalMonthDO = [[StatisticalDO alloc] init];
-    finalMonthDO.forehandCount = 0;
-    finalMonthDO.backhandCount = 0;
-    finalMonthDO.serviceCount = 0;
-    finalMonthDO.forehandGlobalSuccessRate = 0.0;
-    finalMonthDO.backhandGlobalSuccessRate = 0.0;
-    finalMonthDO.serviceGlobalSuccessRate = 0.0;
-    finalMonthDO.winningRun = 0;
-    finalMonthDO.loosingRun = 0;
-    finalMonthDO.month = month;
+    unsigned long count = [searchResultMutableArray count];
     
-    for (int i = 0; i < [searchResultMutableArray count]; i++) {
+    for (int month = 1; month <= 12; month++) {
+        int monthTotalDO = 0;
+        StatisticalDO* finalMonthDO = [[StatisticalDO alloc] init];
+        finalMonthDO.forehandCount = 0;
+        finalMonthDO.backhandCount = 0;
+        finalMonthDO.serviceCount = 0;
+        finalMonthDO.forehandGlobalSuccessRate = 0.0;
+        finalMonthDO.backhandGlobalSuccessRate = 0.0;
+        finalMonthDO.serviceGlobalSuccessRate = 0.0;
+        finalMonthDO.winningRun = 0;
+        finalMonthDO.loosingRun = 0;
         
-        StatisticalDO* statisticalDO = [searchResultMutableArray objectAtIndex:i];
-        int statisticalMonth = statisticalDO.month;
-        
-        if (statisticalMonth != month) {
-            finalMonthDO.forehandCount /= monthTotalDO;
-            finalMonthDO.backhandCount /= monthTotalDO;
-            finalMonthDO.serviceCount /= monthTotalDO;
-            finalMonthDO.forehandGlobalSuccessRate /= monthTotalDO;
-            finalMonthDO.backhandGlobalSuccessRate /= monthTotalDO;
-            finalMonthDO.serviceGlobalSuccessRate /= monthTotalDO;
-            finalMonthDO.winningRun /= monthTotalDO;
-            finalMonthDO.loosingRun /= monthTotalDO;
+        for (unsigned long i = 0; i < count; i++) {
+            StatisticalDO* currentStatistical = [searchResultMutableArray objectAtIndex:i];
             
-            [resultWithAverageByMonth addObject:finalMonthDO];
-            
-            for (int j = month+1; j < statisticalMonth; j++) {
-                finalMonthDO = [[StatisticalDO alloc] init];
-                finalMonthDO.forehandCount = -1;
-                finalMonthDO.backhandCount = -1;
-                finalMonthDO.serviceCount = -1;
-                finalMonthDO.forehandGlobalSuccessRate = -1.f;
-                finalMonthDO.backhandGlobalSuccessRate = -1.f;
-                finalMonthDO.serviceGlobalSuccessRate = -1.f;
-                finalMonthDO.winningRun = -1;
-                finalMonthDO.loosingRun = -1;
-                finalMonthDO.month = j;
+            if (currentStatistical.month != month) {
+                
+                if (monthTotalDO == 0) {
+                    
+                    finalMonthDO.forehandCount = -1;
+                    finalMonthDO.backhandCount = -1;
+                    finalMonthDO.serviceCount = -1;
+                    finalMonthDO.forehandGlobalSuccessRate = -1.f;
+                    finalMonthDO.backhandGlobalSuccessRate = -1.f;
+                    finalMonthDO.serviceGlobalSuccessRate = -1.f;
+                    finalMonthDO.winningRun = -1;
+                    finalMonthDO.loosingRun = -1;
+                    
+                } else {
+                    finalMonthDO.forehandCount /= monthTotalDO;
+                    finalMonthDO.backhandCount /= monthTotalDO;
+                    finalMonthDO.serviceCount /= monthTotalDO;
+                    finalMonthDO.forehandGlobalSuccessRate /= monthTotalDO;
+                    finalMonthDO.backhandGlobalSuccessRate /= monthTotalDO;
+                    finalMonthDO.serviceGlobalSuccessRate /= monthTotalDO;
+                    finalMonthDO.winningRun /= monthTotalDO;
+                    finalMonthDO.loosingRun /= monthTotalDO;
+                    
+                    monthTotalDO = 0;
+                }
+                
                 [resultWithAverageByMonth addObject:finalMonthDO];
+                i = count;
+                
+            } else {
+                finalMonthDO.forehandCount += currentStatistical.forehandCount;
+                finalMonthDO.backhandCount += currentStatistical.backhandCount;
+                finalMonthDO.serviceCount += currentStatistical.serviceCount;
+                finalMonthDO.forehandGlobalSuccessRate += currentStatistical.forehandGlobalSuccessRate;
+                finalMonthDO.backhandGlobalSuccessRate += currentStatistical.backhandGlobalSuccessRate;
+                finalMonthDO.serviceGlobalSuccessRate += currentStatistical.serviceGlobalSuccessRate;
+                finalMonthDO.winningRun += currentStatistical.winningRun;
+                finalMonthDO.loosingRun += currentStatistical.loosingRun;
+                monthTotalDO++;
             }
-            
-            monthTotalDO = 1;
-            statisticalMonth = month;
-            
-            finalMonthDO = [[StatisticalDO alloc] init];
-            finalMonthDO.forehandCount = 0;
-            finalMonthDO.backhandCount = 0;
-            finalMonthDO.serviceCount = 0;
-            finalMonthDO.forehandGlobalSuccessRate = 0.0;
-            finalMonthDO.backhandGlobalSuccessRate = 0.0;
-            finalMonthDO.serviceGlobalSuccessRate = 0.0;
-            finalMonthDO.winningRun = 0;
-            finalMonthDO.loosingRun = 0;
-            finalMonthDO.month = month;
-        }
-        
-            finalMonthDO.forehandCount += statisticalDO.forehandCount;
-            finalMonthDO.backhandCount += statisticalDO.backhandCount;
-            finalMonthDO.serviceCount += statisticalDO.serviceCount;
-            finalMonthDO.forehandGlobalSuccessRate += statisticalDO.forehandGlobalSuccessRate;
-            finalMonthDO.backhandGlobalSuccessRate += statisticalDO.backhandGlobalSuccessRate;
-            finalMonthDO.serviceGlobalSuccessRate += statisticalDO.serviceGlobalSuccessRate;
-            finalMonthDO.winningRun += statisticalDO.winningRun;
-            finalMonthDO.loosingRun += statisticalDO.loosingRun;
-            monthTotalDO++;
+         }
     }
     
     return resultWithAverageByMonth;
