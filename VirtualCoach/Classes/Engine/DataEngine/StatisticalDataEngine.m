@@ -110,9 +110,11 @@
     NSMutableArray<StatisticalDO*>* resultWithAverageByMonth = [[NSMutableArray<StatisticalDO*> alloc] initWithCapacity:12];
     
     unsigned long count = [searchResultMutableArray count];
+    int monthTotalDO = 0;
     
     for (int month = 1; month <= 12; month++) {
-        int monthTotalDO = 0;
+        monthTotalDO = 0;
+        
         StatisticalDO* finalMonthDO = [[StatisticalDO alloc] init];
         finalMonthDO.forehandCount = 0;
         finalMonthDO.backhandCount = 0;
@@ -126,36 +128,7 @@
         for (unsigned long i = 0; i < count; i++) {
             StatisticalDO* currentStatistical = [searchResultMutableArray objectAtIndex:i];
             
-            if (currentStatistical.month != month) {
-                
-                if (monthTotalDO == 0) {
-                    
-                    finalMonthDO.forehandCount = -1;
-                    finalMonthDO.backhandCount = -1;
-                    finalMonthDO.serviceCount = -1;
-                    finalMonthDO.forehandGlobalSuccessRate = -1.f;
-                    finalMonthDO.backhandGlobalSuccessRate = -1.f;
-                    finalMonthDO.serviceGlobalSuccessRate = -1.f;
-                    finalMonthDO.winningRun = -1;
-                    finalMonthDO.loosingRun = -1;
-                    
-                } else {
-                    finalMonthDO.forehandCount /= monthTotalDO;
-                    finalMonthDO.backhandCount /= monthTotalDO;
-                    finalMonthDO.serviceCount /= monthTotalDO;
-                    finalMonthDO.forehandGlobalSuccessRate /= monthTotalDO;
-                    finalMonthDO.backhandGlobalSuccessRate /= monthTotalDO;
-                    finalMonthDO.serviceGlobalSuccessRate /= monthTotalDO;
-                    finalMonthDO.winningRun /= monthTotalDO;
-                    finalMonthDO.loosingRun /= monthTotalDO;
-                    
-                    monthTotalDO = 0;
-                }
-                
-                [resultWithAverageByMonth addObject:finalMonthDO];
-                i = count;
-                
-            } else {
+            if (currentStatistical.month == month) {
                 finalMonthDO.forehandCount += currentStatistical.forehandCount;
                 finalMonthDO.backhandCount += currentStatistical.backhandCount;
                 finalMonthDO.serviceCount += currentStatistical.serviceCount;
@@ -166,7 +139,34 @@
                 finalMonthDO.loosingRun += currentStatistical.loosingRun;
                 monthTotalDO++;
             }
-         }
+        }
+        
+        NSLog([NSString stringWithFormat:@"%d", monthTotalDO]);
+        
+        if (monthTotalDO == 0) {
+            
+            finalMonthDO.forehandCount = -1;
+            finalMonthDO.backhandCount = -1;
+            finalMonthDO.serviceCount = -1;
+            finalMonthDO.forehandGlobalSuccessRate = -1.f;
+            finalMonthDO.backhandGlobalSuccessRate = -1.f;
+            finalMonthDO.serviceGlobalSuccessRate = -1.f;
+            finalMonthDO.winningRun = -1;
+            finalMonthDO.loosingRun = -1;
+            
+        } else {
+            finalMonthDO.forehandCount /= monthTotalDO;
+            finalMonthDO.backhandCount /= monthTotalDO;
+            finalMonthDO.serviceCount /= monthTotalDO;
+            finalMonthDO.forehandGlobalSuccessRate /= monthTotalDO;
+            finalMonthDO.backhandGlobalSuccessRate /= monthTotalDO;
+            finalMonthDO.serviceGlobalSuccessRate /= monthTotalDO;
+            finalMonthDO.winningRun /= monthTotalDO;
+            finalMonthDO.loosingRun /= monthTotalDO;
+            
+        }
+        
+        [resultWithAverageByMonth addObject:finalMonthDO];
     }
     
     return resultWithAverageByMonth;
