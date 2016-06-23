@@ -52,12 +52,7 @@
     
     NSArray *result = [DatabaseService query:query mode:VCSelectIntegerIndexedResult];
     
-    int desc = -1;
-    
-    if (result.count > 0)
-        desc = (int) [result[0][0] longValue];
-    
-    return desc;
+    return result;
 }
 
 //DELETE

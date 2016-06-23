@@ -110,7 +110,7 @@
     NSInteger currentWeekEndMonth = [components month];
     NSInteger currentWeekEndYear = [components year];
     
-    NSLog(@"_currentWeekStartDay : %ld, _currentWeekEndDay : %ld", _currentWeekStartDay, _currentWeekEndDay);
+    NSLog(@"_currentWeekStartDay : %ld, _currentWeekEndDay : %ld", (long)_currentWeekStartDay, (long)_currentWeekEndDay);
     
     // get the player id here
     int playerId = 1;

@@ -242,7 +242,7 @@
                     
                     NSLog(@"Found motion : %@", foundMotion);
                     
-                    if ([foundMotion isEqualToString:@"service"])
+                    if ([foundMotion isEqualToString:@"serve"])
                         _serviceCount++;
                     
                     if ([foundMotion isEqualToString:@"forehand"])

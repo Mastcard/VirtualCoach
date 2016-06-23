@@ -189,6 +189,7 @@
                                        
                                        dispatch_sync(dispatch_get_main_queue(), ^{
                                            [_trainingView.processVideoProgressView removeFromSuperview];
+                                           [_trainingView.processVideoProgressView.progressView setProgress:0.f];
                                            
                                            NSIndexPath *indexPath = [_trainingView.videosTableView indexPathForCell:parentCell];
                                            
@@ -351,6 +352,9 @@
                                        dispatch_sync(dispatch_get_main_queue(), ^{
                                            
                                            [_trainingView.multipleProcessVideoProgressView removeFromSuperview];
+                                           
+                                           [_trainingView.multipleProcessVideoProgressView.progressView setProgress:0.f];
+                                           [_trainingView.multipleProcessVideoProgressView.globalProgressView setProgress:0.f];
                                            
                                            for (NSUInteger j = 0; j < [_trainingView.videosTableView numberOfRowsInSection:0]; j++)
                                            {
