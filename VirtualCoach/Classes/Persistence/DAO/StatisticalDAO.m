@@ -135,19 +135,17 @@
         query = [query stringByAppendingString:@"' "];
         
         // Month switching
-        query = [query stringByAppendingString:@"and (month='"];
+        query = [query stringByAppendingString:@"and ((month='"];
         query = [query stringByAppendingString:startMonth];
-        query = [query stringByAppendingString:@"' or month='"];
-        query = [query stringByAppendingString:endMonth];
-        query = [query stringByAppendingString:@"') "];
-        
-        // Day switching
-        query = [query stringByAppendingString:@"and (day between '"];
+        query = [query stringByAppendingString:@"' and day between '"];
         query = [query stringByAppendingString:startDay];
-        query = [query stringByAppendingString:@"' and '31' "];
-        query = [query stringByAppendingString:@"or day between '1' and '"];
+        query = [query stringByAppendingString:@"' and '31') "];
+        
+        query = [query stringByAppendingString:@"or (month='"];
+        query = [query stringByAppendingString:endMonth];
+        query = [query stringByAppendingString:@"' and  day between '1' and '"];
         query = [query stringByAppendingString:endDay];
-        query = [query stringByAppendingString:@"')"];
+        query = [query stringByAppendingString:@"'))"];
         
     } else {
         query = [query stringByAppendingString:@"year='"];
@@ -157,19 +155,17 @@
         if (startMonth < endMonth) {
             
             // Month switching
-            query = [query stringByAppendingString:@"(month='"];
+            query = [query stringByAppendingString:@" ((month='"];
             query = [query stringByAppendingString:startMonth];
-            query = [query stringByAppendingString:@"' or month='"];
-            query = [query stringByAppendingString:endMonth];
-            query = [query stringByAppendingString:@"') "];
-            
-            // Day switching
-            query = [query stringByAppendingString:@"and (day between '"];
+            query = [query stringByAppendingString:@"' and day between '"];
             query = [query stringByAppendingString:startDay];
-            query = [query stringByAppendingString:@"' and '31' "];
-            query = [query stringByAppendingString:@"or day between '1' and '"];
+            query = [query stringByAppendingString:@"' and '31') "];
+            
+            query = [query stringByAppendingString:@" or (month='"];
+            query = [query stringByAppendingString:endMonth];
+            query = [query stringByAppendingString:@"' and  day between '1' and '"];
             query = [query stringByAppendingString:endDay];
-            query = [query stringByAppendingString:@"')"];
+            query = [query stringByAppendingString:@"'))"];
             
         } else {
             query = [query stringByAppendingString:@"month='"];
