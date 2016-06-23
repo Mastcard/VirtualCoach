@@ -504,7 +504,7 @@
     
     NSArray *statsAfterUpdate = [_stat allStatistical];
     
-    NSLog(@"%@", statsAfterUpdate);
+    NSLog(@"After updates : %@", statsAfterUpdate);
     
     /*********************************************TEST Delete****************************************************/
     //delete coachplayer
