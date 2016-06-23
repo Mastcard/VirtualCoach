@@ -102,6 +102,7 @@
     query = [query stringByAppendingString:idPlayer];
     query = [query stringByAppendingString:@"' order by month;"];
     
+    NSLog(@"Query : %@", query);
     NSArray * result =[[NSArray alloc]init];
     result = [DatabaseService query:query mode:VCSelectIntegerIndexedResult];
     
@@ -126,7 +127,12 @@
     query = [query stringByAppendingString:playerId];
     query = [query stringByAppendingString:@"' and "];
     
-    if (startYear < endYear) {
+    int intStartYear = [startYear intValue];
+    int intEndYear = [endYear intValue];
+    int intStartMonth = [startMonth intValue];
+    int intEndMonth = [endMonth intValue];
+    
+    if (intStartYear < intEndYear) {
         // Year switching
         query = [query stringByAppendingString:@"year between '"];
         query = [query stringByAppendingString:startYear];
@@ -147,12 +153,34 @@
         query = [query stringByAppendingString:endDay];
         query = [query stringByAppendingString:@"'))"];
         
+    } else if (intEndYear < intStartYear) {
+        
+        // Year switching
+        query = [query stringByAppendingString:@"year between '"];
+        query = [query stringByAppendingString:endYear];
+        query = [query stringByAppendingString:@"' and '"];
+        query = [query stringByAppendingString:startYear];
+        query = [query stringByAppendingString:@"' "];
+        
+        // Month switching
+        query = [query stringByAppendingString:@"and ((month='"];
+        query = [query stringByAppendingString:endMonth];
+        query = [query stringByAppendingString:@"' and day between '"];
+        query = [query stringByAppendingString:endDay];
+        query = [query stringByAppendingString:@"' and '31') "];
+        
+        query = [query stringByAppendingString:@"or (month='"];
+        query = [query stringByAppendingString:startMonth];
+        query = [query stringByAppendingString:@"' and  day between '1' and '"];
+        query = [query stringByAppendingString:startDay];
+        query = [query stringByAppendingString:@"'))"];
+        
     } else {
         query = [query stringByAppendingString:@"year='"];
         query = [query stringByAppendingString:startYear];
         query = [query stringByAppendingString:@"' and "];
         
-        if (startMonth < endMonth) {
+        if (intStartMonth < intEndMonth) {
             
             // Month switching
             query = [query stringByAppendingString:@" ((month='"];
@@ -165,6 +193,21 @@
             query = [query stringByAppendingString:endMonth];
             query = [query stringByAppendingString:@"' and  day between '1' and '"];
             query = [query stringByAppendingString:endDay];
+            query = [query stringByAppendingString:@"'))"];
+            
+        } else if (intStartMonth > intEndMonth) {
+            
+            // Month switching
+            query = [query stringByAppendingString:@" ((month='"];
+            query = [query stringByAppendingString:endMonth];
+            query = [query stringByAppendingString:@"' and day between '"];
+            query = [query stringByAppendingString:endDay];
+            query = [query stringByAppendingString:@"' and '31') "];
+            
+            query = [query stringByAppendingString:@" or (month='"];
+            query = [query stringByAppendingString:startMonth];
+            query = [query stringByAppendingString:@"' and  day between '1' and '"];
+            query = [query stringByAppendingString:startDay];
             query = [query stringByAppendingString:@"'))"];
             
         } else {
