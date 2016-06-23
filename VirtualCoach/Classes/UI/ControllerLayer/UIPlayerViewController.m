@@ -58,6 +58,9 @@
         [_playerView.trainingsTableView setDelegate:self];
         [_playerView.trainingsTableView setDataSource:self];
         
+        [_playerView.addPlayerButton addTarget:self action:@selector(addPlayerButtonAction) forControlEvents:UIControlEventTouchUpInside];
+        [_playerView.addPlayerWizardView.okButton addTarget:self action:@selector(addPlayerWizardButtonAction) forControlEvents:UIControlEventTouchUpInside];
+        
         self.view = _playerView;
         
         self.navigationItem.title = @"Players";
@@ -711,8 +714,6 @@
                 NSDate *nextStartDate = [startAndEndOfWeekDates objectForKey:@"startDate"];
                 NSDate *nextEndDate = [startAndEndOfWeekDates objectForKey:@"endDate"];
                 
-                NSLog(@"nextStartDate : %@, nextEndDate : %@", nextStartDate, nextEndDate);
-                
                 NSDateComponents *components = [[NSCalendar currentCalendar] components:NSCalendarUnitDay | NSCalendarUnitMonth | NSCalendarUnitYear fromDate:nextStartDate];
                 _currentYear = [components year];
                 _currentMonth = [components month];
@@ -725,8 +726,6 @@
                 NSInteger currentWeekEndYear = [components year];
                 
                 coordinateSystemTitle = [NSString stringWithFormat:@"%@ - %@", [DateUtilities stringWithDate:nextStartDate], [DateUtilities stringWithDate:nextEndDate]];
-                
-                NSLog(@"nextStartDate : %@, nextEndDate : %@", nextStartDate, nextEndDate);
                 
                 _statistics = [statsDataEngine searchFromDay:(int)_currentWeekStartDay andMonth:(int)currentWeekStartMonth andYear:(int)currentWeekStartYear toDay:(int)_currentWeekEndDay andMonth:(int)currentWeekEndMonth andYear:(int)currentWeekEndYear forPlayerId:1];
             }
@@ -874,6 +873,20 @@
         
         [_playerView.coordinateSystemView draw];
     }
+}
+
+- (void)addPlayerButtonAction
+{
+    NSLog(@"addPlayerButtonAction");
+    [_playerView addSubview:_playerView.addPlayerWizardView alignment:UIViewCentered];
+}
+
+- (void)addPlayerWizardButtonAction
+{
+    // do whatever
+    
+    
+    [_playerView.addPlayerWizardView removeFromSuperview];
 }
 
 @end

@@ -42,6 +42,8 @@
         
         _addPlayerButton = [[UIBaseButton alloc] init];
         _removePlayerButton = [[UIBaseButton alloc] init];
+        
+        _addPlayerWizardView = [[UINewElementWizardView alloc] init];
     }
     
     return self;
@@ -265,11 +267,22 @@
     [removeSelectedPlayerButtonTitle addAttribute:NSForegroundColorAttributeName value:[UIColor colorWithRed:(252 / 255.f) green:(61 / 255.f) blue:(57 / 255.f) alpha:1.f] range:NSMakeRange(0, [removeSelectedPlayerButtonTitle length])];
     
     [_removePlayerButton setAttributedTitle:removeSelectedPlayerButtonTitle forState:UIControlStateNormal];
+    
+    
+    CGSize addPlayerWizardViewSize = CGSizeMake(350, 150);
+    CGPoint addPlayerWizardViewOrigin = CGPointMake(0, 0);
+    
+    [_addPlayerWizardView setFrame:CGRectMake(addPlayerWizardViewOrigin.x, addPlayerWizardViewOrigin.y, addPlayerWizardViewSize.width, addPlayerWizardViewSize.height)];
+    [_addPlayerWizardView.wizardTitleLabel setText:@"New Player"];
+    [_addPlayerWizardView.elementNameLabel setText:@"Player name:"];
+    
 }
 
 - (void)layout
 {
     [super layout];
+    
+    [_addPlayerWizardView layout];
     
     [self prepareForUse];
     

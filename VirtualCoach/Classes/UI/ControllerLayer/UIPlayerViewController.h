@@ -39,4 +39,7 @@
 - (void)twoFingerPinchOnCurveView:(UIPinchGestureRecognizer *)pinchGestureRecognizer;
 - (void)swipeGestureRecognizerOnCurveView:(UISwipeGestureRecognizer *)swipeGestureRecognizer;
 
+- (void)addPlayerButtonAction;
+- (void)addPlayerWizardButtonAction;
+
 @end
