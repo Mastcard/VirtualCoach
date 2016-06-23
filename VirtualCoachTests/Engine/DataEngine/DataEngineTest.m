@@ -125,5 +125,6 @@
     
     NSMutableArray<StatisticalDO*>* result = [_statisticalEngine searchByYear:2016 andPlayerId:1];
     XCTAssertEqual(12, [result count]);
+    XCTAssertNotNil([result objectAtIndex:0]);
 }
 @end
