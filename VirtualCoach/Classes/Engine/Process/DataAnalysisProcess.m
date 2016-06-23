@@ -55,7 +55,6 @@
 @property (nonatomic, assign) NSUInteger forehandCount;
 @property (nonatomic, assign) NSUInteger backhandCount;
 
-
 @property (nonatomic, assign) int sequenceImageStart;
 @property (nonatomic, assign) int sequenceImageEnd;
 
@@ -133,7 +132,6 @@
     {
         //temp
         _count++;
-        
         NSDictionary *imageDict = [_videoTrakingAnalysisInformations objectAtIndex:_videoTrakingAnalysisInformationsIndex];
         
         NSNumber *imageId = [imageDict objectForKey:@"imageId"];
@@ -190,7 +188,7 @@
                             speedVectors->data[idx].y = (_secondFrame->data[idx] > _binaryThreshold) * z;
                         }
                     }
-                     
+                    
                     if (_firstSpeedVectorArray == NULL)
                     {
                         _firstSpeedVectorArray = speedVectors;
@@ -200,16 +198,8 @@
                     {
                         _secondSpeedVectorArray = speedVectors;
                         
-                        //[_entryDataset addKmeanEntryToDataSetFromFirstSpeedVectorsTab:_firstSpeedVectorArray andSecondSpeedVectorsTab:_secondSpeedVectorArray betweenInterval:_secondFrameBounds andWithImageWidth:src->width];
-                        NSLog(@"in dataAnalysis process for kmean _firstFrameBounds starty: %d _firstFrameBounds endy: %d", _firstFrameBounds.start.y,_firstFrameBounds.end.y);
-                        NSLog(@"in dataAnalysis process for kmean _firstFrameBounds startx: %d _firstFrameBounds endx: %d", _firstFrameBounds.start.x,_firstFrameBounds.end.x);
-                        NSLog(@"in dataAnalysis process for kmean _secondFrameBounds starty: %d _secondFrameBounds endy: %d", _secondFrameBounds.start.y,_secondFrameBounds.end.y);
-                        NSLog(@"in dataAnalysis process for kmean _secondFrameBounds startx: %d _secondFrameBounds endx: %d", _secondFrameBounds.start.x,_secondFrameBounds.end.x);
-                        
                         [_entryDataset addKmeanEntryToDataSetFromFirstSpeedVectorsTab:_firstSpeedVectorArray betweenFirstInterval:_firstFrameBounds andSecondSpeedVectorsTab:_secondSpeedVectorArray betweenSecondInterval:_secondFrameBounds andWithImageWidth:src->width];
-                        
-                        NSLog(@"in dataAnalysis process for histogram _firstFrameBounds starty: %d _firstFrameBounds endy: %d", _firstFrameBounds.start.y,_firstFrameBounds.end.y);
-                        NSLog(@"in dataAnalysis process for histogram _firstFrameBounds startx: %d _firstFrameBounds endx: %d", _firstFrameBounds.start.x,_firstFrameBounds.end.x);
+
                         [_histogram generateHistogramFromSpeedVector:_firstSpeedVectorArray betweenInterval:_firstFrameBounds andWithImageWidth:src->width];
                         
                         vect2darrfree(_firstSpeedVectorArray);
@@ -277,7 +267,7 @@
             if (_videoTrakingAnalysisInformationsIndex  < _videoTrakingAnalysisInformations.count-1)
                 _videoTrakingAnalysisInformationsIndex++;
         }
-        /*
+        
          NSUInteger rate = (NSUInteger)(_frameCount / 100);
          
          if (_count % rate == 0)
@@ -285,7 +275,7 @@
          [_delegate didUpdateStatusWithProgress:0.0025 message:[NSString stringWithFormat:@"Analyzing motions.. (%lu / %lu)", (unsigned long)_count, (unsigned long)_frameCount]];
          NSLog(@"%@", [NSString stringWithFormat:@"Analyzing motions.. (%lu / %lu)", (unsigned long)_count, (unsigned long)_frameCount]);
          }
-         */
+         
     }
 }
 

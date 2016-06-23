@@ -79,7 +79,7 @@
         
         for (NSInteger i =0; i<_data.count; i++) {
             
-            NSString *line = [NSString stringWithFormat:@"%ld %@\n", (long)i,[_data objectAtIndex:i]];
+            NSString *line = [NSString stringWithFormat:@"%ld:%@\n", (long)i,[_data objectAtIndex:i]];
             const char * lineChar = line.UTF8String;
             fputs(lineChar, fichier);
         }

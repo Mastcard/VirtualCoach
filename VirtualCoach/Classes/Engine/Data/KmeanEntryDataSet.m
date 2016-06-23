@@ -36,7 +36,7 @@
     _datacount ++;
     _time++;
     entry.time = _time;
-    NSLog(@"time: %d", entry.time);
+    //NSLog(@"time: %d", entry.time);
     
 }
 
@@ -48,7 +48,7 @@
     _datacount ++;
     _time++;
     entry.time = _time;
-    NSLog(@"time: %d", entry.time);
+    //NSLog(@"time: %d", entry.time);
 }
 
 -(void)encodeWithCoder:(NSCoder *)aCoder
