@@ -10,6 +10,19 @@
 
 @implementation CoachDO
 
+- (instancetype)init
+{
+    self = [super init];
+    
+    if (self)
+    {
+        _players = [[NSMutableArray<PlayerDO*>  alloc] init];
+        _referenceVideos = [[NSMutableArray<ReferenceVideoDO*> alloc] init];
+    }
+    
+    return self;
+}
+
 -(instancetype)initWithCoachId:(int)coachId andName:(NSString*)name andFirstName:(NSString*)firstName andLogin:(NSString*)login andPassword:(NSString*)password andLeftHanded:(bool)leftHanded andPlayers:(NSMutableArray<PlayerDO*>*)players andReferenceVideos:(NSMutableArray<ReferenceVideoDO*>*)referenceVideos {
     
     self = [super init];

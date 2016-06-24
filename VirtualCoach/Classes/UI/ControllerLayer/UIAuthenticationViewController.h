@@ -11,6 +11,7 @@
 #import "UIAuthenticationView.h"
 #import "UIApplicationNavigationViewController.h"
 #import "CoachDataEngine.h"
+#import "CoachDO.h"
 #import "Variables.h"
 
 @interface UIAuthenticationViewController : UIBaseViewController

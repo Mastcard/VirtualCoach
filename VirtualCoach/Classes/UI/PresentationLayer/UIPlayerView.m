@@ -269,7 +269,7 @@
     [_removePlayerButton setAttributedTitle:removeSelectedPlayerButtonTitle forState:UIControlStateNormal];
     
     
-    CGSize addPlayerWizardViewSize = CGSizeMake(350, 150);
+    CGSize addPlayerWizardViewSize = CGSizeMake(350, 170);
     CGPoint addPlayerWizardViewOrigin = CGPointMake(0, 0);
     
     [_addPlayerWizardView setFrame:CGRectMake(addPlayerWizardViewOrigin.x, addPlayerWizardViewOrigin.y, addPlayerWizardViewSize.width, addPlayerWizardViewSize.height)];
@@ -285,8 +285,11 @@
     
     [_addPlayerWizardView layout];
     
-    [_addPlayerWizardView.wizardTitleLabel setText:@"New Player"];
-    [_addPlayerWizardView.elementNameLabel setText:@"Player name:"];
+    [_addPlayerWizardView setWizardTitle:@"New player"];
+    [_addPlayerWizardView setElementNameText:@"Player name:"];
+    
+    [_addPlayerWizardView addSubview:_addPlayerWizardView.wizardTitleLabel alignment:UIViewCenteredOnX];
+    [_addPlayerWizardView addSubview:_addPlayerWizardView.elementNameLabel];
     
     [self addSubview:_playersPaneLabel];
     [self addSubview:_playersTableView];

@@ -16,6 +16,7 @@
 #import "StatisticalDataEngine.h"
 #import "NSOrderedDictionary.h"
 #import "StatisticalDataEngineTools.h"
+#import "Variables.h"
 
 #define CURVE_DATA_PICKERVIEW_TAG 1
 #define CURVE_PERIOD_PICKERVIEW_TAG 2
@@ -41,5 +42,7 @@
 
 - (void)addPlayerButtonAction;
 - (void)addPlayerWizardButtonAction;
+
+- (void)removePlayerButtonAction;
 
 @end

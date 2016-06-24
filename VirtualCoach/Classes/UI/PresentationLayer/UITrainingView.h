@@ -11,6 +11,7 @@
 #import "UIBaseButton.h"
 #import "UIProcessProgressView.h"
 #import "UIMultipleProcessProgressView.h"
+#import "UINewElementWizardView.h"
 
 #import <Quartzcore/QuartzCore.h>
 
@@ -32,6 +33,8 @@
 
 @property (nonatomic, strong) UIBaseButton *addPlayerToTrainingButton;
 @property (nonatomic, strong) UIBaseButton *removeSelectedPlayerButton;
+
+@property (nonatomic, strong) UINewElementWizardView *addPlayerToTrainingWizardView;
 
 @property (nonatomic, strong) UIBaseButton *processAllVideosButton;
 @property (nonatomic, strong) UIBaseButton *watchSelectedVideoButton;

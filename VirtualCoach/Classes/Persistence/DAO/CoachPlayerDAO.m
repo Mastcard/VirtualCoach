@@ -49,8 +49,9 @@
     query = [query stringByAppendingString:idCoach];
     query = [query stringByAppendingString:@"';"];
     
-    NSArray * result =[[NSArray alloc]init];
-    result = [DatabaseService query:query mode:VCSelectIntegerIndexedResult];
+    NSLog(@"query searchId : %@", query);
+    
+    NSArray *result = [DatabaseService query:query mode:VCSelectIntegerIndexedResult];
     
     return result;
 }

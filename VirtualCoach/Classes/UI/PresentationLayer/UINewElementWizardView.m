@@ -62,11 +62,8 @@
     [elementLabelText addAttribute:NSForegroundColorAttributeName
                                  value:[UIColor whiteColor]
                                  range:NSMakeRange(0, elementLabelText.length)];
-    [elementLabelText addAttribute:NSFontAttributeName value:[UIFont systemFontOfSize:18.f] range:NSMakeRange(0, elementLabelText.length)];
+    [elementLabelText addAttribute:NSFontAttributeName value:[UIFont systemFontOfSize:15.f] range:NSMakeRange(0, elementLabelText.length)];
     [_elementNameLabel setAttributedText:elementLabelText];
-    
-    CGPoint okAccountButtonOrigin = CGPointMake(0, elementLabelPosition.y + elementLabelSize.height + defaultMargin);
-    CGSize okAccountButtonSize = CGSizeMake(120, 40);
     
     CGSize elementTextFieldSize = CGSizeMake((self.frame.size.width / 2) - (defaultMargin * 3), 40);
     CGPoint elementTextFieldPosition = CGPointMake(elementLabelPosition.x + elementLabelSize.height + defaultMargin, elementLabelPosition.y);
@@ -76,6 +73,9 @@
     [_elementNameTextField setTextColor:[UIColor whiteColor]];
     _elementNameTextField.layer.cornerRadius = 8.0f;
     _elementNameTextField.layer.masksToBounds = YES;
+    
+    CGPoint okAccountButtonOrigin = CGPointMake(0, elementTextFieldPosition.y + elementTextFieldSize.height + defaultMargin);
+    CGSize okAccountButtonSize = CGSizeMake(120, 40);
     
     [_okButton setFrame:CGRectMake(okAccountButtonOrigin.x, okAccountButtonOrigin.y, okAccountButtonSize.width, okAccountButtonSize.height)];
     _okButton.backgroundColor = [UIColor colorWithRed:(0 / 255.f) green:(122 / 255.f) blue:(255 / 255.f) alpha:1.f];
@@ -96,8 +96,6 @@
     
     [self prepareForUse];
     
-    [self addSubview:_wizardTitleLabel alignment:UIViewCenteredOnX];
-    [self addSubview:_elementNameLabel];
     [self addSubview:_elementNameTextField];
     [self addSubview:_okButton alignment:UIViewCenteredOnX];
 }
@@ -105,6 +103,30 @@
 - (void)prepareForUse
 {
     [self prepareView];
+}
+
+- (void)setWizardTitle:(NSString *)title
+{
+    NSMutableAttributedString *coordinateSystemTitleText = [[NSMutableAttributedString alloc] initWithString:title];
+    [coordinateSystemTitleText addAttribute:NSFontAttributeName
+                                      value:[UIFont systemFontOfSize:20.0]
+                                      range:NSMakeRange(0, [coordinateSystemTitleText length])];
+    [coordinateSystemTitleText addAttribute:NSForegroundColorAttributeName value:[UIColor whiteColor] range:NSMakeRange(0, [coordinateSystemTitleText length])];
+    
+    [_wizardTitleLabel setAttributedText:coordinateSystemTitleText];
+    
+    [_wizardTitleLabel sizeToFit];
+}
+
+- (void)setElementNameText:(NSString *)title
+{
+    NSMutableAttributedString *coordinateSystemTitleText = [[NSMutableAttributedString alloc] initWithString:title];
+    [coordinateSystemTitleText addAttribute:NSFontAttributeName
+                                      value:[UIFont systemFontOfSize:18.0]
+                                      range:NSMakeRange(0, [coordinateSystemTitleText length])];
+    [coordinateSystemTitleText addAttribute:NSForegroundColorAttributeName value:[UIColor whiteColor] range:NSMakeRange(0, [coordinateSystemTitleText length])];
+    
+    [_elementNameLabel setAttributedText:coordinateSystemTitleText];
 }
 
 @end

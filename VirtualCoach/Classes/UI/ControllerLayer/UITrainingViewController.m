@@ -38,6 +38,9 @@
         [_trainingView.processAllVideosButton addTarget:self action:@selector(processAllVideosButtonAction) forControlEvents:UIControlEventTouchUpInside];
         [_trainingView.recordingViewButton addTarget:self action:@selector(recordingViewButtonAction) forControlEvents:UIControlEventTouchUpInside];
         
+        [_trainingView.addPlayerToTrainingButton addTarget:self action:@selector(addPlayerToTrainingButtonAction) forControlEvents:UIControlEventTouchUpInside];
+        [_trainingView.addPlayerToTrainingWizardView.okButton addTarget:self action:@selector(addPlayerToTrainingOkButtonAction) forControlEvents:UIControlEventTouchUpInside];
+        
         self.view = _trainingView;
         
         self.navigationItem.title = @"Trainings";
@@ -645,6 +648,16 @@
             }
         });
     }
+}
+
+- (void)addPlayerToTrainingButtonAction
+{
+    [_trainingView addSubview:_trainingView.addPlayerToTrainingWizardView alignment:UIViewCentered];
+}
+
+- (void)addPlayerToTrainingOkButtonAction
+{
+    [_trainingView.addPlayerToTrainingWizardView removeFromSuperview];
 }
 
 @end

@@ -120,10 +120,10 @@
     
     if ([searchResult count] > 0) {
         int coachId = [[[searchResult objectAtIndex:0] objectAtIndex:0] intValue];
-        NSString* coachName = [[[searchResult objectAtIndex:1] objectAtIndex:0] stringValue];
-        NSString* coachFirstName = [[[searchResult objectAtIndex:2] objectAtIndex:0] stringValue];
-        NSString* coachLogin = [[[searchResult objectAtIndex:3] objectAtIndex:0] stringValue];
-        NSString* coachPassword = [[[searchResult objectAtIndex:4] objectAtIndex:0] stringValue];
+        NSString* coachName = [[searchResult objectAtIndex:1] objectAtIndex:0];
+        NSString* coachFirstName = [[searchResult objectAtIndex:2] objectAtIndex:0];
+        NSString* coachLogin = [[searchResult objectAtIndex:3] objectAtIndex:0];
+        NSString* coachPassword = [[searchResult objectAtIndex:4] objectAtIndex:0];
         bool leftHanded = [[[searchResult objectAtIndex:5] objectAtIndex:0] boolValue];
         
         coach.coachId = coachId;
@@ -132,6 +132,30 @@
         coach.login = coachLogin;
         coach.password = coachPassword;
         coach.leftHanded = leftHanded;
+        
+        // get all coach players
+        
+        PlayerDAO *playerDAO = [[PlayerDAO alloc] init];
+        CoachPlayerDAO *coachPlayerDAO = [[CoachPlayerDAO alloc] init];
+        PlayerDO *playerDO;
+        
+        NSString * coachIdString = [NSString stringWithFormat:@"%d", coachId];
+        NSArray *playesId = [coachPlayerDAO searchIdPlayersByCoach:coachIdString];
+        
+        for (int p=0; p<[playesId[0] count]; p++)
+        {
+            NSString *idPlayer = [playesId[0][p] stringValue];
+            
+            NSArray *onePlayer = [playerDAO searchPlayerById:idPlayer];
+            
+            bool leftHanded = YES;
+            
+            if([onePlayer[3][0] intValue] == 1)
+                leftHanded = NO;
+            
+            playerDO = [[PlayerDO alloc] initWithId:[playesId[0][p] intValue] andName:onePlayer[1][0] andFirstName:onePlayer[2][0] andLeftHanded:leftHanded andStatistics:nil andTrophies:nil level:onePlayer[4][0]];
+            [coach.players addObject:playerDO];
+        }
     }
     
     return coach;

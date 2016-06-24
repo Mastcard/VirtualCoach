@@ -36,25 +36,27 @@
 {
     // set loginSuccess depending on authtication result
     
-//    CoachDataEngine *coachDataEngine = [[CoachDataEngine alloc] init];
-//    
-//    NSString *login = [_authenticationView.credentialsView.usernameTextField.text stringByTrimmingCharactersInSet:[NSCharacterSet whitespaceCharacterSet]];
-//    
-//    NSString *password = [_authenticationView.credentialsView.passwordTextField.text stringByTrimmingCharactersInSet:[NSCharacterSet whitespaceCharacterSet]];
+    CoachDataEngine *coachDataEngine = [[CoachDataEngine alloc] init];
     
-//    int coachId = [coachDataEngine selectCoachByLogin:login password:password];
+    NSString *login = [_authenticationView.credentialsView.usernameTextField.text stringByTrimmingCharactersInSet:[NSCharacterSet whitespaceCharacterSet]];
     
-    BOOL loginSuccess = YES;// we have to set it to NO
+    NSString *password = [_authenticationView.credentialsView.passwordTextField.text stringByTrimmingCharactersInSet:[NSCharacterSet whitespaceCharacterSet]];
     
-//    if (coachId > 0)
-//    {
-//        loginSuccess = YES;
-//        
-//        NSString *coachFirstName = [coachDataEngine coachFirstNameWithId:coachId];
-//        
-//        [[Variables dictionary] setObject:[NSNumber numberWithBool:YES] forKey:kConnected];
-//        [[Variables dictionary] setObject:[NSNumber numberWithInt:coachId] forKey:kConnectedUser];
-//    }
+    CoachDO *coachDO = nil;
+    
+    if (![login isEqualToString:@""] && ![password isEqualToString:@""]) {
+        coachDO = [coachDataEngine searchByLogin:login password:password];
+    }
+    
+    BOOL loginSuccess = NO;
+    
+    if (coachDO)
+    {
+        loginSuccess = YES;
+        
+        [[Variables dictionary] setObject:[NSNumber numberWithBool:YES] forKey:kConnected];
+        [[Variables dictionary] setObject:coachDO forKey:kConnectedUser];
+    }
     
     if (loginSuccess)
     {

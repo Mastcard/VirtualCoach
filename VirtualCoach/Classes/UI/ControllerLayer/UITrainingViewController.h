@@ -35,5 +35,7 @@
 - (void)processAllVideosButtonAction;
 - (void)recordingViewButtonAction;
 - (void)playVideoButtonAction:(UIBaseButton *)sender;
+- (void)addPlayerToTrainingButtonAction;
+- (void)addPlayerToTrainingOkButtonAction;
 
 @end

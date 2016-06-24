@@ -18,4 +18,7 @@
 @property (nonatomic, strong) UIBaseTextField *elementNameTextField;
 @property (nonatomic, strong) UIBaseButton *okButton;
 
+- (void)setWizardTitle:(NSString *)title;
+- (void)setElementNameText:(NSString *)title;
+
 @end

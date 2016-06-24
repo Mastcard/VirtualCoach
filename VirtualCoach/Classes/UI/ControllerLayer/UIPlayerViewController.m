@@ -60,6 +60,7 @@
         
         [_playerView.addPlayerButton addTarget:self action:@selector(addPlayerButtonAction) forControlEvents:UIControlEventTouchUpInside];
         [_playerView.addPlayerWizardView.okButton addTarget:self action:@selector(addPlayerWizardButtonAction) forControlEvents:UIControlEventTouchUpInside];
+        [_playerView.removePlayerButton addTarget:self action:@selector(removePlayerButtonAction) forControlEvents:UIControlEventTouchUpInside];
         
         self.view = _playerView;
         
@@ -152,6 +153,12 @@
     
     _trainingsTableViewData = [NSMutableArray arrayWithObjects:@"Training1", @"Training2", @"Training3", @"Training4", @"Training5", @"Training6", @"Training7", @"Training8", @"Training9", @"Training10", @"Training11", @"Training12", nil];
     _playersTableViewData = [NSMutableArray arrayWithObjects:@"Joe", @"David", @"Luke", @"Steve P", @"Jeffrey", nil];
+    
+    
+    CoachDO *coachDO = [[Variables dictionary] objectForKey:kConnectedUser];
+    
+    
+    
     
     _curvesViewPinchGestureRecognizer = [[UIPinchGestureRecognizer alloc] initWithTarget:self action:@selector(twoFingerPinchOnCurveView:)];
     _curvesViewPinchGestureRecognizer.scale = 1;
@@ -434,30 +441,16 @@
     
     else if (tableView.tag == PLAYERS_TABLEVIEW_TAG)
     {
-        NSDictionary *attributes = [(NSAttributedString *)_playerView.playerNameLabel.attributedText attributesAtIndex:0 effectiveRange:NULL];
-        _playerView.playerNameLabel.attributedText = [[NSAttributedString alloc] initWithString:cellText attributes:attributes];
+        CoachDO *coachDO = [[Variables dictionary] objectForKey:kConnectedUser];
         
-        NSDate *selectedDate = [DateUtilities dateWithYear:_currentYear month:_currentMonth day:_currentDay];
+        NSDictionary *attributesPlayerNameLabel = [(NSAttributedString *)_playerView.playerNameLabel.attributedText attributesAtIndex:0 effectiveRange:NULL];
+        _playerView.playerNameLabel.attributedText = [[NSAttributedString alloc] initWithString:((PlayerDO *)[coachDO.players objectAtIndex:indexPath.row]).name attributes:attributesPlayerNameLabel];
         
-        NSDictionary *weekStartAndEndDates = [DateUtilities startAndEndDateOfWeekForDate:selectedDate];
+        NSDictionary *playerFirstNameAttributes = [(NSAttributedString *)_playerView.playerFirstNameLabel.attributedText attributesAtIndex:0 effectiveRange:NULL];
+        _playerView.playerFirstNameLabel.attributedText = [[NSAttributedString alloc] initWithString:((PlayerDO *)[coachDO.players objectAtIndex:indexPath.row]).firstName attributes:playerFirstNameAttributes];
         
-        NSDate *startDate = [weekStartAndEndDates objectForKey:@"startDate"];
-        NSDate *endDate = [weekStartAndEndDates objectForKey:@"endDate"];
-        
-        NSDateComponents *components = [[NSCalendar currentCalendar] components:NSCalendarUnitDay | NSCalendarUnitMonth | NSCalendarUnitYear fromDate:startDate];
-        _currentWeekStartDay = [components day];
-        NSInteger currentWeekStartMonth = [components month];
-        NSInteger currentWeekStartYear = [components year];
-        components = [[NSCalendar currentCalendar] components:NSCalendarUnitDay | NSCalendarUnitMonth | NSCalendarUnitYear fromDate:endDate];
-        _currentWeekEndDay = [components day];
-        NSInteger currentWeekEndMonth = [components month];
-        NSInteger currentWeekEndYear = [components year];
-        
-        int playerId = 1;
-        
-        StatisticalDataEngine *statsDataEngine = [[StatisticalDataEngine alloc] init];
-        
-        _statistics = [statsDataEngine searchFromDay:(int)_currentWeekStartDay andMonth:(int)currentWeekStartMonth andYear:(int)currentWeekStartYear toDay:(int)_currentWeekEndDay andMonth:(int)currentWeekEndMonth andYear:(int)currentWeekEndYear forPlayerId:playerId];
+        NSDictionary *playerLevelAttributes = [(NSAttributedString *)_playerView.playerLevelLabel.attributedText attributesAtIndex:0 effectiveRange:NULL];
+        _playerView.playerLevelLabel.attributedText = [[NSAttributedString alloc] initWithString:((PlayerDO *)[coachDO.players objectAtIndex:indexPath.row]).level attributes:playerLevelAttributes];
     }
 }
 
@@ -474,7 +467,12 @@
         numberOfRows = _trainingsTableViewData.count;
     
     else if (tableView.tag == PLAYERS_TABLEVIEW_TAG)
-        numberOfRows = _playersTableViewData.count;
+    {
+        CoachDO *coachDO = [[Variables dictionary] objectForKey:kConnectedUser];
+//        numberOfRows = _playersTableViewData.count;
+        numberOfRows = coachDO.players.count;
+    }
+    
     
     return numberOfRows;
 }
@@ -506,7 +504,10 @@
     
     else if (tableView.tag == PLAYERS_TABLEVIEW_TAG)
     {
-        [cell.textLabel setText:[_playersTableViewData objectAtIndex:indexPath.row]];
+        CoachDO *coachDO = [[Variables dictionary] objectForKey:kConnectedUser];
+        
+        //[cell.textLabel setText:[_playersTableViewData objectAtIndex:indexPath.row]];
+        [cell.textLabel setText:((PlayerDO *)[coachDO.players objectAtIndex:indexPath.row]).firstName];
     }
     
     
@@ -884,9 +885,26 @@
 - (void)addPlayerWizardButtonAction
 {
     // do whatever
+    NSString *playerName = _playerView.addPlayerWizardView.elementNameTextField.text;
     
+    PlayerDO *newPlayerDO = [[PlayerDO alloc] initWithId:5 andName:@"" andFirstName:playerName andLeftHanded:false andStatistics:nil andTrophies:nil level:@"Dummy"];
+    
+    CoachDO *coachDO = [[Variables dictionary] objectForKey:kConnectedUser];
+    
+    [coachDO.players addObject:newPlayerDO];
+    
+    [_playerView.playersTableView reloadData];
     
     [_playerView.addPlayerWizardView removeFromSuperview];
+}
+
+- (void)removePlayerButtonAction
+{
+    NSIndexPath *selectedIndexPath = [_playerView.playersTableView indexPathForSelectedRow];
+    
+    UITableViewCell *cell = [_playerView.playersTableView cellForRowAtIndexPath:selectedIndexPath];
+    
+    NSLog(@"Remove %@", cell.textLabel.text);
 }
 
 @end
