@@ -245,7 +245,7 @@
                                    
                                    // process all videos
                                    
-                                   NSMutableArray *allVideos = [NSMutableArray array];
+//                                   NSMutableArray *allVideos = [NSMutableArray array];
                                    
                                    // dictionary that will contains all video results (key is video name)
                                    
@@ -253,12 +253,12 @@
                                    
                                    // have to fill this array with all non processed videos
                                    
-                                   [allVideos addObject:@"2016-06-06_19.19.40"];
-                                   [allVideos addObject:@"2016-06-06_19.19.41"];
-                                   [allVideos addObject:@"2016-06-06_19.19.42"];
-                                   [allVideos addObject:@"2016-06-06_19.19.43"];
+//                                   [allVideos addObject:@"2016-06-06_19.19.40"];
+//                                   [allVideos addObject:@"2016-06-06_19.19.41"];
+//                                   [allVideos addObject:@"2016-06-06_19.19.42"];
+//                                   [allVideos addObject:@"2016-06-06_19.19.43"];
                                    
-                                   CGFloat progressPerVideo = 1.f / allVideos.count;
+                                   CGFloat progressPerVideo = 1.f / _videosTableViewData.count;
                                    
                                    // we display the global process view with GCD
                                    
@@ -272,7 +272,7 @@
                                    
                                    dispatch_async(dispatch_get_global_queue(0, 0), ^{
                                        
-                                       for (NSUInteger i = 0; i < allVideos.count; i++)
+                                       for (NSUInteger i = 0; i < _videosTableViewData.count; i++)
                                        {
                                            // we update the UI on the main thread synchronously
                                            
@@ -281,14 +281,14 @@
                                                [_trainingView.multipleProcessVideoProgressView.progressView setProgress:0.f animated:YES];
                                                
                                                NSDictionary *attributes = [(NSAttributedString *)_trainingView.multipleProcessVideoProgressView.globalProgressLabel.attributedText attributesAtIndex:0 effectiveRange:NULL];
-                                               _trainingView.multipleProcessVideoProgressView.globalProgressLabel.attributedText = [[NSAttributedString alloc] initWithString:[NSString stringWithFormat:@"Processing video... (%lu / %lu)", (unsigned long)(i+1), (unsigned long)allVideos.count] attributes:attributes];
+                                               _trainingView.multipleProcessVideoProgressView.globalProgressLabel.attributedText = [[NSAttributedString alloc] initWithString:[NSString stringWithFormat:@"Processing video... (%lu / %lu)", (unsigned long)(i+1), (unsigned long)_videosTableViewData.count] attributes:attributes];
                                            });
                                            
                                            // we extract video informations to prepare the process (always in a synchronous way)
                                            
                                            dispatch_sync(dispatch_get_global_queue(0, 0), ^{
                                                
-                                               NSString *videoName = [allVideos objectAtIndex:i];
+                                               NSString *videoName = [_videosTableViewData objectAtIndex:i];
                                                NSString *documentsDirectory = [NSSearchPathForDirectoriesInDomains(NSDocumentDirectory, NSUserDomainMask, YES) objectAtIndex:0];
                                                
                                                NSString *videoDataFilePath = [documentsDirectory stringByAppendingPathComponent:[NSString stringWithFormat:@"%@-data.plist", videoName]];
@@ -363,9 +363,9 @@
                                            {
                                                UITableViewCell *cell = [_trainingView.videosTableView cellForRowAtIndexPath:[NSIndexPath indexPathForRow:j inSection:0]];
                                                
-                                               for (NSUInteger j = 0; j < allVideos.count; j++)
+                                               for (NSUInteger j = 0; j < _videosTableViewData.count; j++)
                                                {
-                                                   NSString *video = [allVideos objectAtIndex:j];
+                                                   NSString *video = [_videosTableViewData objectAtIndex:j];
                                                    
                                                    if ([cell.textLabel.text isEqualToString:video])
                                                    {
@@ -386,7 +386,7 @@
 //                                                       {
 //                                                           if ([cellSubview isMemberOfClass:[UIBaseButton class]])
 //                                                           {
-//                                                               <#statements#>
+//                                                               
 //                                                           }
 //                                                       }
                                                    }
