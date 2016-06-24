@@ -550,6 +550,8 @@
         
         StatisticalDataEngine *statsDataEngine = [[StatisticalDataEngine alloc] init];
         
+        BOOL shouldUpdateCoordinateSystem = NO;
+        
         if (pinchGestureRecognizer.scale > 1)   // pinch out
         {
             NSString *winningTitle = [UICoordinateSystem2DUtilities titleForTouchLocation:point inCoordinateSystem:_playerView.coordinateSystemView];
@@ -567,6 +569,8 @@
                 futureSelectedRow = 1;
                 
                 _statistics = [statsDataEngine searchByMonth:(int)_currentMonth andYear:(int)_currentYear andPlayerId:1];
+                
+                shouldUpdateCoordinateSystem = YES;
             }
             
             else if (isMonthlyCoordinateSystem) // if monthly coordinate system is displayed (monthly => weekly)
@@ -599,6 +603,8 @@
                 futureSelectedRow = 0;
                 
                 _statistics = [statsDataEngine searchFromDay:(int)_currentWeekStartDay andMonth:(int)currentWeekStartMonth andYear:(int)currentWeekStartYear toDay:(int)_currentWeekEndDay andMonth:(int)currentWeekEndMonth andYear:(int)currentWeekEndYear forPlayerId:1];
+                
+                shouldUpdateCoordinateSystem = YES;
             }
         }
         
@@ -615,6 +621,8 @@
                 futureSelectedRow = 1;
                 
                 _statistics = [statsDataEngine searchByMonth:(int)_currentMonth andYear:(int)_currentYear andPlayerId:1];
+                
+                shouldUpdateCoordinateSystem = YES;
             }
             
             else if (isMonthlyCoordinateSystem) // if monthly coordinate system is displayed (monthly => yearly)
@@ -628,55 +636,60 @@
                 futureSelectedRow = 2;
                 
                 _statistics = [statsDataEngine searchByYear:(int)_currentYear andPlayerId:1];
+                
+                shouldUpdateCoordinateSystem = YES;
             }
         }
         
-        NSInteger row = [_playerView.dataPickerView selectedRowInComponent:0];
-        NSString *selectedDataSource = [_curveDataPickerViewData objectAtIndex:row];
-        
-        if ([selectedDataSource rangeOfString:@"progress"].location == NSNotFound)
+        if (shouldUpdateCoordinateSystem)
         {
-            if ([selectedDataSource isEqualToString:@"Forehands"])
-                data = [StatisticalDataEngineTools selectForehandCountsFromResult:_statistics];
+            NSInteger row = [_playerView.dataPickerView selectedRowInComponent:0];
+            NSString *selectedDataSource = [_curveDataPickerViewData objectAtIndex:row];
             
-            else if ([selectedDataSource isEqualToString:@"Backhands"])
-                data = [StatisticalDataEngineTools selectBackhandCountsFromResult:_statistics];
+            if ([selectedDataSource rangeOfString:@"progress"].location == NSNotFound)
+            {
+                if ([selectedDataSource isEqualToString:@"Forehands"])
+                    data = [StatisticalDataEngineTools selectForehandCountsFromResult:_statistics];
+                
+                else if ([selectedDataSource isEqualToString:@"Backhands"])
+                    data = [StatisticalDataEngineTools selectBackhandCountsFromResult:_statistics];
+                
+                else if ([selectedDataSource isEqualToString:@"Services"])
+                    data = [StatisticalDataEngineTools selectServiceCountsFromResult:_statistics];
+            }
             
-            else if ([selectedDataSource isEqualToString:@"Services"])
-                data = [StatisticalDataEngineTools selectServiceCountsFromResult:_statistics];
+            else
+            {
+                if ([selectedDataSource isEqualToString:@"Forehands (progress)"])
+                    data = [StatisticalDataEngineTools selectForehandProgressFromResult:_statistics];
+                
+                else if ([selectedDataSource isEqualToString:@"Backhands (progress)"])
+                    data = [StatisticalDataEngineTools selectBackhandProgressFromResult:_statistics];
+                
+                else if ([selectedDataSource isEqualToString:@"Services (progress)"])
+                    data = [StatisticalDataEngineTools selectServiceProgressFromResult:_statistics];
+            }
+            
+            Curve *curve = [[Curve alloc] init];
+            curve.values = [NSOrderedDictionary dictionaryWithObjects:data forKeys:titles];
+            
+            
+            [_playerView.coordinateSystemView.coordinateSystem.axes setObject:axis forKey:@"absciss"];
+            
+            [_playerView.coordinateSystemView refreshCoordinateSystem];
+            
+            _playerView.coordinateSystemView.abscissAxis.titles = titles;
+            
+            [_playerView.coordinateSystemView undraw];
+            
+            [_playerView.coordinateSystemView setCoordinateSystemTitle:coordinateSystemTitle];
+            
+            [_drawnCurve undraw];
+            [_drawnCurve setCurve:curve];
+            [_playerView.coordinateSystemView drawCurve:_drawnCurve];
+            
+            [_playerView.coordinateSystemView draw];
         }
-        
-        else
-        {
-            if ([selectedDataSource isEqualToString:@"Forehands (progress)"])
-                data = [StatisticalDataEngineTools selectForehandProgressFromResult:_statistics];
-            
-            else if ([selectedDataSource isEqualToString:@"Backhands (progress)"])
-                data = [StatisticalDataEngineTools selectBackhandProgressFromResult:_statistics];
-            
-            else if ([selectedDataSource isEqualToString:@"Services (progress)"])
-                data = [StatisticalDataEngineTools selectServiceProgressFromResult:_statistics];
-        }
-        
-        Curve *curve = [[Curve alloc] init];
-        curve.values = [NSOrderedDictionary dictionaryWithObjects:data forKeys:titles];
-        
-        
-        [_playerView.coordinateSystemView.coordinateSystem.axes setObject:axis forKey:@"absciss"];
-        
-        [_playerView.coordinateSystemView refreshCoordinateSystem];
-        
-        _playerView.coordinateSystemView.abscissAxis.titles = titles;
-        
-        [_playerView.coordinateSystemView undraw];
-        
-        [_playerView.coordinateSystemView setCoordinateSystemTitle:coordinateSystemTitle];
-        
-        [_drawnCurve undraw];
-        [_drawnCurve setCurve:curve];
-        [_playerView.coordinateSystemView drawCurve:_drawnCurve];
-        
-        [_playerView.coordinateSystemView draw];
     }
 }
 
