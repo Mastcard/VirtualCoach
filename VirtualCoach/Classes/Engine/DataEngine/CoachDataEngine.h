@@ -21,4 +21,6 @@
 -(CoachDO*)searchByLogin:(NSString*)login password:(NSString*)pass;
 //DELETE
 -(id)deleteCoachById:(int)idCoach;
+-(int)selectCoachByLogin:(NSString *)login password:(NSString *)password;
+- (NSString *)coachFirstNameWithId:(int)coachId;
 @end

@@ -59,6 +59,7 @@
     [_passwordTextField setTextColor:[UIColor whiteColor]];
     _passwordTextField.layer.cornerRadius = 8.0f;
     _passwordTextField.layer.masksToBounds = YES;
+    _passwordTextField.secureTextEntry = YES;
     _passwordTextField.attributedPlaceholder = [[NSAttributedString alloc] initWithString:@"Password" attributes:@{NSForegroundColorAttributeName:[UIColor whiteColor]}];
     
     // setting login button

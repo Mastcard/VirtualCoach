@@ -20,4 +20,7 @@
 -(id)deleteCoachPlayerByIdCoach:(NSString *) idCoach;
 -(id)deleteCoachPlayerByIdPlayer:(NSString *) idPlayer;
 -(id)deleteCoachPlayerById:(NSString *) idCP;
+
+
+-(NSArray *)searchIdPlayersByCoachId:(int)idCoach;
 @end

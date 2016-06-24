@@ -26,5 +26,22 @@
     return self;
 }
 
+-(instancetype)initWithId:(int)playerId andName:(NSString*)name andFirstName:(NSString*)firstName andLeftHanded:(bool)leftHanded andStatistics:(NSMutableArray<StatisticalDO*>*)statistics andTrophies:(NSMutableArray<TrophyDO*>*)trophies level:(NSString *)level {
+    
+    self = [super init];
+    
+    if (self) {
+        _playerId = playerId;
+        _name = name;
+        _firstName = firstName;
+        _leftHanded = leftHanded;
+        _statistics = statistics;
+        _trophies = trophies;
+        _level = level;
+    }
+    
+    return self;
+}
+
 @end
 

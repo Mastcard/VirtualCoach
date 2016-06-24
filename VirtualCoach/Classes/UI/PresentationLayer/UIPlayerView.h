@@ -10,6 +10,7 @@
 #import "UIBaseLabel.h"
 #import "UIBaseButton.h"
 #import "UICoordinateSystem2D.h"
+#import "UINewElementWizardView.h"
 
 @interface UIPlayerView : UIBaseView
 
@@ -37,5 +38,7 @@
 
 @property (nonatomic, strong) UIBaseLabel *styleSelectionLabel;
 @property (nonatomic, strong) UIPickerView *stylePickerView;
+
+@property (nonatomic, strong) UINewElementWizardView *addPlayerWizardView;
 
 @end

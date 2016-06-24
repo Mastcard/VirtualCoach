@@ -21,8 +21,11 @@
 @property (nonatomic) bool leftHanded;
 @property (nonatomic) NSMutableArray<StatisticalDO*>* statistics;
 @property (nonatomic) NSMutableArray<TrophyDO*>* trophies;
+@property (nonatomic) NSString *level;
 
 -(instancetype)initWithId:(int)playerId andName:(NSString*)name andFirstName:(NSString*)firstName andLeftHanded:(bool)leftHanded andStatistics:(NSMutableArray<StatisticalDO*>*)statistics andTrophies:(NSMutableArray<TrophyDO*>*)trophies;
+
+-(instancetype)initWithId:(int)playerId andName:(NSString*)name andFirstName:(NSString*)firstName andLeftHanded:(bool)leftHanded andStatistics:(NSMutableArray<StatisticalDO*>*)statistics andTrophies:(NSMutableArray<TrophyDO*>*)trophies level:(NSString *)level;
 
 @end
 

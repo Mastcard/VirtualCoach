@@ -40,6 +40,14 @@
     self.navigationItem.rightBarButtonItem = _menuView.profileButton;
 }
 
+- (void)viewWillAppear:(BOOL)animated
+{
+    CoachDO *coachDO = [[Variables dictionary] objectForKey:kConnectedUser];
+    
+    NSDictionary *attributes = [(NSAttributedString *)_menuView.welcomeLabel.attributedText attributesAtIndex:0 effectiveRange:NULL];
+    _menuView.welcomeLabel.attributedText = [[NSAttributedString alloc] initWithString:[NSString stringWithFormat:@"Welcome %@ !", coachDO.firstName] attributes:attributes];
+}
+
 - (void)captureViewButtonAction
 {
     UIApplicationNavigationViewController *nav = (UIApplicationNavigationViewController *)self.navigationController;
