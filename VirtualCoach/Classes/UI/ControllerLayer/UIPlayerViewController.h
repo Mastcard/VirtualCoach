@@ -13,6 +13,10 @@
 #import "UICoordinateSystemFactory.h"
 #import "UICoordinateSystem2DUtilities.h"
 #import "DateUtilities.h"
+#import "StatisticalDataEngine.h"
+#import "NSOrderedDictionary.h"
+#import "StatisticalDataEngineTools.h"
+#import "Variables.h"
 
 #define CURVE_DATA_PICKERVIEW_TAG 1
 #define CURVE_PERIOD_PICKERVIEW_TAG 2
@@ -35,5 +39,10 @@
 
 - (void)twoFingerPinchOnCurveView:(UIPinchGestureRecognizer *)pinchGestureRecognizer;
 - (void)swipeGestureRecognizerOnCurveView:(UISwipeGestureRecognizer *)swipeGestureRecognizer;
+
+- (void)addPlayerButtonAction;
+- (void)addPlayerWizardButtonAction;
+
+- (void)removePlayerButtonAction;
 
 @end

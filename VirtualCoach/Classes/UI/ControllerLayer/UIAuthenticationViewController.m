@@ -36,7 +36,27 @@
 {
     // set loginSuccess depending on authtication result
     
-    BOOL loginSuccess = YES;
+    CoachDataEngine *coachDataEngine = [[CoachDataEngine alloc] init];
+    
+    NSString *login = [_authenticationView.credentialsView.usernameTextField.text stringByTrimmingCharactersInSet:[NSCharacterSet whitespaceCharacterSet]];
+    
+    NSString *password = [_authenticationView.credentialsView.passwordTextField.text stringByTrimmingCharactersInSet:[NSCharacterSet whitespaceCharacterSet]];
+    
+    CoachDO *coachDO = nil;
+    
+    if (![login isEqualToString:@""] && ![password isEqualToString:@""]) {
+        coachDO = [coachDataEngine searchByLogin:login password:password];
+    }
+    
+    BOOL loginSuccess = NO;
+    
+    if (coachDO)
+    {
+        loginSuccess = YES;
+        
+        [[Variables dictionary] setObject:[NSNumber numberWithBool:YES] forKey:kConnected];
+        [[Variables dictionary] setObject:coachDO forKey:kConnectedUser];
+    }
     
     if (loginSuccess)
     {

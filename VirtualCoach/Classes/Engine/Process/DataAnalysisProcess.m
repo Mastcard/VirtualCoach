@@ -215,7 +215,7 @@
                 {
                     _sequenceStarted = YES;
                     
-                    NSLog(@"Sequence starts at %f", (float)(_count / 60));
+                    NSLog(@"Sequence starts at %f", (float)((float)_count / 60));
                     
                     //test
                     _firstFrame = src;
@@ -241,7 +241,7 @@
                     
                     NSLog(@"Found motion : %@", foundMotion);
                     
-                    if ([foundMotion isEqualToString:@"service"])
+                    if ([foundMotion isEqualToString:@"serve"])
                         _serviceCount++;
                     
                     if ([foundMotion isEqualToString:@"forehand"])
@@ -260,7 +260,7 @@
                     _entryDataset = nil;
                     _entryDataset = [[KmeanEntryDataSet alloc] init];
                     
-                    NSLog(@"Sequence ends at %f", (float)(_count / 60));
+                    NSLog(@"Sequence ends at %f", (float)((float)_count / 60));
                 }
             }
             
@@ -275,7 +275,6 @@
          [_delegate didUpdateStatusWithProgress:0.0025 message:[NSString stringWithFormat:@"Analyzing motions.. (%lu / %lu)", (unsigned long)_count, (unsigned long)_frameCount]];
          NSLog(@"%@", [NSString stringWithFormat:@"Analyzing motions.. (%lu / %lu)", (unsigned long)_count, (unsigned long)_frameCount]);
          }
-         
     }
 }
 

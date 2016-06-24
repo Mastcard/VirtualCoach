@@ -25,6 +25,8 @@
         _addPlayerToTrainingButton = [[UIBaseButton alloc] init];
         _removeSelectedPlayerButton = [[UIBaseButton alloc] init];
         
+        _addPlayerToTrainingWizardView = [[UINewElementWizardView alloc] init];
+        
         _trainingsPanelLabel = [[UIBaseLabel alloc] init];
         _videosPanelLabel = [[UIBaseLabel alloc] init];
         _playersPanelLabel = [[UIBaseLabel alloc] init];
@@ -187,6 +189,11 @@
     CGPoint multipleProcessVideoProgressViewOrigin = CGPointMake(([UIScreen mainScreen].bounds.size.width - multipleProcessVideoProgressViewSize.width) / 2, ([UIScreen mainScreen].bounds.size.height - multipleProcessVideoProgressViewSize.height) / 2);
     
     [_multipleProcessVideoProgressView setFrame:CGRectMake(multipleProcessVideoProgressViewOrigin.x, multipleProcessVideoProgressViewOrigin.y, multipleProcessVideoProgressViewSize.width, multipleProcessVideoProgressViewSize.height)];
+    
+    CGSize addPlayerToTrainingWizardViewSize = CGSizeMake(350, 170);
+    CGPoint addPlayerTotrainingWizardViewOrigin = CGPointMake(0, 0);
+    
+    [_addPlayerToTrainingWizardView setFrame:CGRectMake(addPlayerTotrainingWizardViewOrigin.x, addPlayerTotrainingWizardViewOrigin.y, addPlayerToTrainingWizardViewSize.width, addPlayerToTrainingWizardViewSize.height)];
 }
 
 - (void)layout
@@ -199,6 +206,13 @@
     
     [_processVideoProgressView layout];
     [_multipleProcessVideoProgressView layout];
+    [_addPlayerToTrainingWizardView layout];
+    
+    [_addPlayerToTrainingWizardView setWizardTitle:@"Add player to training"];
+    [_addPlayerToTrainingWizardView setElementNameText:@"Player name:"];
+    
+    [_addPlayerToTrainingWizardView addSubview:_addPlayerToTrainingWizardView.wizardTitleLabel alignment:UIViewCenteredOnX];
+    [_addPlayerToTrainingWizardView addSubview:_addPlayerToTrainingWizardView.elementNameLabel];
     
     [self addSubview:_trainingsTableView];
     [self addSubview:_playersTableView];

@@ -26,6 +26,7 @@
 @property (nonatomic, strong) NSArray *trainingsTableViewData;
 @property (nonatomic, strong) NSMutableArray *playersTableViewData;
 @property (nonatomic, strong) NSMutableArray *videosTableViewData;
+@property (nonatomic, strong) NSMutableArray *videosDurationTableViewData;
 
 @property (nonatomic, strong) AVPlayerViewController *playerViewController;
 
@@ -34,5 +35,7 @@
 - (void)processAllVideosButtonAction;
 - (void)recordingViewButtonAction;
 - (void)playVideoButtonAction:(UIBaseButton *)sender;
+- (void)addPlayerToTrainingButtonAction;
+- (void)addPlayerToTrainingOkButtonAction;
 
 @end

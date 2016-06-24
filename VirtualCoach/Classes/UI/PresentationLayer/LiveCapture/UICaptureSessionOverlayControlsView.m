@@ -39,7 +39,7 @@
     
     [_binaryThresholdSlider setBackgroundColor:[UIColor clearColor]];
     _binaryThresholdSlider.minimumValue = 5.0;
-    _binaryThresholdSlider.maximumValue = 150.0;
+    _binaryThresholdSlider.maximumValue = 100.0;
     _binaryThresholdSlider.continuous = YES;
     _binaryThresholdSlider.value = 20.0;
     

@@ -24,4 +24,6 @@
 @property (nonatomic, strong) UIBaseLabel *trainingsViewInformationsLabel;
 @property (nonatomic, strong) UIBaseLabel *playersViewInformationsLabel;
 
+@property (nonatomic, strong) UIBaseLabel *welcomeLabel;
+
 @end
