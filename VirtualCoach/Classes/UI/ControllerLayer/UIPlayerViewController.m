@@ -689,6 +689,8 @@
             [_playerView.coordinateSystemView drawCurve:_drawnCurve];
             
             [_playerView.coordinateSystemView draw];
+            
+            [_playerView.periodPickerView selectRow:futureSelectedRow inComponent:0 animated:YES];
         }
     }
 }
