@@ -75,6 +75,38 @@
         }
     }
     
+    if (_referenceVideosTableViewData.count == 0)
+    {
+        [_referenceVideosTableViewData addObject:@"Reference1"];
+        [_referenceVideosTableViewData addObject:@"Reference2"];
+        [_referenceVideosTableViewData addObject:@"Reference3"];
+        [_referenceVideosTableViewData addObject:@"Reference4"];
+    }
+    
+    if (_referenceForehandPickerViewData.count == 0)
+    {
+        [_referenceForehandPickerViewData addObject:@"Forehand1"];
+        [_referenceForehandPickerViewData addObject:@"Forehand2"];
+        [_referenceForehandPickerViewData addObject:@"Forehand3"];
+        [_referenceForehandPickerViewData addObject:@"Forehand4"];
+    }
+    
+    if (_referenceBackhandPickerViewData.count == 0)
+    {
+        [_referenceBackhandPickerViewData addObject:@"Backhand1"];
+        [_referenceBackhandPickerViewData addObject:@"Backhand2"];
+        [_referenceBackhandPickerViewData addObject:@"Backhand3"];
+        [_referenceBackhandPickerViewData addObject:@"Backhand4"];
+    }
+    
+    if (_referenceServicePickerViewData.count == 0)
+    {
+        [_referenceServicePickerViewData addObject:@"Backhand1"];
+        [_referenceServicePickerViewData addObject:@"Backhand2"];
+        [_referenceServicePickerViewData addObject:@"Backhand3"];
+        [_referenceServicePickerViewData addObject:@"Backhand4"];
+    }
+    
     //temporary end
 }
 
